@@ -1,0 +1,98 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
+
+import '../../constants/constants.dart';
+import '../../routes/dorak_routes.dart';
+import '../components/components.dart';
+
+class WelcomeScreen extends StatelessWidget {
+  const WelcomeScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: (Container(
+          color: AppColors.primary,
+          padding: EdgeInsets.only(left: 3.0.w, right: 3.0.w, top: 10.0.h),
+          margin: EdgeInsets.symmetric(horizontal: 2.0.w),
+          child: Column(
+            children: [
+              Image.asset(AppAssets.kWelcomeLogo),
+              Expanded(
+                child: EmptyCard(
+                  verticalPadding: 2.h,
+                  height: double.infinity,
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 6.h,
+                        margin: EdgeInsets.symmetric(
+                          horizontal: 1.5.w,
+                        ),
+                        color: AppColors.transparent,
+                        child: Image.asset(
+                          AppAssets.kWelcomeLogo2,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      /*   TextBuilder(
+                        align: TextAlign.center,
+                        text: AppStrings.kWelcomeTitle.tr(),
+                        maxLin: 2,
+                        color: AppColors.navyBlue,
+                        bold: true,
+                      ),*/
+                      SizedBox(
+                        height: 3.0.h,
+                      ),
+                      ButtonBuilder(
+                        buttonColor: AppColors.blue,
+                        title: AppStrings.kLogin.tr(),
+                        height: 6.0.h,
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushNamed(NameRoutes.kLoginScreen);
+                        },
+                      ),
+                      SizedBox(
+                        height: 3.0.h,
+                      ),
+                      ButtonBuilder(
+                        buttonColor: AppColors.liteBlueWO.withOpacity(0.2),
+                        borderColor: Colors.transparent,
+                        title: AppStrings.kRegister.tr(),
+                        onPressed: () {
+                          // if (context
+                          //             .read<GeneralController>()
+                          //             .policy
+                          //             ?.privacy ==
+                          //         null ||
+                          //     context.read<GeneralController>().terms?.terms ==
+                          //         null) {
+                          //   context
+                          //       .read<GeneralController>()
+                          //       .getTermsAndPolicy();
+                          // }
+                          // Navigator.of(context)
+                          //     .pushNamed(NameRoutes.kRegisterScreen);
+                        },
+                        titleStyle: const TextStyle(
+                            color: AppColors.blue, fontWeight: FontWeight.bold),
+                        height: 6.0.h,
+                      ),
+                      SizedBox(
+                        height: 2.0.h,
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        )),
+      ),
+    );
+  }
+}
