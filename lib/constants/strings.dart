@@ -203,4 +203,5 @@ class AppStrings {
   static const kVerifyNow = 'verify_now';
   static const kResendCode = 'resend_code';
   static const kSubscriptionDone = 'subscription_done';
+  static const kWaitingTime = 'waiting_time';
 }

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_image/flutter_svg_image.dart';
@@ -45,10 +43,7 @@ class GeometricalAvatar extends StatelessWidget {
           color: backgroundColor ?? AppColors.lead.withOpacity(0.72),
           image: path != null
               ? DecorationImage(
-                  image: FileImage(
-                    File(path!),
-                  ),
-                  fit: BoxFit.fill)
+                  image: Image.asset(path!).image, fit: BoxFit.fill)
               : url != null
                   ? DecorationImage(
                       image: url!.split('.').last == 'svg'

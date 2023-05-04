@@ -4,7 +4,7 @@ class AppAssets {
   static const kWelcomeLogo = '$kAssets/welcome_logo.png';
   static const kWelcomeLogo2 = '$kAssets/welcome_logo2.png';
   static const kMenuIcon = '$kAssets/menu_icon.svg';
-  static const kNotificationIcon = '$kAssets/notification.svg';
+  static const kNotificationIcon = '$kAssets/notification_icon.png';
   static const kHomeLogo = '$kAssets/home_logo.svg';
   static const kHelpLogo = '$kAssets/help_logo.svg';
   static const kNewsLogo = '$kAssets/news_logo.svg';
@@ -30,9 +30,9 @@ class AppAssets {
   static const kFingerprint = '$kAssets/fingerprint.svg';
   static const kMapPlaceHolder = '$kAssets/map_place_holder.png';
   static const kLogo = '$kAssets/logo.png';
-  static const kProfileIcon = '$kAssets/profile.svg';
-  static const kOfferIcon = '$kAssets/offers.svg';
-  static const kAppointmentIcon = '$kAssets/appointment.svg';
+  static const kProfileIcon = '$kAssets/profile_icon.png';
+  static const kOfferIcon = '$kAssets/offer_icon.png';
+  static const kAppointmentIcon = '$kAssets/appointment_icon.png';
   static const kReportIcon = '$kAssets/report.svg';
   static const kHomeIcon = '$kAssets/home_icon.png';
   static const kBookingCancel = '$kAssets/booking_cancel.svg';
@@ -48,4 +48,10 @@ class AppAssets {
   static const kIntro2 = '$kAssets/intro_2.png';
   static const kIntro3 = '$kAssets/intro_3.png';
   static const kIntro4 = '$kAssets/intro_4.png';
+  static const kDoctorImage = '$kAssets/doctor_image.png';
+  static const kLocationIcon = '$kAssets/location_icon.svg';
+  static const kMoneyIcon = '$kAssets/money_icon.svg';
+  static const kDorakIcon = '$kAssets/dorak_icon.png';
+  static const kMask = '$kAssets/mask.png';
+  static const kCallIcon = '$kAssets/call_icon.png';
 }

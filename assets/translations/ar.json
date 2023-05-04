@@ -209,6 +209,7 @@
   "select_place": "اختر المكان",
   "day_not_available": "لا توجد مواعيد متاحة",
   "add_appointment_success": "تم إضافة الموعد بنجاح",
-  "add_appointment_fail": "لم يتم إضافة الموعد "
+  "add_appointment_fail": "لم يتم إضافة الموعد ",
+  "waiting_time": "وقت الإنتظار :"
 
 }

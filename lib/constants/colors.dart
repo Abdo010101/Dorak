@@ -13,10 +13,12 @@ class AppColors {
 
   static const Color white = Color(0xffFFFFFF);
   static const Color liteWight = Color(0xffF4F6FD);
+  static const Color liteWight2 = Color(0xffEFF0F6);
   static const Color lead = Color(0xffD6D6D6);
   static const Color blue = Color(0xff466FFF);
   static const Color liteBlue = Color(0xff3462FF);
   static const Color liteBlueWO = Color(0xff90A8FF);
+  static const Color liteBlue2 = Color(0xffDAE2FF);
   static const Color gray = Color(0xffBFBFBF);
 
   static const Color darkGray = Color(0xff8A8D9F);

@@ -23,8 +23,8 @@ class BottomNavigationImage extends StatelessWidget {
             color: isCurrentIndex
                 ? AppColors.blue
                 : AppColors.grey.withOpacity(0.5),
-            width: 25.sp,
-            height: 25.sp,
+            width: 20.sp,
+            height: 20.sp,
             fit: BoxFit.fill,
           )
         : Image.asset(

@@ -16,6 +16,7 @@ class EmptyCard extends StatelessWidget {
     this.color,
     this.horizontalPadding,
     this.url,
+    this.borderRadius,
   }) : super(key: key);
 
   final Widget child;
@@ -29,6 +30,7 @@ class EmptyCard extends StatelessWidget {
   final double? horizontalMargin;
   final Color? color;
   final String? url;
+  final BorderRadiusGeometry? borderRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,7 @@ class EmptyCard extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(radius ?? 12.5),
+          borderRadius: borderRadius ?? BorderRadius.circular(radius ?? 12.5),
           color: color ?? AppColors.white,
           image: url == null
               ? null

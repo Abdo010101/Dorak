@@ -40,7 +40,6 @@ class ButtonBuilder extends StatelessWidget {
     return Container(
       width: width,
       height: height ?? 6.5.h,
-      //padding: EdgeInsets.symmetric(vertical: 0.8.h),
       margin: margin,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
