@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="50" height="50" viewBox="0 0 50 50">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#aa6ffe"/>
+      <stop offset="1" stop-color="#711cf1"/>
+    </linearGradient>
+    <clipPath id="clip-path">
+      <path id="Wallet" d="M20,22H3a2.981,2.981,0,0,1-3-2.955V4A4,4,0,0,1,4,0H15.8a4,4,0,0,1,4,4V4.38a2.2,2.2,0,0,1,1.514.687A2.186,2.186,0,0,1,22,6.57V20.031A1.987,1.987,0,0,1,20,22ZM18,11.05a1.991,1.991,0,1,0,2,1.992A2,2,0,0,0,18,11.05ZM3.7,2.19a1.5,1.5,0,0,0-1.5,1.5v.69H17.6V3.69a1.5,1.5,0,0,0-1.5-1.5Z" fill="#fff"/>
+    </clipPath>
+  </defs>
+  <g id="Group_5038" data-name="Group 5038" transform="translate(-16 -19)">
+    <circle id="Oval" cx="25" cy="25" r="25" transform="translate(16 19)" fill="url(#linear-gradient)"/>
+    <g id="icons_notification" data-name="icons/notification" transform="translate(30 33)">
+      <path id="Wallet-2" data-name="Wallet" d="M20,22H3a2.981,2.981,0,0,1-3-2.955V4A4,4,0,0,1,4,0H15.8a4,4,0,0,1,4,4V4.38a2.2,2.2,0,0,1,1.514.687A2.186,2.186,0,0,1,22,6.57V20.031A1.987,1.987,0,0,1,20,22ZM18,11.05a1.991,1.991,0,1,0,2,1.992A2,2,0,0,0,18,11.05ZM3.7,2.19a1.5,1.5,0,0,0-1.5,1.5v.69H17.6V3.69a1.5,1.5,0,0,0-1.5-1.5Z" fill="#fff"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="50" height="50" viewBox="0 0 50 50">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0.05" stop-color="#00c1ce"/>
+      <stop offset="1" stop-color="#82eba1"/>
+    </linearGradient>
+    <clipPath id="clip-path">
+      <path id="Shape" d="M22,18H2a2,2,0,0,1-2-2V12a.5.5,0,0,1,.5-.5,2.5,2.5,0,0,0,0-5A.5.5,0,0,1,0,6V2A2,2,0,0,1,2,0H22a2,2,0,0,1,2,2V6a.5.5,0,0,1-.5.5,2.5,2.5,0,0,0,0,5,.5.5,0,0,1,.5.5v4A2,2,0,0,1,22,18ZM6.5,14a.5.5,0,0,0-.5.5v1a.5.5,0,1,0,1,0v-1A.5.5,0,0,0,6.5,14ZM16,9a2.3,2.3,0,0,0-2,2.5A2.3,2.3,0,0,0,16,14a2.3,2.3,0,0,0,2-2.5A2.3,2.3,0,0,0,16,9Zm.5-5a.5.5,0,0,0-.416.223l-6,9a.5.5,0,1,0,.832.554l6-9a.5.5,0,0,0-.139-.693A.507.507,0,0,0,16.5,4Zm-10,6a.5.5,0,0,0-.5.5v1a.5.5,0,0,0,1,0v-1A.5.5,0,0,0,6.5,10ZM11,4A2.3,2.3,0,0,0,9,6.5,2.3,2.3,0,0,0,11,9a2.3,2.3,0,0,0,2-2.5A2.3,2.3,0,0,0,11,4ZM6.5,6a.5.5,0,0,0-.5.5v1a.5.5,0,1,0,1,0v-1A.5.5,0,0,0,6.5,6Zm0-4.126a.5.5,0,0,0-.5.5V3.5a.5.5,0,0,0,1,0V2.375A.5.5,0,0,0,6.5,1.875Z" transform="translate(0 0.353)" fill="#fff"/>
+    </clipPath>
+  </defs>
+  <g id="icons_promo" data-name="icons/promo" transform="translate(0 -0.353)">
+    <circle id="Oval" cx="25" cy="25" r="25" transform="translate(0 0.353)" fill="url(#linear-gradient)"/>
+    <path id="Shape-2" data-name="Shape" d="M22,18H2a2,2,0,0,1-2-2V12a.5.5,0,0,1,.5-.5,2.5,2.5,0,0,0,0-5A.5.5,0,0,1,0,6V2A2,2,0,0,1,2,0H22a2,2,0,0,1,2,2V6a.5.5,0,0,1-.5.5,2.5,2.5,0,0,0,0,5,.5.5,0,0,1,.5.5v4A2,2,0,0,1,22,18ZM6.5,14a.5.5,0,0,0-.5.5v1a.5.5,0,1,0,1,0v-1A.5.5,0,0,0,6.5,14ZM16,9a2.3,2.3,0,0,0-2,2.5A2.3,2.3,0,0,0,16,14a2.3,2.3,0,0,0,2-2.5A2.3,2.3,0,0,0,16,9Zm.5-5a.5.5,0,0,0-.416.223l-6,9a.5.5,0,1,0,.832.554l6-9a.5.5,0,0,0-.139-.693A.507.507,0,0,0,16.5,4Zm-10,6a.5.5,0,0,0-.5.5v1a.5.5,0,0,0,1,0v-1A.5.5,0,0,0,6.5,10ZM11,4A2.3,2.3,0,0,0,9,6.5,2.3,2.3,0,0,0,11,9a2.3,2.3,0,0,0,2-2.5A2.3,2.3,0,0,0,11,4ZM6.5,6a.5.5,0,0,0-.5.5v1a.5.5,0,1,0,1,0v-1A.5.5,0,0,0,6.5,6Zm0-4.126a.5.5,0,0,0-.5.5V3.5a.5.5,0,0,0,1,0V2.375A.5.5,0,0,0,6.5,1.875Z" transform="translate(13 16.353)" fill="#fff"/>
+    <g id="Group_3885" data-name="Group 3885" transform="translate(13 16)" clip-path="url(#clip-path)">
+      <g id="Colors_Primary" data-name="Colors/Primary" transform="translate(-3 -6)">
+        <rect id="Colors_Primary_background" data-name="Colors/Primary background" width="30" height="30" transform="translate(0 0.353)" fill="#fff"/>
+        <rect id="Rectangle_3" data-name="Rectangle 3" width="30" height="30" transform="translate(0 0.353)" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>

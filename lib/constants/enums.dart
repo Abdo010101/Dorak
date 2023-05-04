@@ -27,3 +27,5 @@ enum SendOtpType { login, register, changPassword, non }
 enum OtpApiType { check, verify }
 
 enum Language { ar, en }
+
+enum ImageType { svg, image }

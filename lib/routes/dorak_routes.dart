@@ -31,4 +31,5 @@ abstract class NameRoutes {
   static const kGoogleMap = '$kMenuDrawerScreen/google_map';
   static const kSubscriptionScreen = '$kMenuDrawerScreen/subscription';
   static const kChangePasswordScreen = '$kOTPScreen/changePassword';
+  static const kMainTestScreen = 'main_test_screen';
 }

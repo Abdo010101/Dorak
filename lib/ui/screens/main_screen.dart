@@ -4,14 +4,15 @@ import 'package:sizer/sizer.dart';
 
 import '../../constants/constants.dart';
 import '../../routes/dorak_routes.dart';
+import '../components/components.dart';
 
 class MainScreen extends StatelessWidget {
-  MainScreen({Key? key}) : super(key: key);
+  const MainScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.white,
+      backgroundColor: AppColors.liteWight,
       appBar: AppBar(
           centerTitle: true,
           elevation: 0.0,
@@ -52,8 +53,7 @@ class MainScreen extends StatelessWidget {
                 color: AppColors.black,
                 fontWeight: FontWeight.bold),
           )),
-      // body: controller.homeScreensList[controller.currentIndex],
-      // bottomNavigationBar: BottomNavigator(),
+      bottomNavigationBar: const BottomNavigator(),
     );
   }
 }

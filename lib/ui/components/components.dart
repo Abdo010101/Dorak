@@ -14,6 +14,8 @@ export 'general/switch_button.dart';
 export 'general/text_builder.dart';
 export 'general/text_form_field_builder.dart';
 export 'general/zone_card.dart';
+export 'home/bottom_navigation.dart';
+export 'home/bottom_navigation_image.dart';
 export 'intro/dotes_intro.dart';
 export 'intro/introItem.dart';
 export 'intro/logo_intro_screen.dart';
