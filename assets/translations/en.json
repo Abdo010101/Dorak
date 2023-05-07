@@ -124,7 +124,7 @@
   "not_have_account": "Already have not an account?",
   "have_account": "Already have an account?",
   "need_help": "Need Help ?",
-  "contact_us": "Tap hear to contact us",
+  "contact_us": "Contact us",
   "logout": "Logout",
   "password": "Password",
   "confirm_password": "Confirm Password",
@@ -208,7 +208,7 @@
   "day_not_available": "No Available Appointment",
   "add_appointment_success": "AddAppointmentSuccess",
   "add_appointment_fail": "AddAppointmentFail",
-  "waiting_time": "Waiting Time:"
-
+  "waiting_time": "Waiting Time:",
+  "favorites": " Favorites"
 
 }

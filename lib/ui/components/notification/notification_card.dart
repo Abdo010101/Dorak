@@ -32,7 +32,7 @@ class NotificationCard extends StatelessWidget {
                   //     : notification?.type == "payment_complete"
                   //         ? AppAssets.kPayment
                   //         :
-                  AppAssets.kPromotion),
+                  AppAssets.kCallIcon),
             ),
             SizedBox(
               width: 5.w,

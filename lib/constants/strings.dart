@@ -204,4 +204,5 @@ class AppStrings {
   static const kResendCode = 'resend_code';
   static const kSubscriptionDone = 'subscription_done';
   static const kWaitingTime = 'waiting_time';
+  static const kFavorites = 'favorites';
 }

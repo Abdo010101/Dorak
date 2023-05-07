@@ -56,6 +56,10 @@ class _MainTestScreenState extends State<MainTestScreen> {
                     title: 'AppReview',
                     destination: NameRoutes.kAppReview,
                   ),
+                  TransmissionButton(
+                    title: 'Profile',
+                    destination: NameRoutes.kProfileScreen,
+                  ),
                 ],
               ),
             ],

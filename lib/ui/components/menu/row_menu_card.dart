@@ -3,10 +3,15 @@ import 'package:sizer/sizer.dart';
 
 class RowMenuCard extends StatelessWidget {
   const RowMenuCard(
-      {Key? key, required this.title, required this.onTap, required this.icon})
+      {Key? key,
+      required this.title,
+      required this.onTap,
+      required this.icon,
+      this.divider = true})
       : super(key: key);
   final String title;
   final String icon;
+  final bool divider;
   final VoidCallback onTap;
   @override
   Widget build(BuildContext context) {
@@ -27,13 +32,15 @@ class RowMenuCard extends StatelessWidget {
           Icons.arrow_forward_ios,
           size: 12.sp,
         ),
-        subtitle: SizedBox(
-          height: 0.5.h,
-          child: Divider(
-            color: Colors.black.withOpacity(0.15),
-            thickness: 0.1.h,
-          ),
-        ),
+        subtitle: divider
+            ? SizedBox(
+                height: 0.5.h,
+                child: Divider(
+                  color: Colors.black.withOpacity(0.15),
+                  thickness: 0.1.h,
+                ),
+              )
+            : null,
       ),
     );
   }

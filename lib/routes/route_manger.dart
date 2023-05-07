@@ -1,5 +1,4 @@
 import 'package:dorakpattient/routes/dorak_routes.dart';
-import 'package:dorakpattient/ui/screens/main_screen.dart';
 import 'package:dorakpattient/ui/screens/screens.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +20,8 @@ class RouteManger {
       case NameRoutes.kNotificationScreen:
         return MaterialPageRoute(
             builder: (context) => const NotificationScreen());
+      case NameRoutes.kProfileScreen:
+        return MaterialPageRoute(builder: (context) => const ProfileScreen());
 
       default:
         return MaterialPageRoute(builder: (context) => const MainTestScreen());
