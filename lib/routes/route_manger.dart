@@ -20,6 +20,9 @@ class RouteManger {
       case NameRoutes.kNotificationScreen:
         return MaterialPageRoute(
             builder: (context) => const NotificationScreen());
+      case NameRoutes.kProfileDetailsScreen:
+        return MaterialPageRoute(
+            builder: (context) => const ProfileDetailsScreen());
       case NameRoutes.kProfileScreen:
         return MaterialPageRoute(builder: (context) => const ProfileScreen());
 

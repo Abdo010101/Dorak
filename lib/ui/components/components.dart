@@ -35,5 +35,6 @@ export 'menu/row_menu_card.dart';
 export 'notification/notification_card.dart';
 export 'offer/date_time_builder.dart';
 export 'offer/offer_widget.dart';
+export 'profile/information_text.dart';
 export 'settings/settings_components.dart';
 export 'terms_policy/terms_policy_bottom_sheet.dart';

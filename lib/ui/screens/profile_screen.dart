@@ -31,7 +31,8 @@ class ProfileScreen extends StatelessWidget {
               trailing: 'example@mail.com',
               horizontalMargin: 0,
               verticalMargin: 1.h,
-              onTap: () {},
+              onTap: () => Navigator.pushNamed(
+                  context, NameRoutes.kProfileDetailsScreen),
             ),
             EmptyCard(
               verticalMargin: 1.h,
