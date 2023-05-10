@@ -4,16 +4,15 @@ class NetworkConstant {
   static const String kPageNumberParam = 'page';
   static const int kPageNumberValue = 1;
 
-  static const _kDevBaseUrl = 'http://192.168.1.105:8000/api/doctor/';
+  static const _kDevBaseUrl = 'https://dorak-dev.webstdy.net/api/patient/';
 
-  // static const _kDevBaseUrl = 'http://192.168.1.109:8000/api/';
-  static const _kReleaseBaseUrl = 'https://dorak-dev.webstdy.net/api/doctor/';
+  static const _kReleaseBaseUrl = 'https://dorak.webstdy.net/api/patient/';
   static const kAppleStoreUrl = '';
   static const kGooglePlayUrl = '';
   static const kAndroidPackage = '';
   static const kAppleId = '';
   static const kAuthorizationHeader = "authorization";
-  static const kBaseUrl = _kReleaseBaseUrl;
+  static const kBaseUrl = _kDevBaseUrl;
   static const kGoogleApiKey = 'AIzaSyBZFRav3jNg1pH9RAQxO1IhOGb7keLaoDM';
 
 /*  static const kTestToken =
@@ -25,46 +24,4 @@ class NetworkConstant {
   static const String kAllOffers = "offers";
   static const String kLoginRequest = "login";
   static const String kRegisterRequest = "register";
-  static const String kSendOtpRequest = "resend-otp";
-  static const String kVerifyOtpRequest = "verify";
-  static const String kCompleteInfoRequest = "complete-information";
-  static const String kGeneralRequest = "general";
-  static const String kProductRequest = "products";
-  static const String kSpecializationRequest = "main-specializations";
-  static const String kSubSpecializationRequest = "sub-specializations";
-  static const String kCitiesRequest = "cities";
-  static const String kAreasRequest = "areas";
-  static const String kSingleCollectionRequest = "collections";
-  static const String kAllReview = "ratings";
-  static const String kUpcomingApp = "reservations/upcoming";
-  static const String kTodayApp = "reservations/today";
-  static const String kPastApp = "reservations/past";
-  static const String kHomeData = "home";
-  static const String kReports = "monthly-report/";
-  static const String kDoctorSchedules = "doctor-with-all-schedules";
-  static const String kSubscriptions = "subscriptions";
-  static const String kAds = "ads";
-  static const String kMedicalCenterRequest = "medical-centers";
-  static const String kChangeBookingStatus = "change-booking-status";
-  static const String kAppRatings = "app-ratings";
-  static const String kUpdateProfile = "update-personal-information";
-  static const String kTerms = "terms-of-service";
-  static const String kPolicy = "privacy-policy";
-  static const String kChangeAppointmentStatus = "reservations/change-status";
-  static const String kChangeOfferStatus = "change-status";
-  static const String kUpdateClinicInfo = "update-clinic-information";
-  static const String kUpdateClinicSchedules = "update-clinic-schedules";
-  static const String kUpdateMedicalSchedules = "updating-medical-schedules";
-  static const String kDeleteMedicalCenter = 'detaching-medical';
-  static const String kLogout = "logout";
-  static const String kNotifications = "notifications";
-  static const String kSubscriptionOptions = "subscription-options";
-  static const String kPaymentMethods = "payment-methods";
-  static const String kCheckOtp = "check-otp";
-  static const String kSendOtp = "send-otp";
-  static const String kChangePassword = "change-password";
-  static const String kSocialLogin = "social-login";
-  static const String kCreateApplicationSubscription =
-      "create-application-subscription";
-  static const String kUpdateNotificationsStatus = "toggle-notifications";
 }

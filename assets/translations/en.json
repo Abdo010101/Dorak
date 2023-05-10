@@ -120,7 +120,7 @@
   "sign_continue": "Sign in to continue",
   "remember": "Remember me",
   "forget_password": "Forget password ?",
-  "sign_up": "Sing up",
+  "sign_up": "Sign up",
   "not_have_account": "Already have not an account?",
   "have_account": "Already have an account?",
   "need_help": "Need Help ?",
@@ -201,6 +201,7 @@
   "manual_appointment": "Manual Appointment",
   "patients_info": "Patients' information",
   "pickup_date": "Pickup Date",
+  "register_google": "Register with Google",
   "this_week": "This week",
   "next_week": "Next Week",
   "pickup_time": "Pickup Time",
@@ -209,6 +210,5 @@
   "add_appointment_success": "AddAppointmentSuccess",
   "add_appointment_fail": "AddAppointmentFail",
   "waiting_time": "Waiting Time:"
-
 
 }

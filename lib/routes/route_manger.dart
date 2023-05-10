@@ -22,6 +22,11 @@ class RouteManger {
         return MaterialPageRoute(
             builder: (context) => const NotificationScreen());
 
+      case NameRoutes.kRegisterScreen:
+        return MaterialPageRoute(builder: (context) => const SignUpScreen());
+
+      case NameRoutes.kLoginScreen:
+        return MaterialPageRoute(builder: (context) => const LoginScreen());
       default:
         return MaterialPageRoute(builder: (context) => const MainTestScreen());
     }

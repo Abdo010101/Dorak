@@ -58,6 +58,19 @@ class _MainTestScreenState extends State<MainTestScreen> {
                   ),
                 ],
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  TransmissionButton(
+                    title: 'LoginScreen',
+                    destination: NameRoutes.kLoginScreen,
+                  ),
+                  TransmissionButton(
+                    title: 'RegisterScreen',
+                    destination: NameRoutes.kRegisterScreen,
+                  ),
+                ],
+              ),
             ],
           ),
         ),

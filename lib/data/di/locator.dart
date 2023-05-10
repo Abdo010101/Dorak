@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
+import '../networks/clients/clients.dart';
 import '../networks/logging_interceptor.dart';
 import '../networks/network_constant.dart';
+import '../repository/repository.dart';
 import '../shared/shared_pref.dart';
 
 final locator = GetIt.instance;
@@ -18,6 +20,10 @@ Future setupLocator() async {
   // locator.registerFactory(() => AuthenticationClient(
   //       InjectionClass.dio,
   //     ));
+
+  locator.registerFactory<AuthenticationRepository>(() =>
+      AuthenticationRepository(
+          authenticationClient: locator<AuthenticationClient>()));
 
   /// repositories
   // locator.registerFactory<AuthenticationRepository>(() =>
