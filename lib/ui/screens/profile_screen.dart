@@ -53,7 +53,8 @@ class ProfileScreen extends StatelessWidget {
                     title: AppStrings.kSettings.tr(),
                     icon: AppAssets.kSettingIcon,
                     onTap: () {
-                      // Navigator.of(context).pushNamed(NameRoutes.kSettingScreen);
+                      Navigator.of(context)
+                          .pushNamed(NameRoutes.kSettingScreen);
                     },
                   ),
                   RowMenuCard(

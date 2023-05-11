@@ -1,5 +1,6 @@
 import 'package:dorakpattient/routes/dorak_routes.dart';
 import 'package:dorakpattient/ui/screens/screens.dart';
+import 'package:dorakpattient/ui/screens/setting_screen.dart';
 import 'package:flutter/material.dart';
 
 class RouteManger {
@@ -21,10 +22,14 @@ class RouteManger {
         return MaterialPageRoute(
             builder: (context) => const NotificationScreen());
       case NameRoutes.kProfileDetailsScreen:
-        return MaterialPageRoute(
-            builder: (context) => const ProfileDetailsScreen());
+        return MaterialPageRoute(builder: (context) => ProfileDetailsScreen());
       case NameRoutes.kProfileScreen:
         return MaterialPageRoute(builder: (context) => const ProfileScreen());
+      case NameRoutes.kAppointmentsScreen:
+        return MaterialPageRoute(
+            builder: (context) => const AppointmentsScreen());
+      case NameRoutes.kSettingScreen:
+        return MaterialPageRoute(builder: (context) => SettingsScreen());
 
       default:
         return MaterialPageRoute(builder: (context) => const MainTestScreen());

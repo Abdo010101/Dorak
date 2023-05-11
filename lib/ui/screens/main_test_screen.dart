@@ -62,6 +62,18 @@ class _MainTestScreenState extends State<MainTestScreen> {
                   ),
                 ],
               ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  TransmissionButton(
+                    title: 'Appointments',
+                    destination: NameRoutes.kAppointmentsScreen,
+                  ),
+                ],
+              ),
             ],
           ),
         ),
