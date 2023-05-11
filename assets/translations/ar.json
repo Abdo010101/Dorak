@@ -124,7 +124,7 @@
   "forget_password": "نسيت كلمة المرور",
   "sign_up": "اشتراك ",
   "need_help": "تحتاج مساعدة ؟",
-  "contact_us": "أضغط هنا للاتصال بنا",
+  "contact_us": "أتصل بنا",
   "logout": "تسجيل الخروج",
   "password": "الرقم السرى",
   "confirm_password": "تأكيد الرقم السرى",
@@ -210,6 +210,7 @@
   "day_not_available": "لا توجد مواعيد متاحة",
   "add_appointment_success": "تم إضافة الموعد بنجاح",
   "add_appointment_fail": "لم يتم إضافة الموعد ",
-  "waiting_time": "وقت الإنتظار :"
+  "waiting_time": "وقت الإنتظار :",
+  "favorites": " المفضلة"
 
 }

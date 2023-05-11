@@ -30,9 +30,10 @@ class LoginController extends AuthController {
     isLoading = true;
     notifyListeners();
     formKey.currentState?.save();
+
     final result = await login(
-        email: emailController.text,
-        password: passwordController.text,
+        email: emailTextEditingController.text,
+        password: passwordTextEditingController.text,
         rememberMe: rememberMe,
         token: '');
     isLoading = false;

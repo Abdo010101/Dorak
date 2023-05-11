@@ -1,7 +1,9 @@
+import 'package:dorakpattient/controllers/auth/login_controller.dart';
 import 'package:dorakpattient/routes/dorak_routes.dart';
 import 'package:dorakpattient/routes/route_manger.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import 'constants/constants.dart';
@@ -29,23 +31,29 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Sizer(
-      builder: (BuildContext context, Orientation orientation,
-          DeviceType deviceType) {
-        return MaterialApp(
-          localizationsDelegates: context.localizationDelegates,
-          supportedLocales: context.supportedLocales,
-          locale: EasyLocalization.of(context)?.currentLocale,
-          onGenerateRoute: RouteManger.generateRouter,
-          debugShowCheckedModeBanner: false,
-          title: AppStrings.kAppName.tr(),
-          initialRoute: NameRoutes.kMainTestScreen,
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
-          //   home: const MainTestScreen(),
-        );
-      },
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<LoginController>(
+            create: (_) => LoginController())
+      ],
+      child: Sizer(
+        builder: (BuildContext context, Orientation orientation,
+            DeviceType deviceType) {
+          return MaterialApp(
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: EasyLocalization.of(context)?.currentLocale,
+            onGenerateRoute: RouteManger.generateRouter,
+            debugShowCheckedModeBanner: false,
+            title: AppStrings.kAppName.tr(),
+            initialRoute: NameRoutes.kMainTestScreen,
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+            ),
+            //   home: const MainTestScreen(),
+          );
+        },
+      ),
     );
   }
 }

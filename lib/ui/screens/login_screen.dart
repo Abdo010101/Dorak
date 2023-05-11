@@ -160,7 +160,6 @@ class LoginScreen extends StatelessWidget {
                               onPressed: () async {
                                 final isSuccess =
                                     await controller.signIn(context);
-                                print("isSuccess= $isSuccess");
                               }),
                         ],
                       ),

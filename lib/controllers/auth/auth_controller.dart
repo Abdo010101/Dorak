@@ -12,10 +12,7 @@ import '../../data/models/response/response.dart';
 import '../../data/repository/repository.dart';
 
 class AuthController extends ChangeNotifier {
-  TextEditingController emailController = TextEditingController();
   final _sharedPref = locator<SharedPref>();
-
-  TextEditingController passwordController = TextEditingController();
 
   final _authenticationRepository = locator<AuthenticationRepository>();
   UserResponse? currentUser = UserResponse();

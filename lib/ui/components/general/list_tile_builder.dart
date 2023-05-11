@@ -18,6 +18,8 @@ class ListTileBuilder extends StatelessWidget {
     this.trailing,
     this.onTap,
     this.url,
+    this.horizontalPadding,
+    this.horizontalMargin,
   }) : super(key: key);
 
   final Widget? child;
@@ -25,6 +27,8 @@ class ListTileBuilder extends StatelessWidget {
   final double? height;
   final double? radius;
   final double? verticalPadding;
+  final double? horizontalPadding;
+  final double? horizontalMargin;
   final double? verticalMargin;
   final String title;
   final String subTitle;
@@ -38,14 +42,16 @@ class ListTileBuilder extends StatelessWidget {
       onTap: onTap,
       child: Container(
         margin: EdgeInsets.symmetric(
-            horizontal: 5.w, vertical: verticalMargin ?? 1.5.h),
+            horizontal: horizontalMargin ?? 5.w,
+            vertical: verticalMargin ?? 1.5.h),
         padding: EdgeInsets.symmetric(
-            horizontal: 4.w, vertical: verticalPadding ?? 2.h),
+            horizontal: horizontalPadding ?? 4.w,
+            vertical: verticalPadding ?? 2.h),
         width: width,
         height: height,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(radius ?? 12.5),
-            color: AppColors.liteWight),
+            color: AppColors.white),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -55,7 +61,7 @@ class ListTileBuilder extends StatelessWidget {
                 Row(
                   children: [
                     GeometricalAvatar(
-                      radius: 40.sp,
+                      radius: 47.5.sp,
                       url: url,
                       child: const SizedBox(),
                     ),

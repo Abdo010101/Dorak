@@ -17,9 +17,9 @@ Future setupLocator() async {
   var instance = await SharedPref.getInstance();
   locator.registerSingleton<SharedPref>(instance);
 
-  // locator.registerFactory(() => AuthenticationClient(
-  //       InjectionClass.dio,
-  //     ));
+  locator.registerFactory(() => AuthenticationClient(
+        InjectionClass.dio,
+      ));
 
   locator.registerFactory<AuthenticationRepository>(() =>
       AuthenticationRepository(
