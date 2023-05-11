@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:dorakpattient/data/repository/home_repo.dart';
 import 'package:get_it/get_it.dart';
 
 import '../networks/clients/clients.dart';
@@ -20,10 +21,16 @@ Future setupLocator() async {
   locator.registerFactory(() => AuthenticationClient(
         InjectionClass.dio,
       ));
+  locator.registerFactory(() => HomeClient(
+        InjectionClass.dio,
+      ));
 
   locator.registerFactory<AuthenticationRepository>(() =>
       AuthenticationRepository(
           authenticationClient: locator<AuthenticationClient>()));
+
+  locator.registerFactory<HomeRepository>(
+      () => HomeRepository(homeClient: locator<HomeClient>()));
 
   /// repositories
   // locator.registerFactory<AuthenticationRepository>(() =>

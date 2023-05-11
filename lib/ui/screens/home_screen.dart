@@ -1,12 +1,27 @@
+import 'package:dorakpattient/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../constants/constants.dart';
 import '../../routes/dorak_routes.dart';
 import '../components/components.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    Future.delayed(Duration.zero).then((value) {
+      Provider.of<HomeController>(context, listen: false).getHomeData(context);
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

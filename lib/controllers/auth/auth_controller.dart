@@ -4,7 +4,6 @@ import 'package:dorakpattient/data/networks/dio_errors.dart';
 import 'package:dorakpattient/data/networks/model_response.dart';
 import 'package:dorakpattient/data/networks/network_constant.dart';
 import 'package:dorakpattient/data/shared/shared_pref.dart';
-import 'package:dorakpattient/utis/util.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../data/models/request/request.dart';
