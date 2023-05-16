@@ -8,7 +8,7 @@ import '../components.dart';
 
 class MedicalCenterWidget extends StatelessWidget {
   const MedicalCenterWidget({Key? key}) : super(key: key);
-
+  final bool home = true;
   @override
   Widget build(BuildContext context) {
     return EmptyCard(
@@ -57,72 +57,96 @@ class MedicalCenterWidget extends StatelessWidget {
           TextBuilder(
             text:
                 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrystandard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-            verticalPadding: 1.h,
+            verticalPadding: 0.75.h,
             size: AppFontSizes.kS3,
             maxLin: 3,
             color: AppColors.darkGray,
           ),
-          EmptyCard(
-            horizontalMargin: 0,
-            verticalMargin: 1.h,
-            verticalPadding: 0,
-            horizontalPadding: 1.5.w,
-            radius: 50,
-            width: 100.w,
-            height: 4.h,
-            color: AppColors.liteBlue2,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(AppAssets.kLocationIcon),
-                TextBuilder(
-                  width: 30.w,
-                  text: "City name and area",
-                  size: AppFontSizes.kS2,
-                  color: AppColors.navyBlue,
+          home
+              ? SizedBox()
+              : EmptyCard(
+                  horizontalMargin: 0,
+                  verticalMargin: 1.h,
                   verticalPadding: 0,
-                  horizontalPadding: 2.w,
+                  horizontalPadding: 1.5.w,
+                  radius: 50,
+                  width: 100.w,
+                  height: 4.h,
+                  color: AppColors.liteBlue2,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(AppAssets.kLocationIcon),
+                      TextBuilder(
+                        width: 30.w,
+                        text: "City name and area",
+                        size: AppFontSizes.kS2,
+                        color: AppColors.navyBlue,
+                        verticalPadding: 0,
+                        horizontalPadding: 2.w,
+                      ),
+                      VerticalDividerBuilder(
+                        dividerColor: AppColors.white,
+                        width: 0.25.w,
+                        height: 3.h,
+                        horizontalMargin: 2.5.w,
+                      ),
+                      SvgPicture.asset(AppAssets.kMoneyIcon),
+                      TextBuilder(
+                        width: 30.w,
+                        text: "Fees: 300 LE",
+                        size: AppFontSizes.kS2,
+                        color: AppColors.navyBlue,
+                        verticalPadding: 0,
+                        horizontalPadding: 2.w,
+                      ),
+                    ],
+                  ),
                 ),
-                VerticalDividerBuilder(
-                  dividerColor: AppColors.white,
-                  width: 0.25.w,
-                  height: 3.h,
-                  horizontalMargin: 2.5.w,
-                ),
-                SvgPicture.asset(AppAssets.kMoneyIcon),
-                TextBuilder(
-                  width: 30.w,
-                  text: "Fees: 300 LE",
-                  size: AppFontSizes.kS2,
-                  color: AppColors.navyBlue,
-                  verticalPadding: 0,
-                  horizontalPadding: 2.w,
-                ),
-              ],
-            ),
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Icon(
-                Icons.access_time,
-                size: 9.sp,
-                color: AppColors.lightGrey2,
-              ),
-              TextBuilder(
-                  text: '${AppStrings.kWaitingTime.tr()} 40 min',
-                  size: AppFontSizes.kS2,
-                  verticalPadding: 0,
-                  horizontalPadding: 1.w,
-                  color: AppColors.lightGrey2),
+              home
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          AppAssets.kLocationIcon,
+                          color: AppColors.lightGrey2,
+                        ),
+                        TextBuilder(
+                          width: 30.w,
+                          text: "City name and area",
+                          size: AppFontSizes.kS2,
+                          color: AppColors.lightGrey2,
+                          verticalPadding: 0,
+                          horizontalPadding: 2.w,
+                        ),
+                      ],
+                    )
+                  : Row(
+                      children: [
+                        Icon(
+                          Icons.access_time,
+                          size: 9.sp,
+                          color: AppColors.lightGrey2,
+                        ),
+                        TextBuilder(
+                            text: '${AppStrings.kWaitingTime.tr()} 40 min',
+                            size: AppFontSizes.kS2,
+                            verticalPadding: 0,
+                            horizontalPadding: 1.w,
+                            color: AppColors.lightGrey2),
+                      ],
+                    ),
               const Spacer(),
               EmptyCard(
                 verticalPadding: 0,
-                verticalMargin: 0,
+                verticalMargin: 0.4.h,
                 horizontalPadding: 0,
                 horizontalMargin: 0,
-                height: 30.sp,
-                width: 30.sp,
+                height: 27.5.sp,
+                width: 27.5.sp,
                 radius: 50,
                 color: AppColors.lightPurple,
                 child: Image.asset(AppAssets.kCallIcon),

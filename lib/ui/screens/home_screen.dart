@@ -37,15 +37,11 @@ class HomeScreen extends StatelessWidget {
         ),
         leading: Container(
           height: 6.h,
-          padding: EdgeInsetsDirectional.only(start: 3.0.w),
-          child: IconButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed(NameRoutes.kMenuDrawerScreen);
-            },
-            icon: Image.asset(
-              AppAssets.kDorakIcon,
-              fit: BoxFit.fill,
-            ),
+          padding:
+              EdgeInsetsDirectional.symmetric(vertical: 1.1.h, horizontal: 5.w),
+          child: Image.asset(
+            AppAssets.kDorakIcon,
+            fit: BoxFit.fill,
           ),
         ),
       ),
@@ -73,26 +69,38 @@ class HomeScreen extends StatelessWidget {
                 verticalPadding: 1.h,
                 bold: true,
               ),
-              TextFormFieldBuilder(
-                hint: 'Find a doctor or speciality',
-                verticalMargin: 1.h,
-                horizontalMargin: 0,
-                maxLines: 3,
-                width: 100.w,
-                height: 7.5.h,
-                padding: EdgeInsets.only(right: 2.5.w, left: 2.5.w, top: 5.h),
-                borderRadius: 15,
-                prefixIcon: const Icon(
-                  Icons.search,
-                  color: AppColors.gray,
+              InkWell(
+                onTap: () => Navigator.pushNamed(
+                    context, NameRoutes.kSearchForSpecialtiesScreen),
+                child: EmptyCard(
+                  verticalPadding: 0.25.h,
+                  verticalMargin: 1.h,
+                  horizontalMargin: 0,
+                  width: 100.w,
+                  height: 6.5.h,
+                  color: AppColors.white,
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.search,
+                        color: AppColors.gray,
+                      ),
+                      TextBuilder(
+                        text: 'Find a doctor or speciality',
+                        verticalPadding: 0,
+                        horizontalPadding: 3.w,
+                        size: AppFontSizes.kS3,
+                      ),
+                    ],
+                  ),
                 ),
-                color: AppColors.white,
               ),
               SectionLabel(
                 title: 'Best Doctors',
                 seeAllPressed: () {},
               ),
-              SizedBox(
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 0.75.h),
                 height: 27.h,
                 child: ListView.separated(
                   itemCount: 4,
@@ -111,8 +119,9 @@ class HomeScreen extends StatelessWidget {
                 title: 'Nearest Medical Center ',
                 seeAllPressed: () {},
               ),
-              SizedBox(
-                height: 27.h,
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 1.h),
+                height: 20.h,
                 child: ListView.separated(
                   itemCount: 4,
                   scrollDirection: Axis.horizontal,

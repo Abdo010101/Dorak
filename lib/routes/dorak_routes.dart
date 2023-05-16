@@ -10,26 +10,22 @@ abstract class NameRoutes {
   static const kEditProfileScreen = '$kHomeScreen/edit_profile';
   static const kNotificationScreen = '$kHomeScreen/notification';
   static const kOffersScreen = '$kHomeScreen/offers';
-  static const kNewOfferScreen = '$kOffersScreen/new_offer';
-  static const kSettingScreen = '$kMenuDrawerScreen/setting';
+  static const kSettingScreen = '$kProfileScreen/setting';
   static const kForgetPasswordScreen = '$kLoginScreen/forget_password';
   static const kAppointmentsScreen = '$kLoginScreen/appointments_screen';
   static const kReviewScreen = '$kHomeScreen/reviews_screen';
-  static const kMenuDrawerScreen = '$kHomeScreen/menu_drawer_screen';
-  static const kMyBillScreen = '$kMenuDrawerScreen/my_bill_screen';
+  static const kSearchForCityScreen = '$kHomeScreen/search_for_city_screen';
+  static const kResultOfSearch = '$kSearchForCityScreen/result_of_search';
+  static const kSearchForSpecialtiesScreen =
+      '$kHomeScreen/search_for_specialties_screen';
+  static const kDoctorScreen = '$kHomeScreen/doctor_Screen';
   static const kReportScreen = '$kHomeScreen/report_Screen';
   static const kProfileScreen = '$kHomeScreen/profile_screen';
   static const kProfileDetailsScreen = '$kProfileScreen/profile_details_screen';
-  static const kClinicProfileScreen = '$kProfileScreen/clinic_profile_screen';
   static const kSuccessScreen = '$kOTPScreen/success_screen';
-  static const kSuccessPromotionScreen =
-      '$kHomeScreen/success_promotion_screen';
   static const kSignUpFingerScreen = '$kSuccessScreen/sign_up_finger_screen';
   static const kMedicalCenterScreen = '$kProfileScreen/medical_center_screen';
-  static const kAppReview = '$kMenuDrawerScreen/app_review';
-  static const kPromoteScreen = '$kMenuDrawerScreen/promote';
-  static const kGoogleMap = '$kMenuDrawerScreen/google_map';
-  static const kSubscriptionScreen = '$kMenuDrawerScreen/subscription';
+  static const kAppReview = '$kProfileScreen/app_review';
   static const kChangePasswordScreen = '$kOTPScreen/changePassword';
   static const kMainTestScreen = 'main_test_screen';
 }

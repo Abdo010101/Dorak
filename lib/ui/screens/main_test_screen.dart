@@ -72,6 +72,30 @@ class _MainTestScreenState extends State<MainTestScreen> {
                     title: 'Appointments',
                     destination: NameRoutes.kAppointmentsScreen,
                   ),
+                  TransmissionButton(
+                    title: 'SearchForSpecialties',
+                    destination: NameRoutes.kSearchForSpecialtiesScreen,
+                  ),
+                  TransmissionButton(
+                    title: 'SearchForCity',
+                    destination: NameRoutes.kSearchForCityScreen,
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  TransmissionButton(
+                    title: 'ResultOfSearch',
+                    destination: NameRoutes.kResultOfSearch,
+                  ),
+                  TransmissionButton(
+                    title: 'DoctorScreen',
+                    destination: NameRoutes.kDoctorScreen,
+                  ),
                 ],
               ),
             ],
