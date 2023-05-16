@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class UserResponse {
   String? token;
   Patient? patient;
@@ -17,6 +19,15 @@ class UserResponse {
       data['patient'] = this.patient!.toJson();
     }
     return data;
+  }
+
+  String convertUserToSharedPreferencesObject() => jsonEncode(this);
+
+  factory UserResponse.fromSharedPreferencesObject(String? prefObject) {
+    if (prefObject != null) {
+      return UserResponse.fromJson(jsonDecode(prefObject));
+    }
+    return UserResponse();
   }
 }
 

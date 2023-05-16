@@ -18,8 +18,8 @@ abstract class AuthenticationClient {
     @Body() LoginRequest model,
   );
 
-  /* @POST(NetworkConstant.kRegisterRequest)
+  @POST(NetworkConstant.kRegisterRequest)
   Future<BaseResponse<UserResponse>> register(
     @Body() var model,
-  );*/
+  );
 }

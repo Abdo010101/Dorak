@@ -48,4 +48,32 @@ class AuthController extends ChangeNotifier {
       // Get.back();
     }
   }
+
+  Future<Result<UserResponse?>> register({
+    required var registerRequest,
+  }) async {
+    try {
+      //Loading().loading(context);
+
+      final result = await _authenticationRepository.register(registerRequest);
+      if (result.data != null) {
+        ///TODO enhance here .
+        InjectionClass.dio.options.headers.addAll({
+          NetworkConstant.kAuthorizationHeader: 'Bearer ${result.data!.token}'
+        });
+
+        await _sharedPref.storeLoginInfo(result.data!);
+        isLoggedIn = _sharedPref.isUserLoggedIn();
+        currentUser = result.data;
+        return Success(result.data!);
+      } else {
+        return Error(errorMessage: result.error?.message);
+      }
+    } on DioError catch (e) {
+      return Error(errorMessage: DioExceptions.fromDioError(e).message);
+    } finally {
+      //Dismiss Dialog .
+      // Get.back();
+    }
+  }
 }

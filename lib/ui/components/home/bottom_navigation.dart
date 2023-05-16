@@ -5,8 +5,11 @@ import '../../../constants/constants.dart';
 import '../components.dart';
 
 class BottomNavigator extends StatelessWidget {
-  const BottomNavigator({Key? key}) : super(key: key);
-
+  const BottomNavigator(
+      {Key? key, required this.index, required this.onChanged})
+      : super(key: key);
+  final int index;
+  final Function(int) onChanged;
   @override
   Widget build(BuildContext context) {
     return EmptyCard(
@@ -18,35 +21,36 @@ class BottomNavigator extends StatelessWidget {
           topRight: Radius.circular(25.0), topLeft: Radius.circular(25.0)),
       child: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        currentIndex: 1,
+        currentIndex: index,
+        onTap: onChanged,
         backgroundColor: AppColors.white,
         elevation: 0,
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: BottomNavigationImage(
               image: AppAssets.kHomeIcon,
-              isCurrentIndex: false,
+              isCurrentIndex: index == 0,
             ),
             label: '',
           ),
           BottomNavigationBarItem(
             icon: BottomNavigationImage(
               image: AppAssets.kAppointmentIcon,
-              isCurrentIndex: false,
+              isCurrentIndex: index == 1,
             ),
             label: '',
           ),
           BottomNavigationBarItem(
             icon: BottomNavigationImage(
               image: AppAssets.kOfferIcon,
-              isCurrentIndex: false,
+              isCurrentIndex: index == 2,
             ),
             label: '',
           ),
           BottomNavigationBarItem(
             icon: BottomNavigationImage(
               image: AppAssets.kProfileIcon,
-              isCurrentIndex: false,
+              isCurrentIndex: index == 3,
             ),
             label: '',
           ),

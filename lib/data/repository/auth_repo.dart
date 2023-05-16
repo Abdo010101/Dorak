@@ -27,7 +27,7 @@ class AuthenticationRepository extends BaseRepository {
     }
   }
 
-  /* Future<BaseModel<UserResponse>> register(var model) async {
+  Future<BaseModel<UserResponse>> register(var model) async {
     if (await checkForConnectivity()) {
       try {
         return BaseModel(
@@ -40,5 +40,5 @@ class AuthenticationRepository extends BaseRepository {
     } else {
       return BaseModel.noNetworkConnection();
     }
-  }*/
+  }
 }

@@ -1,14 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:dorakpattient/data/di/locator.dart';
-
 import 'package:dorakpattient/data/repository/home_repo.dart';
-import 'package:dorakpattient/data/shared/shared_pref.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
-
-import '../../data/models/request/request.dart';
 import '../../data/models/response/response.dart';
-import '../../data/repository/repository.dart';
 
 class HomeController extends ChangeNotifier {
   final _homeRepository = locator<HomeRepository>();

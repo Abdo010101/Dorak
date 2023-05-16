@@ -1,4 +1,5 @@
 import 'package:dorakpattient/controllers/auth/login_controller.dart';
+import 'package:dorakpattient/controllers/auth/register_controller.dart';
 import 'package:dorakpattient/controllers/home_controller.dart';
 import 'package:dorakpattient/routes/dorak_routes.dart';
 import 'package:dorakpattient/routes/route_manger.dart';
@@ -36,7 +37,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<LoginController>(
             create: (_) => LoginController()),
-        ChangeNotifierProvider<HomeController>(create: (_) => HomeController())
+        ChangeNotifierProvider<HomeController>(create: (_) => HomeController()),
+        ChangeNotifierProvider<RegisterController>(
+            create: (_) => RegisterController())
       ],
       child: Sizer(
         builder: (BuildContext context, Orientation orientation,
