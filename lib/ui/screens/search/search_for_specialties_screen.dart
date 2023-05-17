@@ -10,28 +10,7 @@ class SearchForSpecialtiesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.liteWight,
-      appBar: AppBar(
-        backgroundColor: AppColors.liteWight,
-        elevation: 0,
-        leadingWidth: 40.w,
-        leading: Row(
-          children: [
-            IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(
-                Icons.arrow_back_ios_new,
-                color: AppColors.blue,
-              ),
-            ),
-            TextBuilder(
-              text: 'Specialties',
-              color: AppColors.navyBlue,
-              verticalPadding: 2.h,
-              bold: true,
-            ),
-          ],
-        ),
-      ),
+      appBar: const CustomAppBar(title: 'Specialties'),
       body: EmptyCard(
         color: AppColors.transparent,
         verticalPadding: 0,

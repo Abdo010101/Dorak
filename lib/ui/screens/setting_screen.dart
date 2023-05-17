@@ -11,29 +11,10 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.liteWight,
-        elevation: 0,
-        leadingWidth: 40.w,
-        leading: Row(
-          children: [
-            IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(
-                Icons.arrow_back_ios_new,
-                color: AppColors.blue,
-              ),
-            ),
-            TextBuilder(
-              text: languageStatus
-                  ? AppStrings.kLanguage.tr()
-                  : AppStrings.kSettings.tr(),
-              color: AppColors.navyBlue,
-              verticalPadding: 2.h,
-              bold: true,
-            ),
-          ],
-        ),
+      appBar: CustomAppBar(
+        title: languageStatus
+            ? AppStrings.kLanguage.tr()
+            : AppStrings.kSettings.tr(),
       ),
       backgroundColor: AppColors.liteWight,
       body: EmptyCard(

@@ -101,12 +101,14 @@ class HomeScreen extends StatelessWidget {
               ),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 0.75.h),
-                height: 27.h,
+                height: 28.h,
                 child: ListView.separated(
                   itemCount: 4,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
-                    return const DoctorWidget();
+                    return const DoctorWidget(
+                      home: true,
+                    );
                   },
                   separatorBuilder: (BuildContext context, int index) {
                     return SizedBox(
@@ -126,7 +128,9 @@ class HomeScreen extends StatelessWidget {
                   itemCount: 4,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
-                    return const MedicalCenterWidget();
+                    return const MedicalCenterWidget(
+                      home: true,
+                    );
                   },
                   separatorBuilder: (BuildContext context, int index) {
                     return SizedBox(
@@ -146,7 +150,6 @@ class HomeScreen extends StatelessWidget {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: 4,
-                scrollDirection: Axis.vertical,
                 itemBuilder: (context, index) {
                   return const AppointmentWidget();
                 },

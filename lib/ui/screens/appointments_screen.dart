@@ -21,7 +21,7 @@ class AppointmentsScreen extends StatelessWidget {
             TextBuilder(
               text: 'Appointments',
               color: AppColors.navyBlue,
-              verticalPadding: 2.h,
+              verticalPadding: 0.5.h,
               horizontalPadding: 2.5.w,
               bold: true,
             ),

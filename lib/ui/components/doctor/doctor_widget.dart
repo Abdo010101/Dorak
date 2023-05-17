@@ -7,15 +7,15 @@ import '../../../constants/constants.dart';
 import '../components.dart';
 
 class DoctorWidget extends StatelessWidget {
-  const DoctorWidget({Key? key}) : super(key: key);
-
+  const DoctorWidget({Key? key, this.home = false}) : super(key: key);
+  final bool home;
   @override
   Widget build(BuildContext context) {
     return EmptyCard(
       radius: 15.0,
       verticalMargin: 0.5.h,
       horizontalMargin: 0,
-      verticalPadding: 1.h,
+      verticalPadding: 2.h,
       width: 90.w,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,72 +65,76 @@ class DoctorWidget extends StatelessWidget {
             maxLin: 3,
             color: AppColors.darkGray,
           ),
-          EmptyCard(
-            horizontalMargin: 0,
-            verticalMargin: 1.h,
-            verticalPadding: 0,
-            horizontalPadding: 1.5.w,
-            radius: 50,
-            width: 100.w,
-            height: 4.h,
-            color: AppColors.liteBlue2,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(AppAssets.kLocationIcon),
-                TextBuilder(
-                  width: 30.w,
-                  text: "City name and area",
-                  size: AppFontSizes.kS2,
-                  color: AppColors.navyBlue,
+          home
+              ? EmptyCard(
+                  horizontalMargin: 0,
+                  verticalMargin: 1.h,
                   verticalPadding: 0,
-                  horizontalPadding: 2.w,
-                ),
-                VerticalDividerBuilder(
-                  dividerColor: AppColors.white,
-                  width: 0.25.w,
-                  height: 3.h,
-                  horizontalMargin: 2.5.w,
-                ),
-                SvgPicture.asset(AppAssets.kMoneyIcon),
-                TextBuilder(
-                  width: 30.w,
-                  text: "Fees: 300 LE",
-                  size: AppFontSizes.kS2,
-                  color: AppColors.navyBlue,
-                  verticalPadding: 0,
-                  horizontalPadding: 2.w,
-                ),
-              ],
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Icon(
-                Icons.access_time,
-                size: 9.sp,
-                color: AppColors.lightGrey2,
-              ),
-              TextBuilder(
-                  text: '${AppStrings.kWaitingTime.tr()} 40 min',
-                  size: AppFontSizes.kS2,
-                  verticalPadding: 0,
-                  horizontalPadding: 1.w,
-                  color: AppColors.lightGrey2),
-              const Spacer(),
-              ButtonBuilder(
-                title: "Book",
-                width: 35.w,
-                height: 4.h,
-                titleStyle: AppStyles.kButtonTextStyle.copyWith(
-                    fontWeight: FontWeight.normal,
-                    color: AppColors.white,
-                    fontSize: AppFontSizes.kS3),
-                onPressed: () {},
-              ),
-            ],
-          ),
+                  horizontalPadding: 1.5.w,
+                  radius: 50,
+                  width: 100.w,
+                  height: 4.h,
+                  color: AppColors.liteBlue2,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(AppAssets.kLocationIcon),
+                      TextBuilder(
+                        width: 30.w,
+                        text: "City name and area",
+                        size: AppFontSizes.kS2,
+                        color: AppColors.navyBlue,
+                        verticalPadding: 0,
+                        horizontalPadding: 2.w,
+                      ),
+                      VerticalDividerBuilder(
+                        dividerColor: AppColors.white,
+                        width: 0.25.w,
+                        height: 3.h,
+                        horizontalMargin: 2.5.w,
+                      ),
+                      SvgPicture.asset(AppAssets.kMoneyIcon),
+                      TextBuilder(
+                        width: 30.w,
+                        text: "Fees: 300 LE",
+                        size: AppFontSizes.kS2,
+                        color: AppColors.navyBlue,
+                        verticalPadding: 0,
+                        horizontalPadding: 2.w,
+                      ),
+                    ],
+                  ),
+                )
+              : const SizedBox(),
+          home
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Icon(
+                      Icons.access_time,
+                      size: 9.sp,
+                      color: AppColors.lightGrey2,
+                    ),
+                    TextBuilder(
+                        text: '${AppStrings.kWaitingTime.tr()} 40 min',
+                        size: AppFontSizes.kS2,
+                        verticalPadding: 0,
+                        horizontalPadding: 1.w,
+                        color: AppColors.lightGrey2),
+                    const Spacer(),
+                    ButtonBuilder(
+                      title: "Book",
+                      width: 35.w,
+                      height: 4.h,
+                      titleStyle: AppStyles.kButtonTextStyle.copyWith(
+                          fontWeight: FontWeight.normal,
+                          color: AppColors.white,
+                          fontSize: AppFontSizes.kS3),
+                      onPressed: () {},
+                    ),
+                  ],
+                )
+              : const SizedBox(),
         ],
       ),
     );
