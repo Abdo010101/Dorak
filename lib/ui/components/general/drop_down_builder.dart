@@ -33,7 +33,7 @@ class DropDownBuilder extends StatelessWidget {
         width: width ?? 85.w,
         height: height ?? 6.h,
         padding: EdgeInsets.symmetric(
-          horizontal: 2.5.w, /* vertical: 1.h*/
+          horizontal: 2.w, /* vertical: 1.h*/
         ),
         decoration: AppStyles.kCardBoxDecoration.copyWith(boxShadow: []),
         child: Center(

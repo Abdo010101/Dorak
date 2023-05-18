@@ -62,6 +62,29 @@ class _MainTestScreenState extends State<MainTestScreen> {
                   ),
                 ],
               ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  TransmissionButton(
+                    title: 'Appointments',
+                    destination: NameRoutes.kAppointmentsScreen,
+                  ),
+                  TransmissionButton(
+                    title: 'SearchForSpecialties',
+                    destination: NameRoutes.kSearchForSpecialtiesScreen,
+                  ),
+                  TransmissionButton(
+                    title: 'SearchForCity',
+                    destination: NameRoutes.kSearchForCityScreen,
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
@@ -72,6 +95,14 @@ class _MainTestScreenState extends State<MainTestScreen> {
                   TransmissionButton(
                     title: 'RegisterScreen',
                     destination: NameRoutes.kRegisterScreen,
+                  ),
+                  TransmissionButton(
+                    title: 'ResultOfSearch',
+                    destination: NameRoutes.kResultOfSearch,
+                  ),
+                  TransmissionButton(
+                    title: 'DoctorScreen',
+                    destination: NameRoutes.kDoctorScreen,
                   ),
                 ],
               ),

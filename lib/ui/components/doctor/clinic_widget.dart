@@ -6,9 +6,8 @@ import 'package:sizer/sizer.dart';
 import '../../../constants/constants.dart';
 import '../components.dart';
 
-class MedicalCenterWidget extends StatelessWidget {
-  const MedicalCenterWidget({Key? key}) : super(key: key);
-
+class ClinicWidget extends StatelessWidget {
+  const ClinicWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return EmptyCard(
@@ -21,46 +20,31 @@ class MedicalCenterWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Row(
-            children: [
-              GeometricalAvatar(
-                path: AppAssets.kDoctorImage,
-                radius: 30.sp,
-                margin: EdgeInsetsDirectional.only(end: 2.w),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextBuilder(
-                    text: 'Medical Center Name',
-                    size: AppFontSizes.kS4,
-                    color: AppColors.navyBlue,
-                    horizontalPadding: 0.5.w,
-                    bold: true,
-                    verticalPadding: 0,
-                  ),
-                  EmptyCard(
-                    horizontalPadding: 0,
-                    verticalPadding: 0,
-                    verticalMargin: 0,
-                    horizontalMargin: 0.5.w,
-                    radius: 0,
-                    color: AppColors.blue,
-                    height: 0.5.h,
-                    width: 5.w,
-                    child: SizedBox(),
-                  )
-                ],
-              ),
-            ],
-          ),
           TextBuilder(
-            text:
-                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrystandard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-            verticalPadding: 1.h,
-            size: AppFontSizes.kS3,
-            maxLin: 3,
-            color: AppColors.darkGray,
+            text: 'Clinic Name',
+            size: AppFontSizes.kS4,
+            color: AppColors.navyBlue,
+            horizontalPadding: 0.5.w,
+            bold: true,
+            verticalPadding: 0,
+          ),
+          const GeneralLine(),
+          SizedBox(
+            height: 11.h,
+            child: ListView.builder(
+              itemCount: 7,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                return GeometricalAvatar(
+                  backgroundColor: AppColors.transparent,
+                  path: AppAssets.kTodaySummary,
+                  radius: 10.sp,
+                  width: 20.w,
+                  margin: EdgeInsetsDirectional.symmetric(
+                      vertical: 0.5.h, horizontal: 1.w),
+                );
+              },
+            ),
           ),
           EmptyCard(
             horizontalMargin: 0,
@@ -104,25 +88,29 @@ class MedicalCenterWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Icon(
-                Icons.access_time,
-                size: 9.sp,
-                color: AppColors.lightGrey2,
+              Row(
+                children: [
+                  Icon(
+                    Icons.access_time,
+                    size: 9.sp,
+                    color: AppColors.lightGrey2,
+                  ),
+                  TextBuilder(
+                      text: '${AppStrings.kWaitingTime.tr()} 40 min',
+                      size: AppFontSizes.kS2,
+                      verticalPadding: 0,
+                      horizontalPadding: 1.w,
+                      color: AppColors.lightGrey2),
+                ],
               ),
-              TextBuilder(
-                  text: '${AppStrings.kWaitingTime.tr()} 40 min',
-                  size: AppFontSizes.kS2,
-                  verticalPadding: 0,
-                  horizontalPadding: 1.w,
-                  color: AppColors.lightGrey2),
               const Spacer(),
               EmptyCard(
                 verticalPadding: 0,
-                verticalMargin: 0,
+                verticalMargin: 0.4.h,
                 horizontalPadding: 0,
                 horizontalMargin: 0,
-                height: 30.sp,
-                width: 30.sp,
+                height: 27.5.sp,
+                width: 27.5.sp,
                 radius: 50,
                 color: AppColors.lightPurple,
                 child: Image.asset(AppAssets.kCallIcon),

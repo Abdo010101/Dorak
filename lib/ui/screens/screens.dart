@@ -1,4 +1,6 @@
 export 'app_review_screen.dart';
+export 'appointments_screen.dart';
+export 'doctor_screen.dart';
 export 'home_screen.dart';
 export 'introduction_screen.dart';
 export 'main_screen.dart';
@@ -6,6 +8,10 @@ export 'main_test_screen.dart';
 export 'notification_screen.dart';
 export 'profile_details_screen.dart';
 export 'profile_screen.dart';
+export 'result_of_search.dart';
+export 'search/search_for_city_screen.dart';
+export 'search/search_for_specialties_screen.dart';
+export 'setting_screen.dart';
 export 'splash_screen.dart';
 export 'success_screen.dart';
 export 'welcome_screen.dart';

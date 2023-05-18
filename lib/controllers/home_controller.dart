@@ -8,7 +8,8 @@ class HomeController extends ChangeNotifier {
   final _homeRepository = locator<HomeRepository>();
   bool isLoading = false;
   HomeResponse? homeData;
-
+  List<BestDoctors> bestDoctorsList = [];
+  // List<BestDoctors> bestDoctorsList = [];
   Future<void> getHomeData(BuildContext context) async {
     try {
       isLoading = true;
@@ -17,6 +18,9 @@ class HomeController extends ChangeNotifier {
       final result = await _homeRepository.getHomeData();
       if (result.data != null) {
         homeData = result.data!;
+        bestDoctorsList
+          ..clear()
+          ..addAll(homeData!.bestDoctors!);
         isLoading = false;
         notifyListeners();
       }

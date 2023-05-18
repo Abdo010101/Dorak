@@ -41,7 +41,7 @@ class RegisterController extends AuthController {
     isLoading = true;
     notifyListeners();
     FocusScope.of(context).unfocus();
-    String? firebaseToken = await FirebaseMessaging.instance.getToken();
+//    String? firebaseToken = await FirebaseMessaging.instance.getToken();
 
     RegisterRequest request = RegisterRequest(
         name: userNameController.text,
@@ -49,7 +49,7 @@ class RegisterController extends AuthController {
         phone: phoneController.text,
         password: passwordController.text,
         passwordConfirmation: confirmPasswordController.text,
-        token: firebaseToken,
+        token: "firebaseToken",
         accepted: 1);
 
     formKey.currentState?.save();
