@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<LoginController>(
             create: (_) => LoginController()),
         ChangeNotifierProvider<HomeController>(create: (_) => HomeController()),
+        ChangeNotifierProvider<AuthController>(create: (_) => AuthController()),
         ChangeNotifierProvider<RegisterController>(
             create: (_) => RegisterController()),
         ChangeNotifierProvider<MainScreenController>(

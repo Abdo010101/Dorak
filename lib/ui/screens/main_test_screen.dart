@@ -53,26 +53,6 @@ class _MainTestScreenState extends State<MainTestScreen> {
                     destination: NameRoutes.kHomeScreen,
                   ),
                   TransmissionButton(
-                    title: 'AppReview',
-                    destination: NameRoutes.kAppReview,
-                  ),
-                  TransmissionButton(
-                    title: 'Profile',
-                    destination: NameRoutes.kProfileScreen,
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  TransmissionButton(
-                    title: 'Appointments',
-                    destination: NameRoutes.kAppointmentsScreen,
-                  ),
-                  TransmissionButton(
                     title: 'SearchForSpecialties',
                     destination: NameRoutes.kSearchForSpecialtiesScreen,
                   ),
@@ -100,6 +80,11 @@ class _MainTestScreenState extends State<MainTestScreen> {
                     title: 'ResultOfSearch',
                     destination: NameRoutes.kResultOfSearch,
                   ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
                   TransmissionButton(
                     title: 'DoctorScreen',
                     destination: NameRoutes.kDoctorScreen,

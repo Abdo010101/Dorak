@@ -9,8 +9,9 @@ import 'package:flutter/cupertino.dart';
 import '../../data/models/request/request.dart';
 import '../../data/models/response/response.dart';
 import '../../data/repository/repository.dart';
+import '../controllers.dart';
 
-class AuthController extends ChangeNotifier {
+class AuthController extends DisposableProvider {
   final _sharedPref = locator<SharedPref>();
 
   final _authenticationRepository = locator<AuthenticationRepository>();
@@ -75,5 +76,12 @@ class AuthController extends ChangeNotifier {
       //Dismiss Dialog .
       // Get.back();
     }
+  }
+
+  @override
+  void disposeValues() {
+    isLoggedIn = false;
+    currentUser = UserResponse();
+    _sharedPref.deleteLoginInfo();
   }
 }
