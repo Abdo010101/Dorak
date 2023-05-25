@@ -1,9 +1,7 @@
-import 'package:date_time_picker/date_time_picker.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+
 import 'package:sizer/sizer.dart';
-import 'package:wc_form_validators/wc_form_validators.dart';
 
 import '../../../constants/constants.dart';
 import '../components.dart';
@@ -12,21 +10,19 @@ class DateTimeBuilder extends StatelessWidget {
   const DateTimeBuilder(
       {Key? key,
       this.timeController,
-      this.onTimeChanged,
       this.dateController,
       this.isEditable = true,
       this.hintText})
       : super(key: key);
   final TextEditingController? timeController;
   final TextEditingController? dateController;
-  final Function(DateTime)? onTimeChanged;
   final String? hintText;
   final bool isEditable;
 
   @override
   Widget build(BuildContext context) {
     var timeShowController = TextEditingController();
-    timeShowController = timeController!;
+    timeShowController = timeController ?? TextEditingController();
     /* String? format = formatTimePickerJm(timeShowController.text);
     timeController?.text = format!;*/
     return EmptyCard(
@@ -45,8 +41,24 @@ class DateTimeBuilder extends StatelessWidget {
               hint: hintText,
               controller: timeShowController,
               onTap: isEditable
-                  ? () {
-                      DatePicker.showTime12hPicker(context,
+                  ? () async {
+                      TimeOfDay? timeOfDay = await showTimePicker(
+                        context: context,
+                        initialTime: TimeOfDay.now(),
+                      );
+                      if (timeOfDay != null) {
+                        var timeNow = DateTime.now();
+                        DateTime dateTime = DateTime(
+                            timeNow.year,
+                            timeNow.month,
+                            timeNow.day,
+                            timeOfDay.hour,
+                            timeOfDay.minute);
+                        var dateFormat = DateFormat.Hm('en').format(dateTime);
+                        timeShowController.text = dateFormat.toString();
+                        timeController!.text = dateFormat.toString();
+                      }
+                      /*    DatePicker.showTime12hPicker(context,
                           locale: context.locale.languageCode == 'ar'
                               ? LocaleType.ar
                               : LocaleType.en,
@@ -55,21 +67,31 @@ class DateTimeBuilder extends StatelessWidget {
                         timeShowController.text = dateFormat.toString();
                         timeController!.text = dateFormat.toString();
                         print(timeController!.text);
-                      }, currentTime: DateTime.now());
+                      }, currentTime: DateTime.now());*/
                     }
                   : null,
             )
-          : DateTimePicker(
-              locale: const Locale('en'),
-              decoration:
-                  AppStyles.kDateTimeDecoration.copyWith(hintText: hintText),
-              type: DateTimePickerType.date,
-              firstDate: DateTime(2010),
-              validator: Validators.required('required'.tr()),
-              lastDate: DateTime(2050),
+          : TextFormFieldBuilder(
+              isEnabled: false,
+              hint: hintText,
               controller: dateController,
-              use24HourFormat: false,
-              onChanged: (value) {},
+              onTap: isEditable
+                  ? () async {
+                      DateTime? dateTime = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime(DateTime.now().year + 1,
+                            DateTime.now().month, DateTime.now().day),
+                      );
+                      print("sdasds= ${dateTime}");
+                      if (dateTime != null) {
+                        dateController?.text =
+                            '${dateTime.year}/${dateTime.month}/${dateTime.day}';
+                      }
+                      print("sdasds2222= ${dateController?.text}");
+                    }
+                  : null,
             ),
     );
   }

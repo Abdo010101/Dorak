@@ -11,15 +11,15 @@ class MainTestScreen extends StatefulWidget {
 class _MainTestScreenState extends State<MainTestScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 25.0, horizontal: 15.0),
+          padding: EdgeInsets.symmetric(vertical: 25.0, horizontal: 15.0),
           child: Column(
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children: [
                   TransmissionButton(
                     title: 'Splash',
                     destination: NameRoutes.kSplashScreen,
@@ -38,12 +38,12 @@ class _MainTestScreenState extends State<MainTestScreen> {
                   ),
                 ],
               ),
-              const SizedBox(
+              SizedBox(
                 height: 20,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children: [
                   TransmissionButton(
                     title: 'Notification',
                     destination: NameRoutes.kNotificationScreen,
@@ -62,12 +62,12 @@ class _MainTestScreenState extends State<MainTestScreen> {
                   ),
                 ],
               ),
-              const SizedBox(
+              SizedBox(
                 height: 20,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children: [
                   TransmissionButton(
                     title: 'LoginScreen',
                     destination: NameRoutes.kLoginScreen,
@@ -84,7 +84,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children: [
                   TransmissionButton(
                     title: 'DoctorScreen',
                     destination: NameRoutes.kDoctorScreen,
