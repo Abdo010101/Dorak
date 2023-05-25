@@ -1,5 +1,3 @@
-import 'package:dorakpattient/controllers/auth/login_controller.dart';
-import 'package:dorakpattient/controllers/auth/register_controller.dart';
 import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/controllers/home_controller.dart';
 import 'package:dorakpattient/routes/dorak_routes.dart';
@@ -55,7 +53,7 @@ class MyApp extends StatelessWidget {
             onGenerateRoute: RouteManger.generateRouter,
             debugShowCheckedModeBanner: false,
             title: AppStrings.kAppName.tr(),
-            initialRoute: NameRoutes.kMainTestScreen,
+            initialRoute: NameRoutes.kSplashScreen,
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),

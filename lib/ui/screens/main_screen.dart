@@ -1,5 +1,4 @@
 import 'package:dorakpattient/controllers/controllers.dart';
-import 'package:dorakpattient/ui/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,10 +16,10 @@ class MainScreen extends StatelessWidget {
         extendBody: true,
         backgroundColor: AppColors.liteWight,
         bottomNavigationBar: BottomNavigator(
-          onChanged: (ind) {},
-          index: controller.index,
+          onChanged: (index) => controller.onBottomSheetChanged(index, context),
+          index: controller.currentIndex,
         ),
-        body: HomeScreen(),
+        body: controller.homeScreensList[controller.currentIndex],
       );
     });
   }

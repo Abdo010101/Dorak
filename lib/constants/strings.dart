@@ -6,7 +6,7 @@ class AppStrings {
   static const kOffers = 'offers';
   static const kAddNewOffer = 'add_N_offer';
   static const kMyOffer = 'my_offer';
-  static const kEditOffer = 'edit_offer';
+  static const kOfferDetails = 'Offer_details';
   static const kAddOffer = 'add_offer';
   static const kUploadImage = 'upload_image';
   static const kOfferDuration = 'offer_duration';

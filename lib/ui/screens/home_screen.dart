@@ -118,9 +118,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       seeAllPressed: () {},
                     ),
                     controller.isLoading
-                        ? LoadingWidget()
+                        ? const LoadingWidget(
+                            backgroundColor: AppColors.transparent,
+                          )
                         : controller.bestDoctorsList.length == 0
-                            ? Center(
+                            ? const Center(
                                 child:
                                     Text("There is No Available Doctors Now "),
                               )
@@ -144,6 +146,33 @@ class _HomeScreenState extends State<HomeScreen> {
                                   },
                                 ),
                               ),
+                    SectionLabel(
+                      title: 'Offers ',
+                      seeAllPressed: () {},
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 1.h),
+                      height: 32.h,
+                      child: ListView.separated(
+                        itemCount: 4,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return OfferWidget(
+                            offerTittle: 'Offer Tittle',
+                            offerSubTittle:
+                                'Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may b',
+                            offerPic: AppAssets.kOfferPic,
+                            offerPrice: '1000',
+                            onPressed: () {},
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return SizedBox(
+                            width: 3.w,
+                          );
+                        },
+                      ),
+                    ),
                     SectionLabel(
                       title: 'Nearest Medical Center ',
                       seeAllPressed: () {},

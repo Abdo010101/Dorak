@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../constants/constants.dart';
 import '../../data/di/locator.dart';
 import '../../data/shared/shared_pref.dart';
+import '../../routes/dorak_routes.dart';
 
 class SplashScreen extends StatefulWidget {
   SplashScreen({Key? key}) : super(key: key);
@@ -24,6 +25,7 @@ class _SplashScreenState extends State<SplashScreen>
   void initData() async {
     animationController =
         AnimationController(duration: const Duration(seconds: 1), vsync: this);
+    startAnimation();
     // authController = Provider.of<AuthController>(context, listen: false);
     // await authController.checkUserLoggedIn().then((value) => startAnimation());
     // if (context.mounted) {
@@ -64,10 +66,10 @@ class _SplashScreenState extends State<SplashScreen>
 
   startAnimation() async {
     animationController.forward();
-
     animationController.addListener(() {});
     animationController.addStatusListener((status) async {
       if (status == AnimationStatus.completed) {
+        Navigator.pushReplacementNamed(context, NameRoutes.kWelcomeScreen);
         // if (authController.isLoggedIn) {
         //   // Doctor? doctor = authController.currentUser?.doctor;
         //   if (doctor?.titleId != null) {
@@ -93,7 +95,7 @@ class _SplashScreenState extends State<SplashScreen>
         //   // await _sharedPref.storeFirstTime();
         //   //Navigator.pushNamedAndRemoveUntil(context, NameRoutes.kWelcomeScreen,(_)=>false);
         // }
-      }
+      } else {}
     });
   }
 }

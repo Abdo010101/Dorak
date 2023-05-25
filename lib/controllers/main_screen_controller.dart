@@ -1,14 +1,23 @@
-import 'package:dio/dio.dart';
-import 'package:dorakpattient/data/di/locator.dart';
-import 'package:dorakpattient/data/repository/home_repo.dart';
 import 'package:flutter/cupertino.dart';
-import '../../data/models/response/response.dart';
+
+import '../ui/screens/screens.dart';
 
 class MainScreenController extends ChangeNotifier {
-  final _homeRepository = locator<HomeRepository>();
-  bool isLoading = false;
-  HomeResponse? homeData;
-  int index = 0;
+  int currentIndex = 0;
 
-  void onBottomSheetChanged() {}
+  void onBottomSheetChanged(int index, BuildContext context) {
+    if (context.mounted) {
+      if (index == 3) {
+      } else if (index == 2) {}
+    }
+    currentIndex = index;
+    notifyListeners();
+  }
+
+  List<Widget> homeScreensList = [
+    const HomeScreen(),
+    const AppointmentsScreen(), const AppointmentsScreen(),
+    // const OffersScreen(),
+    const ProfileScreen(),
+  ];
 }

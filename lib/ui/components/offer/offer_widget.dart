@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../constants/constants.dart';
+import '../../../utis/util.dart';
 import '../components.dart';
 
 class OfferWidget extends StatelessWidget {
@@ -11,17 +11,14 @@ class OfferWidget extends StatelessWidget {
     Key? key,
     required this.offerTittle,
     required this.offerSubTittle,
-    required this.isActive,
     required this.offerPic,
     this.onPressed,
-    this.changeStatus,
+    this.offerPrice,
   }) : super(key: key);
   final VoidCallback? onPressed;
-  final Function(bool)? changeStatus;
-
   final String? offerTittle;
+  final String? offerPrice;
   final String? offerSubTittle;
-  final bool isActive;
   final String? offerPic;
 
   @override
@@ -31,18 +28,19 @@ class OfferWidget extends StatelessWidget {
         EmptyCard(
           verticalMargin: 1.h,
           verticalPadding: 1.5.h,
+          horizontalMargin: 0,
           height: 30.h,
+          width: 90.w,
           child: Column(
             children: [
               EmptyCard(
-                width: 100.w,
+                width: 82.w,
                 height: 17.5.h,
                 verticalMargin: 0,
                 verticalPadding: 0,
                 horizontalMargin: 0,
                 horizontalPadding: 0,
-                url: offerPic,
-                child: const SizedBox(),
+                child: Image.asset(offerPic!),
               ),
               Row(
                 children: [
@@ -54,6 +52,7 @@ class OfferWidget extends StatelessWidget {
                     //     .currentUser
                     //     ?.doctor
                     //     ?.image,
+                    path: AppAssets.kDoctorImage,
                     child: const SizedBox(),
                   ),
                   Container(
@@ -68,9 +67,10 @@ class OfferWidget extends StatelessWidget {
                               //         .currentUser
                               //         ?.doctor
                               //         ?.name ??
-                              'DocNam',
+                              'Doctor Name',
                           horizontalPadding: 2.5.w,
                           verticalPadding: 0,
+                          color: AppColors.black,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -79,23 +79,25 @@ class OfferWidget extends StatelessWidget {
                               margin: EdgeInsetsDirectional.only(
                                   start: 2.5.w, top: 1.h, end: 1.w),
                               height: 2.5.h,
-                              // child: Util.isNumeric(context
-                              //         .read<AuthController>()
-                              //         .currentUser
-                              //         ?.doctor
-                              //         ?.rate)
-                              //     ? RatingBarWidget(
-                              //         initialRating: double.parse(context
-                              //                 .read<AuthController>()
-                              //                 .currentUser
-                              //                 ?.doctor
-                              //                 ?.rate ??
-                              //             '4.5'),
-                              //         itemSize: 10.sp,
-                              //       )
-                              //     : const SizedBox(),
+                              child: Util.isNumeric(
+                                      // .read<AuthController>()
+                                      // .currentUser
+                                      // ?.doctor
+                                      // ?.rate
+                                      '4.5')
+                                  ? RatingBarWidget(
+                                      initialRating: 4.5,
+                                      // double.parse(context
+                                      //         .read<AuthController>()
+                                      //         .currentUser
+                                      //         ?.doctor
+                                      //         ?.rate ??
+
+                                      itemSize: 10.sp,
+                                    )
+                                  : const SizedBox(),
                             ),
-                            Text(
+                            const Text(
                                 // context
                                 //     .read<AuthController>()
                                 //     .currentUser
@@ -113,34 +115,40 @@ class OfferWidget extends StatelessWidget {
           ),
         ),
         Container(
-          width: 100.w,
+          width: 82.w,
           height: 17.5.h,
-          margin: EdgeInsets.symmetric(horizontal: 9.w, vertical: 2.5.h),
-          padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
+          margin: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.5.h),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.5),
             color: AppColors.darkBlue.withOpacity(0.25),
           ),
         ),
         PositionedDirectional(
-          bottom: 3.5.h,
-          end: 7.5.w,
+          bottom: 8.h,
+          start: 56.w,
+          child: Row(
+            children: [
+              Text(
+                offerPrice ?? '1000',
+              )
+            ],
+          ),
+        ),
+        PositionedDirectional(
+          bottom: 2.5.h,
+          start: 56.w,
           child: ButtonBuilder(
             onPressed: onPressed,
-            height: 5.h,
-            width: 40.w,
-            buttonColor: AppColors.liteWight,
-            title: AppStrings.kEditOffer.tr(),
-            titleStyle: const TextStyle(color: AppColors.blue),
-            prefixIcon: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 1.w),
-              child: SvgPicture.asset(AppAssets.kPen),
-            ),
+            height: 4.h,
+            width: 30.w,
+            buttonColor: AppColors.blue,
+            title: AppStrings.kOfferDetails.tr(),
+            titleStyle: const TextStyle(color: AppColors.white),
           ),
         ),
         PositionedDirectional(
           bottom: 17.5.h,
-          start: 15.w,
+          start: 8.w,
           child: TextBuilder(
             text: offerTittle,
             color: Colors.white,
@@ -150,7 +158,7 @@ class OfferWidget extends StatelessWidget {
         PositionedDirectional(
           width: 75.w,
           bottom: 12.5.h,
-          start: 15.w,
+          start: 8.w,
           child: TextBuilder(
             text: offerSubTittle,
             color: Colors.white,
@@ -158,40 +166,6 @@ class OfferWidget extends StatelessWidget {
             size: 12.sp,
           ),
         ),
-        PositionedDirectional(
-          end: 0,
-          top: -1.5.h,
-          child: EmptyCard(
-            horizontalPadding: 0,
-            verticalPadding: 0,
-            height: 6.5.h,
-            width: 25.w,
-            child: Switch(
-              activeColor: Colors.white,
-              activeTrackColor: AppColors.green,
-              inactiveTrackColor: AppColors.error,
-              value: isActive,
-              onChanged: changeStatus,
-            ),
-          ),
-        ),
-        // PositionedDirectional(
-        //   start: 0,
-        //   top: -1.5.h,
-        //   child: EmptyCard(
-        //     horizontalPadding: 2.5.w,
-        //     verticalPadding: 1.25.h,
-        //     height: 6.5.h,
-        //     width: 12.w,
-        //     child: GestureDetector(
-        //       onTap: removeFunction,
-        //       child: SvgPicture.asset(
-        //         AppAssets.kTrash,
-        //         color: AppColors.bRed,
-        //       ),
-        //     ),
-        //   ),
-        // ),
       ],
     );
   }

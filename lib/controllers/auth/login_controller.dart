@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../../data/models/response/response.dart';
 import '../../data/repository/repository.dart';
+import '../../routes/dorak_routes.dart';
 
 class LoginController extends AuthController {
   TextEditingController emailTextEditingController = TextEditingController();
@@ -37,10 +38,9 @@ class LoginController extends AuthController {
         rememberMe: rememberMe,
         token: '');
     isLoading = false;
-
     notifyListeners();
-
     if (result is Success<UserResponse?>) {
+      Navigator.pushNamed(context, NameRoutes.kHomeScreen);
       return true;
     } else {
       Util.showSnackBar(context,

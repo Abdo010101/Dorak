@@ -45,10 +45,6 @@ class _MainTestScreenState extends State<MainTestScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TransmissionButton(
-                    title: 'Notification',
-                    destination: NameRoutes.kNotificationScreen,
-                  ),
-                  TransmissionButton(
                     title: 'Main Screen',
                     destination: NameRoutes.kHomeScreen,
                   ),
@@ -88,6 +84,10 @@ class _MainTestScreenState extends State<MainTestScreen> {
                   TransmissionButton(
                     title: 'DoctorScreen',
                     destination: NameRoutes.kDoctorScreen,
+                  ),
+                  TransmissionButton(
+                    title: 'Notification',
+                    destination: NameRoutes.kNotificationScreen,
                   ),
                 ],
               ),
