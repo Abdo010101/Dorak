@@ -25,8 +25,8 @@ class AppointmentWidget extends StatelessWidget {
             child: Row(
               children: [
                 Container(
-                  height: 50.sp,
-                  width: 50.sp,
+                  height: 35.sp,
+                  width: 35.sp,
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
@@ -49,17 +49,22 @@ class AppointmentWidget extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(
+                      height: 2.0.h,
+                    ),
                     TextBuilder(
                       text: 'ENT Specialist',
-                      verticalPadding: 1.h,
+                      verticalPadding: 0.0,
                       horizontalPadding: 2.w,
+                      size: 10.sp,
                       color: AppColors.navyBlue,
                     ),
                     TextBuilder(
                       text: '20 April, 2021 , 12:30 PM',
                       verticalPadding: 0,
+                      height: 0.3.h,
                       horizontalPadding: 2.w,
-                      size: AppFontSizes.kS3,
+                      size: 8.sp,
                     )
                   ],
                 ),
@@ -109,8 +114,8 @@ class AppointmentWidget extends StatelessWidget {
                 verticalMargin: 0,
                 horizontalPadding: 0,
                 horizontalMargin: 0,
-                height: 30.sp,
-                width: 30.sp,
+                height: 22.sp,
+                width: 22.sp,
                 radius: 50,
                 color: AppColors.lightPurple,
                 child: Image.asset(AppAssets.kCallIcon),

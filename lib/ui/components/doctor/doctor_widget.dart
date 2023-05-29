@@ -8,9 +8,10 @@ import '../../../constants/constants.dart';
 import '../components.dart';
 
 class DoctorWidget extends StatelessWidget {
-  const DoctorWidget({Key? key, this.home = false, this.model})
+  const DoctorWidget({Key? key, this.home = false, this.cardOnTab, this.model})
       : super(key: key);
   final bool home;
+  final VoidCallback? cardOnTab;
   final BestDoctors? model;
   @override
   Widget build(BuildContext context) {
@@ -61,7 +62,7 @@ class DoctorWidget extends StatelessWidget {
             ],
           ),
           TextBuilder(
-            text: '${model?.bio}',
+            text: '${model?.bio ?? ''}',
             verticalPadding: 1.h,
             size: AppFontSizes.kS3,
             maxLin: 3,
@@ -118,7 +119,8 @@ class DoctorWidget extends StatelessWidget {
                       color: AppColors.lightGrey2,
                     ),
                     TextBuilder(
-                        text: '${AppStrings.kWaitingTime.tr()} 40 min',
+                        text:
+                            '${AppStrings.kWaitingTime.tr()} ${model?.examinationDuration} min',
                         size: AppFontSizes.kS2,
                         verticalPadding: 0,
                         horizontalPadding: 1.w,

@@ -4,7 +4,6 @@ import 'package:dorakpattient/data/networks/dio_errors.dart';
 import 'package:dorakpattient/data/networks/model_response.dart';
 import 'package:dorakpattient/data/networks/network_constant.dart';
 import 'package:dorakpattient/data/shared/shared_pref.dart';
-import 'package:flutter/cupertino.dart';
 
 import '../../data/models/request/request.dart';
 import '../../data/models/response/response.dart';
@@ -78,10 +77,24 @@ class AuthController extends DisposableProvider {
     }
   }
 
+  Future<void> checkUserLoggedIn() async {
+    isLoggedIn = _sharedPref.isUserLoggedIn();
+    if (isLoggedIn) {
+      currentUser = await _sharedPref.retrieveUserInfo();
+      InjectionClass.dio.options.headers.addAll({
+        NetworkConstant.kAuthorizationHeader: 'Bearer ${currentUser!.token}'
+      });
+    }
+    @override
+    void disposeValues() {
+      isLoggedIn = false;
+      currentUser = UserResponse();
+      _sharedPref.deleteLoginInfo();
+    }
+  }
+
   @override
   void disposeValues() {
-    isLoggedIn = false;
-    currentUser = UserResponse();
-    _sharedPref.deleteLoginInfo();
+    // TODO: implement disposeValues
   }
 }

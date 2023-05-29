@@ -1,8 +1,9 @@
+import 'response.dart';
+
 class HomeResponse {
   List<BestDoctors>? bestDoctors;
-  List<LatestOffers>? latestOffers;
-  // List<Null>? patientReservations;
-
+  List<OfferResponse>? latestOffers;
+  List<PatientReservations>? patientReservations;
   HomeResponse({
     this.bestDoctors,
     this.latestOffers,
@@ -13,13 +14,19 @@ class HomeResponse {
     if (json['best_doctors'] != null) {
       bestDoctors = <BestDoctors>[];
       json['best_doctors'].forEach((v) {
-        bestDoctors!.add(new BestDoctors.fromJson(v));
+        bestDoctors!.add(BestDoctors.fromJson(v));
+      });
+    }
+    if (json['patient_reservations'] != null) {
+      patientReservations = <PatientReservations>[];
+      json['patient_reservations'].forEach((v) {
+        patientReservations!.add(PatientReservations.fromJson(v));
       });
     }
     if (json['latest_offers'] != null) {
-      latestOffers = <LatestOffers>[];
+      latestOffers = <OfferResponse>[];
       json['latest_offers'].forEach((v) {
-        latestOffers!.add(new LatestOffers.fromJson(v));
+        latestOffers!.add(new OfferResponse.fromJson(v));
       });
     }
 /*    if (json['patient_reservations'] != null) {
@@ -96,51 +103,59 @@ class BestDoctors {
   }
 }
 
-class LatestOffers {
+class PatientReservations {
   int? id;
-  String? mainPic;
-  String? title;
-  String? description;
-  String? priceAfter;
-  String? priceBefore;
-  int? isActive;
-  BestDoctors? doctor;
+  String? mainSpecialization;
+  String? fullImagePath;
+  String? name;
+  String? rate;
+  String? phone;
+  String? status;
+  String? date;
+  String? time;
+  String? day;
+  String? month;
 
-  LatestOffers(
+  PatientReservations(
       {this.id,
-      this.mainPic,
-      this.title,
-      this.description,
-      this.priceAfter,
-      this.priceBefore,
-      this.isActive,
-      this.doctor});
+      this.mainSpecialization,
+      this.fullImagePath,
+      this.name,
+      this.rate,
+      this.phone,
+      this.status,
+      this.date,
+      this.time,
+      this.day,
+      this.month});
 
-  LatestOffers.fromJson(Map<String, dynamic> json) {
+  PatientReservations.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    mainPic = json['main_pic'];
-    title = json['title'];
-    description = json['description'];
-    priceAfter = json['price_after'];
-    priceBefore = json['price_before'];
-    isActive = json['is_active'];
-    doctor = json['doctor'] != null
-        ? new BestDoctors.fromJson(json['doctor'])
-        : null;
+    mainSpecialization = json['main_specialization'];
+    fullImagePath = json['full_image_path'];
+    name = json['name'];
+    rate = json['rate'];
+    phone = json['phone'];
+    status = json['status'];
+    date = json['date'];
+    time = json['time'];
+    day = json['day'];
+    month = json['month'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['main_pic'] = this.mainPic;
-    data['title'] = this.title;
-    data['description'] = this.description;
-    data['price_after'] = this.priceAfter;
-    data['price_before'] = this.priceBefore;
-    data['is_active'] = this.isActive;
-    if (this.doctor != null) {
-      data['doctor'] = this.doctor!.toJson();
-    }
+    data['main_specialization'] = this.mainSpecialization;
+    data['full_image_path'] = this.fullImagePath;
+    data['name'] = this.name;
+    data['rate'] = this.rate;
+    data['phone'] = this.phone;
+    data['status'] = this.status;
+    data['date'] = this.date;
+    data['time'] = this.time;
+    data['day'] = this.day;
+    data['month'] = this.month;
     return data;
   }
 }

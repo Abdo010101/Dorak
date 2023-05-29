@@ -12,7 +12,7 @@ class NetworkConstant {
   static const kAndroidPackage = '';
   static const kAppleId = '';
   static const kAuthorizationHeader = "authorization";
-  static const kBaseUrl = _kReleaseBaseUrl;
+  static const kBaseUrl = _kDevBaseUrl;
   static const kGoogleApiKey = 'AIzaSyBZFRav3jNg1pH9RAQxO1IhOGb7keLaoDM';
 
 /*  static const kTestToken =
@@ -21,7 +21,10 @@ class NetworkConstant {
   static String tokenBuilder(String token) => 'Bearer $token';
 
   static const String kHomeRequest = "home";
+  static const String kDoctorProfileRequest = "doctors";
+
   static const String kAllOffers = "offers";
   static const String kLoginRequest = "login";
   static const String kRegisterRequest = "register";
+  static const String kGeneralRequest = "general";
 }

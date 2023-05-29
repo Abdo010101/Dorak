@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../constants/constants.dart';
+import '../../controllers/controllers.dart';
 import '../../data/di/locator.dart';
+import '../../data/models/response/response.dart';
 import '../../data/shared/shared_pref.dart';
 import '../../routes/dorak_routes.dart';
 
@@ -21,16 +24,17 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   final _sharedPref = locator<SharedPref>();
+  late AuthController authController;
 
   void initData() async {
     animationController =
         AnimationController(duration: const Duration(seconds: 1), vsync: this);
     startAnimation();
-    // authController = Provider.of<AuthController>(context, listen: false);
-    // await authController.checkUserLoggedIn().then((value) => startAnimation());
-    // if (context.mounted) {
-    //   Provider.of<GeneralController>(context, listen: false).getData();
-    // }
+    authController = Provider.of<AuthController>(context, listen: false);
+    await authController.checkUserLoggedIn().then((value) => startAnimation());
+    if (context.mounted) {
+      Provider.of<GeneralController>(context, listen: false).getData();
+    }
   }
 
   var animationController;
@@ -70,31 +74,31 @@ class _SplashScreenState extends State<SplashScreen>
     animationController.addStatusListener((status) async {
       if (status == AnimationStatus.completed) {
         Navigator.pushReplacementNamed(context, NameRoutes.kWelcomeScreen);
-        // if (authController.isLoggedIn) {
-        //   // Doctor? doctor = authController.currentUser?.doctor;
-        //   if (doctor?.titleId != null) {
-        //
-        //     if(doctor?.verifiedAt!=null) {
-        //       // context.read<HomeController>().getHomeData(context);
-        //       Navigator.pushReplacementNamed(context, NameRoutes.kHomeScreen);
-        //     }
-        //     else
-        //       Navigator.pushReplacementNamed(context, NameRoutes.kWelcomeScreen);
-        //
-        //   } else {
-        //     Navigator.pushReplacementNamed(context, NameRoutes.kWelcomeScreen);
-        //   }
-        //
-        //   //Navigator.pushNamedAndRemoveUntil(context, NameRoutes.kHomeScreen,(_) => false);
-        // } else {
-        //   // Navigator.pushReplacementNamed(
-        //   //     context,
-        //   //     await _sharedPref.getFirstTime() ?? false
-        //   //         ? NameRoutes.kWelcomeScreen
-        //   //         : NameRoutes.kIntroScreen);
-        //   // await _sharedPref.storeFirstTime();
-        //   //Navigator.pushNamedAndRemoveUntil(context, NameRoutes.kWelcomeScreen,(_)=>false);
-        // }
+        if (authController.isLoggedIn) {
+          Patient? patient = authController.currentUser?.patient;
+          if (patient?.name != null) {
+            /* if (patient?.verifiedAt != null) {
+              context.read<HomeController>().getHomeData(context);
+              Navigator.pushReplacementNamed(context, NameRoutes.kHomeScreen);
+            } else
+              Navigator.pushReplacementNamed(
+                  context, NameRoutes.kWelcomeScreen);*/
+          } else {
+            Navigator.pushReplacementNamed(context, NameRoutes.kWelcomeScreen);
+          }
+
+          Navigator.pushNamedAndRemoveUntil(
+              context, NameRoutes.kHomeScreen, (_) => false);
+        } else {
+          Navigator.pushReplacementNamed(
+              context,
+              await _sharedPref.getFirstTime() ?? false
+                  ? NameRoutes.kWelcomeScreen
+                  : NameRoutes.kIntroScreen);
+          await _sharedPref.storeFirstTime();
+          Navigator.pushNamedAndRemoveUntil(
+              context, NameRoutes.kWelcomeScreen, (_) => false);
+        }
       } else {}
     });
   }

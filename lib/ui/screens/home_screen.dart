@@ -1,4 +1,5 @@
 import 'package:dorakpattient/controllers/home_controller.dart';
+import 'package:dorakpattient/data/models/response/home_response.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -88,8 +89,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       bold: true,
                     ),
                     InkWell(
-                      onTap: () => Navigator.pushNamed(
-                          context, NameRoutes.kSearchForSpecialtiesScreen),
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, NameRoutes.kSearchForSpecialtiesScreen);
+                      },
                       child: EmptyCard(
                         verticalPadding: 0.25.h,
                         verticalMargin: 1.h,
@@ -121,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ? const LoadingWidget(
                             backgroundColor: AppColors.transparent,
                           )
-                        : controller.bestDoctorsList.length == 0
+                        : controller.bestDoctorsList.isEmpty
                             ? const Center(
                                 child:
                                     Text("There is No Available Doctors Now "),
@@ -134,8 +137,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                       controller.homeData!.bestDoctors!.length,
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, index) {
-                                    return const DoctorWidget(
+                                    BestDoctors? doctorModel = controller
+                                        .homeData?.bestDoctors?[index];
+                                    return DoctorWidget(
                                       home: true,
+                                      model: doctorModel,
+                                      cardOnTab: () {
+                                        Navigator.of(context).pushNamed(
+                                            NameRoutes.kDoctorScreen);
+                                      },
                                     );
                                   },
                                   separatorBuilder:
@@ -150,30 +160,61 @@ class _HomeScreenState extends State<HomeScreen> {
                       title: 'Offers ',
                       seeAllPressed: () {},
                     ),
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 1.h),
-                      height: 32.h,
-                      child: ListView.separated(
-                        itemCount: 4,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          return OfferWidget(
-                            offerTittle: 'Offer Tittle',
-                            offerSubTittle:
-                                'Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may b',
-                            offerPic: AppAssets.kOfferPic,
-                            offerPrice: '1000',
-                            onPressed: () {},
-                          );
-                        },
-                        separatorBuilder: (BuildContext context, int index) {
-                          return SizedBox(
-                            width: 3.w,
-                          );
-                        },
-                      ),
+                    controller.latestOfferList.isEmpty
+                        ? const Center(
+                            child: Text("There is No Available Offers Now "),
+                          )
+                        : Container(
+                            margin: EdgeInsets.symmetric(vertical: 1.h),
+                            height: 32.h,
+                            child: ListView.separated(
+                              itemCount: controller.latestOfferList.length,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                var offerModel =
+                                    controller.latestOfferList[index];
+                                return OfferWidget(
+                                  offerTittle: offerModel.title,
+                                  offerSubTittle: '${offerModel.description}',
+                                  offerPic: offerModel.mainPic,
+                                  offerPrice: offerModel.priceBefore,
+                                  doctorName: offerModel.doctor!.name,
+                                  rateCount: offerModel.doctor?.ratingsCount,
+                                  rate: offerModel.doctor!.rate,
+                                  onPressed: () {},
+                                );
+                              },
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return SizedBox(
+                                  width: 3.w,
+                                );
+                              },
+                            ),
+                          ),
+                    SizedBox(
+                      height: 1.h,
                     ),
                     SectionLabel(
+                      title: 'My Appointment',
+                      seeAllPressed: () {},
+                    ),
+                    controller.appointmentList.isEmpty
+                        ? const Center(
+                            child: Text("There is No Available Appointment"),
+                          )
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: 4,
+                            itemBuilder: (context, index) {
+                              return const AppointmentWidget();
+                            },
+                          ),
+                    SizedBox(
+                      height: 15.0.h,
+                    ),
+                    /*     SectionLabel(
                       title: 'Nearest Medical Center ',
                       seeAllPressed: () {},
                     ),
@@ -194,22 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           );
                         },
                       ),
-                    ),
-                    SizedBox(
-                      height: 1.h,
-                    ),
-                    SectionLabel(
-                      title: 'My Appointment',
-                      seeAllPressed: () {},
-                    ),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: 4,
-                      itemBuilder: (context, index) {
-                        return const AppointmentWidget();
-                      },
-                    ),
+                    ),*/
                   ],
                 ),
               ),
