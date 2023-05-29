@@ -1,5 +1,6 @@
 import 'package:dorakpattient/controllers/home_controller.dart';
 import 'package:dorakpattient/data/models/response/home_response.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -157,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                     SectionLabel(
-                      title: 'Offers ',
+                      title: AppStrings.kOffers.tr(),
                       seeAllPressed: () {},
                     ),
                     controller.latestOfferList.isEmpty

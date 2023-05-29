@@ -128,24 +128,26 @@ class OfferWidget extends StatelessWidget {
         ),
         PositionedDirectional(
           bottom: 8.h,
-          start: 56.w,
+          start: 55.w,
           width: 30.w,
           child: Row(
             children: [
               Text(
-                '${offerPrice ?? '1000'}  LE',
+                '${offerPrice ?? '1000'} LE',
                 style: AppStyles.kButtonTextStyle.copyWith(
                   decoration: TextDecoration.lineThrough,
                   color: AppColors.gray,
                   fontSize: 10.sp,
+                  fontWeight: FontWeight.normal,
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               Text(
-                '${offerPrice ?? '1000'}  LE',
+                '${offerPrice ?? '1000'} LE',
                 style: AppStyles.kButtonTextStyle.copyWith(
                   color: AppColors.blue,
                   fontSize: 10.sp,
+                  fontWeight: FontWeight.w700,
                 ),
               )
             ],
