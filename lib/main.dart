@@ -41,7 +41,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<RegisterController>(
             create: (_) => RegisterController()),
         ChangeNotifierProvider<MainScreenController>(
-            create: (_) => MainScreenController())
+            create: (_) => MainScreenController()),
+        ChangeNotifierProvider(
+          create: (context) => GeneralController(),
+        ),
       ],
       child: Sizer(
         builder: (BuildContext context, Orientation orientation,

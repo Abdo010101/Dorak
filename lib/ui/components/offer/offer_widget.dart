@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -12,7 +13,10 @@ class OfferWidget extends StatelessWidget {
     required this.offerTittle,
     required this.offerSubTittle,
     required this.offerPic,
+    this.doctorName,
     this.onPressed,
+    this.rate,
+    this.rateCount,
     this.offerPrice,
   }) : super(key: key);
   final VoidCallback? onPressed;
@@ -20,7 +24,9 @@ class OfferWidget extends StatelessWidget {
   final String? offerPrice;
   final String? offerSubTittle;
   final String? offerPic;
-
+  final String? doctorName;
+  final int? rateCount;
+  final dynamic rate;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -40,7 +46,10 @@ class OfferWidget extends StatelessWidget {
                 verticalPadding: 0,
                 horizontalMargin: 0,
                 horizontalPadding: 0,
-                child: Image.asset(offerPic!),
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: CachedNetworkImage(
+                        imageUrl: offerPic!, fit: BoxFit.cover)),
               ),
               Row(
                 children: [
@@ -61,13 +70,7 @@ class OfferWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TextBuilder(
-                          text:
-                              // context
-                              //         .read<AuthController>()
-                              //         .currentUser
-                              //         ?.doctor
-                              //         ?.name ??
-                              'Doctor Name',
+                          text: '$doctorName',
                           horizontalPadding: 2.5.w,
                           verticalPadding: 0,
                           color: AppColors.black,
@@ -84,9 +87,9 @@ class OfferWidget extends StatelessWidget {
                                       // .currentUser
                                       // ?.doctor
                                       // ?.rate
-                                      '4.5')
+                                      '$rate')
                                   ? RatingBarWidget(
-                                      initialRating: 4.5,
+                                      initialRating: double.parse(rate),
                                       // double.parse(context
                                       //         .read<AuthController>()
                                       //         .currentUser
@@ -97,13 +100,13 @@ class OfferWidget extends StatelessWidget {
                                     )
                                   : const SizedBox(),
                             ),
-                            const Text(
+                            Text(
                                 // context
                                 //     .read<AuthController>()
                                 //     .currentUser
                                 //     ?.doctor
                                 //     ?.rate ??
-                                '4.5'),
+                                '$rate'),
                           ],
                         )
                       ],

@@ -49,4 +49,9 @@ class LoginController extends AuthController {
       return false;
     }
   }
+
+  @override
+  void disposeValues() {
+    // TODO: implement disposeValues
+  }
 }

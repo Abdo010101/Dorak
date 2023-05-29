@@ -11,8 +11,9 @@ class HomeController extends ChangeNotifier {
   bool isLoading = false;
   HomeResponse? homeData;
   List<BestDoctors> bestDoctorsList = [];
+  List<OfferResponse> latestOfferList = [];
+  List<PatientReservations> appointmentList = [];
 
-  // List<BestDoctors> bestDoctorsList = [];
   Future<void> getHomeData(BuildContext context) async {
     try {
       isLoading = true;
@@ -24,6 +25,13 @@ class HomeController extends ChangeNotifier {
         bestDoctorsList
           ..clear()
           ..addAll(homeData!.bestDoctors!);
+        latestOfferList
+          ..clear()
+          ..addAll(homeData!.latestOffers!);
+
+        appointmentList
+          ..clear()
+          ..addAll(homeData!.patientReservations!);
         isLoading = false;
         notifyListeners();
       } else {

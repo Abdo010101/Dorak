@@ -1,4 +1,8 @@
+import 'package:dorakpattient/controllers/controllers.dart';
+import 'package:dorakpattient/data/models/response/response.dart';
+import 'package:dorakpattient/routes/dorak_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../constants/constants.dart';
@@ -6,6 +10,7 @@ import '../../components/components.dart';
 
 class SearchForSpecialtiesScreen extends StatelessWidget {
   const SearchForSpecialtiesScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,15 +51,32 @@ class SearchForSpecialtiesScreen extends StatelessWidget {
               verticalPadding: 1.5.h,
               horizontalPadding: 0,
             ),
-            Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: 12,
-                scrollDirection: Axis.vertical,
-                itemBuilder: (context, index) {
-                  return const SpecialtiesWidget();
-                },
-              ),
+            Consumer<GeneralController>(
+              builder: (cont, controller, child) {
+                List<Titles> specialList =
+                    controller.generalResponse?.mainSpecializations ?? [];
+                return controller.isLoading
+                    ? const LoadingWidget(
+                        backgroundColor: AppColors.transparent,
+                      )
+                    : Expanded(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: specialList.length,
+                          scrollDirection: Axis.vertical,
+                          itemBuilder: (context, index) {
+                            Titles specialModel = specialList[index];
+                            return SpecialtiesWidget(
+                              specialModel: specialModel,
+                              specialOnTap: () {
+                                Navigator.pushNamed(
+                                    context, NameRoutes.kSearchForCityScreen);
+                              },
+                            );
+                          },
+                        ),
+                      );
+              },
             ),
           ],
         ),
