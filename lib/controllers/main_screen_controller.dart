@@ -16,8 +16,8 @@ class MainScreenController extends ChangeNotifier {
 
   List<Widget> homeScreensList = [
     const HomeScreen(),
-    const AppointmentsScreen(), const AppointmentsScreen(),
-    // const OffersScreen(),
+    const AppointmentsScreen(),
+    const OffersScreen(),
     const ProfileScreen(),
   ];
 }
