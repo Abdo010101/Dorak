@@ -28,7 +28,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             TextBuilder(
               text: title,
               color: AppColors.navyBlue,
-              verticalPadding: 1.h,
+              verticalPadding: 2.5.h,
               bold: true,
             ),
           ],
@@ -39,5 +39,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   // TODO: implement preferredSize
-  Size get preferredSize => Size.fromHeight(9.h);
+  Size get preferredSize => Size.fromHeight(10.h);
 }

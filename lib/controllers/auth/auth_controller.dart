@@ -34,7 +34,6 @@ class AuthController extends DisposableProvider {
           NetworkConstant.kAuthorizationHeader:
               '${NetworkConstant.tokenBuilder(result.data!.token!)} '
         });
-
         currentUser = result.data;
         notifyListeners();
         return Success(result.data!);

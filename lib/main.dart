@@ -45,12 +45,9 @@ class MyApp extends StatelessWidget {
             create: (_) => DoctorProfileController()),
         ChangeNotifierProvider<MainScreenController>(
             create: (_) => MainScreenController()),
-        ChangeNotifierProvider(
-          create: (context) => GeneralController(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => OffersController(),
-        ),
+        ChangeNotifierProvider(create: (context) => GeneralController()),
+        ChangeNotifierProvider(create: (context) => OffersController()),
+        ChangeNotifierProvider(create: (context) => PatientProfileController()),
       ],
       child: Sizer(
         builder: (BuildContext context, Orientation orientation,

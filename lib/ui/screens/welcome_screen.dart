@@ -64,6 +64,9 @@ class WelcomeScreen extends StatelessWidget {
                         borderColor: Colors.transparent,
                         title: AppStrings.kRegister.tr(),
                         onPressed: () {
+                          Navigator.of(context)
+                              .pushNamed(NameRoutes.kGenderScreen);
+
                           // if (context
                           //             .read<GeneralController>()
                           //             .policy

@@ -1,8 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../constants/constants.dart';
+import '../../controllers/controllers.dart';
 import '../../routes/dorak_routes.dart';
 import '../../utis/util.dart';
 import '../components/components.dart';
@@ -12,6 +14,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final patient = Provider.of<LoginController>(context).currentUser?.patient;
     return Scaffold(
       backgroundColor: AppColors.liteWight,
       body: EmptyCard(
@@ -26,10 +29,11 @@ class ProfileScreen extends StatelessWidget {
               bold: true,
             ),
             ListTileBuilder(
-              title: 'User name',
-              subTitle: '00123456789',
-              trailing: 'example@mail.com',
+              title: patient?.name ?? 'User name',
+              subTitle: patient?.phone ?? '00123456789',
+              trailing: patient?.email ?? 'example@mail.com',
               horizontalMargin: 0,
+              horizontalPadding: 5.w,
               verticalMargin: 1.h,
               onTap: () => Navigator.pushNamed(
                   context, NameRoutes.kProfileDetailsScreen),

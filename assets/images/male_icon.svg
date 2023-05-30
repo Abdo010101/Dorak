@@ -1,0 +1,20 @@
+<svg id="Icon_" data-name="Icon " xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="51.975" height="51.975" viewBox="0 0 51.975 51.975">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#466fff" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#3462ff"/>
+    </linearGradient>
+    <clipPath id="clip-path">
+      <rect id="man-20_1_1_Background_Mask_" data-name="man-20 (1) 1 (Background/Mask)" width="20.79" height="20.79" fill="none"/>
+    </clipPath>
+  </defs>
+  <circle id="Ellipse_6" data-name="Ellipse 6" cx="25.987" cy="25.987" r="25.987" fill="url(#linear-gradient)"/>
+  <g id="man-20_1_1" data-name="man-20 (1) 1" transform="translate(15.592 15.592)">
+    <rect id="man-20_1_1_Background_Mask_2" data-name="man-20 (1) 1 (Background/Mask)" width="20.79" height="20.79" fill="none"/>
+    <g id="man-20_1_1-2" data-name="man-20 (1) 1" clip-path="url(#clip-path)">
+      <g id="Group" transform="translate(1.04 1.039)">
+        <path id="Vector" d="M7.655,18.711a7.655,7.655,0,0,1,0-15.309,7.562,7.562,0,0,1,4.772,1.68L15.807,1.7h-3.05a.85.85,0,0,1,0-1.7h4.914a1.041,1.041,0,0,1,1.039,1.039V5.954a.85.85,0,0,1-1.7,0V2.9l-3.381,3.38a7.567,7.567,0,0,1,1.68,4.772A7.663,7.663,0,0,1,7.655,18.711Zm0-13.608a5.953,5.953,0,1,0,5.953,5.953A5.96,5.96,0,0,0,7.655,5.1Z" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>

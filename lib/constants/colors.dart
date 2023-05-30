@@ -32,9 +32,12 @@ class AppColors {
   static const Color bLBlueWO = Color(0xff00BCE5);
   static const Color bOrange = Color(0xffFFA900);
   static const Color lBOrange = Color(0xffFFBF35);
+
+  static const Color red = Color(0xffFF4141);
   static const Color bRed = Color(0xffEB2323);
   static const Color bLRed = Color(0xffff4141);
   static const Color lightRed = Color(0xffF55757);
+
   static const Color navyBlue = Color(0xff4E4B66);
   static const Color black = Colors.black;
   static const Color darkBlue = Color(0xff0F2348);

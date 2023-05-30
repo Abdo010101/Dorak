@@ -3,6 +3,7 @@ import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/data/di/locator.dart';
 import 'package:dorakpattient/data/models/response/response.dart';
 import 'package:flutter/material.dart';
+
 import '../../data/repository/repository.dart';
 
 class DoctorProfileController extends DisposableProvider {
@@ -16,7 +17,6 @@ class DoctorProfileController extends DisposableProvider {
     try {
       isLoading = true;
       notifyListeners();
-
       final result =
           await _doctorProfileRepository.getDoctorProfile(doctorId: doctorId);
       if (result.data != null) {
