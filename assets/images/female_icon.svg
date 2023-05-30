@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="195.975" height="195.975" viewBox="0 0 195.975 195.975">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ff4e98" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#ff4e98"/>
+      <stop offset="1" stop-color="#ff227f"/>
+    </linearGradient>
+    <filter id="Rectangle_560" x="0" y="0" width="195.975" height="195.975" filterUnits="userSpaceOnUse">
+      <feOffset dy="16" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="24" result="blur"/>
+      <feFlood flood-color="#ff227f" flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <clipPath id="clip-path">
+      <rect id="woman-21_1_1_Background_Mask_" data-name="woman-21 (1) 1 (Background/Mask)" width="20.79" height="20.79" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="Icon_" data-name="Icon " transform="translate(72 56)">
+    <g transform="matrix(1, 0, 0, 1, -72, -56)" filter="url(#Rectangle_560)">
+      <rect id="Rectangle_560-2" data-name="Rectangle 560" width="51.975" height="51.975" rx="25.987" transform="translate(72 56)" fill="url(#linear-gradient)"/>
+    </g>
+    <g id="woman-21_1_1" data-name="woman-21 (1) 1" transform="translate(15.592 15.592)">
+      <rect id="woman-21_1_1_Background_Mask_2" data-name="woman-21 (1) 1 (Background/Mask)" width="20.79" height="20.79" fill="none"/>
+      <g id="woman-21_1_1-2" data-name="woman-21 (1) 1" clip-path="url(#clip-path)">
+        <g id="Group" transform="translate(3.118 1.039)">
+          <path id="Vector" d="M7.017,18.711a.78.78,0,0,1-.779-.779v-.78H4.678a.779.779,0,1,1,0-1.559h1.56V13.987a7.017,7.017,0,1,1,1.559,0v1.605h1.56a.779.779,0,0,1,0,1.559H7.8v.78A.78.78,0,0,1,7.017,18.711Zm0-17.151a5.457,5.457,0,1,0,5.457,5.457A5.463,5.463,0,0,0,7.017,1.56Z" fill="#fff"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

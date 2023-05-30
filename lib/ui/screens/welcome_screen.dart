@@ -65,7 +65,8 @@ class WelcomeScreen extends StatelessWidget {
                         title: AppStrings.kRegister.tr(),
                         onPressed: () {
                           Navigator.of(context)
-                              .pushNamed(NameRoutes.kRegisterScreen);
+                              .pushNamed(NameRoutes.kGenderScreen);
+
                           // if (context
                           //             .read<GeneralController>()
                           //             .policy

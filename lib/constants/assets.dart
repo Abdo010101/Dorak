@@ -54,4 +54,6 @@ class AppAssets {
   static const kMask = '$kAssets/mask.png';
   static const kCallIcon = '$kAssets/call_icon.png';
   static const kFavoritesIcon = '$kAssets/favorites_icon.png';
+  static const kMaleIcon = '$kAssets/male_icon.svg';
+  static const kFemaleIcon = '$kAssets/female_icon.svg';
 }

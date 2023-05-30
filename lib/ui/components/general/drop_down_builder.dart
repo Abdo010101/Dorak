@@ -76,7 +76,7 @@ class DropDownBuilder extends StatelessWidget {
                 text:
 
                     ///ToDo
-                    '',
+                    valueItem,
                 verticalPadding: 0,
                 horizontalPadding: 2.5.w,
                 color: AppColors.darkGray,

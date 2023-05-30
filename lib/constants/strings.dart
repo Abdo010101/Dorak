@@ -63,7 +63,6 @@ class AppStrings {
   static const kViews = 'views';
   static const kDuration = 'duration';
   static const kViewAll = 'view_all';
-
   static const kGender = 'gender';
   static const kTitle = 'title';
   static const kMainSpecialty = 'main_specialty';
@@ -205,4 +204,6 @@ class AppStrings {
   static const kSubscriptionDone = 'subscription_done';
   static const kWaitingTime = 'waiting_time';
   static const kFavorites = 'favorites';
+  static const kFemale = 'female';
+  static const kMale = 'male';
 }

@@ -58,42 +58,29 @@ class ListTileBuilder extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    GeometricalAvatar(
-                      radius: 47.5.sp,
-                      url: url,
-                      child: const SizedBox(),
+                    TextBuilder(
+                      text: title,
+                      color: AppColors.blue,
+                      verticalPadding: 0,
+                      size: 12.5.sp,
                     ),
-                    SizedBox(
-                      width: 5.0.w,
+                    TextBuilder(
+                      text: subTitle,
+                      color: AppColors.darkGray,
+                      size: 10.sp,
+                      verticalPadding: 1.h,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextBuilder(
-                          text: title,
-                          color: AppColors.blue,
-                          verticalPadding: 0,
-                          size: 12.5.sp,
-                        ),
-                        TextBuilder(
-                          text: subTitle,
-                          color: AppColors.darkGray,
-                          size: 10.sp,
-                          verticalPadding: 1.h,
-                        ),
-                        TextBuilder(
-                          text: trailing ?? '',
-                          size: 10.sp,
-                          color: AppColors.darkGray,
-                          verticalPadding: 0,
-                        ),
-                      ],
+                    TextBuilder(
+                      text: trailing ?? '',
+                      size: 10.sp,
+                      color: AppColors.darkGray,
+                      verticalPadding: 0,
                     ),
                   ],
                 ),
-
                 Icon(
                   Icons.arrow_forward_ios,
                   size: 12.sp,
