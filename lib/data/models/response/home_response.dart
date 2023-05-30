@@ -1,7 +1,7 @@
 import 'response.dart';
 
 class HomeResponse {
-  List<BestDoctors>? bestDoctors;
+  List<Doctor>? bestDoctors;
   List<OfferResponse>? latestOffers;
   List<PatientReservations>? patientReservations;
   HomeResponse({
@@ -12,9 +12,9 @@ class HomeResponse {
 
   HomeResponse.fromJson(Map<String, dynamic> json) {
     if (json['best_doctors'] != null) {
-      bestDoctors = <BestDoctors>[];
+      bestDoctors = <Doctor>[];
       json['best_doctors'].forEach((v) {
-        bestDoctors!.add(BestDoctors.fromJson(v));
+        bestDoctors!.add(Doctor.fromJson(v));
       });
     }
     if (json['patient_reservations'] != null) {

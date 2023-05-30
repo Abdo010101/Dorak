@@ -1,3 +1,4 @@
+import 'package:dorakpattient/data/models/response/response.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -7,8 +8,10 @@ import '../../../constants/constants.dart';
 import '../components.dart';
 
 class MedicalCenterWidget extends StatelessWidget {
-  const MedicalCenterWidget({Key? key, this.home = false}) : super(key: key);
+  const MedicalCenterWidget({Key? key, this.home = false, this.placeModel})
+      : super(key: key);
   final bool home;
+  final Places? placeModel;
   @override
   Widget build(BuildContext context) {
     return EmptyCard(
@@ -32,7 +35,7 @@ class MedicalCenterWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextBuilder(
-                    text: 'Medical Center Name',
+                    text: '${placeModel?.name}',
                     size: AppFontSizes.kS4,
                     color: AppColors.navyBlue,
                     horizontalPadding: 0.5.w,
@@ -46,7 +49,9 @@ class MedicalCenterWidget extends StatelessWidget {
           ),
           TextBuilder(
             text:
-                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrystandard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+
+                ///TODO add description to place here in Model ...
+                'sadasd',
             verticalPadding: 0.75.h,
             size: AppFontSizes.kS2,
             maxLin: 3,

@@ -1,9 +1,10 @@
+import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/ui/components/components.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../constants/constants.dart';
 import '../../data/models/response/response.dart';
 
@@ -12,105 +13,120 @@ class DoctorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const CustomAppBar(title: 'Specialties Name'),
-      backgroundColor: AppColors.liteWight,
-      bottomNavigationBar: EmptyCard(
-        horizontalMargin: 0,
-        verticalMargin: 0,
-        verticalPadding: 1.h,
-        height: 12.h,
-        borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(25.0),
-          topLeft: Radius.circular(25.0),
-        ),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+    return Consumer<DoctorProfileController>(
+      builder: (BuildContext context, doctorController, Widget? child) {
+        return Scaffold(
+          appBar: const CustomAppBar(title: 'Specialties Name'),
+          backgroundColor: AppColors.liteWight,
+          bottomNavigationBar: EmptyCard(
+            horizontalMargin: 0,
+            verticalMargin: 0,
+            verticalPadding: 1.h,
+            height: 12.h,
+            borderRadius: const BorderRadius.only(
+              topRight: Radius.circular(25.0),
+              topLeft: Radius.circular(25.0),
+            ),
+            child: Column(
               children: [
-                Icon(
-                  Icons.check_circle_outline,
-                  color: AppColors.green,
-                  size: 12.5.sp,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.check_circle_outline,
+                      color: AppColors.green,
+                      size: 12.5.sp,
+                    ),
+                    TextBuilder(
+                      text: 'Available',
+                      color: AppColors.blue,
+                      size: AppFontSizes.kS2,
+                      verticalPadding: 0.75.h,
+                    ),
+                    SizedBox(
+                      width: 1.w,
+                    ),
+                    TextBuilder(
+                      text: 'today',
+                      color: AppColors.blue,
+                      size: AppFontSizes.kS2,
+                      verticalPadding: 0.75.h,
+                      bold: true,
+                    ),
+                  ],
                 ),
-                TextBuilder(
-                  text: 'Available',
-                  color: AppColors.blue,
-                  size: AppFontSizes.kS2,
-                  verticalPadding: 0.75.h,
-                ),
-                SizedBox(
-                  width: 1.w,
-                ),
-                TextBuilder(
-                  text: 'today',
-                  color: AppColors.blue,
-                  size: AppFontSizes.kS2,
-                  verticalPadding: 0.75.h,
-                  bold: true,
+                ButtonBuilder(
+                  title: 'Book appointment',
+                  onPressed: () {},
+                  width: 77.5.w,
+                  height: 6.h,
                 ),
               ],
             ),
-            ButtonBuilder(
-              title: 'Book appointment',
-              onPressed: () {},
-              width: 77.5.w,
-              height: 6.h,
-            ),
-          ],
-        ),
-      ),
-      body: Column(
-        children: [
-          SwitchButton(
-              choose: AppStrings.kClinic.tr(),
-              fTitle: AppStrings.kClinic.tr(),
-              sTitle: AppStrings.kOffers.tr(),
-              fBOnPressed: () {},
-              sBOnPressed: () {}),
-          Expanded(
-            child: SingleChildScrollView(
-                child: Column(
-              children: [
-                const DoctorWidget(),
-                EmptyCard(
-                  color: Colors.transparent,
-                  verticalPadding: 0,
-                  horizontalPadding: 0,
-                  verticalMargin: 0,
-                  height: 6.25.h,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 6,
-                      itemBuilder: (context, index) {
-                        return ButtonBuilder(
-                          title: 'Address ${index + 1}',
-                          width: 25.w,
-                          height: 4.h,
-                          buttonColor: index == 0
-                              ? AppColors.blue
-                              : AppColors.transparent,
-                          titleStyle: AppStyles.kButtonTextStyle.copyWith(
-                            fontSize: AppFontSizes.kS3,
-                            color:
-                                index == 0 ? AppColors.white : AppColors.blue,
-                          ),
-                          margin: EdgeInsets.symmetric(
-                              vertical: 1.h, horizontal: 1.w),
-                          onPressed: () {},
-                        );
-                      }),
-                ),
-                const MedicalCenterWidget(),
-                const ClinicWidget(),
-                const AddressWidget(),
-                const PatientsReviews(),
-              ],
-            )),
           ),
-        ],
-      ),
+          body: doctorController.isLoading
+              ? const LoadingWidget(
+                  backgroundColor: AppColors.transparent,
+                )
+              : Column(
+                  children: [
+                    SwitchButton(
+                        choose: AppStrings.kClinic.tr(),
+                        fTitle: AppStrings.kClinic.tr(),
+                        sTitle: AppStrings.kOffers.tr(),
+                        fBOnPressed: () {},
+                        sBOnPressed: () {}),
+                    Expanded(
+                      child: SingleChildScrollView(
+                          child: Column(
+                        children: [
+                          DoctorWidget(
+                              model: doctorController
+                                  .doctorProfileResponse?.doctor),
+                          EmptyCard(
+                            color: Colors.transparent,
+                            verticalPadding: 0,
+                            horizontalPadding: 0,
+                            verticalMargin: 0,
+                            height: 6.25.h,
+                            child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: doctorController
+                                    .doctorProfileResponse?.places!.length,
+                                itemBuilder: (context, index) {
+                                  Places? placeModel = doctorController
+                                      .doctorProfileResponse?.places![index];
+                                  return ButtonBuilder(
+                                    title: '${placeModel?.name} ',
+                                    //  width: 25.w,
+                                    height: 4.h,
+                                    buttonColor: index == 0
+                                        ? AppColors.blue
+                                        : AppColors.transparent,
+                                    titleStyle:
+                                        AppStyles.kButtonTextStyle.copyWith(
+                                      fontSize: AppFontSizes.kS3,
+                                      color: index == 0
+                                          ? AppColors.white
+                                          : AppColors.blue,
+                                    ),
+                                    margin: EdgeInsets.symmetric(
+                                        vertical: 1.h, horizontal: 1.w),
+                                    onPressed: () {},
+                                  );
+                                }),
+                          ),
+                          const MedicalCenterWidget(),
+                          const ClinicWidget(),
+                          const AddressWidget(),
+                          const PatientsReviews(),
+                        ],
+                      )),
+                    ),
+                  ],
+                ),
+        );
+      },
     );
   }
 }

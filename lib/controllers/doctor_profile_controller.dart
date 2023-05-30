@@ -1,20 +1,24 @@
 import 'package:dio/dio.dart';
 import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/data/di/locator.dart';
+import 'package:dorakpattient/data/models/response/response.dart';
 import 'package:flutter/material.dart';
 import '../../data/repository/repository.dart';
 
 class DoctorProfileController extends DisposableProvider {
   bool isLoading = false;
   final _doctorProfileRepository = locator<DoctorProfileRepository>();
-
-  Future<void> getHomeData(BuildContext context) async {
+  DoctorProfileResponse? doctorProfileResponse;
+  Future<void> getDoctorProfile(BuildContext context,
+      {required int doctorId}) async {
     try {
       isLoading = true;
       notifyListeners();
 
-      final result = await _doctorProfileRepository.getHomeData();
+      final result =
+          await _doctorProfileRepository.getDoctorProfile(doctorId: doctorId);
       if (result.data != null) {
+        doctorProfileResponse = result.data;
         isLoading = false;
         notifyListeners();
       } else {
