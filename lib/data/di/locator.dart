@@ -28,6 +28,9 @@ Future setupLocator() async {
   locator.registerFactory(() => GeneralClient(
         InjectionClass.dio,
       ));
+  locator.registerFactory(() => OffersClint(
+        InjectionClass.dio,
+      ));
 
   locator.registerFactory(() => DoctorProfileClient(
         InjectionClass.dio,
@@ -46,6 +49,9 @@ Future setupLocator() async {
   locator.registerFactory<DoctorProfileRepository>(() =>
       DoctorProfileRepository(
           doctorProfileClient: locator<DoctorProfileClient>()));
+
+  locator.registerFactory<OffersRepository>(
+      () => OffersRepository(offersClient: locator<OffersClint>()));
 
   /// repositories
   // locator.registerFactory<AuthenticationRepository>(() =>

@@ -1,5 +1,6 @@
 import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/controllers/home_controller.dart';
+import 'package:dorakpattient/controllers/offers_controller.dart';
 import 'package:dorakpattient/routes/dorak_routes.dart';
 import 'package:dorakpattient/routes/route_manger.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -46,6 +47,9 @@ class MyApp extends StatelessWidget {
             create: (_) => MainScreenController()),
         ChangeNotifierProvider(
           create: (context) => GeneralController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => OffersController(),
         ),
       ],
       child: Sizer(
