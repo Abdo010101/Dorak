@@ -10,7 +10,7 @@ class HomeController extends ChangeNotifier {
   final _homeRepository = locator<HomeRepository>();
   bool isLoading = false;
   HomeResponse? homeData;
-  List<BestDoctors> bestDoctorsList = [];
+  List<Doctor> bestDoctorsList = [];
   List<OfferResponse> latestOfferList = [];
   List<PatientReservations> appointmentList = [];
 

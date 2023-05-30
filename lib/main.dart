@@ -41,6 +41,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<AuthController>(create: (_) => AuthController()),
         ChangeNotifierProvider<RegisterController>(
             create: (_) => RegisterController()),
+        ChangeNotifierProvider<DoctorProfileController>(
+            create: (_) => DoctorProfileController()),
         ChangeNotifierProvider<MainScreenController>(
             create: (_) => MainScreenController()),
         ChangeNotifierProvider(

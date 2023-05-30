@@ -1,11 +1,11 @@
 import 'package:dorakpattient/controllers/home_controller.dart';
-import 'package:dorakpattient/data/models/response/home_response.dart';
+import 'package:dorakpattient/data/models/response/response.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../constants/constants.dart';
+import '../../controllers/controllers.dart';
 import '../../routes/dorak_routes.dart';
 import '../components/components.dart';
 
@@ -137,13 +137,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                   itemCount:
                                       controller.homeData!.bestDoctors!.length,
                                   scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, index) {
-                                    BestDoctors? doctorModel = controller
+                                  itemBuilder: (cont, index) {
+                                    Doctor? doctorModel = controller
                                         .homeData?.bestDoctors?[index];
                                     return DoctorWidget(
                                       home: true,
                                       model: doctorModel,
                                       cardOnTab: () {
+                                        Provider.of<DoctorProfileController>(
+                                                context,
+                                                listen: false)
+                                            .getDoctorProfile(context,
+                                                doctorId: doctorModel!.id!);
                                         Navigator.of(context).pushNamed(
                                             NameRoutes.kDoctorScreen);
                                       },

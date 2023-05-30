@@ -6,15 +6,18 @@ import '../networks/base_model.dart';
 import '../networks/clients/clients.dart';
 
 class DoctorProfileRepository extends BaseRepository {
-  final HomeClient homeClient;
+  final DoctorProfileClient doctorProfileClient;
 
-  DoctorProfileRepository({required this.homeClient});
+  DoctorProfileRepository({required this.doctorProfileClient});
 
-  Future<BaseModel<HomeResponse>> getHomeData() async {
+  Future<BaseModel<DoctorProfileResponse>> getDoctorProfile(
+      {int? doctorId}) async {
     if (await checkForConnectivity()) {
       try {
         return BaseModel(
-            data: await homeClient.getHomeData().then((value) {
+            data: await doctorProfileClient
+                .getDoctorProfile(id: doctorId)
+                .then((value) {
           return value.data;
         }));
       } on DioError catch (e) {
