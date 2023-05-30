@@ -15,6 +15,7 @@ class DoctorScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<DoctorProfileController>(
       builder: (BuildContext context, doctorController, Widget? child) {
+        Places? place = doctorController.selectedPlace;
         return Scaffold(
           appBar: const CustomAppBar(title: 'Specialties Name'),
           backgroundColor: AppColors.liteWight,
@@ -94,31 +95,39 @@ class DoctorScreen extends StatelessWidget {
                                 itemCount: doctorController
                                     .doctorProfileResponse?.places!.length,
                                 itemBuilder: (context, index) {
-                                  Places? placeModel = doctorController
-                                      .doctorProfileResponse?.places![index];
+                                  bool isSelected =
+                                      doctorController.currentPlaceSelected ==
+                                          index;
+                                  Places placeModel = doctorController
+                                      .doctorProfileResponse!.places![index];
                                   return ButtonBuilder(
-                                    title: '${placeModel?.name} ',
+                                    title: '${placeModel.name} ',
                                     //  width: 25.w,
                                     height: 4.h,
-                                    buttonColor: index == 0
+                                    buttonColor: isSelected
                                         ? AppColors.blue
                                         : AppColors.transparent,
                                     titleStyle:
                                         AppStyles.kButtonTextStyle.copyWith(
                                       fontSize: AppFontSizes.kS3,
-                                      color: index == 0
+                                      color: isSelected
                                           ? AppColors.white
                                           : AppColors.blue,
                                     ),
                                     margin: EdgeInsets.symmetric(
                                         vertical: 1.h, horizontal: 1.w),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      doctorController
+                                          .onChangedSelectPlace(index);
+                                    },
                                   );
                                 }),
                           ),
-                          const MedicalCenterWidget(),
-                          const ClinicWidget(),
-                          const AddressWidget(),
+                          MedicalCenterWidget(placeModel: place),
+                          ClinicWidget(place: place),
+                          AddressWidget(
+                              address: place?.shortAddress,
+                              fullAddress: place?.longAddress),
                           const PatientsReviews(),
                         ],
                       )),
@@ -132,7 +141,13 @@ class DoctorScreen extends StatelessWidget {
 }
 
 class AddressWidget extends StatelessWidget {
-  const AddressWidget({Key? key}) : super(key: key);
+  const AddressWidget(
+      {Key? key, this.address, this.fullAddress, this.lat, this.lng})
+      : super(key: key);
+  final String? address;
+  final String? fullAddress;
+  final String? lat;
+  final String? lng;
   @override
   Widget build(BuildContext context) {
     return EmptyCard(
@@ -141,50 +156,59 @@ class AddressWidget extends StatelessWidget {
         height: 20.h,
         child: Row(
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      AppAssets.kLocationIcon,
-                      width: 4.w,
-                      height: 4.w,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextBuilder(
-                          text: 'Address',
-                          color: AppColors.navyBlue,
-                          bold: true,
-                          verticalPadding: 0,
-                          horizontalPadding: 2.w,
-                        ),
-                        const GeneralLine(),
-                      ],
-                    ),
-                  ],
-                ),
-                TextBuilder(
-                  text:
-                      'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrystandard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-                  verticalPadding: 1.h,
-                  horizontalPadding: 0,
-                  size: AppFontSizes.kS3,
-                  maxLin: 6,
-                  width: 47.w,
-                  color: AppColors.darkGray,
-                ),
-              ],
+            Expanded(
+              flex: 1,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                        AppAssets.kLocationIcon,
+                        width: 4.w,
+                        height: 4.w,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TextBuilder(
+                            text: 'Address',
+                            color: AppColors.navyBlue,
+                            size: 10.sp,
+                            bold: true,
+                            verticalPadding: 0,
+                            horizontalPadding: 2.w,
+                          ),
+                          const GeneralLine(),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 1.0.h,
+                  ),
+                  TextBuilder(
+                    text: '$fullAddress',
+                    verticalPadding: 1.h,
+                    horizontalPadding: 0,
+                    size: 10.sp,
+                    maxLin: 6,
+                    width: 47.w,
+                    color: AppColors.darkGray,
+                  ),
+                ],
+              ),
             ),
-            GeometricalAvatar(
-              backgroundColor: AppColors.transparent,
-              path: AppAssets.kMap,
-              radius: 10.sp,
-              width: 35.w,
-              height: 22.5.h,
+            Expanded(
+              flex: 1,
+              child: GeometricalAvatar(
+                backgroundColor: AppColors.transparent,
+                path: AppAssets.kMap,
+                radius: 10.sp,
+                width: 35.w,
+                height: 22.5.h,
+              ),
             )
           ],
         ));
@@ -192,8 +216,8 @@ class AddressWidget extends StatelessWidget {
 }
 
 class PatientsReviews extends StatelessWidget {
-  const PatientsReviews({Key? key}) : super(key: key);
-
+  const PatientsReviews({Key? key, this.rateModel}) : super(key: key);
+  final Ratings? rateModel;
   @override
   Widget build(BuildContext context) {
     return EmptyCard(

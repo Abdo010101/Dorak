@@ -47,6 +47,7 @@ class TextBuilder extends StatelessWidget {
                     ? TextDecoration.lineThrough
                     : TextDecoration.none,
             height: height ?? 1,
+            overflow: TextOverflow.ellipsis,
             color: color ?? AppColors.darkGray,
             fontSize: size ?? 12.5.sp,
             fontWeight: bold ? FontWeight.bold : FontWeight.normal),

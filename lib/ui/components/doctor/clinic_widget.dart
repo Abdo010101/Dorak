@@ -4,10 +4,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../constants/constants.dart';
+import '../../../data/models/response/response.dart';
 import '../components.dart';
 
 class ClinicWidget extends StatelessWidget {
-  const ClinicWidget({Key? key}) : super(key: key);
+  const ClinicWidget({Key? key, required this.place}) : super(key: key);
+
+  final Places? place;
   @override
   Widget build(BuildContext context) {
     return EmptyCard(
@@ -21,7 +24,7 @@ class ClinicWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           TextBuilder(
-            text: 'Clinic Name',
+            text: '${place?.name}',
             size: AppFontSizes.kS4,
             color: AppColors.navyBlue,
             horizontalPadding: 0.5.w,
@@ -32,12 +35,13 @@ class ClinicWidget extends StatelessWidget {
           SizedBox(
             height: 11.h,
             child: ListView.builder(
-              itemCount: 7,
+              itemCount: place?.images?.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
+                String? image = place?.images?[index];
                 return GeometricalAvatar(
                   backgroundColor: AppColors.transparent,
-                  path: AppAssets.kTodaySummary,
+                  url: image,
                   radius: 10.sp,
                   width: 20.w,
                   margin: EdgeInsetsDirectional.symmetric(
