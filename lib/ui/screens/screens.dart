@@ -18,3 +18,4 @@ export 'sign_up_screen.dart';
 export 'splash_screen.dart';
 export 'success_screen.dart';
 export 'welcome_screen.dart';
+export 'gender_screen.dart';

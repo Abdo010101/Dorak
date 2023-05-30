@@ -59,6 +59,8 @@ class RouteManger {
             builder: (context) => const ResultOfSearchScreen());
       case NameRoutes.kDoctorScreen:
         return MaterialPageRoute(builder: (context) => const DoctorScreen());
+      case NameRoutes.kGenderScreen:
+        return MaterialPageRoute(builder: (context) => const DoctorScreen());
 
       default:
         return MaterialPageRoute(builder: (context) => const MainTestScreen());
