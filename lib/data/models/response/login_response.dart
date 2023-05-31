@@ -36,11 +36,11 @@ class Patient {
   String? name;
   String? phone;
   String? email;
-  Null? gender;
-  Null? weight;
-  Null? height;
+  String? gender;
+  String? weight;
+  String? height;
   int? allowNotifications;
-  Null? countryId;
+  int? countryId;
 
   Patient(
       {this.id,

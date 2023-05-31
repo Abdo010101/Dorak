@@ -206,4 +206,12 @@ class AppStrings {
   static const kFavorites = 'favorites';
   static const kFemale = 'female';
   static const kMale = 'male';
+  static const kPatientsInformation = 'patients_info';
+  static const kManualAppointmentTitle = 'manual_appointment';
+  static const kSelectPlace = 'select_place';
+  static const kPickupDate = 'pickup_date';
+  static const kThisWeek = 'this_week';
+  static const kNextWeek = 'next_week';
+  static const kPickupTime = 'pickup_time';
+  static const kNotAvailableDay = 'day_not_available';
 }

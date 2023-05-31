@@ -123,12 +123,15 @@ class DoctorScreen extends StatelessWidget {
                                   );
                                 }),
                           ),
-                          MedicalCenterWidget(placeModel: place),
-                          ClinicWidget(place: place),
+                          doctorController.currentPlaceSelected == 0
+                              ? ClinicWidget(place: place)
+                              : MedicalCenterWidget(placeModel: place),
                           AddressWidget(
                               address: place?.shortAddress,
                               fullAddress: place?.longAddress),
-                          const PatientsReviews(),
+                          PatientsReviews(
+                              rateList: doctorController
+                                  .doctorProfileResponse?.ratings),
                         ],
                       )),
                     ),
@@ -216,8 +219,8 @@ class AddressWidget extends StatelessWidget {
 }
 
 class PatientsReviews extends StatelessWidget {
-  const PatientsReviews({Key? key, this.rateModel}) : super(key: key);
-  final Ratings? rateModel;
+  const PatientsReviews({Key? key, this.rateList}) : super(key: key);
+  final List<Ratings>? rateList;
   @override
   Widget build(BuildContext context) {
     return EmptyCard(
@@ -259,17 +262,17 @@ class PatientsReviews extends StatelessWidget {
             height: 1.5.h,
           ),
           ListView.builder(
-              itemCount: 5,
+              itemCount: rateList?.length,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
+                Ratings rateModel = rateList![index];
                 return Review(
                   review: ReviewResponse(
-                      name: 'Patient Name',
-                      comment:
-                          'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrystandard dummy text ev',
-                      rating: 4,
-                      time: '2 Hours ago'),
+                      name: '${rateModel.name}',
+                      comment: '${rateModel.comment}',
+                      rating: rateModel.rating,
+                      time: '${rateModel.time}'),
                 );
               }),
         ],
