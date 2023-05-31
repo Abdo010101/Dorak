@@ -7,3 +7,4 @@ export 'home_response.dart';
 export 'login_response.dart';
 export 'offer_response.dart';
 export 'review_response.dart';
+export 'available_shecdules_response.dart';

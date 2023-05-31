@@ -1,10 +1,10 @@
-/*
+import 'package:dorakpattient/controllers/book_controller.dart';
+import 'package:dorakpattient/data/models/response/response.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
-
 import '../../constants/constants.dart';
 import '../components/components.dart';
 
@@ -36,9 +36,8 @@ class AddManualAppointmentScreen extends StatelessWidget {
         ),
         body: WillPopScope(
           onWillPop: () {
-            */
-/*     controller.resetController();
-              Navigator.pop(context);*/ /*
+            /* controller.resetController();
+              Navigator.pop(context);*/
 
             return Future.value(false);
           },
@@ -182,7 +181,7 @@ class PickUpTimeBuilder extends StatelessWidget {
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (_, index) {
-                      AvailableSchedules schedule =
+                      Schedules schedule =
                           controller.availableSchedulesList[index];
                       return EmptyCard(
                           horizontalMargin: 0.0,
@@ -307,4 +306,3 @@ class PickUpTimeBuilder extends StatelessWidget {
     });
   }
 }
-*/

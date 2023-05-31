@@ -65,7 +65,7 @@ class ClinicWidget extends StatelessWidget {
                 SvgPicture.asset(AppAssets.kLocationIcon),
                 TextBuilder(
                   width: 30.w,
-                  text: "City name and area",
+                  text: "${place?.shortAddress}",
                   size: AppFontSizes.kS2,
                   color: AppColors.navyBlue,
                   verticalPadding: 0,

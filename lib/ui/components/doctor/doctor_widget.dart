@@ -14,6 +14,7 @@ class DoctorWidget extends StatelessWidget {
   final bool home;
   final VoidCallback? cardOnTab;
   final Doctor? model;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -88,7 +89,7 @@ class DoctorWidget extends StatelessWidget {
                         SvgPicture.asset(AppAssets.kLocationIcon),
                         TextBuilder(
                           width: 30.w,
-                          text: "City name and area",
+                          text: "${model?.address}",
                           size: AppFontSizes.kS2,
                           color: AppColors.navyBlue,
                           verticalPadding: 0,
