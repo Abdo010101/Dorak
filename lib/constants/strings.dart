@@ -204,6 +204,5 @@ class AppStrings {
   static const kSubscriptionDone = 'subscription_done';
   static const kWaitingTime = 'waiting_time';
   static const kFavorites = 'favorites';
-  static const kFemale = 'female';
-  static const kMale = 'male';
+  static const kGenderList = ['male', 'female'];
 }

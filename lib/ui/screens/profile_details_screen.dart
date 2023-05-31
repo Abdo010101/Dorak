@@ -1,3 +1,4 @@
+import 'package:dorakpattient/routes/dorak_routes.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -12,11 +13,11 @@ class ProfileDetailsScreen extends StatelessWidget {
   const ProfileDetailsScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final patient = Provider.of<LoginController>(context).currentUser?.patient;
+    final patient = Provider.of<AuthController>(context).currentUser?.patient;
     final controller = Provider.of<PatientProfileController>(context);
 
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         title: 'My profile',
       ),
       backgroundColor: AppColors.liteWight,
@@ -34,7 +35,11 @@ class ProfileDetailsScreen extends StatelessWidget {
                     MaterialButton(
                       minWidth: 5.w,
                       padding: EdgeInsets.zero,
-                      onPressed: controller.changeToEdit,
+                      onPressed: () {
+                        controller.resetProfileData(patient: patient);
+                        Navigator.pushNamed(
+                            context, NameRoutes.kEditProfileScreen);
+                      },
                       child: Row(
                         children: [
                           Padding(

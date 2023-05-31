@@ -34,6 +34,9 @@ class AuthController extends DisposableProvider {
           NetworkConstant.kAuthorizationHeader:
               '${NetworkConstant.tokenBuilder(result.data!.token!)} '
         });
+        await _sharedPref.storeLoginInfo(result.data!);
+        isLoggedIn = _sharedPref.isUserLoggedIn();
+        currentUser = result.data;
         currentUser = result.data;
         notifyListeners();
         return Success(result.data!);
@@ -56,11 +59,10 @@ class AuthController extends DisposableProvider {
 
       final result = await _authenticationRepository.register(registerRequest);
       if (result.data != null) {
-        ///TODO enhance here .
         InjectionClass.dio.options.headers.addAll({
-          NetworkConstant.kAuthorizationHeader: 'Bearer ${result.data!.token}'
+          NetworkConstant.kAuthorizationHeader:
+              '${NetworkConstant.tokenBuilder(result.data!.token!)} '
         });
-
         await _sharedPref.storeLoginInfo(result.data!);
         isLoggedIn = _sharedPref.isUserLoggedIn();
         currentUser = result.data;

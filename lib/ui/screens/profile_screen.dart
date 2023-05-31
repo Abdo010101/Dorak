@@ -14,7 +14,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final patient = Provider.of<LoginController>(context).currentUser?.patient;
+    final patient = Provider.of<AuthController>(context).currentUser?.patient;
     return Scaffold(
       backgroundColor: AppColors.liteWight,
       body: EmptyCard(

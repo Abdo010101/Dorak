@@ -27,4 +27,5 @@ class NetworkConstant {
   static const String kLoginRequest = "login";
   static const String kRegisterRequest = "register";
   static const String kGeneralRequest = "general";
+  static const String kUpdateProfile = "update-profile";
 }

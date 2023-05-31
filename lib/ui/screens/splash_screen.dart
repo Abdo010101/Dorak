@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import '../../constants/constants.dart';
 import '../../controllers/controllers.dart';
 import '../../data/di/locator.dart';
-import '../../data/models/response/response.dart';
 import '../../data/shared/shared_pref.dart';
 import '../../routes/dorak_routes.dart';
 
@@ -73,20 +72,7 @@ class _SplashScreenState extends State<SplashScreen>
     animationController.addListener(() {});
     animationController.addStatusListener((status) async {
       if (status == AnimationStatus.completed) {
-        Navigator.pushReplacementNamed(context, NameRoutes.kWelcomeScreen);
         if (authController.isLoggedIn) {
-          Patient? patient = authController.currentUser?.patient;
-          if (patient?.name != null) {
-            /* if (patient?.verifiedAt != null) {
-              context.read<HomeController>().getHomeData(context);
-              Navigator.pushReplacementNamed(context, NameRoutes.kHomeScreen);
-            } else
-              Navigator.pushReplacementNamed(
-                  context, NameRoutes.kWelcomeScreen);*/
-          } else {
-            Navigator.pushReplacementNamed(context, NameRoutes.kWelcomeScreen);
-          }
-
           Navigator.pushNamedAndRemoveUntil(
               context, NameRoutes.kHomeScreen, (_) => false);
         } else {
