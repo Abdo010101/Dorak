@@ -14,7 +14,7 @@ enum SettingsComponentsType { arrow, switching, check }
 
 enum PromoteType { pending, unsubscribed, subscribed }
 
-enum LoginSocialType { google, facebook }
+enum LoginSocialType { google, facebook, apple }
 
 enum PaymentMethod { cash, creditCard, bankTransfer }
 

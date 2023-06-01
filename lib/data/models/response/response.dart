@@ -1,9 +1,11 @@
 export 'all_offers_response.dart';
+export 'appointment_response.dart';
 export 'base/base_response.dart';
 export 'base/base_response_list.dart';
 export 'doctor_profile_response.dart';
 export 'general_response.dart';
 export 'home_response.dart';
 export 'login_response.dart';
+export 'notification_response.dart';
 export 'offer_response.dart';
 export 'review_response.dart';

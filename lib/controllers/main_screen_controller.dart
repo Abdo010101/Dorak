@@ -1,15 +1,19 @@
-import 'package:dorakpattient/controllers/offers_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
+import '../constants/constants.dart';
 import '../ui/screens/screens.dart';
+import 'controllers.dart';
 
 class MainScreenController extends ChangeNotifier {
   int currentIndex = 0;
 
   void onBottomSheetChanged(int index, BuildContext context) {
     if (context.mounted) {
-      if (index == 3) {
+      if (index == 1) {
+        context
+            .read<AppointmentsController>()
+            .changeAppointmentDate(AppStrings.kUpcoming);
       } else if (index == 2) {
         context.read<OffersController>().getAllOffers();
       }

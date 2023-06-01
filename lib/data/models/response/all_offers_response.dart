@@ -1,11 +1,12 @@
-import 'package:dorakpattient/data/models/response/offer_response.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import 'response.dart';
 
 part 'all_offers_response.g.dart';
 
 @JsonSerializable()
 class AllOffersResponse {
-  List<OfferResponse>? offers;
+  BaseResponse<List<OfferResponse>>? offers;
   @JsonKey(name: 'max_price')
   String? maxPrice;
   @JsonKey(name: 'min_price')

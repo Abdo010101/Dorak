@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:dorakpattient/data/networks/network_constant.dart';
-
 import 'package:retrofit/retrofit.dart';
 
 import '../../models/request/request.dart';
@@ -22,4 +21,12 @@ abstract class AuthenticationClient {
   Future<BaseResponse<UserResponse>> register(
     @Body() var model,
   );
+
+  @POST(NetworkConstant.kSocialLogin)
+  Future<BaseResponse<UserResponse>> loginWithSocial(
+    @Body() LoginWithSocialRequest model,
+  );
+
+  @POST(NetworkConstant.kLogout)
+  Future<dynamic> logout();
 }

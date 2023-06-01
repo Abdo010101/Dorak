@@ -34,6 +34,10 @@ class PatientProfileController extends DisposableProvider {
 
   Future<bool> updateProfile(BuildContext context) async {
     if (profileFormKey.currentState?.validate() != true) return false;
+    if (nameController.text == profile.name &&
+        phoneController.text == profile.phone &&
+        emailController.text == profile.email &&
+        profile.gender == gender) return false;
     isLoading = true;
     notifyListeners();
     Patient patient = Patient(

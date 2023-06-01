@@ -16,16 +16,16 @@ class OfferWidget extends StatelessWidget {
     this.doctorName,
     this.onPressed,
     this.rate,
-    this.rateCount,
     this.offerPrice,
+    this.docPic,
   }) : super(key: key);
   final VoidCallback? onPressed;
   final String? offerTittle;
   final String? offerPrice;
   final String? offerSubTittle;
   final String? offerPic;
+  final String? docPic;
   final String? doctorName;
-  final int? rateCount;
   final dynamic rate;
   @override
   Widget build(BuildContext context) {
@@ -56,12 +56,7 @@ class OfferWidget extends StatelessWidget {
                   GeometricalAvatar(
                     margin: EdgeInsets.only(top: 2.5.h),
                     radius: 35.sp,
-                    // url: context
-                    //     .read<AuthController>()
-                    //     .currentUser
-                    //     ?.doctor
-                    //     ?.image,
-                    path: AppAssets.kDoctorImage,
+                    url: docPic,
                     child: const SizedBox(),
                   ),
                   Container(
@@ -82,31 +77,14 @@ class OfferWidget extends StatelessWidget {
                               margin: EdgeInsetsDirectional.only(
                                   start: 2.5.w, top: 1.h, end: 1.w),
                               height: 2.5.h,
-                              child: Util.isNumeric(
-                                      // .read<AuthController>()
-                                      // .currentUser
-                                      // ?.doctor
-                                      // ?.rate
-                                      '$rate')
+                              child: Util.isNumeric('$rate')
                                   ? RatingBarWidget(
                                       initialRating: double.parse(rate),
-                                      // double.parse(context
-                                      //         .read<AuthController>()
-                                      //         .currentUser
-                                      //         ?.doctor
-                                      //         ?.rate ??
-
                                       itemSize: 10.sp,
                                     )
                                   : const SizedBox(),
                             ),
-                            Text(
-                                // context
-                                //     .read<AuthController>()
-                                //     .currentUser
-                                //     ?.doctor
-                                //     ?.rate ??
-                                '$rate'),
+                            Text('$rate'),
                           ],
                         )
                       ],
@@ -129,25 +107,33 @@ class OfferWidget extends StatelessWidget {
         PositionedDirectional(
           bottom: 8.h,
           start: 55.w,
-          width: 30.w,
+          width: 31.w,
           child: Row(
             children: [
-              Text(
-                '${offerPrice ?? '1000'} LE',
-                style: AppStyles.kButtonTextStyle.copyWith(
-                  decoration: TextDecoration.lineThrough,
-                  color: AppColors.gray,
-                  fontSize: 10.sp,
-                  fontWeight: FontWeight.normal,
+              SizedBox(
+                width: 15.w,
+                child: Text(
+                  '${offerPrice ?? '1000'}LE',
+                  maxLines: 1,
+                  style: AppStyles.kButtonTextStyle.copyWith(
+                    decoration: TextDecoration.lineThrough,
+                    color: AppColors.gray,
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.normal,
+                  ),
                 ),
               ),
               const Spacer(),
-              Text(
-                '${offerPrice ?? '1000'} LE',
-                style: AppStyles.kButtonTextStyle.copyWith(
-                  color: AppColors.blue,
-                  fontSize: 10.sp,
-                  fontWeight: FontWeight.w700,
+              SizedBox(
+                width: 15.w,
+                child: Text(
+                  '${offerPrice ?? '1000'}LE',
+                  maxLines: 1,
+                  style: AppStyles.kButtonTextStyle.copyWith(
+                    color: AppColors.blue,
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               )
             ],

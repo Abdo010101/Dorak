@@ -6,6 +6,7 @@ import 'package:sizer/sizer.dart';
 import '../../constants/constants.dart';
 import '../../controllers/controllers.dart';
 import '../../routes/dorak_routes.dart';
+import '../../utis/helpers/app_providers.dart';
 import '../../utis/util.dart';
 import '../components/components.dart';
 
@@ -15,6 +16,8 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final patient = Provider.of<AuthController>(context).currentUser?.patient;
+    var authController = Provider.of<AuthController>(context, listen: false);
+
     return Scaffold(
       backgroundColor: AppColors.liteWight,
       body: EmptyCard(
@@ -87,7 +90,14 @@ class ProfileScreen extends StatelessWidget {
                       backgroundColor: MaterialStateProperty.all(
                         Colors.transparent,
                       )),
-                  onPressed: () {},
+                  onPressed: () {
+                    AppProviders.disposeAllDisposableProviders(context);
+                    authController.logout(context);
+                    Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        NameRoutes.kWelcomeScreen,
+                        (Route<dynamic> route) => false);
+                  },
                   icon: Icon(
                     Icons.login_rounded,
                     size: 15.sp,

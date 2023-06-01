@@ -207,7 +207,16 @@ class LoginScreen extends StatelessWidget {
                               height: 7.h,
                               buttonColor: AppColors.white,
                               borderColor: AppColors.transparent,
-                              onPressed: () async {},
+                              onPressed: () async {
+                                final isSuccess =
+                                    await controller.signInWithSocial(
+                                        context, LoginSocialType.facebook);
+                                if (!isSuccess) {
+                                } else {
+                                  Navigator.of(context).pushReplacementNamed(
+                                      NameRoutes.kHomeScreen);
+                                }
+                              },
                               margin: EdgeInsets.symmetric(
                                   vertical: 1.h, horizontal: 2.5.w),
                             ),
@@ -226,7 +235,16 @@ class LoginScreen extends StatelessWidget {
                                 height: 7.h,
                                 buttonColor: AppColors.white,
                                 borderColor: AppColors.transparent,
-                                onPressed: () async {},
+                                onPressed: () async {
+                                  final isSuccess =
+                                      await controller.signInWithSocial(
+                                          context, LoginSocialType.google);
+                                  if (!isSuccess) {
+                                  } else {
+                                    Navigator.of(context).pushReplacementNamed(
+                                        NameRoutes.kHomeScreen);
+                                  }
+                                },
                                 margin: EdgeInsets.symmetric(
                                     vertical: 1.h, horizontal: 2.5.w)),
                           ],

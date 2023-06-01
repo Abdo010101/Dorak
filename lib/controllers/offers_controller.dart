@@ -7,7 +7,8 @@ import '../data/models/response/response.dart';
 
 class OffersController extends DisposableProvider {
   bool isLoading = false;
-  AllOffersResponse allOffers = AllOffersResponse();
+  AllOffersResponse searchResult = AllOffersResponse();
+  List<OfferResponse> offers = [];
   final _offersRepository = locator<OffersRepository>();
 
   Future<void> getAllOffers() async {
@@ -19,7 +20,8 @@ class OffersController extends DisposableProvider {
       };
       final result = await _offersRepository.getAllOffers(data);
       if (result.data != null) {
-        allOffers = result.data!;
+        searchResult = result.data!;
+        offers = searchResult.offers!.data!;
         isLoading = false;
         notifyListeners();
       } else {

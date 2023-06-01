@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "101557805399",
+    "firebase_url": "https://dorak-e98ba-default-rtdb.firebaseio.com",
+    "project_id": "dorak-e98ba",
+    "storage_bucket": "dorak-e98ba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:101557805399:android:ab38ee1c9b796d3d359e12",
+        "android_client_info": {
+          "package_name": "com.webstdy.dorak"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "101557805399-54tlb1t0ksdpjt1jbo68pok9cg0f0on5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVLShj-ZwYk8A33qYRFGlGML2Ul8TzcbI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "101557805399-54tlb1t0ksdpjt1jbo68pok9cg0f0on5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "101557805399-r2f750dlrm0lu78561i9i44lv5ea663o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.webstdy.dorak"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

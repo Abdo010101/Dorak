@@ -1,3 +1,4 @@
+export 'appointment_controller.dart';
 export 'auth/auth_controller.dart';
 export 'auth/login_controller.dart';
 export 'auth/register_controller.dart';
@@ -5,4 +6,6 @@ export 'disposable_controller.dart';
 export 'doctor_profile_controller.dart';
 export 'general_controller.dart';
 export 'main_screen_controller.dart';
+export 'notification_controller.dart';
+export 'offers_controller.dart';
 export 'patient_profile_controller.dart';

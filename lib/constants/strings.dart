@@ -177,6 +177,7 @@ class AppStrings {
   static const kDeleteOffer = 'delete_offer';
   static const kSubscriptionOption = 'sub_option';
   static const kViewBilling = 'view_billing';
+  static const kAllowNotificationsManually = 'allow_notifications_manually';
   static const kNoNotification = 'no_notification';
   static const kConfirmDeletion = 'confirm_deletion';
   static const kSureDeletion = 'are_you_sure_delete';
