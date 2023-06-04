@@ -6,3 +6,4 @@ export 'home_client.dart';
 export 'notification_client.dart';
 export 'offers_clint.dart';
 export 'profile_client.dart';
+export 'rate_client.dart';

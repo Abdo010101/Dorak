@@ -14,7 +14,8 @@ class DividerLogin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return SizedBox(
+      height: height ?? 0.5.h,
       child: Divider(
         height: height ?? 0,
         thickness: thickness ?? 0.25.h,

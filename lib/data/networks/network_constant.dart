@@ -33,4 +33,6 @@ class NetworkConstant {
   static const String kLogout = "logout";
   static const String kSocialLogin = "social-login";
   static const String kAppointment = "reservations";
+  static const String kAppRatings = "app-ratings";
+  static const String kCancelReservation = "$kAppointment/cancel-reservation";
 }

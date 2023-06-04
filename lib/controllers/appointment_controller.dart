@@ -42,4 +42,27 @@ class AppointmentsController extends ChangeNotifier {
       // isLoading.value = false;
     }
   }
+
+  Future<void> declineAppointment(int index) async {
+    try {
+      isLoading = true;
+      notifyListeners();
+      var data = {
+        'id': appointmentsList[index].id,
+      };
+      final result = await _appointmentsRepository.declineAppointment(data);
+      if (result.data != null) {
+        appointmentsList[index].status = AppStatus.cancelled.name;
+        isLoading = false;
+        notifyListeners();
+      } else {
+        //SnackBar(content: Text(result.error?.message), );
+      }
+    } on DioError catch (e) {
+      //return Error(errorMessage: DioExceptions.fromDioError(e).message);
+      //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
+    } finally {
+      // isLoading.value = false;
+    }
+  }
 }

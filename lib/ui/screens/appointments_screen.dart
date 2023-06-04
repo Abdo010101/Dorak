@@ -50,16 +50,25 @@ class AppointmentsScreen extends StatelessWidget {
                       controller.changeAppointmentDate(AppStrings.kPast),
                 ),
                 Expanded(
-                  child: controller.isLoading
-                      ? const LoadingWidget(
-                          backgroundColor: AppColors.transparent,
-                        )
-                      : ListView.builder(
+                  child: Stack(
+                    children: [
+                      ListView.builder(
                           padding: EdgeInsets.zero,
                           itemCount: controller.appointmentsList.length,
                           itemBuilder: (context, index) {
-                            return const AppointmentWidget();
+                            return AppointmentWidget(
+                              appointment: controller.appointmentsList[index],
+                              declineAppointment: () =>
+                                  controller.declineAppointment(index),
+                            );
                           }),
+                      controller.isLoading
+                          ? const LoadingWidget(
+                              backgroundColor: AppColors.transparent,
+                            )
+                          : const SizedBox(),
+                    ],
+                  ),
                 ),
               ],
             );

@@ -6,3 +6,4 @@ export 'general_repo.dart';
 export 'notification_repo.dart';
 export 'offers_repo.dart';
 export 'profile_repo.dart';
+export 'rate_repo.dart';

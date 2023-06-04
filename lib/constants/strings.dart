@@ -136,7 +136,7 @@ class AppStrings {
   static const kNoAppointmentsU = 'no_appointments_u';
   static const kNoAppointmentsP = 'no_appointments_p';
   static const kNoReviews = 'no_reviews';
-
+  static const kDecline = 'decline';
   static const kPromotingPackage = 'promoting_package';
   static const kRepresentativesContact = 'representatives_contact';
   static const kHome = 'home';

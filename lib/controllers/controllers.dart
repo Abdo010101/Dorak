@@ -1,3 +1,4 @@
+export 'app_review_controller.dart';
 export 'appointment_controller.dart';
 export 'auth/auth_controller.dart';
 export 'auth/login_controller.dart';
