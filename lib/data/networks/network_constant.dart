@@ -28,4 +28,10 @@ class NetworkConstant {
   static const String kRegisterRequest = "register";
   static const String kGeneralRequest = "general";
   static const String kAvailableSchedulesRequest = "available-schedules";
+  static const String kUpdateProfile = "update-profile";
+  static const String kNotifications = "notifications";
+  static const String kUpdateNotificationsStatus = "toggle-notifications";
+  static const String kLogout = "logout";
+  static const String kSocialLogin = "social-login";
+  static const String kAppointment = "reservations";
 }

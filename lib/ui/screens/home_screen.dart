@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
 import '../../constants/constants.dart';
 import '../../controllers/controllers.dart';
 import '../../routes/dorak_routes.dart';
@@ -185,7 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   offerPic: offerModel.mainPic,
                                   offerPrice: offerModel.priceBefore,
                                   doctorName: offerModel.doctor!.name,
-                                  rateCount: offerModel.doctor?.ratingsCount,
+                                  docPic: offerModel.doctor!.image,
                                   rate: offerModel.doctor!.rate,
                                   onPressed: () {},
                                 );

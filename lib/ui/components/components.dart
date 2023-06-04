@@ -8,6 +8,7 @@ export 'general/button_builder.dart';
 export 'general/check_box_builder.dart';
 export 'general/confirm_deletion.dart';
 export 'general/custom_app_bar.dart';
+export 'general/dialog.dart';
 export 'general/divider_builder.dart';
 export 'general/drop_down_builder.dart';
 export 'general/empty_card.dart';

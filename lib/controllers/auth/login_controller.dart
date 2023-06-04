@@ -2,10 +2,18 @@ import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/data/di/locator.dart';
 import 'package:dorakpattient/data/networks/model_response.dart';
 import 'package:dorakpattient/utis/util.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
+import '../../constants/constants.dart';
+import '../../data/models/request/request.dart';
 import '../../data/models/response/response.dart';
 import '../../data/repository/repository.dart';
+import '../../data/shared/shared_pref.dart';
 import '../../routes/dorak_routes.dart';
 
 class LoginController extends AuthController {
@@ -17,6 +25,7 @@ class LoginController extends AuthController {
   bool rememberMe = true;
   final _authenticationRepository = locator<AuthenticationRepository>();
   bool showPass = true;
+  final _sharedPref = locator<SharedPref>();
 
   onChangedRememberMe(bool? value) {
     rememberMe = value!;
@@ -26,17 +35,16 @@ class LoginController extends AuthController {
   Future<bool> signIn(BuildContext context) async {
     if (formKey.currentState?.validate() != true) return false;
     FocusScope.of(context).unfocus();
-    //String? firebaseToken = await FirebaseMessaging.instance.getToken();
+    String? firebaseToken = await FirebaseMessaging.instance.getToken();
 
     isLoading = true;
     notifyListeners();
     formKey.currentState?.save();
-
     final result = await login(
         email: emailTextEditingController.text,
         password: passwordTextEditingController.text,
         rememberMe: rememberMe,
-        token: '');
+        token: firebaseToken);
     isLoading = false;
     notifyListeners();
     if (result is Success<UserResponse?>) {
@@ -48,6 +56,123 @@ class LoginController extends AuthController {
 
       return false;
     }
+  }
+
+  Future<bool> signInWithSocial(
+      BuildContext context, LoginSocialType type) async {
+    isLoading = true;
+    notifyListeners();
+    _sharedPref.setLoginType(type);
+    LoginWithSocialRequest userData = type == LoginSocialType.facebook
+        ? await loginInWithFacebook()
+        : type == LoginSocialType.apple
+            ? await loginInWithApple()
+            : await loginWithGoogleAccount();
+    if (userData.name != null) {
+      final result = await Provider.of<AuthController>(context, listen: false)
+          .loginWithSocial(loginRequest: userData);
+      isLoading = false;
+      notifyListeners();
+      if (result is Success<UserResponse?>) {
+        return true;
+      } else {
+        Util.showSnackBar(context,
+            message: (result as Error<UserResponse?>).errorMessage!);
+        isLoading = false;
+        notifyListeners();
+        return false;
+      }
+    }
+    isLoading = false;
+    notifyListeners();
+    return false;
+  }
+
+  Map<String, dynamic>? _userData;
+
+  Future<LoginWithSocialRequest> loginInWithFacebook() async {
+    String? firebaseToken = await FirebaseMessaging.instance.getToken();
+    final accessToken = await FacebookAuth.instance.accessToken;
+    if (accessToken != null) {
+      final userData = await FacebookAuth.instance.getUserData();
+      _userData = userData;
+      return LoginWithSocialRequest(
+        email: _userData?['email'],
+        name: _userData?['name'],
+        socialId: _userData?['id'],
+        firebaseToken: firebaseToken,
+      );
+    } else {
+      String? firebaseToken = await FirebaseMessaging.instance.getToken();
+      final LoginResult result = await FacebookAuth.instance.login();
+      if (result.status == LoginStatus.success) {
+        final userData = await FacebookAuth.instance.getUserData();
+        _userData = userData;
+        return LoginWithSocialRequest(
+          email: _userData?['email'],
+          name: _userData?['name'],
+          socialId: _userData?['id'],
+          firebaseToken: firebaseToken,
+        );
+      } else {
+        print(result.status);
+        print(result.message);
+        return LoginWithSocialRequest();
+      }
+    }
+  }
+
+  Future<LoginWithSocialRequest> loginInWithApple() async {
+    String? firebaseToken = await FirebaseMessaging.instance.getToken();
+    final credential = await SignInWithApple.getAppleIDCredential(
+      scopes: [
+        AppleIDAuthorizationScopes.email,
+        AppleIDAuthorizationScopes.fullName,
+      ],
+    );
+    print(credential);
+    if (credential.state != null) {
+      return LoginWithSocialRequest(
+        email: credential.email,
+        name: credential.givenName,
+        socialId: credential.userIdentifier,
+        firebaseToken: firebaseToken,
+      );
+    } else {
+      return LoginWithSocialRequest();
+    }
+  }
+
+  logOutWithFacebook() async {
+    await FacebookAuth.instance.logOut();
+    _userData = null;
+  }
+
+  static final googleSignIn = GoogleSignIn(
+      clientId:
+          '1007375530455-eok55o0ge601agqaaih0ngvomgbv1gaf.apps.googleusercontent.com');
+  dynamic user;
+
+  Future<LoginWithSocialRequest> loginWithGoogleAccount() async {
+    String? firebaseToken = await FirebaseMessaging.instance.getToken();
+    user = await googleSignIn.signIn();
+    if (user != null) {
+      return LoginWithSocialRequest(
+        email: user.email,
+        name: user.displayName,
+        socialId: user.id,
+        firebaseToken: firebaseToken,
+      );
+    } else {
+      isLoading = false;
+      notifyListeners();
+      return LoginWithSocialRequest();
+    }
+  }
+
+  void logoutFromGoogleAccount() async {
+    user = await googleSignIn.disconnect();
+    print(user);
   }
 
   @override

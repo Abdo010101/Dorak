@@ -7,7 +7,6 @@ abstract class NameRoutes {
   static const kCompleteInfoScreen = '$kSplashScreen/complete-info';
   static const kOTPScreen = '$kRegisterScreen/otp';
   static const kHomeScreen = '$kSplashScreen/home';
-  static const kEditProfileScreen = '$kHomeScreen/edit_profile';
   static const kNotificationScreen = '$kHomeScreen/notification';
   static const kOffersScreen = '$kHomeScreen/offers';
   static const kSettingScreen = '$kProfileScreen/setting';
@@ -22,6 +21,8 @@ abstract class NameRoutes {
   static const kReportScreen = '$kHomeScreen/report_Screen';
   static const kProfileScreen = '$kHomeScreen/profile_screen';
   static const kProfileDetailsScreen = '$kProfileScreen/profile_details_screen';
+  static const kEditProfileScreen =
+      '$kProfileDetailsScreen/edit_profile_screen';
   static const kSuccessScreen = '$kOTPScreen/success_screen';
   static const kSignUpFingerScreen = '$kSuccessScreen/sign_up_finger_screen';
   static const kMedicalCenterScreen = '$kProfileScreen/medical_center_screen';

@@ -40,7 +40,7 @@ class Patient {
   String? weight;
   String? height;
   int? allowNotifications;
-  int? countryId;
+  String? countryId;
 
   Patient(
       {this.id,

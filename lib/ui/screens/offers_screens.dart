@@ -1,7 +1,9 @@
 import 'package:dorakpattient/constants/constants.dart';
+import 'package:dorakpattient/controllers/offers_controller.dart';
 import 'package:dorakpattient/ui/components/components.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 class OffersScreen extends StatelessWidget {
@@ -52,20 +54,36 @@ class OffersScreen extends StatelessWidget {
             SizedBox(
               height: 1.5.h,
             ),
-            Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.zero,
-                itemCount: 7,
-                itemBuilder: (context, index) {
-                  return OfferWidget(
-                    offerTittle: 'offerTittle',
-                    offerSubTittle: 'offerSubTittle',
-                    offerPic: AppAssets.kOfferPic,
-                    onPressed: () {},
-                  );
-                },
-              ),
+            Consumer<OffersController>(
+              builder: (context, controller, child) {
+                return Expanded(
+                  child: controller.isLoading
+                      ? const LoadingWidget(
+                          backgroundColor: AppColors.transparent,
+                        )
+                      : ListView.builder(
+                          padding: EdgeInsets.zero,
+                          itemCount: controller.offers.length,
+                          itemBuilder: (context, index) {
+                            return OfferWidget(
+                              offerTittle: controller.offers[index].title,
+                              offerSubTittle:
+                                  controller.offers[index].description,
+                              offerPic: controller.offers[index].mainPic,
+                              offerPrice: controller.offers[index].priceBefore,
+                              doctorName: controller.offers[index].doctor?.name,
+                              docPic: controller.offers[index].doctor!.image,
+                              rate: controller.offers[index].doctor!.rate,
+                              onPressed: () {},
+                            );
+                          },
+                        ),
+                );
+              },
             ),
+            SizedBox(
+              height: 10.h,
+            )
           ],
         ),
       ),

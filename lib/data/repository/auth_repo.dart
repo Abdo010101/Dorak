@@ -41,4 +41,36 @@ class AuthenticationRepository extends BaseRepository {
       return BaseModel.noNetworkConnection();
     }
   }
+
+  Future<BaseModel<UserResponse>> loginWithSocial(
+      LoginWithSocialRequest model) async {
+    if (await checkForConnectivity()) {
+      try {
+        return BaseModel(
+            data:
+                await authenticationClient.loginWithSocial(model).then((value) {
+          return value.data;
+        }));
+      } on DioError catch (e) {
+        return BaseModel(error: ErrorResponse(dioError: e));
+      }
+    } else {
+      return BaseModel.noNetworkConnection();
+    }
+  }
+
+  Future<BaseModel<dynamic>> logout() async {
+    if (await checkForConnectivity()) {
+      try {
+        return BaseModel(
+            data: await authenticationClient.logout().then((value) {
+          return value;
+        }));
+      } on DioError catch (e) {
+        return BaseModel(error: ErrorResponse(dioError: e));
+      }
+    } else {
+      return BaseModel.noNetworkConnection();
+    }
+  }
 }

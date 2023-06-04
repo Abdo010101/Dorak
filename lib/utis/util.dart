@@ -6,9 +6,9 @@ import 'package:url_launcher/url_launcher.dart';
 import '../constants/constants.dart';
 
 class Util {
-  static showSnackBar(BuildContext context, {required String message}) {
+  static showSnackBar(BuildContext context, {required String? message}) {
     ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
+        .showSnackBar(SnackBar(content: Text(message ?? "")));
   }
 
   // static void pickImageBottomSheet(BuildContext context,

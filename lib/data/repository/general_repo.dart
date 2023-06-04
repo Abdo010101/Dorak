@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:dorakpattient/data/networks/base_model.dart';
+import 'package:dorakpattient/data/networks/clients/general_client.dart';
 import 'package:dorakpattient/data/repository/base_repo.dart';
 
 import '../models/response/response.dart';
