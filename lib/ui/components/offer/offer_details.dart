@@ -1,9 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../constants/constants.dart';
+import '../../../controllers/controllers.dart';
 import '../../../data/models/response/response.dart';
+import '../../../routes/dorak_routes.dart';
 import '../../../utis/util.dart';
 import '../components.dart';
 
@@ -124,7 +127,11 @@ class OfferDetailsBottomSheet extends StatelessWidget {
           title: AppStrings.kBookNow.tr(),
           width: 100.w,
           height: 6.5.h,
-          onPressed: () async {},
+          onPressed: () async {
+            Provider.of<DoctorProfileController>(context, listen: false)
+                .getDoctorProfile(context, doctorId: offer!.doctor!.id!);
+            Navigator.of(context).pushNamed(NameRoutes.kDoctorScreen);
+          },
         )
       ],
     );
