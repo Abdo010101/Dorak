@@ -52,7 +52,7 @@ class BottomSheetBuilder extends StatelessWidget {
                             topRight: Radius.circular(25)),
                     color: AppColors.liteWight),
                 height: height != null ? height! * 0.67 : 82.5.h,
-                padding: EdgeInsets.symmetric(vertical: 2.5.h),
+                padding: EdgeInsets.symmetric(vertical: 2.5.h, horizontal: 4.w),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment:

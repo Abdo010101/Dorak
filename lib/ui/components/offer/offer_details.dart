@@ -3,31 +3,129 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../constants/constants.dart';
+import '../../../data/models/response/response.dart';
+import '../../../utis/util.dart';
 import '../components.dart';
 
 class OfferDetailsBottomSheet extends StatelessWidget {
-  const OfferDetailsBottomSheet({Key? key}) : super(key: key);
-
+  const OfferDetailsBottomSheet({Key? key, this.offer}) : super(key: key);
+  final OfferResponse? offer;
   @override
   Widget build(BuildContext context) {
-    // var editProfileController =
-    // Provider.of<EditClinicController>(context, listen: true);
     return BottomSheetBuilder(
+      height: 110.h,
       bottomWidget: ButtonBuilder(
-        radius: 0,
+        radius: 25,
         buttonColor: AppColors.blue,
-        title: AppStrings.kBookAppointments.tr(),
+        title: AppStrings.kBookNow.tr(),
         width: 100.w,
         height: 6.5.h,
         onPressed: () async {},
       ),
       children: [
-        TextBuilder(
-          text: AppStrings.kClinicEdit.tr(),
-          color: Colors.black,
-          size: 15.sp,
-          verticalPadding: 1.h,
+        GeometricalAvatar(
+          height: 20.h,
+          width: 100.w,
+          radius: 15,
+          url: offer?.mainPic,
         ),
+        Row(
+          children: [
+            GeometricalAvatar(
+              margin: EdgeInsets.only(top: 2.5.h),
+              radius: 35.sp,
+              url: offer?.doctor?.image,
+              child: const SizedBox(),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 2.5.h),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextBuilder(
+                    text: offer?.doctor?.name,
+                    horizontalPadding: 2.5.w,
+                    verticalPadding: 0,
+                    color: AppColors.black,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsetsDirectional.only(
+                            start: 2.5.w, top: 1.h, end: 1.w),
+                        height: 2.5.h,
+                        child: Util.isNumeric(offer?.doctor?.rate)
+                            ? RatingBarWidget(
+                                initialRating:
+                                    double.parse(offer!.doctor!.rate!),
+                                itemSize: 10.sp,
+                              )
+                            : const SizedBox(),
+                      ),
+                      Text(offer!.doctor!.rate!),
+                    ],
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              width: 15.w,
+              child: Text(
+                '${offer?.priceBefore ?? '1000'}LE',
+                maxLines: 1,
+                style: AppStyles.kButtonTextStyle.copyWith(
+                  decoration: TextDecoration.lineThrough,
+                  color: AppColors.gray,
+                  fontSize: 10.sp,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+            ),
+            const Spacer(),
+            SizedBox(
+              width: 15.w,
+              child: Text(
+                '${offer?.priceAfter ?? '1000'}LE',
+                maxLines: 1,
+                style: AppStyles.kButtonTextStyle.copyWith(
+                  color: AppColors.blue,
+                  fontSize: 10.sp,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            )
+          ],
+        ),
+        EmptyCard(
+          horizontalMargin: 0,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              TextBuilder(
+                text: offer?.title,
+                color: AppColors.black,
+                verticalPadding: 0,
+                horizontalPadding: 0,
+              ),
+              TextBuilder(
+                text: offer?.description,
+                width: 100.w,
+                maxLin: 6,
+                horizontalPadding: 0,
+                align: TextAlign.end,
+              ),
+            ],
+          ),
+        ),
+        ButtonBuilder(
+          radius: 25,
+          buttonColor: AppColors.blue,
+          title: AppStrings.kBookNow.tr(),
+          width: 100.w,
+          height: 6.5.h,
+          onPressed: () async {},
+        )
       ],
     );
   }
