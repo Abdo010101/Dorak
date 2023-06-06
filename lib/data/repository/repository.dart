@@ -7,3 +7,4 @@ export 'notification_repo.dart';
 export 'offers_repo.dart';
 export 'available_appointment_repo.dart';
 export 'profile_repo.dart';
+export 'rate_repo.dart';

@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/controllers/home_controller.dart';
-import 'package:dorakpattient/controllers/offers_controller.dart';
 import 'package:dorakpattient/routes/dorak_routes.dart';
 import 'package:dorakpattient/routes/route_manger.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -78,6 +77,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => OffersController()),
         ChangeNotifierProvider(create: (context) => PatientProfileController()),
         ChangeNotifierProvider(create: (context) => AppointmentsController()),
+        ChangeNotifierProvider(create: (context) => AppReviewController()),
       ],
       child: Sizer(
         builder: (BuildContext context, Orientation orientation,

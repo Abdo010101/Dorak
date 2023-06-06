@@ -16,12 +16,14 @@ class OfferWidget extends StatelessWidget {
     this.doctorName,
     this.onPressed,
     this.rate,
-    this.offerPrice,
+    this.priceBefore,
     this.docPic,
+    this.priceAfter,
   }) : super(key: key);
   final VoidCallback? onPressed;
   final String? offerTittle;
-  final String? offerPrice;
+  final String? priceBefore;
+  final String? priceAfter;
   final String? offerSubTittle;
   final String? offerPic;
   final String? docPic;
@@ -113,7 +115,7 @@ class OfferWidget extends StatelessWidget {
               SizedBox(
                 width: 15.w,
                 child: Text(
-                  '${offerPrice ?? '1000'}LE',
+                  '${priceBefore ?? '1000'}LE',
                   maxLines: 1,
                   style: AppStyles.kButtonTextStyle.copyWith(
                     decoration: TextDecoration.lineThrough,
@@ -127,7 +129,7 @@ class OfferWidget extends StatelessWidget {
               SizedBox(
                 width: 15.w,
                 child: Text(
-                  '${offerPrice ?? '1000'}LE',
+                  '${priceAfter ?? '1000'}LE',
                   maxLines: 1,
                   style: AppStyles.kButtonTextStyle.copyWith(
                     color: AppColors.blue,

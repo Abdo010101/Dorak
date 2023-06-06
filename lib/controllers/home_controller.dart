@@ -4,6 +4,7 @@ import 'package:dorakpattient/data/repository/home_repo.dart';
 import 'package:dorakpattient/routes/dorak_routes.dart';
 import 'package:dorakpattient/utis/helpers/app_providers.dart';
 import 'package:flutter/cupertino.dart';
+
 import '../../data/models/response/response.dart';
 
 class HomeController extends ChangeNotifier {
@@ -12,7 +13,7 @@ class HomeController extends ChangeNotifier {
   HomeResponse? homeData;
   List<Doctor> bestDoctorsList = [];
   List<OfferResponse> latestOfferList = [];
-  List<PatientReservations> appointmentList = [];
+  List<AppointmentResponse> appointmentList = [];
 
   Future<void> getHomeData(BuildContext context) async {
     try {

@@ -176,17 +176,26 @@ class LoginScreen extends StatelessWidget {
                             Container(
                               margin: EdgeInsets.only(bottom: 1.h),
                               padding: EdgeInsets.symmetric(vertical: 1.h),
+                              height: 3.5.h,
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  const DividerLogin(
-                                    dividerColor: AppColors.darkGray,
+                                  Expanded(
+                                    child: DividerLogin(
+                                      dividerColor: AppColors.darkGray,
+                                      height: 0.5.h,
+                                      thickness: 0.25.h,
+                                    ),
                                   ),
                                   Text(
                                     AppStrings.kOrLoginScreen.tr(),
                                   ),
-                                  const DividerLogin(
-                                    dividerColor: AppColors.darkGray,
+                                  Expanded(
+                                    child: DividerLogin(
+                                      dividerColor: AppColors.darkGray,
+                                      height: 0.5.h,
+                                      thickness: 0.25.h,
+                                    ),
                                   ),
                                 ],
                               ),

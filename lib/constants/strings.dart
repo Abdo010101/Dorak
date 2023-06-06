@@ -136,7 +136,7 @@ class AppStrings {
   static const kNoAppointmentsU = 'no_appointments_u';
   static const kNoAppointmentsP = 'no_appointments_p';
   static const kNoReviews = 'no_reviews';
-
+  static const kDecline = 'decline';
   static const kPromotingPackage = 'promoting_package';
   static const kRepresentativesContact = 'representatives_contact';
   static const kHome = 'home';
@@ -216,4 +216,5 @@ class AppStrings {
   static const kPickupTime = 'pickup_time';
   static const kNotAvailableDay = 'day_not_available';
   static const kGenderList = ['male', 'female'];
+  static const kBookNow = 'book_now';
 }

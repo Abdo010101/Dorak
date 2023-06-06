@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         backgroundColor: AppColors.blue,
         body: Consumer<HomeController>(
-          builder: (con, controller, child) {
+          builder: (context, controller, child) {
             return EmptyCard(
               borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(25), topLeft: Radius.circular(25)),
@@ -133,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               )
                             : Container(
                                 margin: EdgeInsets.symmetric(vertical: 0.75.h),
-                                height: 28.h,
+                                height: 24.h,
                                 child: ListView.separated(
                                   itemCount:
                                       controller.homeData!.bestDoctors!.length,
@@ -184,11 +184,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                   offerTittle: offerModel.title,
                                   offerSubTittle: '${offerModel.description}',
                                   offerPic: offerModel.mainPic,
-                                  offerPrice: offerModel.priceBefore,
+                                  priceBefore: offerModel.priceBefore,
                                   doctorName: offerModel.doctor!.name,
                                   docPic: offerModel.doctor!.image,
                                   rate: offerModel.doctor!.rate,
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    showBottomSheet(
+                                        context: context,
+                                        backgroundColor: Colors.transparent,
+                                        builder: (context) {
+                                          return OfferDetailsBottomSheet(
+                                            offer: offerModel,
+                                          );
+                                        });
+                                  },
                                 );
                               },
                               separatorBuilder:
@@ -213,9 +222,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         : ListView.builder(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
-                            itemCount: 4,
+                            itemCount: controller.appointmentList.length,
                             itemBuilder: (context, index) {
-                              return const AppointmentWidget();
+                              return AppointmentWidget(
+                                appointment: controller.appointmentList[index],
+                              );
                             },
                           ),
                     SizedBox(

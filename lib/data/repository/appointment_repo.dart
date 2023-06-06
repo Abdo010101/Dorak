@@ -26,4 +26,20 @@ class AppointmentsRepository extends BaseRepository {
       return BaseModel.noNetworkConnection();
     }
   }
+
+  Future<BaseModel<AppointmentResponse>> declineAppointment(var type) async {
+    if (await checkForConnectivity()) {
+      try {
+        return BaseModel(
+            data:
+                await appointmentClient.declineAppointment(type).then((value) {
+          return value.data;
+        }));
+      } on DioError catch (e) {
+        return BaseModel(error: ErrorResponse(dioError: e));
+      }
+    } else {
+      return BaseModel.noNetworkConnection();
+    }
+  }
 }

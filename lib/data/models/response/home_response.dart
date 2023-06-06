@@ -3,7 +3,7 @@ import 'response.dart';
 class HomeResponse {
   List<Doctor>? bestDoctors;
   List<OfferResponse>? latestOffers;
-  List<PatientReservations>? patientReservations;
+  List<AppointmentResponse>? patientReservations;
   HomeResponse({
     this.bestDoctors,
     this.latestOffers,
@@ -18,9 +18,9 @@ class HomeResponse {
       });
     }
     if (json['patient_reservations'] != null) {
-      patientReservations = <PatientReservations>[];
+      patientReservations = <AppointmentResponse>[];
       json['patient_reservations'].forEach((v) {
-        patientReservations!.add(PatientReservations.fromJson(v));
+        patientReservations!.add(AppointmentResponse.fromJson(v));
       });
     }
     if (json['latest_offers'] != null) {
@@ -99,63 +99,6 @@ class BestDoctors {
     data['address'] = this.address;
     data['rate'] = this.rate;
     data['ratings_count'] = this.ratingsCount;
-    return data;
-  }
-}
-
-class PatientReservations {
-  int? id;
-  String? mainSpecialization;
-  String? fullImagePath;
-  String? name;
-  String? rate;
-  String? phone;
-  String? status;
-  String? date;
-  String? time;
-  String? day;
-  String? month;
-
-  PatientReservations(
-      {this.id,
-      this.mainSpecialization,
-      this.fullImagePath,
-      this.name,
-      this.rate,
-      this.phone,
-      this.status,
-      this.date,
-      this.time,
-      this.day,
-      this.month});
-
-  PatientReservations.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    mainSpecialization = json['main_specialization'];
-    fullImagePath = json['full_image_path'];
-    name = json['name'];
-    rate = json['rate'];
-    phone = json['phone'];
-    status = json['status'];
-    date = json['date'];
-    time = json['time'];
-    day = json['day'];
-    month = json['month'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['main_specialization'] = this.mainSpecialization;
-    data['full_image_path'] = this.fullImagePath;
-    data['name'] = this.name;
-    data['rate'] = this.rate;
-    data['phone'] = this.phone;
-    data['status'] = this.status;
-    data['date'] = this.date;
-    data['time'] = this.time;
-    data['day'] = this.day;
-    data['month'] = this.month;
     return data;
   }
 }
