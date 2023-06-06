@@ -8,6 +8,7 @@ import '../data/repository/repository.dart';
 class GeneralController extends ChangeNotifier {
   final _generalRepository = locator<GeneralRepository>();
   GeneralResponse? generalResponse;
+  List<Titles> specializationList = [];
   /* List<GeneralData> subSpecializationList = [];
   List<GeneralData> areaList = [];
   List<MedicalCenterResponse> medicalCenterList = [];

@@ -29,6 +29,9 @@ class SearchForSpecialtiesScreen extends StatelessWidget {
             TextFormFieldBuilder(
               hint: 'Search for a speciality',
               verticalMargin: 0,
+              onChange: (text) {
+                // controller.search(text);
+              },
               horizontalMargin: 0,
               maxLines: 3,
               width: 100.w,
