@@ -45,12 +45,9 @@ void main() async {
   } catch (e) {}
   runApp(
     EasyLocalization(
-      supportedLocales: const [
-        Locale("ar"),
-        Locale("en"),
-      ],
+      supportedLocales: LanguageController.allLocales,
       path: 'assets/translations',
-      startLocale: const Locale("en"),
+      startLocale: const Locale("ar"),
       child: const MyApp(),
     ),
   );
@@ -78,10 +75,15 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => PatientProfileController()),
         ChangeNotifierProvider(create: (context) => AppointmentsController()),
         ChangeNotifierProvider(create: (context) => AppReviewController()),
+        ChangeNotifierProvider(create: (context) => LanguageController()),
       ],
       child: Sizer(
         builder: (BuildContext context, Orientation orientation,
             DeviceType deviceType) {
+          context.read<LanguageController>().checkStatus =
+              EasyLocalization.of(context)?.currentLocale == const Locale('en')
+                  ? 'English'
+                  : 'عربى';
           return MaterialApp(
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,

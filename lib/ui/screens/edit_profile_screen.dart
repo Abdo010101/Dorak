@@ -15,8 +15,8 @@ class EditProfileScreen extends StatelessWidget {
     PatientProfileController controller =
         Provider.of<PatientProfileController>(context, listen: false);
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: 'Edit my profile',
+      appBar: CustomAppBar(
+        title: AppStrings.kEditProfile.tr(),
       ),
       bottomNavigationBar: ButtonBuilder(
         title: AppStrings.kSaveChanges.tr(),

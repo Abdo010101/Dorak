@@ -66,6 +66,8 @@ class RouteManger {
 
       case NameRoutes.kGenderScreen:
         return MaterialPageRoute(builder: (context) => const GenderScreen());
+      case NameRoutes.kLanguageScreen:
+        return MaterialPageRoute(builder: (context) => const LanguageScreen());
 
       default:
         return MaterialPageRoute(builder: (context) => const MainTestScreen());

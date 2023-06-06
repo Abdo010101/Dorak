@@ -6,6 +6,7 @@ export 'auth/register_controller.dart';
 export 'disposable_controller.dart';
 export 'doctor_profile_controller.dart';
 export 'general_controller.dart';
+export 'language_controller.dart';
 export 'main_screen_controller.dart';
 export 'notification_controller.dart';
 export 'offers_controller.dart';

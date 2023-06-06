@@ -80,7 +80,7 @@ class ClinicWidget extends StatelessWidget {
                 SvgPicture.asset(AppAssets.kMoneyIcon),
                 TextBuilder(
                   width: 30.w,
-                  text: "Fees: 300 LE",
+                  text: "${AppStrings.kFees.tr()}: 300 LE",
                   size: AppFontSizes.kS2,
                   color: AppColors.navyBlue,
                   verticalPadding: 0,

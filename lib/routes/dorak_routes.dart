@@ -30,4 +30,5 @@ abstract class NameRoutes {
   static const kChangePasswordScreen = '$kOTPScreen/changePassword';
   static const kMainTestScreen = 'main_test_screen';
   static const kGenderScreen = '$kWelcomeScreen/gender_screen';
+  static const kLanguageScreen = '$kWelcomeScreen/language_screen';
 }

@@ -7,7 +7,7 @@ import '../data/models/response/response.dart';
 import '../data/repository/repository.dart';
 
 class AppointmentsController extends ChangeNotifier {
-  String appointmentDate = AppStrings.kToday;
+  String appointmentDate = AppStrings.kUpcoming;
   bool isLoading = false;
   bool pressed = false;
   List<AppointmentResponse> appointmentsList = [];

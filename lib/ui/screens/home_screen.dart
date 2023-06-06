@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 1.5.h,
                     ),
                     TextBuilder(
-                      text: 'Book Clinic Appointment',
+                      text: AppStrings.kBookAppointment.tr(),
                       color: AppColors.navyBlue,
                       size: AppFontSizes.kS5,
                       verticalPadding: 1.h,
@@ -109,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: AppColors.gray,
                             ),
                             TextBuilder(
-                              text: 'Find a doctor or speciality',
+                              text: AppStrings.kFindDoctor.tr(),
                               verticalPadding: 0,
                               horizontalPadding: 3.w,
                               size: AppFontSizes.kS3,
@@ -119,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     SectionLabel(
-                      title: 'Best Doctors',
+                      title: AppStrings.kBestDoctors.tr(),
                       seeAllPressed: () {},
                     ),
                     controller.isLoading
@@ -127,9 +127,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             backgroundColor: AppColors.transparent,
                           )
                         : controller.bestDoctorsList.isEmpty
-                            ? const Center(
+                            ? Center(
                                 child:
-                                    Text("There is No Available Doctors Now "),
+                                    Text(AppStrings.kNoAvailableDoctors.tr()),
                               )
                             : Container(
                                 margin: EdgeInsets.symmetric(vertical: 0.75.h),
@@ -168,8 +168,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       seeAllPressed: () {},
                     ),
                     controller.latestOfferList.isEmpty
-                        ? const Center(
-                            child: Text("There is No Available Offers Now "),
+                        ? Center(
+                            child: Text(AppStrings.kNoAvailableOffers.tr()),
                           )
                         : Container(
                             margin: EdgeInsets.symmetric(vertical: 1.h),
@@ -212,12 +212,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 1.h,
                     ),
                     SectionLabel(
-                      title: 'My Appointment',
+                      title: AppStrings.kMyAppointment.tr(),
                       seeAllPressed: () {},
                     ),
                     controller.appointmentList.isEmpty
-                        ? const Center(
-                            child: Text("There is No Available Appointment"),
+                        ? Center(
+                            child:
+                                Text(AppStrings.kNoAvailableAppointment.tr()),
                           )
                         : ListView.builder(
                             shrinkWrap: true,

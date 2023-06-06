@@ -5,6 +5,7 @@ export 'edit_profile_screen.dart';
 export 'gender_screen.dart';
 export 'home_screen.dart';
 export 'introduction_screen.dart';
+export 'language_screen.dart';
 export 'login_screen.dart';
 export 'main_screen.dart';
 export 'main_test_screen.dart';
