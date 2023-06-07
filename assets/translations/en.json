@@ -115,11 +115,13 @@
   "add_appointment_fail": "AddAppointmentFail",
   "waiting_time": "Waiting Time:",
   "favorites": " Favorites",
+  "book_now": "Book Now",
   "book_appointment": "Book Appointment",
   "Find_doctor": "Find a doctor or speciality",
   "best_doctors": "Best Doctors",
   "no_available_doctors": "There is No Available Doctors Now",
   "no_available_offers": "There is No Available Offers Now",
   "my_appointment": "My Appointment",
-  "no_available_appointment": "There is No Available Appointment"
+  "no_available_appointment": "There is No Available Appointment",
+  "search_for_speciality": "Search for a speciality"
 }

@@ -33,6 +33,7 @@ class OfferDetailsBottomSheet extends StatelessWidget {
           url: offer?.mainPic,
         ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             GeometricalAvatar(
               margin: EdgeInsets.only(top: 2.5.h),
@@ -72,6 +73,7 @@ class OfferDetailsBottomSheet extends StatelessWidget {
                 ],
               ),
             ),
+            const Spacer(),
             SizedBox(
               width: 15.w,
               child: Text(
@@ -85,7 +87,9 @@ class OfferDetailsBottomSheet extends StatelessWidget {
                 ),
               ),
             ),
-            const Spacer(),
+            SizedBox(
+              width: 0.5.w,
+            ),
             SizedBox(
               width: 15.w,
               child: Text(

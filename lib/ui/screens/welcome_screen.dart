@@ -13,7 +13,7 @@ class WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: (Container(
+        child: Container(
           color: AppColors.primary,
           padding: EdgeInsets.only(left: 3.0.w, right: 3.0.w, top: 10.0.h),
           margin: EdgeInsets.symmetric(horizontal: 2.0.w),
@@ -65,8 +65,7 @@ class WelcomeScreen extends StatelessWidget {
                         title: AppStrings.kRegister.tr(),
                         onPressed: () {
                           Navigator.of(context)
-                              .pushNamed(NameRoutes.kGenderScreen);
-
+                              .pushNamed(NameRoutes.kRegisterScreen);
                           // if (context
                           //             .read<GeneralController>()
                           //             .policy
@@ -94,7 +93,7 @@ class WelcomeScreen extends StatelessWidget {
               )
             ],
           ),
-        )),
+        ),
       ),
     );
   }

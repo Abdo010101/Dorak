@@ -10,4 +10,5 @@ export 'language_controller.dart';
 export 'main_screen_controller.dart';
 export 'notification_controller.dart';
 export 'offers_controller.dart';
+export 'otp_verification_controller.dart';
 export 'patient_profile_controller.dart';

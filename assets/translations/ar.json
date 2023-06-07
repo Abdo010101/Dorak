@@ -115,11 +115,13 @@
   "add_appointment_fail": "لم يتم إضافة الموعد ",
   "waiting_time": "وقت الإنتظار :",
   "favorites": " المفضلة",
+  "book_now": "أحجز الأن",
   "book_appointment": "أحجز موعد",
   "Find_doctor": "ابحث عن طبيب أو تخصص",
   "best_doctors": "أفضل الأطباء",
   "no_available_doctors": "لا يوجد أطباء حاليا",
   "no_available_offers": "لا توجد عروض متاحة الآن",
   "my_appointment": "المواعيد الخاصة بي",
-  "no_available_appointment": "لا يوجد موعد متاح"
+  "no_available_appointment": "لا يوجد موعد متاح",
+  "search_for_speciality": "البحث عن متخصص"
 }

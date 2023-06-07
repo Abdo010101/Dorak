@@ -59,6 +59,56 @@ class AuthenticationRepository extends BaseRepository {
     }
   }
 
+  Future<BaseModel<dynamic>> sendOtp({required var body}) async {
+    if (await checkForConnectivity()) {
+      try {
+        return BaseModel(
+            data: await authenticationClient.sendOtp(body).then((value) {
+          return value;
+        }));
+      } on DioError catch (e) {
+        return BaseModel(error: ErrorResponse(dioError: e));
+      }
+    } else {
+      return BaseModel.noNetworkConnection();
+    }
+  }
+
+  Future<BaseModel<dynamic>> checkOtp(
+      {required String phone, required var body}) async {
+    if (await checkForConnectivity()) {
+      try {
+        return BaseModel(
+            data:
+                await authenticationClient.checkOtp(phone, body).then((value) {
+          return value;
+        }));
+      } on DioError catch (e) {
+        return BaseModel(error: ErrorResponse(dioError: e));
+      }
+    } else {
+      return BaseModel.noNetworkConnection();
+    }
+  }
+
+  Future<BaseModel<dynamic>> changePassword(
+      {required String phone, required var body}) async {
+    if (await checkForConnectivity()) {
+      try {
+        return BaseModel(
+            data: await authenticationClient
+                .changePassword(phone, body)
+                .then((value) {
+          return value;
+        }));
+      } on DioError catch (e) {
+        return BaseModel(error: ErrorResponse(dioError: e));
+      }
+    } else {
+      return BaseModel.noNetworkConnection();
+    }
+  }
+
   Future<BaseModel<dynamic>> logout() async {
     if (await checkForConnectivity()) {
       try {

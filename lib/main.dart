@@ -76,6 +76,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => AppointmentsController()),
         ChangeNotifierProvider(create: (context) => AppReviewController()),
         ChangeNotifierProvider(create: (context) => LanguageController()),
+        ChangeNotifierProvider(create: (context) => VerifyController()),
       ],
       child: Sizer(
         builder: (BuildContext context, Orientation orientation,

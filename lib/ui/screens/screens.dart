@@ -1,7 +1,9 @@
 export 'app_review_screen.dart';
 export 'appointments_screen.dart';
+export 'change_password_screen.dart';
 export 'doctor_screen.dart';
 export 'edit_profile_screen.dart';
+export 'forget_password_screen.dart';
 export 'gender_screen.dart';
 export 'home_screen.dart';
 export 'introduction_screen.dart';
@@ -11,6 +13,7 @@ export 'main_screen.dart';
 export 'main_test_screen.dart';
 export 'notification_screen.dart';
 export 'offers_screens.dart';
+export 'phone_verification_screen.dart';
 export 'profile_details_screen.dart';
 export 'profile_screen.dart';
 export 'result_of_search.dart';

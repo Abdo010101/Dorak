@@ -137,10 +137,17 @@ class LoginScreen extends StatelessWidget {
                                     children: [
                                       Row(
                                         children: [
-                                          CheckBoxBuilder(
-                                              onChanged: controller
-                                                  .onChangedRememberMe,
-                                              value: controller.rememberMe),
+                                          Selector<LoginController, bool>(
+                                            selector: (_, provider) =>
+                                                provider.rememberMe,
+                                            builder:
+                                                (context, rememberMe, child) {
+                                              return CheckBoxBuilder(
+                                                  onChanged: controller
+                                                      .onChangedRememberMe,
+                                                  value: rememberMe);
+                                            },
+                                          ),
                                           Text(
                                             AppStrings.kRememberMe.tr(),
                                             style: TextStyle(fontSize: 11.sp),
@@ -175,15 +182,14 @@ class LoginScreen extends StatelessWidget {
                             ),
                             Container(
                               margin: EdgeInsets.only(bottom: 1.h),
-                              padding: EdgeInsets.symmetric(vertical: 1.h),
-                              height: 3.5.h,
+                              height: 2.75.h,
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Expanded(
                                     child: DividerLogin(
                                       dividerColor: AppColors.darkGray,
-                                      height: 0.5.h,
+                                      height: 1.h,
                                       thickness: 0.25.h,
                                     ),
                                   ),
@@ -193,7 +199,7 @@ class LoginScreen extends StatelessWidget {
                                   Expanded(
                                     child: DividerLogin(
                                       dividerColor: AppColors.darkGray,
-                                      height: 0.5.h,
+                                      height: 1.h,
                                       thickness: 0.25.h,
                                     ),
                                   ),

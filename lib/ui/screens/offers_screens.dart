@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 class OffersScreen extends StatelessWidget {
-  OffersScreen({Key? key}) : super(key: key);
+  const OffersScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +38,7 @@ class OffersScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextFormFieldBuilder(
-                  hint: 'Search for a speciality',
+                  hint: AppStrings.kSearchForSpeciality.tr(),
                   controller: controller.offerSearchController,
                   verticalMargin: 0,
                   horizontalMargin: 0,

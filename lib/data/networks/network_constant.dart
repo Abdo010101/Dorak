@@ -38,4 +38,9 @@ class NetworkConstant {
   static const String kAppointment = "reservations";
   static const String kAppRatings = "app-ratings";
   static const String kCancelReservation = "$kAppointment/cancel-reservation";
+  static const String kCheckOtp = "check-otp";
+  static const String kSendOtp = "send-otp";
+  static const String kChangePassword = "change-password";
+  static const String kSendOtpRequest = "resend-otp";
+  static const String kVerifyOtpRequest = "verify";
 }
