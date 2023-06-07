@@ -11,7 +11,7 @@ class SearchController extends ChangeNotifier {
   List<AppointmentResponse> appointmentsList = [];
   final _appointmentsRepository = locator<AppointmentsRepository>();
 
-  Future<void> getAllAppointments() async {
+  /* Future<void> getAllAppointments() async {
     try {
       isLoading = true;
       final result = await _appointmentsRepository
@@ -33,5 +33,5 @@ class SearchController extends ChangeNotifier {
     } finally {
       // isLoading.value = false;
     }
-  }
+  }*/
 }
