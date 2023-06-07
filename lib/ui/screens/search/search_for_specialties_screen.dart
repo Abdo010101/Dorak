@@ -13,6 +13,8 @@ class SearchForSpecialtiesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GeneralController generalController =
+        Provider.of<GeneralController>(context, listen: false);
     return Scaffold(
       backgroundColor: AppColors.liteWight,
       appBar: const CustomAppBar(title: 'Specialties'),
@@ -29,11 +31,12 @@ class SearchForSpecialtiesScreen extends StatelessWidget {
             TextFormFieldBuilder(
               hint: 'Search for a speciality',
               verticalMargin: 0,
+              textInputAction: TextInputAction.done,
               onChange: (text) {
-                // controller.search(text);
+                generalController.search(text);
               },
               horizontalMargin: 0,
-              maxLines: 3,
+              maxLines: 1,
               width: 100.w,
               height: 7.5.h,
               padding: EdgeInsets.only(right: 2.5.w, left: 2.5.w, top: 5.h),
@@ -56,29 +59,32 @@ class SearchForSpecialtiesScreen extends StatelessWidget {
             ),
             Consumer<GeneralController>(
               builder: (cont, controller, child) {
-                List<Titles> specialList =
-                    controller.generalResponse?.mainSpecializations ?? [];
+                List<Titles> specialList = controller.specializationList;
                 return controller.isLoading
                     ? const LoadingWidget(
                         backgroundColor: AppColors.transparent,
                       )
-                    : Expanded(
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: specialList.length,
-                          scrollDirection: Axis.vertical,
-                          itemBuilder: (context, index) {
-                            Titles specialModel = specialList[index];
-                            return SpecialtiesWidget(
-                              specialModel: specialModel,
-                              specialOnTap: () {
-                                Navigator.pushNamed(
-                                    context, NameRoutes.kSearchForCityScreen);
+                    : specialList.isEmpty
+                        ? Center(child: Text("لا توجد نتائج متاحة"))
+                        : Expanded(
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: specialList.length,
+                              scrollDirection: Axis.vertical,
+                              itemBuilder: (context, index) {
+                                Titles specialModel = specialList[index];
+                                return SpecialtiesWidget(
+                                  specialModel: specialModel,
+                                  specialOnTap: () {
+                                    controller.onSpecializationChange(
+                                        specialModel.id!);
+                                    Navigator.pushNamed(context,
+                                        NameRoutes.kSearchForCityScreen);
+                                  },
+                                );
                               },
-                            );
-                          },
-                        ),
-                      );
+                            ),
+                          );
               },
             ),
           ],

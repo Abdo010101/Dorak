@@ -12,14 +12,15 @@ abstract class GeneralClient {
   @GET(NetworkConstant.kGeneralRequest)
   Future<BaseResponse<GeneralResponse>> getGeneralData();
 
+
+  @GET(NetworkConstant.kAreaRequest)
+  Future<BaseResponseList<Titles>> getAreas();
   /* @GET(
       "${NetworkConstant.kSpecializationRequest}/{special_id}/${NetworkConstant.kSubSpecializationRequest}")
   Future<BaseResponse<SpecializationResponse>> getSubSpecialization(
       @Path('special_id') specialId);
 
-  @GET(
-      "${NetworkConstant.kCitiesRequest}/{city_id}/${NetworkConstant.kAreasRequest}")
-  Future<BaseResponseList<GeneralData>> getAreas(@Path('city_id') cityId);
+
 
   @GET(NetworkConstant.kMedicalCenterRequest)
   Future<BaseResponseList<MedicalCenterResponse>> getMedicalCenters();
