@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../constants/constants.dart';
+import '../../../controllers/controllers.dart';
+import '../../../data/models/response/response.dart';
 import '../../components/components.dart';
 
 class SearchForCityScreen extends StatelessWidget {
   const SearchForCityScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    GeneralController generalController =
+        Provider.of<GeneralController>(context, listen: false);
     return Scaffold(
       backgroundColor: AppColors.liteWight,
       appBar: const CustomAppBar(title: 'Specialties'),
@@ -25,7 +31,11 @@ class SearchForCityScreen extends StatelessWidget {
               hint: 'Search for a city',
               verticalMargin: 0,
               horizontalMargin: 0,
-              maxLines: 3,
+              textInputAction: TextInputAction.done,
+              onChange: (text) {
+                generalController.areaSearch(text);
+              },
+              maxLines: 1,
               width: 100.w,
               height: 7.5.h,
               padding: EdgeInsets.only(right: 2.5.w, left: 2.5.w, top: 5.h),
@@ -46,27 +56,45 @@ class SearchForCityScreen extends StatelessWidget {
               verticalPadding: 1.5.h,
               horizontalPadding: 0,
             ),
-            const CityWidget(
+            CityWidget(
               cityName: 'Current Location',
+              specialOnTap: () async {
+                bool result =
+                    await generalController.handleLocationPermission(context);
+                if (result) {
+                  Position position = await Geolocator.getCurrentPosition(
+                      desiredAccuracy: LocationAccuracy.high);
+                }
+              },
               color: AppColors.blue,
               bold: true,
             ),
-            const CityWidget(
-              cityName: 'All cities',
-              color: AppColors.blue,
-            ),
-            Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: 12,
-                scrollDirection: Axis.vertical,
-                itemBuilder: (context, index) {
-                  return const CityWidget(
-                    cityName: 'City name',
-                  );
-                },
-              ),
-            ),
+            Consumer<GeneralController>(builder: (cont, controller, child) {
+              List<Titles> areaList = controller.areaList;
+              return controller.isLoading
+                  ? const LoadingWidget(
+                      backgroundColor: AppColors.transparent,
+                    )
+                  : areaList.isEmpty
+                      ? Center(child: Text("لا توجد نتائج متاحة"))
+                      : Expanded(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: areaList.length,
+                            scrollDirection: Axis.vertical,
+                            itemBuilder: (context, index) {
+                              Titles areaModel = areaList[index];
+
+                              return CityWidget(
+                                cityName: '${areaModel.name}',
+                                specialOnTap: () {
+                                  controller.areaSearch(areaModel.name!);
+                                },
+                              );
+                            },
+                          ),
+                        );
+            })
           ],
         ),
       ),
