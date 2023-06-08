@@ -38,7 +38,7 @@ class SignUpScreen extends StatelessWidget {
           child: Stack(
             children: [
               Form(
-                key: controller.formKey,
+                key: controller.formRegisterKey,
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

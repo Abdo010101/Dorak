@@ -1,5 +1,3 @@
-import '../response/response.dart';
-
 class RegisterRequest {
   String? name;
   String? email;
@@ -9,14 +7,15 @@ class RegisterRequest {
   int? accepted;
   String? token;
 
-  RegisterRequest(
-      {this.name,
-      this.email,
-      this.phone,
-      this.password,
-      this.passwordConfirmation,
-      this.token,
-      this.accepted});
+  RegisterRequest({
+    this.name,
+    this.email,
+    this.phone,
+    this.password,
+    this.passwordConfirmation,
+    this.token,
+    this.accepted,
+  });
 
   RegisterRequest.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -25,6 +24,7 @@ class RegisterRequest {
     password = json['password'];
     passwordConfirmation = json['password_confirmation'];
     accepted = json['accepted'];
+    token = json['fcm_token'];
   }
 
   Map<String, dynamic> toJson() {

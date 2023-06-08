@@ -4,17 +4,18 @@ import 'package:dio/dio.dart';
 import 'package:dorakpattient/routes/dorak_routes.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../constants/constants.dart';
-import '../data/models/response/response.dart';
-import '../data/networks/model_response.dart';
-import '../ui/screens/screens.dart';
-import '../utis/util.dart';
-import 'controllers.dart';
+import '../../constants/constants.dart';
+import '../../data/models/response/response.dart';
+import '../../data/networks/model_response.dart';
+import '../../ui/screens/screens.dart';
+import '../../utis/util.dart';
+import '../controllers.dart';
 
 class VerifyController extends AuthController {
-  final formVerifyKey = GlobalKey<FormState>();
-  final formPhoneKey = GlobalKey<FormState>();
   TextEditingController phoneController = TextEditingController();
+  final GlobalKey<FormState> formVerifyKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formPhoneKey = GlobalKey<FormState>();
+
   final List<Widget> textFormList = [];
   Timer? countdownTimer;
   Duration myDuration = const Duration(seconds: 59);
@@ -72,8 +73,9 @@ class VerifyController extends AuthController {
           await checkOtp(context: context, phone: phone, otp: otp.toString());
       if (result is Success<Patient> || result is Success<dynamic>) {
         isLoading = false;
+        notifyListeners();
         if (type == SendOtpType.non)
-          Navigator.pushNamed(context, NameRoutes.kHomeScreen);
+          Navigator.pushNamed(context, NameRoutes.kSuccessScreen);
         else {
           Navigator.pushNamed(context, NameRoutes.kChangePasswordScreen);
         }
@@ -83,7 +85,7 @@ class VerifyController extends AuthController {
         isLoading = false;
         notifyListeners();
         Util.showSnackBar(context,
-            message: (result as Error<Patient>).errorMessage!);
+            message: (result as Error<dynamic>).errorMessage!);
         return false;
       }
     } on DioError catch (e) {
@@ -96,5 +98,12 @@ class VerifyController extends AuthController {
     } finally {
       // isLoading.value = false;
     }
+  }
+
+  @override
+  void disposeValues() {
+    formVerifyKey.currentState?.dispose();
+    formPhoneKey.currentState?.dispose();
+    // TODO: implement disposeValues
   }
 }

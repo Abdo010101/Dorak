@@ -2,10 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:dorakpattient/data/networks/base_model.dart';
 import 'package:dorakpattient/data/networks/clients/general_client.dart';
 import 'package:dorakpattient/data/repository/base_repo.dart';
-import 'package:flutter/material.dart';
+
 import '../models/response/response.dart';
-import '../networks/clients/clients.dart';
-import 'package:geolocator/geolocator.dart';
 
 class GeneralRepository extends BaseRepository {
   final GeneralClient generalClient;
@@ -75,7 +73,7 @@ class GeneralRepository extends BaseRepository {
     } else {
       return BaseModel.noNetworkConnection();
     }
-  }
+  }*/
 
   Future<BaseModel<TermsPolicyResponse>> getTermsAndService() async {
     if (await checkForConnectivity()) {
@@ -105,5 +103,5 @@ class GeneralRepository extends BaseRepository {
     } else {
       return BaseModel.noNetworkConnection();
     }
-  }*/
+  }
 }

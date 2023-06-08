@@ -15,7 +15,7 @@ import '../controllers.dart';
 
 class AuthController extends DisposableProvider {
   final _sharedPref = locator<SharedPref>();
-  final changePasswordKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formChangePasswordKey = GlobalKey<FormState>();
 
   final _authenticationRepository = locator<AuthenticationRepository>();
   UserResponse? currentUser = UserResponse();
@@ -59,8 +59,6 @@ class AuthController extends DisposableProvider {
     required var registerRequest,
   }) async {
     try {
-      //Loading().loading(context);
-
       final result = await _authenticationRepository.register(registerRequest);
       if (result.data != null) {
         InjectionClass.dio.options.headers.addAll({
@@ -131,26 +129,22 @@ class AuthController extends DisposableProvider {
         NetworkConstant.kAuthorizationHeader: 'Bearer ${currentUser!.token}'
       });
     }
-    @override
-    void disposeValues() {
-      isLoggedIn = false;
-      currentUser = UserResponse();
-      _sharedPref.deleteLoginInfo();
-    }
   }
 
   Future<dynamic> sendOtp(
       {required BuildContext context, required String? phone}) async {
     try {
+      isLoading = true;
+      notifyListeners();
       var data = dio.FormData.fromMap({
         'phone': phone,
       });
       final result = await _authenticationRepository.sendOtp(
         body: data,
       );
+      isLoading = false;
+      notifyListeners();
       if (result.data != null) {
-        isLoading = false;
-        notifyListeners();
         return true;
       } else {
         return false;
@@ -169,6 +163,8 @@ class AuthController extends DisposableProvider {
       required String otp,
       required String? phone}) async {
     try {
+      isLoading = true;
+      notifyListeners();
       var data = dio.FormData.fromMap({
         'otp': otp,
       });
@@ -176,6 +172,8 @@ class AuthController extends DisposableProvider {
         phone: phone ?? '',
         body: data,
       );
+      isLoading = false;
+      notifyListeners();
       if (result.data != null) {
         return Success(result.data!);
       } else {
@@ -192,23 +190,34 @@ class AuthController extends DisposableProvider {
   Future<bool> changePassword(
       BuildContext context, String password, String phone) async {
     try {
+      if (formChangePasswordKey.currentState?.validate() != true) return false;
+      isLoading = true;
+      notifyListeners();
       var data = dio.FormData.fromMap({
         'password': password,
         'password_confirmation': password,
       });
+      formChangePasswordKey.currentState?.save();
       final result = await _authenticationRepository.changePassword(
         phone: phone,
         body: data,
       );
       if (result.data != null) {
-        Navigator.pushReplacementNamed(context, NameRoutes.kLoginScreen);
         isLoading = false;
         notifyListeners();
+        if (context.mounted) {
+          Navigator.pushNamedAndRemoveUntil(
+              context, NameRoutes.kWelcomeScreen, (_) => false);
+        }
         return true;
       } else {
+        isLoading = true;
+        notifyListeners();
         return false;
       }
     } on DioError catch (e) {
+      isLoading = true;
+      notifyListeners();
       return false;
       // return Error(errorMessage: DioExceptions.fromDioError(e).message);
       //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
@@ -219,6 +228,10 @@ class AuthController extends DisposableProvider {
 
   @override
   void disposeValues() {
+    formChangePasswordKey.currentState?.dispose();
+    isLoggedIn = false;
+    currentUser = UserResponse();
+    _sharedPref.deleteLoginInfo();
     // TODO: implement disposeValues
   }
 }

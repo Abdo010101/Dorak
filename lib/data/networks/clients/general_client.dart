@@ -12,7 +12,6 @@ abstract class GeneralClient {
   @GET(NetworkConstant.kGeneralRequest)
   Future<BaseResponse<GeneralResponse>> getGeneralData();
 
-
   @GET(NetworkConstant.kAreaRequest)
   Future<BaseResponseList<Titles>> getAreas();
   /* @GET(
@@ -23,11 +22,11 @@ abstract class GeneralClient {
 
 
   @GET(NetworkConstant.kMedicalCenterRequest)
-  Future<BaseResponseList<MedicalCenterResponse>> getMedicalCenters();
+  Future<BaseResponseList<MedicalCenterResponse>> getMedicalCenters();*/
 
   @GET(NetworkConstant.kTerms)
   Future<BaseResponse<TermsPolicyResponse>> getTermsAndService();
 
   @GET(NetworkConstant.kPolicy)
-  Future<BaseResponse<TermsPolicyResponse>> getPrivacyAndPolicy();*/
+  Future<BaseResponse<TermsPolicyResponse>> getPrivacyAndPolicy();
 }

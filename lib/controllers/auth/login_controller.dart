@@ -22,12 +22,8 @@ class LoginController extends AuthController {
   TextEditingController changePasswordController = TextEditingController();
   TextEditingController confirmChangePasswordController =
       TextEditingController();
+  final GlobalKey<FormState> formLoginKey = GlobalKey<FormState>();
 
-  final formKey = GlobalKey<FormState>();
-  final formSendOtpKey = GlobalKey<FormState>();
-  final formChangePasswordKey = GlobalKey<FormState>();
-
-  bool isLoading = false;
   bool rememberMe = true;
   bool showPass = true;
   final _sharedPref = locator<SharedPref>();
@@ -38,12 +34,12 @@ class LoginController extends AuthController {
   }
 
   Future<bool> signIn(BuildContext context) async {
-    if (formKey.currentState?.validate() != true) return false;
+    if (formLoginKey.currentState?.validate() != true) return false;
     FocusScope.of(context).unfocus();
     String? firebaseToken = await FirebaseMessaging.instance.getToken();
     isLoading = true;
     notifyListeners();
-    formKey.currentState?.save();
+    formLoginKey.currentState?.save();
     final result = await login(
         email: emailTextEditingController.text,
         password: passwordTextEditingController.text,
@@ -53,6 +49,7 @@ class LoginController extends AuthController {
     notifyListeners();
     if (result is Success<UserResponse?>) {
       if (result.data?.patient?.verifiedAt == null) {
+        context.read<AuthController>().currentUser = result.data;
         Navigator.pushNamed(context, NameRoutes.kOTPScreen);
       } else {
         Navigator.pushNamed(context, NameRoutes.kHomeScreen);
@@ -185,6 +182,7 @@ class LoginController extends AuthController {
 
   @override
   void disposeValues() {
+    formLoginKey.currentState?.dispose();
     // TODO: implement disposeValues
   }
 }

@@ -48,7 +48,7 @@ class LoginScreen extends StatelessWidget {
                   Stack(
                     children: [
                       Form(
-                        key: controller.formKey,
+                        key: controller.formLoginKey,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

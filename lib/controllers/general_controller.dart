@@ -17,9 +17,9 @@ class GeneralController extends ChangeNotifier {
 
   /* List<GeneralData> subSpecializationList = [];
   List<GeneralData> areaList = [];
-  List<MedicalCenterResponse> medicalCenterList = [];
+  List<MedicalCenterResponse> medicalCenterList = [];*/
   TermsPolicyResponse? terms;
-  TermsPolicyResponse? policy;*/
+  TermsPolicyResponse? policy;
   bool isLoading = false;
 
   getData() async {
@@ -132,6 +132,7 @@ class GeneralController extends ChangeNotifier {
     }
     return true;
   }
+
 /* Future<void> getSubSpecialization(int specialId) async {
     try {
       final result =
@@ -191,7 +192,7 @@ class GeneralController extends ChangeNotifier {
     } finally {
       // isLoading.value = false;
     }
-  }
+  }*/
 
   getTermsAndPolicy() async {
     await getTermsAndService();
@@ -240,5 +241,5 @@ class GeneralController extends ChangeNotifier {
     } finally {
       // isLoading.value = false;
     }
-  }*/
+  }
 }

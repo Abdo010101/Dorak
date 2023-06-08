@@ -106,13 +106,18 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
                           textButtonTitle: (AppStrings.kResendCode.tr()),
                           isResendCode:
                               verifyController?.myDuration.inSeconds == 0,
-                          onTab: () {
+                          onTab: () async {
                             print("xxxx= $seconds}");
                             if (seconds == 0) {
-                              authController.sendOtp(
-                                  context: context,
-                                  phone: authController
-                                      .currentUser?.patient?.phone);
+                              controller.type == SendOtpType.changPassword
+                                  ? await authController.sendOtp(
+                                      context: context,
+                                      phone: controller.phoneController.text)
+                                  : await authController.sendOtp(
+                                      context: context,
+                                      phone: authController
+                                          .currentUser?.patient?.phone,
+                                    );
                             }
                           },
                         ),

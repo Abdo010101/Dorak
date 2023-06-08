@@ -43,4 +43,6 @@ class NetworkConstant {
   static const String kChangePassword = "change-password";
   static const String kSendOtpRequest = "resend-otp";
   static const String kVerifyOtpRequest = "verify";
+  static const String kTerms = "terms-of-service";
+  static const String kPolicy = "privacy-policy";
 }

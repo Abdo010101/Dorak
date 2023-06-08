@@ -3,6 +3,7 @@ import 'package:dorakpattient/data/networks/model_response.dart';
 import 'package:dorakpattient/utis/util.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 import '../../data/models/request/request.dart';
 import '../../data/models/response/response.dart';
@@ -13,8 +14,7 @@ class RegisterController extends AuthController {
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
-  bool isLoading = false;
-  final formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formRegisterKey = GlobalKey<FormState>();
   bool agreeTermsCondition = false;
   bool showConfPass = true;
   bool showPass = true;
@@ -35,7 +35,7 @@ class RegisterController extends AuthController {
   }
 
   Future<bool> signUp(BuildContext context) async {
-    if (formKey.currentState?.validate() != true) return false;
+    if (formRegisterKey.currentState?.validate() != true) return false;
     isLoading = true;
     notifyListeners();
     FocusScope.of(context).unfocus();
@@ -49,9 +49,10 @@ class RegisterController extends AuthController {
         passwordConfirmation: confirmPasswordController.text,
         token: firebaseToken,
         accepted: 1);
-    formKey.currentState?.save();
+    formRegisterKey.currentState?.save();
     final result = await register(registerRequest: request.toJson());
     if (result is Success<UserResponse?>) {
+      context.read<AuthController>().currentUser = result.data;
       await sendOtp(phone: phoneController.text, context: context);
       isLoading = false;
       notifyListeners();
@@ -73,5 +74,11 @@ class RegisterController extends AuthController {
       }
       return null;
     };
+  }
+
+  @override
+  void disposeValues() {
+    formRegisterKey.currentState?.dispose();
+    // TODO: implement disposeValues
   }
 }
