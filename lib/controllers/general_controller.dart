@@ -12,8 +12,12 @@ class GeneralController extends ChangeNotifier {
   List<Titles> specializationList = [];
   List<Titles> areaList = [];
   List<Titles> originalAreaList = [];
+  double? lat;
+
+  double? lng;
 
   int? specializationId;
+  int? cityId;
 
   /* List<GeneralData> subSpecializationList = [];
   List<GeneralData> areaList = [];
@@ -104,6 +108,22 @@ class GeneralController extends ChangeNotifier {
     specializationId = id;
   }
 
+  void onSelectedCity(int id) {
+    cityId = id;
+  }
+
+  Future<void> getCurrentLocation(BuildContext context) async {
+    var result = await handleLocationPermission(context);
+
+    if (result) {
+      Position? position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+
+      lat = position.latitude;
+      lng = position.longitude;
+    }
+  }
+
   Future<bool> handleLocationPermission(BuildContext context) async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -132,113 +152,4 @@ class GeneralController extends ChangeNotifier {
     }
     return true;
   }
-/* Future<void> getSubSpecialization(int specialId) async {
-    try {
-      final result =
-          await _generalRepository.getSupSpecialization(specialId: specialId);
-      if (result.data != null) {
-        if (result.data!.subSpecializations != null) {
-          subSpecializationList
-            ..clear()
-            ..addAll(result.data!.subSpecializations!);
-        }
-        notifyListeners();
-      } else {
-        // GetSnackBar(message: (result.error?.message));
-      }
-    } on DioError catch (e) {
-      // return Error(errorMessage: DioExceptions.fromDioError(e).message);
-      // GetSnackBar(message: (DioExceptions.fromDioError(e).message));
-    } finally {
-      // isLoading.value = false;
-    }
-  }
-
-  Future<void> getAreas(int cityId) async {
-    try {
-      final result = await _generalRepository.getAreas(cityId: cityId);
-      if (result.data != null) {
-        areaList
-          ..clear()
-          ..addAll(result.data!);
-
-        notifyListeners();
-      } else {
-        // GetSnackBar(message: (result.error?.message));
-      }
-    } on DioError catch (e) {
-      // return Error(errorMessage: DioExceptions.fromDioError(e).message);
-      // GetSnackBar(message: (DioExceptions.fromDioError(e).message));
-    } finally {
-      // isLoading.value = false;
-    }
-  }
-
-  Future<void> getMedicalCenters() async {
-    try {
-      final result = await _generalRepository.getMedicalCenters();
-      if (result.data != null) {
-        medicalCenterList
-          ..clear()
-          ..addAll(result.data!);
-        notifyListeners();
-      } else {
-        // GetSnackBar(message: (result.error?.message));
-      }
-    } on DioError catch (e) {
-      // return Error(errorMessage: DioExceptions.fromDioError(e).message);
-      // GetSnackBar(message: (DioExceptions.fromDioError(e).message));
-    } finally {
-      // isLoading.value = false;
-    }
-  }
-
-  getTermsAndPolicy() async {
-    await getTermsAndService();
-    await getPrivacyAndPolicy();
-  }
-
-  Future<void> getTermsAndService() async {
-    try {
-      isLoading = true;
-      notifyListeners();
-      final result = await _generalRepository.getTermsAndService();
-      if (result.data != null) {
-        terms = result.data;
-        isLoading = false;
-        notifyListeners();
-      }
-      {
-        //SnackBar(content: Text(result.error?.message), );
-      }
-    } on DioError catch (e) {
-      //return Error(errorMessage: DioExceptions.fromDioError(e).message);
-
-      //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
-    } finally {
-      // isLoading.value = false;
-    }
-  }
-
-  Future<void> getPrivacyAndPolicy() async {
-    try {
-      isLoading = true;
-      notifyListeners();
-      final result = await _generalRepository.getPrivacyAndPolicy();
-      if (result.data != null) {
-        policy = result.data;
-        isLoading = false;
-        notifyListeners();
-      }
-      {
-        //SnackBar(content: Text(result.error?.message), );
-      }
-    } on DioError catch (e) {
-      //return Error(errorMessage: DioExceptions.fromDioError(e).message);
-
-      //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
-    } finally {
-      // isLoading.value = false;
-    }
-  }*/
 }

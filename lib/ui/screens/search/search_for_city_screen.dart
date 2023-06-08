@@ -1,3 +1,4 @@
+import 'package:dorakpattient/routes/dorak_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
@@ -10,13 +11,14 @@ import '../../components/components.dart';
 
 class SearchForCityScreen extends StatelessWidget {
   const SearchForCityScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     GeneralController generalController =
         Provider.of<GeneralController>(context, listen: false);
     return Scaffold(
       backgroundColor: AppColors.liteWight,
-      appBar: const CustomAppBar(title: 'Specialties'),
+      appBar: const CustomAppBar(title: 'Cities'),
       body: EmptyCard(
         color: AppColors.transparent,
         verticalPadding: 0,
@@ -59,12 +61,7 @@ class SearchForCityScreen extends StatelessWidget {
             CityWidget(
               cityName: 'Current Location',
               specialOnTap: () async {
-                bool result =
-                    await generalController.handleLocationPermission(context);
-                if (result) {
-                  Position position = await Geolocator.getCurrentPosition(
-                      desiredAccuracy: LocationAccuracy.high);
-                }
+                await generalController.getCurrentLocation(context);
               },
               color: AppColors.blue,
               bold: true,
@@ -88,7 +85,17 @@ class SearchForCityScreen extends StatelessWidget {
                               return CityWidget(
                                 cityName: '${areaModel.name}',
                                 specialOnTap: () {
-                                  controller.areaSearch(areaModel.name!);
+                                  controller.onSelectedCity(areaModel.id!);
+                                  Provider.of<SearchResultController>(context,
+                                          listen: false)
+                                      .getDoctors(
+                                          cityId: controller.cityId,
+                                          lat: controller.lat,
+                                          lng: controller.lng,
+                                          specializationId:
+                                              controller.specializationId);
+                                  Navigator.of(context)
+                                      .pushNamed(NameRoutes.kResultOfSearch);
                                 },
                               );
                             },

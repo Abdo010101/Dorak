@@ -10,3 +10,4 @@ export 'notification_response.dart';
 export 'offer_response.dart';
 export 'review_response.dart';
 export 'available_shecdules_response.dart';
+export 'search_result_response.dart';

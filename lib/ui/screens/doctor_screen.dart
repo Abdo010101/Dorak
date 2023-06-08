@@ -30,31 +30,34 @@ class DoctorScreen extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.check_circle_outline,
-                      color: AppColors.green,
-                      size: 12.5.sp,
-                    ),
-                    TextBuilder(
-                      text: 'Available',
-                      color: AppColors.blue,
-                      size: AppFontSizes.kS2,
-                      verticalPadding: 0.75.h,
-                    ),
-                    SizedBox(
-                      width: 1.w,
-                    ),
-                    TextBuilder(
-                      text: 'today',
-                      color: AppColors.blue,
-                      size: AppFontSizes.kS2,
-                      verticalPadding: 0.75.h,
-                      bold: true,
-                    ),
-                  ],
+                Visibility(
+                  visible: place != null && place.reservationStatus!,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.check_circle_outline,
+                        color: AppColors.green,
+                        size: 12.5.sp,
+                      ),
+                      TextBuilder(
+                        text: 'Available',
+                        color: AppColors.blue,
+                        size: AppFontSizes.kS2,
+                        verticalPadding: 0.75.h,
+                      ),
+                      SizedBox(
+                        width: 1.w,
+                      ),
+                      TextBuilder(
+                        text: 'today',
+                        color: AppColors.blue,
+                        size: AppFontSizes.kS2,
+                        verticalPadding: 0.75.h,
+                        bold: true,
+                      ),
+                    ],
+                  ),
                 ),
                 ButtonBuilder(
                   title: 'Book appointment',

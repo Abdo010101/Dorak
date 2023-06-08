@@ -5,18 +5,18 @@ import '../networks/base_model.dart';
 import '../networks/clients/clients.dart';
 import 'base_repo.dart';
 
-class SearchDoctorsRepository extends BaseRepository {
-  final AppointmentClient appointmentClient;
+class DoctorsSearchResultRepository extends BaseRepository {
+  final DoctorsSearchResultClient searchResultClient;
 
-  SearchDoctorsRepository({required this.appointmentClient});
+  DoctorsSearchResultRepository({required this.searchResultClient});
 
-  Future<BaseModel<List<AppointmentResponse>>> getAllAppointments(
-      String type) async {
+  Future<BaseModel<SearchResultResponse>> getDoctors(
+      Map<String, dynamic> prams) async {
     if (await checkForConnectivity()) {
       try {
         return BaseModel(
             data:
-                await appointmentClient.getAllAppointments(type).then((value) {
+                await searchResultClient.getDoctorsResults(prams).then((value) {
           return value.data;
         }));
       } on DioError catch (e) {

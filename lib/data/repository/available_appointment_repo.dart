@@ -10,25 +10,18 @@ class AvailableAppointmentRepository extends BaseRepository {
 
   AvailableAppointmentRepository({required this.availableAppointmentClient});
 
-  /*Future<BaseModel<AvailableSchedulesResponse>> getAvailableSchedules({
+  Future<BaseModel<AvailableSchedulesResponse>> getAvailableSchedules({
     required int doctorId,
     int? id,
   }) async {
     if (await checkForConnectivity()) {
       try {
-        return id == null
-            ? BaseModel(
-                data: await availableAppointmentClient
-                    .getAvailableSchedules()
-                    .then((value) {
-                return value.data;
-              }))
-            : BaseModel(
-                data: await availableAppointmentClient
-                    .getAvailableSchedulesByPlace(data: id)
-                    .then((value) {
-                return value.data;
-              }));
+        return BaseModel(
+            data: await availableAppointmentClient
+                .getAvailableSchedulesByPlace(doctorId: doctorId, id: id)
+                .then((value) {
+          return value.data;
+        }));
       } on DioError catch (e) {
         return BaseModel(error: ErrorResponse(dioError: e));
       }
@@ -36,7 +29,7 @@ class AvailableAppointmentRepository extends BaseRepository {
       return BaseModel.noNetworkConnection();
     }
   }
-*/
+
   /* Future<BaseModel<ReservationResponse>> makeReservations(
       {Map<String, dynamic>? data}) async {
     if (await checkForConnectivity()) {

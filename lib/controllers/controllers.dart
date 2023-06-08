@@ -9,3 +9,5 @@ export 'main_screen_controller.dart';
 export 'notification_controller.dart';
 export 'offers_controller.dart';
 export 'patient_profile_controller.dart';
+export 'search_controller.dart';
+export 'reservation_controller.dart';
