@@ -8,7 +8,6 @@ import 'package:sizer/sizer.dart';
 
 class OffersScreen extends StatelessWidget {
   const OffersScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,30 +32,35 @@ class OffersScreen extends StatelessWidget {
         verticalPadding: 0,
         horizontalPadding: 4.w,
         color: AppColors.transparent,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextFormFieldBuilder(
-              hint: 'Search for a speciality',
-              verticalMargin: 0,
-              horizontalMargin: 0,
-              maxLines: 3,
-              width: 100.w,
-              height: 7.5.h,
-              padding: EdgeInsets.only(right: 2.5.w, left: 2.5.w, top: 5.h),
-              borderRadius: 15,
-              prefixIcon: const Icon(
-                Icons.search,
-                color: AppColors.gray,
-              ),
-              color: AppColors.white,
-            ),
-            SizedBox(
-              height: 1.5.h,
-            ),
-            Consumer<OffersController>(
-              builder: (context, controller, child) {
-                return Expanded(
+        child: Consumer<OffersController>(
+          builder: (context, controller, child) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextFormFieldBuilder(
+                  hint: AppStrings.kSearchForSpeciality.tr(),
+                  controller: controller.offerSearchController,
+                  verticalMargin: 0,
+                  horizontalMargin: 0,
+                  maxLines: 3,
+                  width: 100.w,
+                  height: 7.5.h,
+                  padding: EdgeInsets.only(right: 2.5.w, left: 2.5.w, top: 5.h),
+                  borderRadius: 15,
+                  prefixIcon: IconButton(
+                    onPressed: () => controller.getAllOffers(),
+                    icon: Icon(
+                      Icons.search,
+                      size: AppFontSizes.kS6,
+                      color: AppColors.gray,
+                    ),
+                  ),
+                  color: AppColors.white,
+                ),
+                SizedBox(
+                  height: 1.5.h,
+                ),
+                Expanded(
                   child: controller.isLoading
                       ? const LoadingWidget(
                           backgroundColor: AppColors.transparent,
@@ -70,21 +74,31 @@ class OffersScreen extends StatelessWidget {
                               offerSubTittle:
                                   controller.offers[index].description,
                               offerPic: controller.offers[index].mainPic,
-                              offerPrice: controller.offers[index].priceBefore,
+                              priceBefore: controller.offers[index].priceBefore,
+                              priceAfter: controller.offers[index].priceAfter,
                               doctorName: controller.offers[index].doctor?.name,
                               docPic: controller.offers[index].doctor!.image,
                               rate: controller.offers[index].doctor!.rate,
-                              onPressed: () {},
+                              onPressed: () {
+                                showBottomSheet(
+                                    context: context,
+                                    backgroundColor: Colors.transparent,
+                                    builder: (context) {
+                                      return OfferDetailsBottomSheet(
+                                        offer: controller.offers[index],
+                                      );
+                                    });
+                              },
                             );
                           },
                         ),
-                );
-              },
-            ),
-            SizedBox(
-              height: 10.h,
-            )
-          ],
+                ),
+                SizedBox(
+                  height: 10.h,
+                )
+              ],
+            );
+          },
         ),
       ),
     );

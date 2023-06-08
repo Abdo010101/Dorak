@@ -4,7 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import 'package:wc_form_validators/wc_form_validators.dart';
+
 import '../../constants/constants.dart';
 import '../components/components.dart';
 
@@ -22,7 +22,7 @@ class AddManualAppointmentScreen extends StatelessWidget {
           backgroundColor: Colors.white,
           centerTitle: true,
           title: Text(
-            AppStrings.kManualAppointmentTitle.tr(),
+            '',
             style: const TextStyle(color: AppColors.navyBlue),
           ),
           leading: IconButton(
@@ -60,7 +60,7 @@ class AddManualAppointmentScreen extends StatelessWidget {
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 2.0.w),
                             child: TextBuilder(
-                              text: AppStrings.kPatientsInformation.tr(),
+                              text: '',
                               bold: true,
                               color: AppColors.black,
                               size: 10.sp,

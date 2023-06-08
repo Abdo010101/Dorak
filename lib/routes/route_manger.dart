@@ -64,8 +64,22 @@ class RouteManger {
       case NameRoutes.kDoctorScreen:
         return MaterialPageRoute(builder: (context) => const DoctorScreen());
 
+      case NameRoutes.kOTPScreen:
+        return MaterialPageRoute(
+            builder: (context) => const PhoneVerificationScreen());
+
       case NameRoutes.kGenderScreen:
         return MaterialPageRoute(builder: (context) => const GenderScreen());
+
+      case NameRoutes.kForgetPasswordScreen:
+        return MaterialPageRoute(
+            builder: (context) => const ForgetPasswordScreen());
+      case NameRoutes.kChangePasswordScreen:
+        return MaterialPageRoute(
+            builder: (context) => const ChangePasswordScreen());
+
+      case NameRoutes.kLanguageScreen:
+        return MaterialPageRoute(builder: (context) => const LanguageScreen());
 
       default:
         return MaterialPageRoute(builder: (context) => const MainTestScreen());

@@ -12,18 +12,23 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import '../../constants/constants.dart';
 import '../../data/models/request/request.dart';
 import '../../data/models/response/response.dart';
-import '../../data/repository/repository.dart';
 import '../../data/shared/shared_pref.dart';
 import '../../routes/dorak_routes.dart';
 
 class LoginController extends AuthController {
   TextEditingController emailTextEditingController = TextEditingController();
-
   TextEditingController passwordTextEditingController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController changePasswordController = TextEditingController();
+  TextEditingController confirmChangePasswordController =
+      TextEditingController();
+
   final formKey = GlobalKey<FormState>();
+  final formSendOtpKey = GlobalKey<FormState>();
+  final formChangePasswordKey = GlobalKey<FormState>();
+
   bool isLoading = false;
   bool rememberMe = true;
-  final _authenticationRepository = locator<AuthenticationRepository>();
   bool showPass = true;
   final _sharedPref = locator<SharedPref>();
 
@@ -36,7 +41,6 @@ class LoginController extends AuthController {
     if (formKey.currentState?.validate() != true) return false;
     FocusScope.of(context).unfocus();
     String? firebaseToken = await FirebaseMessaging.instance.getToken();
-
     isLoading = true;
     notifyListeners();
     formKey.currentState?.save();
@@ -48,7 +52,11 @@ class LoginController extends AuthController {
     isLoading = false;
     notifyListeners();
     if (result is Success<UserResponse?>) {
-      Navigator.pushNamed(context, NameRoutes.kHomeScreen);
+      if (result.data?.patient?.verifiedAt == null) {
+        Navigator.pushNamed(context, NameRoutes.kOTPScreen);
+      } else {
+        Navigator.pushNamed(context, NameRoutes.kHomeScreen);
+      }
       return true;
     } else {
       Util.showSnackBar(context,

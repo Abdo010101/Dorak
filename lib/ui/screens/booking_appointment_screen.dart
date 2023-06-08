@@ -24,6 +24,7 @@ class AddManualAppointmentScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         centerTitle: true,
         title: Text(
+          /// TODO to be change text here ..
           AppStrings.kManualAppointmentTitle.tr(),
           style: const TextStyle(color: AppColors.navyBlue),
         ),

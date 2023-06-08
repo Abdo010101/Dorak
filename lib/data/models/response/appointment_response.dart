@@ -9,6 +9,7 @@ class AppointmentResponse {
   String? phone;
   String? status;
   String? rate;
+  String? date;
   String? day;
   String? month;
   @JsonKey(name: 'main_specialization')
@@ -23,6 +24,7 @@ class AppointmentResponse {
     this.status,
     this.rate,
     this.day,
+    this.date,
     this.month,
     this.mainSpecialization,
     this.image,

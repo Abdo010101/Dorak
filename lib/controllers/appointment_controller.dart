@@ -7,7 +7,7 @@ import '../data/models/response/response.dart';
 import '../data/repository/repository.dart';
 
 class AppointmentsController extends ChangeNotifier {
-  String appointmentDate = AppStrings.kToday;
+  String appointmentDate = AppStrings.kUpcoming;
   bool isLoading = false;
   bool pressed = false;
   List<AppointmentResponse> appointmentsList = [];
@@ -37,6 +37,29 @@ class AppointmentsController extends ChangeNotifier {
     } on DioError catch (e) {
       //return Error(errorMessage: DioExceptions.fromDioError(e).message);
 
+      //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
+    } finally {
+      // isLoading.value = false;
+    }
+  }
+
+  Future<void> declineAppointment(int index) async {
+    try {
+      isLoading = true;
+      notifyListeners();
+      var data = {
+        'id': appointmentsList[index].id,
+      };
+      final result = await _appointmentsRepository.declineAppointment(data);
+      if (result.data != null) {
+        appointmentsList[index].status = AppStatus.cancelled.name;
+        isLoading = false;
+        notifyListeners();
+      } else {
+        //SnackBar(content: Text(result.error?.message), );
+      }
+    } on DioError catch (e) {
+      //return Error(errorMessage: DioExceptions.fromDioError(e).message);
       //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
     } finally {
       // isLoading.value = false;

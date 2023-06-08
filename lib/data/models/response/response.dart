@@ -1,5 +1,6 @@
 export 'all_offers_response.dart';
 export 'appointment_response.dart';
+export 'available_shecdules_response.dart';
 export 'base/base_response.dart';
 export 'base/base_response_list.dart';
 export 'doctor_profile_response.dart';
@@ -8,6 +9,6 @@ export 'home_response.dart';
 export 'login_response.dart';
 export 'notification_response.dart';
 export 'offer_response.dart';
+export 'otp_response.dart';
 export 'review_response.dart';
-export 'available_shecdules_response.dart';
 export 'search_result_response.dart';

@@ -41,6 +41,7 @@ class Patient {
   String? height;
   int? allowNotifications;
   String? countryId;
+  String? verifiedAt;
 
   Patient(
       {this.id,
@@ -51,7 +52,8 @@ class Patient {
       this.weight,
       this.height,
       this.allowNotifications,
-      this.countryId});
+      this.countryId,
+      this.verifiedAt});
 
   Patient.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -63,6 +65,7 @@ class Patient {
     height = json['height'];
     allowNotifications = json['allow_notifications'];
     countryId = json['country_id'];
+    verifiedAt = json['verified_at'];
   }
 
   Map<String, dynamic> toJson() {
@@ -76,6 +79,7 @@ class Patient {
     data['height'] = this.height;
     data['allow_notifications'] = this.allowNotifications;
     data['country_id'] = this.countryId;
+    data['country_id'] = this.verifiedAt;
     return data;
   }
 }

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/data/di/locator.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../../data/repository/repository.dart';
 import '../data/models/response/response.dart';
@@ -11,12 +12,14 @@ class OffersController extends DisposableProvider {
   List<OfferResponse> offers = [];
   final _offersRepository = locator<OffersRepository>();
 
-  Future<void> getAllOffers() async {
+  TextEditingController offerSearchController = TextEditingController();
+
+  Future<void> getAllOffers({bool? home}) async {
     try {
       isLoading = true;
       notifyListeners();
       var data = {
-        'title': '',
+        'title': home == true ? '' : offerSearchController.text,
       };
       final result = await _offersRepository.getAllOffers(data);
       if (result.data != null) {

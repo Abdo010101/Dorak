@@ -26,7 +26,7 @@ class ProfileScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextBuilder(
-              text: 'Welcome to Dorak',
+              text: AppStrings.kWelcomeTitle.tr(),
               color: AppColors.navyBlue,
               verticalPadding: 2.h,
               bold: true,

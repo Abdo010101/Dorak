@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' as dio;
 import 'package:dorakpattient/data/di/locator.dart';
 import 'package:dorakpattient/data/networks/dio_errors.dart';
 import 'package:dorakpattient/data/networks/model_response.dart';
@@ -9,14 +10,17 @@ import 'package:flutter/material.dart';
 import '../../data/models/request/request.dart';
 import '../../data/models/response/response.dart';
 import '../../data/repository/repository.dart';
+import '../../routes/dorak_routes.dart';
 import '../controllers.dart';
 
 class AuthController extends DisposableProvider {
   final _sharedPref = locator<SharedPref>();
+  final changePasswordKey = GlobalKey<FormState>();
 
   final _authenticationRepository = locator<AuthenticationRepository>();
   UserResponse? currentUser = UserResponse();
   bool isLoggedIn = false;
+  bool isLoading = false;
 
   Future<Result<UserResponse?>> login(
       {required String email,
@@ -37,7 +41,6 @@ class AuthController extends DisposableProvider {
         });
         await _sharedPref.storeLoginInfo(result.data!);
         isLoggedIn = _sharedPref.isUserLoggedIn();
-        currentUser = result.data;
         currentUser = result.data;
         notifyListeners();
         return Success(result.data!);
@@ -133,6 +136,84 @@ class AuthController extends DisposableProvider {
       isLoggedIn = false;
       currentUser = UserResponse();
       _sharedPref.deleteLoginInfo();
+    }
+  }
+
+  Future<dynamic> sendOtp(
+      {required BuildContext context, required String? phone}) async {
+    try {
+      var data = dio.FormData.fromMap({
+        'phone': phone,
+      });
+      final result = await _authenticationRepository.sendOtp(
+        body: data,
+      );
+      if (result.data != null) {
+        isLoading = false;
+        notifyListeners();
+        return true;
+      } else {
+        return false;
+      }
+    } on DioError catch (e) {
+      return false;
+      // return Error(errorMessage: DioExceptions.fromDioError(e).message);
+      //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
+    } finally {
+      // isLoading.value = false;
+    }
+  }
+
+  Future<Result<dynamic>> checkOtp(
+      {required BuildContext context,
+      required String otp,
+      required String? phone}) async {
+    try {
+      var data = dio.FormData.fromMap({
+        'otp': otp,
+      });
+      final result = await _authenticationRepository.checkOtp(
+        phone: phone ?? '',
+        body: data,
+      );
+      if (result.data != null) {
+        return Success(result.data!);
+      } else {
+        return Error(errorMessage: result.error?.message);
+      }
+    } on DioError catch (e) {
+      return Error(errorMessage: DioExceptions.fromDioError(e).message);
+    } finally {
+      //Dismiss Dialog .
+      // Get.back();
+    }
+  }
+
+  Future<bool> changePassword(
+      BuildContext context, String password, String phone) async {
+    try {
+      var data = dio.FormData.fromMap({
+        'password': password,
+        'password_confirmation': password,
+      });
+      final result = await _authenticationRepository.changePassword(
+        phone: phone,
+        body: data,
+      );
+      if (result.data != null) {
+        Navigator.pushReplacementNamed(context, NameRoutes.kLoginScreen);
+        isLoading = false;
+        notifyListeners();
+        return true;
+      } else {
+        return false;
+      }
+    } on DioError catch (e) {
+      return false;
+      // return Error(errorMessage: DioExceptions.fromDioError(e).message);
+      //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
+    } finally {
+      // isLoading.value = false;
     }
   }
 

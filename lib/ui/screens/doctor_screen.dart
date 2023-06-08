@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
 import '../../constants/constants.dart';
 import '../../data/models/response/response.dart';
 
@@ -60,7 +61,7 @@ class DoctorScreen extends StatelessWidget {
                   ),
                 ),
                 ButtonBuilder(
-                  title: 'Book appointment',
+                  title: AppStrings.kBookAppointment.tr(),
                   onPressed: () {},
                   width: 77.5.w,
                   height: 6.h,
@@ -179,7 +180,7 @@ class AddressWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TextBuilder(
-                            text: 'Address',
+                            text: AppStrings.kAddress.tr(),
                             color: AppColors.navyBlue,
                             size: 10.sp,
                             bold: true,

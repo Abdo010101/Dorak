@@ -38,6 +38,7 @@ export 'menu/developed_widget.dart';
 export 'menu/row_menu_card.dart';
 export 'notification/notification_card.dart';
 export 'offer/date_time_builder.dart';
+export 'offer/offer_details.dart';
 export 'offer/offer_widget.dart';
 export 'profile/information_text.dart';
 export 'search/city_widget.dart';

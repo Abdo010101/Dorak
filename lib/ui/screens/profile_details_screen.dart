@@ -17,8 +17,8 @@ class ProfileDetailsScreen extends StatelessWidget {
     final controller = Provider.of<PatientProfileController>(context);
 
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: 'My profile',
+      appBar: CustomAppBar(
+        title: AppStrings.kProfile.tr(),
       ),
       backgroundColor: AppColors.liteWight,
       body: Column(

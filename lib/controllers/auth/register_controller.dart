@@ -1,5 +1,4 @@
 import 'package:dorakpattient/controllers/controllers.dart';
-import 'package:dorakpattient/data/di/locator.dart';
 import 'package:dorakpattient/data/networks/model_response.dart';
 import 'package:dorakpattient/utis/util.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -7,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 
 import '../../data/models/request/request.dart';
 import '../../data/models/response/response.dart';
-import '../../data/repository/repository.dart';
 
 class RegisterController extends AuthController {
   TextEditingController userNameController = TextEditingController();
@@ -37,11 +35,11 @@ class RegisterController extends AuthController {
   }
 
   Future<bool> signUp(BuildContext context) async {
-    //  if (formKey.currentState?.validate() != true) return false;
+    if (formKey.currentState?.validate() != true) return false;
     isLoading = true;
     notifyListeners();
     FocusScope.of(context).unfocus();
-//    String? firebaseToken = await FirebaseMessaging.instance.getToken();
+    String? firebaseToken = await FirebaseMessaging.instance.getToken();
 
     RegisterRequest request = RegisterRequest(
         name: userNameController.text,
@@ -49,13 +47,12 @@ class RegisterController extends AuthController {
         phone: phoneController.text,
         password: passwordController.text,
         passwordConfirmation: confirmPasswordController.text,
-        token: "firebaseToken",
+        token: firebaseToken,
         accepted: 1);
-
     formKey.currentState?.save();
     final result = await register(registerRequest: request.toJson());
-
     if (result is Success<UserResponse?>) {
+      await sendOtp(phone: phoneController.text, context: context);
       isLoading = false;
       notifyListeners();
       return true;

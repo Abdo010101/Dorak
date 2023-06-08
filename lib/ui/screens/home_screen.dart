@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         backgroundColor: AppColors.blue,
         body: Consumer<HomeController>(
-          builder: (con, controller, child) {
+          builder: (context, controller, child) {
             return EmptyCard(
               borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(25), topLeft: Radius.circular(25)),
@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 1.5.h,
                     ),
                     TextBuilder(
-                      text: 'Book Clinic Appointment',
+                      text: AppStrings.kBookAppointment.tr(),
                       color: AppColors.navyBlue,
                       size: AppFontSizes.kS5,
                       verticalPadding: 1.h,
@@ -109,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: AppColors.gray,
                             ),
                             TextBuilder(
-                              text: 'Find a doctor or speciality',
+                              text: AppStrings.kFindDoctor.tr(),
                               verticalPadding: 0,
                               horizontalPadding: 3.w,
                               size: AppFontSizes.kS3,
@@ -119,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     SectionLabel(
-                      title: 'Best Doctors',
+                      title: AppStrings.kBestDoctors.tr(),
                       seeAllPressed: () {},
                     ),
                     controller.isLoading
@@ -127,13 +127,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             backgroundColor: AppColors.transparent,
                           )
                         : controller.bestDoctorsList.isEmpty
-                            ? const Center(
+                            ? Center(
                                 child:
-                                    Text("There is No Available Doctors Now "),
+                                    Text(AppStrings.kNoAvailableDoctors.tr()),
                               )
                             : Container(
                                 margin: EdgeInsets.symmetric(vertical: 0.75.h),
-                                height: 28.h,
+                                height: 24.h,
                                 child: ListView.separated(
                                   itemCount:
                                       controller.homeData!.bestDoctors!.length,
@@ -168,8 +168,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       seeAllPressed: () {},
                     ),
                     controller.latestOfferList.isEmpty
-                        ? const Center(
-                            child: Text("There is No Available Offers Now "),
+                        ? Center(
+                            child: Text(AppStrings.kNoAvailableOffers.tr()),
                           )
                         : Container(
                             margin: EdgeInsets.symmetric(vertical: 1.h),
@@ -184,11 +184,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                   offerTittle: offerModel.title,
                                   offerSubTittle: '${offerModel.description}',
                                   offerPic: offerModel.mainPic,
-                                  offerPrice: offerModel.priceBefore,
+                                  priceBefore: offerModel.priceBefore,
                                   doctorName: offerModel.doctor!.name,
                                   docPic: offerModel.doctor!.image,
                                   rate: offerModel.doctor!.rate,
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    showBottomSheet(
+                                        context: context,
+                                        backgroundColor: Colors.transparent,
+                                        builder: (context) {
+                                          return OfferDetailsBottomSheet(
+                                            offer: offerModel,
+                                          );
+                                        });
+                                  },
                                 );
                               },
                               separatorBuilder:
@@ -203,19 +212,22 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 1.h,
                     ),
                     SectionLabel(
-                      title: 'My Appointment',
+                      title: AppStrings.kMyAppointment.tr(),
                       seeAllPressed: () {},
                     ),
                     controller.appointmentList.isEmpty
-                        ? const Center(
-                            child: Text("There is No Available Appointment"),
+                        ? Center(
+                            child:
+                                Text(AppStrings.kNoAvailableAppointment.tr()),
                           )
                         : ListView.builder(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
-                            itemCount: 4,
+                            itemCount: controller.appointmentList.length,
                             itemBuilder: (context, index) {
-                              return const AppointmentWidget();
+                              return AppointmentWidget(
+                                appointment: controller.appointmentList[index],
+                              );
                             },
                           ),
                     SizedBox(

@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/controllers/home_controller.dart';
-import 'package:dorakpattient/controllers/offers_controller.dart';
 import 'package:dorakpattient/routes/dorak_routes.dart';
 import 'package:dorakpattient/routes/route_manger.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -46,12 +45,9 @@ void main() async {
   } catch (e) {}
   runApp(
     EasyLocalization(
-      supportedLocales: const [
-        Locale("ar"),
-        Locale("en"),
-      ],
+      supportedLocales: LanguageController.allLocales,
       path: 'assets/translations',
-      startLocale: const Locale("en"),
+      startLocale: const Locale("ar"),
       child: const MyApp(),
     ),
   );
@@ -80,10 +76,17 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => AppointmentsController()),
         ChangeNotifierProvider(create: (context) => SearchController()),
         ChangeNotifierProvider(create: (context) => SearchResultController()),
+        ChangeNotifierProvider(create: (context) => AppReviewController()),
+        ChangeNotifierProvider(create: (context) => LanguageController()),
+        ChangeNotifierProvider(create: (context) => VerifyController()),
       ],
       child: Sizer(
         builder: (BuildContext context, Orientation orientation,
             DeviceType deviceType) {
+          context.read<LanguageController>().checkStatus =
+              EasyLocalization.of(context)?.currentLocale == const Locale('en')
+                  ? 'English'
+                  : 'عربى';
           return MaterialApp(
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,

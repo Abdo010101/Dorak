@@ -37,12 +37,6 @@ class SuccessScreen extends StatelessWidget {
                   align: TextAlign.center,
                   maxLin: 2,
                 ),
-                TextBuilder(
-                  text: AppStrings.kAccCreated[2].tr(),
-                  maxLin: 2,
-                  align: TextAlign.center,
-                  verticalPadding: 1.h,
-                ),
                 ButtonBuilder(
                   buttonColor: AppColors.blue,
                   onPressed: () {
@@ -50,7 +44,7 @@ class SuccessScreen extends StatelessWidget {
                     //     .read<LoginController>()
                     //     .sendOtp(context, SendOtpType.register);
                   },
-                  title: AppStrings.kAccCreated[3].tr(),
+                  title: '',
                   height: 6.h,
                   margin: EdgeInsets.symmetric(vertical: 2.h),
                 )

@@ -15,7 +15,7 @@ class MainScreenController extends ChangeNotifier {
             .read<AppointmentsController>()
             .changeAppointmentDate(AppStrings.kUpcoming);
       } else if (index == 2) {
-        context.read<OffersController>().getAllOffers();
+        context.read<OffersController>().getAllOffers(home: true);
       }
     }
     currentIndex = index;
@@ -25,7 +25,7 @@ class MainScreenController extends ChangeNotifier {
   List<Widget> homeScreensList = [
     const HomeScreen(),
     const AppointmentsScreen(),
-    const OffersScreen(),
+    OffersScreen(),
     const ProfileScreen(),
   ];
 }
