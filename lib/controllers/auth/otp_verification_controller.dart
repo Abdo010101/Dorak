@@ -69,8 +69,9 @@ class VerifyController extends AuthController {
       otp.write(element.text);
     });
     try {
-      final result =
-          await checkOtp(context: context, phone: phone, otp: otp.toString());
+      final result = type != SendOtpType.changPassword
+          ? await checkOtp(context: context, phone: phone, otp: otp.toString())
+          : await verifyOtp(context: context, otp: otp.toString());
       if (result is Success<Patient> || result is Success<dynamic>) {
         isLoading = false;
         notifyListeners();
@@ -103,7 +104,7 @@ class VerifyController extends AuthController {
   @override
   void disposeValues() {
     formVerifyKey.currentState?.dispose();
-    formPhoneKey.currentState?.dispose();
+    //formPhoneKey.currentState?.dispose();
     // TODO: implement disposeValues
   }
 }

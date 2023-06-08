@@ -91,6 +91,21 @@ class AuthenticationRepository extends BaseRepository {
     }
   }
 
+  Future<BaseModel<dynamic>> verifyOtp({required var body}) async {
+    if (await checkForConnectivity()) {
+      try {
+        return BaseModel(
+            data: await authenticationClient.verifyOtp(body).then((value) {
+          return value;
+        }));
+      } on DioError catch (e) {
+        return BaseModel(error: ErrorResponse(dioError: e));
+      }
+    } else {
+      return BaseModel.noNetworkConnection();
+    }
+  }
+
   Future<BaseModel<dynamic>> changePassword(
       {required String phone, required var body}) async {
     if (await checkForConnectivity()) {

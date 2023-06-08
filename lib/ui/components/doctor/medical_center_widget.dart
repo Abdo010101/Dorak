@@ -70,7 +70,7 @@ class MedicalCenterWidget extends StatelessWidget {
                         ),
                         TextBuilder(
                           width: 30.w,
-                          text: "City name and area",
+                          text: "${placeModel?.shortAddress}",
                           size: AppFontSizes.kS2,
                           color: AppColors.lightGrey2,
                           verticalPadding: 0,
@@ -109,7 +109,7 @@ class MedicalCenterWidget extends StatelessWidget {
                           SvgPicture.asset(AppAssets.kLocationIcon),
                           TextBuilder(
                             width: 30.w,
-                            text: "City name and area",
+                            text: "${placeModel?.shortAddress}",
                             size: AppFontSizes.kS2,
                             color: AppColors.navyBlue,
                             verticalPadding: 0,
@@ -124,7 +124,7 @@ class MedicalCenterWidget extends StatelessWidget {
                           SvgPicture.asset(AppAssets.kMoneyIcon),
                           TextBuilder(
                             width: 30.w,
-                            text: "Fees: 300 LE",
+                            text: "Fees: ${placeModel?.examinationPrice} LE",
                             size: AppFontSizes.kS2,
                             color: AppColors.navyBlue,
                             verticalPadding: 0,
@@ -144,7 +144,8 @@ class MedicalCenterWidget extends StatelessWidget {
                               color: AppColors.lightGrey2,
                             ),
                             TextBuilder(
-                                text: '${AppStrings.kWaitingTime.tr()} 40 min',
+                                text:
+                                    '${AppStrings.kWaitingTime.tr()} ${placeModel?.examinationDuration} min',
                                 size: AppFontSizes.kS2,
                                 verticalPadding: 0,
                                 horizontalPadding: 1.w,

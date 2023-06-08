@@ -6,20 +6,31 @@ import '../data/di/locator.dart';
 import '../data/models/response/response.dart';
 import '../data/repository/repository.dart';
 
-class SearchController extends ChangeNotifier {
+class SearchResultController extends ChangeNotifier {
   bool isLoading = false;
-  List<AppointmentResponse> appointmentsList = [];
-  final _appointmentsRepository = locator<AppointmentsRepository>();
+  List<Doctor> doctorsList = [];
+  final _doctorsRepository = locator<DoctorsSearchResultRepository>();
 
-  /* Future<void> getAllAppointments() async {
+  Future<void> getDoctors(
+      {int? cityId, double? lat, double? lng, int? specializationId}) async {
     try {
+      Map<String, dynamic> prams = {};
+      if (cityId != null) {
+        prams['area_id'] = cityId;
+      } else if (lat != null && lng != null) {
+        prams['lat'] = lat;
+        prams['lng'] = lng;
+      }
+      if (specializationId != null) {
+        prams['specializations[]'] = 2;
+      }
+
       isLoading = true;
-      final result = await _appointmentsRepository
-          .getAllAppointments('reservations/${appointmentDate.toLowerCase()}');
+      final result = await _doctorsRepository.getDoctors(prams);
       if (result.data != null) {
-        appointmentsList
+        doctorsList
           ..clear()
-          ..addAll(result.data!);
+          ..addAll(result.data!.doctors!.data!);
         isLoading = false;
         notifyListeners();
       }
@@ -33,5 +44,5 @@ class SearchController extends ChangeNotifier {
     } finally {
       // isLoading.value = false;
     }
-  }*/
+  }
 }

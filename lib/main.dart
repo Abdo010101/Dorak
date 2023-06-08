@@ -74,6 +74,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => OffersController()),
         ChangeNotifierProvider(create: (context) => PatientProfileController()),
         ChangeNotifierProvider(create: (context) => AppointmentsController()),
+        ChangeNotifierProvider(create: (context) => SearchController()),
+        ChangeNotifierProvider(create: (context) => SearchResultController()),
         ChangeNotifierProvider(create: (context) => AppReviewController()),
         ChangeNotifierProvider(create: (context) => LanguageController()),
         ChangeNotifierProvider(create: (context) => VerifyController()),

@@ -187,6 +187,32 @@ class AuthController extends DisposableProvider {
     }
   }
 
+  Future<Result<dynamic>> verifyOtp(
+      {required BuildContext context, required String otp}) async {
+    try {
+      isLoading = true;
+      notifyListeners();
+      var data = dio.FormData.fromMap({
+        'otp': otp,
+      });
+      final result = await _authenticationRepository.verifyOtp(
+        body: data,
+      );
+      isLoading = false;
+      notifyListeners();
+      if (result.data != null) {
+        return Success(result.data!);
+      } else {
+        return Error(errorMessage: result.error?.message);
+      }
+    } on DioError catch (e) {
+      return Error(errorMessage: DioExceptions.fromDioError(e).message);
+    } finally {
+      //Dismiss Dialog .
+      // Get.back();
+    }
+  }
+
   Future<bool> changePassword(
       BuildContext context, String password, String phone) async {
     try {

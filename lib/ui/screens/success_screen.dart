@@ -43,7 +43,7 @@ class SuccessScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.pushNamed(context, NameRoutes.kHomeScreen);
                   },
-                  title: '',
+                  title: AppStrings.kAccCreated[2].tr(),
                   height: 6.h,
                   margin: EdgeInsets.symmetric(vertical: 2.h),
                 )

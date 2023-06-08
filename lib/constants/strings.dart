@@ -40,6 +40,7 @@ class AppStrings {
   static const kAccCreated = [
     'created',
     'created_success',
+    'get_started',
   ];
   static const kAppReview = "app_review";
   static const kPleaseRate = "rate_quality";
@@ -125,4 +126,5 @@ class AppStrings {
   static const kMyAppointment = 'my_appointment';
   static const kNoAvailableAppointment = 'no_available_appointment';
   static const kSearchForSpeciality = 'search_for_speciality';
+  static const kManualAppointmentTitle = 'manual_appointment';
 }

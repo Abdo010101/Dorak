@@ -12,8 +12,12 @@ class GeneralController extends ChangeNotifier {
   List<Titles> specializationList = [];
   List<Titles> areaList = [];
   List<Titles> originalAreaList = [];
+  double? lat;
+
+  double? lng;
 
   int? specializationId;
+  int? cityId;
 
   /* List<GeneralData> subSpecializationList = [];
   List<GeneralData> areaList = [];
@@ -102,6 +106,22 @@ class GeneralController extends ChangeNotifier {
 
   void onSpecializationChange(int id) {
     specializationId = id;
+  }
+
+  void onSelectedCity(int id) {
+    cityId = id;
+  }
+
+  Future<void> getCurrentLocation(BuildContext context) async {
+    var result = await handleLocationPermission(context);
+
+    if (result) {
+      Position? position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+
+      lat = position.latitude;
+      lng = position.longitude;
+    }
   }
 
   Future<bool> handleLocationPermission(BuildContext context) async {
