@@ -1,5 +1,6 @@
 import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/ui/components/components.dart';
+import 'package:dorakpattient/utis/util.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -131,8 +132,11 @@ class DoctorScreen extends StatelessWidget {
                               ? ClinicWidget(place: place)
                               : MedicalCenterWidget(placeModel: place),
                           AddressWidget(
-                              address: place?.shortAddress,
-                              fullAddress: place?.longAddress),
+                            address: place?.shortAddress,
+                            fullAddress: place?.longAddress,
+                            latitude: place?.lat,
+                            longitude: place?.lng,
+                          ),
                           PatientsReviews(
                               rateList: doctorController
                                   .doctorProfileResponse?.ratings),
@@ -149,76 +153,80 @@ class DoctorScreen extends StatelessWidget {
 
 class AddressWidget extends StatelessWidget {
   const AddressWidget(
-      {Key? key, this.address, this.fullAddress, this.lat, this.lng})
+      {Key? key, this.address, this.fullAddress, this.latitude, this.longitude})
       : super(key: key);
   final String? address;
   final String? fullAddress;
-  final String? lat;
-  final String? lng;
+  final String? latitude;
+  final String? longitude;
+
   @override
   Widget build(BuildContext context) {
     return EmptyCard(
-        verticalPadding: 1.5.h,
-        verticalMargin: 1.h,
-        height: 20.h,
-        child: Row(
-          children: [
-            Expanded(
-              flex: 1,
-              child: Column(
+      verticalPadding: 1.5.h,
+      verticalMargin: 1.h,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              SvgPicture.asset(
+                AppAssets.kLocationIcon,
+                width: 4.w,
+                height: 4.w,
+              ),
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      SvgPicture.asset(
-                        AppAssets.kLocationIcon,
-                        width: 4.w,
-                        height: 4.w,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TextBuilder(
-                            text: AppStrings.kAddress.tr(),
-                            color: AppColors.navyBlue,
-                            size: 10.sp,
-                            bold: true,
-                            verticalPadding: 0,
-                            horizontalPadding: 2.w,
-                          ),
-                          const GeneralLine(),
-                        ],
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 1.0.h,
-                  ),
                   TextBuilder(
-                    text: '$fullAddress',
-                    verticalPadding: 1.h,
-                    horizontalPadding: 0,
+                    text: AppStrings.kAddress.tr(),
+                    color: AppColors.navyBlue,
                     size: 10.sp,
-                    maxLin: 6,
-                    width: 47.w,
-                    color: AppColors.darkGray,
+                    bold: true,
+                    verticalPadding: 0,
+                    horizontalPadding: 2.w,
                   ),
+                  const GeneralLine(),
                 ],
               ),
-            ),
-            Expanded(
-              flex: 1,
-              child: GeometricalAvatar(
-                backgroundColor: AppColors.transparent,
-                path: AppAssets.kMap,
-                radius: 10.sp,
-                width: 35.w,
-                height: 22.5.h,
+            ],
+          ),
+          SizedBox(
+            height: 1.0.h,
+          ),
+          TextBuilder(
+            text: fullAddress,
+            verticalPadding: 1.h,
+            horizontalPadding: 0,
+            size: 10.sp,
+            maxLin: 6,
+            width: 47.w,
+            color: AppColors.darkGray,
+          ),
+          Row(
+            children: [
+              const Spacer(),
+              InkWell(
+                onTap: () =>
+                    Util.openMap(latitude: latitude, longitude: longitude),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(AppAssets.kDirections),
+                    TextBuilder(
+                      text: AppStrings.kDirections.tr(),
+                      color: AppColors.blue,
+                      horizontalPadding: 1.5.w,
+                      verticalPadding: 0,
+                    ),
+                  ],
+                ),
               ),
-            )
-          ],
-        ));
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }
 

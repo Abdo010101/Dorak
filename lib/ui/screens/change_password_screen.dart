@@ -16,6 +16,7 @@ class ChangePasswordScreen extends StatelessWidget {
         Provider.of<RegisterController>(context, listen: false);
     VerifyController verifyController =
         Provider.of<VerifyController>(context, listen: false);
+    final GlobalKey<FormState> formChangePasswordKey = GlobalKey<FormState>();
 
     return Scaffold(
       backgroundColor: AppColors.liteWight,
@@ -36,7 +37,7 @@ class ChangePasswordScreen extends StatelessWidget {
         children: [
           EmptyCard(
             child: Form(
-              key: controller.formChangePasswordKey,
+              key: formChangePasswordKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -68,11 +69,14 @@ class ChangePasswordScreen extends StatelessWidget {
                     title: 'send'.tr(),
                     onPressed: () {
                       FocusManager.instance.primaryFocus?.unfocus();
-                      controller.changePassword(
-                        context,
-                        controller.passwordController.text,
-                        verifyController.phoneController.text,
-                      );
+                      (formChangePasswordKey.currentState?.validate() == true)
+                          ? controller.changePassword(
+                              context,
+                              controller.passwordController.text,
+                              verifyController.phoneController.text,
+                            )
+                          : null;
+                      formChangePasswordKey.currentState?.save();
                     },
                   )
                 ],

@@ -20,7 +20,6 @@ class VerifyController extends AuthController {
   Timer? countdownTimer;
   Duration myDuration = const Duration(seconds: 59);
   SendOtpType type = SendOtpType.non;
-  bool agreeTermsCondition = false;
   final List<TextEditingController> textEditingControllerList = [];
 
   void startTimer() {
@@ -69,7 +68,7 @@ class VerifyController extends AuthController {
       otp.write(element.text);
     });
     try {
-      final result = type != SendOtpType.changPassword
+      final result = type == SendOtpType.changPassword
           ? await checkOtp(context: context, phone: phone, otp: otp.toString())
           : await verifyOtp(context: context, otp: otp.toString());
       if (result is Success<Patient> || result is Success<dynamic>) {
@@ -99,6 +98,15 @@ class VerifyController extends AuthController {
     } finally {
       // isLoading.value = false;
     }
+  }
+
+  void resetController() {
+    textFormList.clear();
+    countdownTimer = null;
+    myDuration = const Duration(seconds: 59);
+    phoneController.clear();
+    type = SendOtpType.changPassword;
+    textEditingControllerList.clear();
   }
 
   @override

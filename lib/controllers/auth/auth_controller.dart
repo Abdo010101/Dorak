@@ -15,7 +15,7 @@ import '../controllers.dart';
 
 class AuthController extends DisposableProvider {
   final _sharedPref = locator<SharedPref>();
-  final GlobalKey<FormState> formChangePasswordKey = GlobalKey<FormState>();
+  // final GlobalKey<FormState> formChangePasswordKey = GlobalKey<FormState>();
 
   final _authenticationRepository = locator<AuthenticationRepository>();
   UserResponse? currentUser = UserResponse();
@@ -190,6 +190,7 @@ class AuthController extends DisposableProvider {
   Future<Result<dynamic>> verifyOtp(
       {required BuildContext context, required String otp}) async {
     try {
+      print('phone : phone');
       isLoading = true;
       notifyListeners();
       var data = dio.FormData.fromMap({
@@ -216,14 +217,13 @@ class AuthController extends DisposableProvider {
   Future<bool> changePassword(
       BuildContext context, String password, String phone) async {
     try {
-      if (formChangePasswordKey.currentState?.validate() != true) return false;
       isLoading = true;
       notifyListeners();
       var data = dio.FormData.fromMap({
         'password': password,
         'password_confirmation': password,
       });
-      formChangePasswordKey.currentState?.save();
+
       final result = await _authenticationRepository.changePassword(
         phone: phone,
         body: data,
@@ -254,7 +254,6 @@ class AuthController extends DisposableProvider {
 
   @override
   void disposeValues() {
-    formChangePasswordKey.currentState?.dispose();
     isLoggedIn = false;
     currentUser = UserResponse();
     _sharedPref.deleteLoginInfo();

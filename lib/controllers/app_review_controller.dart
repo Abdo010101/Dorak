@@ -49,4 +49,10 @@ class AppReviewController extends ChangeNotifier {
     ratting = newRatting;
     notifyListeners();
   }
+
+  void resetController() {
+    isLoading = false;
+    ratting = 0;
+    rateController.clear();
+  }
 }

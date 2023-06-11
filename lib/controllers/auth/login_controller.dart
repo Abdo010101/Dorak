@@ -16,8 +16,8 @@ import '../../data/shared/shared_pref.dart';
 import '../../routes/dorak_routes.dart';
 
 class LoginController extends AuthController {
-  TextEditingController emailTextEditingController = TextEditingController();
-  TextEditingController passwordTextEditingController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController changePasswordController = TextEditingController();
   TextEditingController confirmChangePasswordController =
@@ -41,8 +41,8 @@ class LoginController extends AuthController {
     notifyListeners();
     formLoginKey.currentState?.save();
     final result = await login(
-        email: emailTextEditingController.text,
-        password: passwordTextEditingController.text,
+        email: emailController.text,
+        password: passwordController.text,
         rememberMe: rememberMe,
         token: firebaseToken);
     isLoading = false;
@@ -178,6 +178,16 @@ class LoginController extends AuthController {
   void logoutFromGoogleAccount() async {
     user = await googleSignIn.disconnect();
     print(user);
+  }
+
+  void resetController() {
+    emailController.clear();
+    passwordController.clear();
+    phoneController.clear();
+    changePasswordController.clear();
+    confirmChangePasswordController.clear();
+    rememberMe = true;
+    showPass = true;
   }
 
   @override

@@ -3,7 +3,7 @@ abstract class NameRoutes {
   static const kWelcomeScreen = "$kSplashScreen/welcome";
   static const kIntroScreen = "$kSplashScreen/intro";
   static const kLoginScreen = '$kSplashScreen/login';
-  static const kRegisterScreen = '$kSplashScreen/register';
+  static const kRegisterScreen = '$kWelcomeScreen/register';
   static const kCompleteInfoScreen = '$kSplashScreen/complete-info';
   static const kOTPScreen = '$kRegisterScreen/otp';
   static const kHomeScreen = '$kSplashScreen/home';
@@ -30,5 +30,5 @@ abstract class NameRoutes {
   static const kChangePasswordScreen = '$kOTPScreen/changePassword';
   static const kMainTestScreen = 'main_test_screen';
   static const kGenderScreen = '$kOTPScreen/gender_screen';
-  static const kLanguageScreen = '$kWelcomeScreen/language_screen';
+  static const kLanguageScreen = '$kProfileScreen/language_screen';
 }

@@ -127,4 +127,5 @@ class AppStrings {
   static const kNoAvailableAppointment = 'no_available_appointment';
   static const kSearchForSpeciality = 'search_for_speciality';
   static const kManualAppointmentTitle = 'manual_appointment';
+  static const kDirections = 'directions';
 }

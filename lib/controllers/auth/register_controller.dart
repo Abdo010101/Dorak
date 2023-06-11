@@ -5,6 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
+import '../../constants/enums.dart';
 import '../../data/models/request/request.dart';
 import '../../data/models/response/response.dart';
 
@@ -53,6 +54,7 @@ class RegisterController extends AuthController {
     final result = await register(registerRequest: request.toJson());
     if (result is Success<UserResponse?>) {
       context.read<AuthController>().currentUser = result.data;
+      context.read<VerifyController>().type = SendOtpType.non;
       await sendOtp(phone: phoneController.text, context: context);
       isLoading = false;
       notifyListeners();
@@ -76,9 +78,21 @@ class RegisterController extends AuthController {
     };
   }
 
+  void resetController() {
+    userNameController.clear();
+    emailController.clear();
+    phoneController.clear();
+    passwordController.clear();
+    confirmPasswordController.clear();
+    agreeTermsCondition = false;
+    showConfPass = true;
+    showPass = true;
+  }
+
   @override
   void disposeValues() {
     formRegisterKey.currentState?.dispose();
+    resetController();
     // TODO: implement disposeValues
   }
 }

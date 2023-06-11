@@ -180,7 +180,7 @@ class _AuthenticationClient implements AuthenticationClient {
     )
         .compose(
           _dio.options,
-          'check-otp',
+          'verify',
           queryParameters: queryParameters,
           data: _data,
         )

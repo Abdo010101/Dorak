@@ -86,7 +86,7 @@
   "intro_title2": "إدارة حجوزات المركز الطبي",
   "intro_title3": "أنشئ عروض لعملائك",
   "intro_title4": "سهل الاستخدام والإدارة",
-  "call": "مكالمة",
+  "call": "اتصال",
   "skip": "تخطى",
   "back": "العودة",
   "no_notification": "لم تصلك إشعارات بعد",
@@ -124,5 +124,6 @@
   "my_appointment": "المواعيد الخاصة بي",
   "no_available_appointment": "لا يوجد موعد متاح",
   "search_for_speciality": "البحث عن متخصص",
-  "get_started": "إبدأ الأن"
+  "get_started": "إبدأ الأن",
+  "directions": "الإتجاهات"
 }

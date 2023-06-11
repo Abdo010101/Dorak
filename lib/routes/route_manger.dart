@@ -1,6 +1,9 @@
 import 'package:dorakpattient/routes/dorak_routes.dart';
 import 'package:dorakpattient/ui/screens/screens.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../controllers/controllers.dart';
 
 class RouteManger {
   static Route<dynamic> generateRouter(RouteSettings settings) {
@@ -18,7 +21,10 @@ class RouteManger {
         return MaterialPageRoute(builder: (context) => const WelcomeScreen());
 
       case NameRoutes.kAppReview:
-        return MaterialPageRoute(builder: (context) => const AppReview());
+        return MaterialPageRoute(builder: (context) {
+          context.read<AppReviewController>().resetController();
+          return const AppReview();
+        });
 
       case NameRoutes.kHomeScreen:
         return MaterialPageRoute(builder: (context) => const MainScreen());
@@ -36,19 +42,26 @@ class RouteManger {
 
       case NameRoutes.kProfileScreen:
         return MaterialPageRoute(builder: (context) => const ProfileScreen());
-
       case NameRoutes.kRegisterScreen:
-        return MaterialPageRoute(builder: (context) => const SignUpScreen());
+        return MaterialPageRoute(builder: (context) {
+          context.read<RegisterController>().resetController();
+          return const SignUpScreen();
+        });
 
       case NameRoutes.kLoginScreen:
-        return MaterialPageRoute(builder: (context) => const LoginScreen());
+        return MaterialPageRoute(
+          builder: (context) {
+            context.read<LoginController>().resetController();
+            return const LoginScreen();
+          },
+        );
 
       case NameRoutes.kAppointmentsScreen:
         return MaterialPageRoute(
             builder: (context) => const AppointmentsScreen());
 
       case NameRoutes.kSettingScreen:
-        return MaterialPageRoute(builder: (context) => SettingsScreen());
+        return MaterialPageRoute(builder: (context) => const SettingsScreen());
 
       case NameRoutes.kSearchForSpecialtiesScreen:
         return MaterialPageRoute(
@@ -72,8 +85,10 @@ class RouteManger {
         return MaterialPageRoute(builder: (context) => const GenderScreen());
 
       case NameRoutes.kForgetPasswordScreen:
-        return MaterialPageRoute(
-            builder: (context) => const ForgetPasswordScreen());
+        return MaterialPageRoute(builder: (context) {
+          context.read<VerifyController>().resetController();
+          return const ForgetPasswordScreen();
+        });
       case NameRoutes.kChangePasswordScreen:
         return MaterialPageRoute(
             builder: (context) => const ChangePasswordScreen());
@@ -82,7 +97,7 @@ class RouteManger {
         return MaterialPageRoute(builder: (context) => const LanguageScreen());
 
       default:
-        return MaterialPageRoute(builder: (context) => const MainTestScreen());
+        return MaterialPageRoute(builder: (context) => SplashScreen());
     }
   }
 }
