@@ -12,3 +12,5 @@ export 'offer_response.dart';
 export 'otp_response.dart';
 export 'review_response.dart';
 export 'search_result_response.dart';
+export 'terms_policy_response.dart';
+export 'reservation_response.dart';

@@ -16,13 +16,21 @@ class AvailableAppointmentRepository extends BaseRepository {
   }) async {
     if (await checkForConnectivity()) {
       try {
-        print("doctorId== ${doctorId}$id");
-        return BaseModel(
-            data: await availableAppointmentClient
-                .getAvailableSchedulesByPlace(doctorId: doctorId, id: id)
-                .then((value) {
-          return value.data;
-        }));
+        return id == 0 || id == null
+            ? BaseModel(
+                data: await availableAppointmentClient
+                    .getAvailableSchedulesForClinic(
+                doctorId: doctorId,
+              )
+                    .then((value) {
+                return value.data;
+              }))
+            : BaseModel(
+                data: await availableAppointmentClient
+                    .getAvailableSchedulesByPlace(doctorId: doctorId, id: id)
+                    .then((value) {
+                return value.data;
+              }));
       } on DioError catch (e) {
         return BaseModel(error: ErrorResponse(dioError: e));
       }
@@ -31,7 +39,7 @@ class AvailableAppointmentRepository extends BaseRepository {
     }
   }
 
-  /* Future<BaseModel<ReservationResponse>> makeReservations(
+  Future<BaseModel<ReservationResponse>> makeReservations(
       {Map<String, dynamic>? data}) async {
     if (await checkForConnectivity()) {
       try {
@@ -47,5 +55,5 @@ class AvailableAppointmentRepository extends BaseRepository {
     } else {
       return BaseModel.noNetworkConnection();
     }
-  }*/
+  }
 }

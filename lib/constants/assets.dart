@@ -56,4 +56,5 @@ class AppAssets {
   static const kFavoritesIcon = '$kAssets/favorites_icon.png';
   static const kMaleIcon = '$kAssets/male_icon.svg';
   static const kFemaleIcon = '$kAssets/female_icon.svg';
+  static const kDirections = '$kAssets/directions.svg';
 }

@@ -89,7 +89,7 @@ class AppReview extends StatelessWidget {
                           margin: EdgeInsets.symmetric(vertical: 2.5.h),
                           title: AppStrings.kSubmit.tr(),
                           onPressed: () => controller.addRate(context),
-                        )
+                        ),
                       ],
                     ),
                   ),

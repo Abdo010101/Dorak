@@ -12,8 +12,14 @@ abstract class AvailableAppointmentClient {
 
   @GET('{doctorId}/${NetworkConstant.kAvailableSchedulesRequest}/{id}')
   Future<BaseResponse<AvailableSchedulesResponse>> getAvailableSchedulesByPlace(
-      {@Path('doctorId') int? doctorId, @Queries() Map<String, dynamic> prams});
+      {@Path('doctorId') int? doctorId,
+      /*  @Queries() Map<String, dynamic> prams,*/
+      @Path('id') int? id});
 
-  /*@POST(NetworkConstant.kMakeReservations)
-  Future<BaseResponse<ReservationResponse>> makeReservations(@Body() data);*/
+  @GET('{doctorId}/${NetworkConstant.kAvailableSchedulesRequest}')
+  Future<BaseResponse<AvailableSchedulesResponse>>
+      getAvailableSchedulesForClinic({@Path('doctorId') int? doctorId});
+
+  @POST(NetworkConstant.kAppointment)
+  Future<BaseResponse<ReservationResponse>> makeReservations(@Body() data);
 }

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:dorakpattient/constants/constants.dart';
 import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -15,14 +16,14 @@ class PatientProfileController extends DisposableProvider {
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  String gender = '';
+  String? gender;
   Patient profile = Patient();
 
   resetProfileData({Patient? patient}) {
     nameController.text = patient?.name ?? '';
     phoneController.text = patient?.phone ?? '';
     emailController.text = patient?.email ?? '';
-    gender = patient?.gender ?? '';
+    gender = patient?.gender ?? AppStrings.kGenderList[0];
     profile = patient!;
     notifyListeners();
   }

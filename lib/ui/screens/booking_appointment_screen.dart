@@ -8,8 +8,8 @@ import '../../controllers/controllers.dart';
 import '../../data/models/response/response.dart';
 import '../components/components.dart';
 
-class AddManualAppointmentScreen extends StatelessWidget {
-  AddManualAppointmentScreen({Key? key}) : super(key: key);
+class ReservationScreen extends StatelessWidget {
+  ReservationScreen({Key? key}) : super(key: key);
 
   final List<Widget> daysOfWeekList = [];
 
@@ -17,6 +17,8 @@ class AddManualAppointmentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var appointmentController =
         Provider.of<ReservationAppointmentController>(context, listen: false);
+    DoctorProfileController doctorProfileController =
+        Provider.of<DoctorProfileController>(context, listen: false);
     return Scaffold(
       backgroundColor: AppColors.liteWight,
       appBar: AppBar(
@@ -25,7 +27,7 @@ class AddManualAppointmentScreen extends StatelessWidget {
         centerTitle: true,
         title: Text(
           /// TODO to be change text here ..
-          AppStrings.kManualAppointmentTitle.tr(),
+          AppStrings.kBookAppointment.tr(),
           style: const TextStyle(color: AppColors.navyBlue),
         ),
         leading: IconButton(
@@ -55,40 +57,99 @@ class AddManualAppointmentScreen extends StatelessWidget {
                       height: 1.0.h,
                     ),
                     EmptyCard(
-                      horizontalMargin: 0,
-                      verticalMargin: 1.h,
-                      verticalPadding: 0,
-                      horizontalPadding: 1.5.w,
-                      radius: 50,
-                      width: 100.w,
-                      height: 4.h,
-                      color: AppColors.liteBlue2,
-                      child: Row(
+                      radius: 15.0,
+                      verticalMargin: 0.5.h,
+                      horizontalMargin: 2.w,
+                      verticalPadding: 1.h,
+                      width: 90.w,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SvgPicture.asset(AppAssets.kLocationIcon),
                           TextBuilder(
-                            width: 30.w,
-                            text: "{model?.address}",
-                            size: AppFontSizes.kS2,
+                            text:
+                                '${doctorProfileController.selectedPlace?.name}',
+                            size: AppFontSizes.kS4,
                             color: AppColors.navyBlue,
+                            horizontalPadding: 0.5.w,
+                            bold: true,
                             verticalPadding: 0,
-                            horizontalPadding: 2.w,
                           ),
-                          VerticalDividerBuilder(
-                            dividerColor: AppColors.white,
-                            width: 0.25.w,
-                            height: 3.h,
-                            horizontalMargin: 2.5.w,
-                          ),
-                          SvgPicture.asset(AppAssets.kMoneyIcon),
-                          TextBuilder(
-                            width: 30.w,
-                            text: "Fees: {model?.examinationPrice} LE",
-                            size: AppFontSizes.kS2,
-                            color: AppColors.navyBlue,
+                          const GeneralLine(),
+                          EmptyCard(
+                            horizontalMargin: 0,
+                            verticalMargin: 1.h,
                             verticalPadding: 0,
-                            horizontalPadding: 2.w,
+                            horizontalPadding: 1.5.w,
+                            radius: 50,
+                            width: 100.w,
+                            height: 4.h,
+                            color: AppColors.liteBlue2,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(AppAssets.kLocationIcon),
+                                TextBuilder(
+                                  width: 30.w,
+                                  text: doctorProfileController
+                                          .selectedPlace?.shortAddress ??
+                                      '',
+                                  size: AppFontSizes.kS2,
+                                  color: AppColors.navyBlue,
+                                  verticalPadding: 0,
+                                  horizontalPadding: 2.w,
+                                ),
+                                VerticalDividerBuilder(
+                                  dividerColor: AppColors.white,
+                                  width: 0.25.w,
+                                  height: 3.h,
+                                  horizontalMargin: 2.5.w,
+                                ),
+                                SvgPicture.asset(AppAssets.kMoneyIcon),
+                                TextBuilder(
+                                  width: 30.w,
+                                  text:
+                                      "${AppStrings.kFees.tr()}: ${doctorProfileController.selectedPlace?.examinationPrice} LE",
+                                  size: AppFontSizes.kS2,
+                                  color: AppColors.navyBlue,
+                                  verticalPadding: 0,
+                                  horizontalPadding: 2.w,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.access_time,
+                                    size: 9.sp,
+                                    color: AppColors.lightGrey2,
+                                  ),
+                                  TextBuilder(
+                                      text:
+                                          '${AppStrings.kWaitingTime.tr()} ${doctorProfileController.selectedPlace?.examinationDuration} min',
+                                      size: AppFontSizes.kS2,
+                                      verticalPadding: 0,
+                                      horizontalPadding: 1.w,
+                                      color: AppColors.lightGrey2),
+                                ],
+                              ),
+                              /*      const Spacer(),
+                              EmptyCard(
+                                verticalPadding: 0,
+                                verticalMargin: 0.4.h,
+                                horizontalPadding: 0,
+                                horizontalMargin: 0,
+                                height: 27.5.sp,
+                                width: 27.5.sp,
+                                radius: 50,
+                                color: AppColors.lightPurple,
+                                child: Image.asset(AppAssets.kCallIcon),
+                              ),*/
+                            ],
                           ),
                         ],
                       ),
@@ -102,11 +163,13 @@ class AddManualAppointmentScreen extends StatelessWidget {
         },
       ),
       bottomNavigationBar: EmptyCard(
+        color: AppColors.transparent,
         child: ButtonBuilder(
-          margin: EdgeInsets.symmetric(vertical: 2.5.h, horizontal: 8.0.w),
+          margin: EdgeInsets.symmetric(vertical: 1.5.h, horizontal: 8.0.w),
           title: AppStrings.kSubmit.tr(),
-          onPressed:
-              () {} /* () => appointmentController.makeReservations(context)*/,
+          onPressed: () => appointmentController.makeReservations(context,
+              doctorId:
+                  doctorProfileController.doctorProfileResponse?.doctor?.id),
         ),
       ),
     );

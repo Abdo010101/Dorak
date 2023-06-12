@@ -48,7 +48,7 @@ class LoginScreen extends StatelessWidget {
                   Stack(
                     children: [
                       Form(
-                        key: controller.formKey,
+                        key: controller.formLoginKey,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -97,8 +97,7 @@ class LoginScreen extends StatelessWidget {
                                     height: 3.0.h,
                                   ),
                                   TextFormFieldBuilder(
-                                    controller:
-                                        controller.emailTextEditingController,
+                                    controller: controller.emailController,
                                     textInputAction: TextInputAction.next,
                                     validator: Validators.compose(
                                       [
@@ -113,8 +112,7 @@ class LoginScreen extends StatelessWidget {
                                     height: 2.0.h,
                                   ),
                                   TextFormFieldBuilder(
-                                    controller: controller
-                                        .passwordTextEditingController,
+                                    controller: controller.passwordController,
                                     obscureText: true,
                                     textInputAction: TextInputAction.done,
                                     validator: Validators.compose([

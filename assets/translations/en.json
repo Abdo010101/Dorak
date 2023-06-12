@@ -123,5 +123,7 @@
   "no_available_offers": "There is No Available Offers Now",
   "my_appointment": "My Appointment",
   "no_available_appointment": "There is No Available Appointment",
-  "search_for_speciality": "Search for a speciality"
+  "search_for_speciality": "Search for a speciality",
+  "get_started": "Get Started",
+  "directions": "Directions"
 }

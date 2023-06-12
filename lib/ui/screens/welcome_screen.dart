@@ -1,8 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../constants/constants.dart';
+import '../../controllers/controllers.dart';
 import '../../routes/dorak_routes.dart';
 import '../components/components.dart';
 
@@ -11,6 +13,8 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GeneralController generalController =
+        Provider.of<GeneralController>(context, listen: false);
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -64,21 +68,12 @@ class WelcomeScreen extends StatelessWidget {
                         borderColor: Colors.transparent,
                         title: AppStrings.kRegister.tr(),
                         onPressed: () {
+                          if (generalController.policy?.privacy == null ||
+                              generalController.terms?.terms == null) {
+                            generalController.getTermsAndPolicy();
+                          }
                           Navigator.of(context)
                               .pushNamed(NameRoutes.kRegisterScreen);
-                          // if (context
-                          //             .read<GeneralController>()
-                          //             .policy
-                          //             ?.privacy ==
-                          //         null ||
-                          //     context.read<GeneralController>().terms?.terms ==
-                          //         null) {
-                          //   context
-                          //       .read<GeneralController>()
-                          //       .getTermsAndPolicy();
-                          // }
-                          // Navigator.of(context)
-                          //     .pushNamed(NameRoutes.kRegisterScreen);
                         },
                         titleStyle: const TextStyle(
                             color: AppColors.blue, fontWeight: FontWeight.bold),

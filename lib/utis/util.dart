@@ -48,15 +48,23 @@ class Util {
     }
   }
 
-  static void openWhatsapp(
-      {required BuildContext context, required String phoneNumber}) async {
-    String whatsappURl = "https://wa.me/$phoneNumber";
-
-    ///TODO edit deprected here ...
-    if (await canLaunch(whatsappURl)) {
-      await launch(whatsappURl);
+  static void openWhatsapp({required String phoneNumber}) async {
+    Uri url = Uri.parse("https://wa.me/$phoneNumber");
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url, mode: LaunchMode.externalApplication);
     } else {
       throw 'whatsapp no installed';
+    }
+  }
+
+  static void openMap(
+      {required String? latitude, required String? longitude}) async {
+    Uri url = Uri.parse(
+        "https:/www.google.com/maps/search/?api=1&query=$latitude,$longitude");
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'google Map no installed';
     }
   }
 
@@ -83,6 +91,19 @@ class Util {
         msg: result == UpdatedResult.success
             ? AppStrings.kDataUpdatedSuccess.tr()
             : AppStrings.kDataUpdatedFail.tr(),
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: AppColors.grey,
+        textColor: AppColors.white,
+        fontSize: AppFontSizes.kS5);
+  }
+
+  static Future<bool?> kToastAddAppointment(UpdatedResult result) {
+    return Fluttertoast.showToast(
+        msg: result == UpdatedResult.success
+            ? AppStrings.kAddAppointmentSuccess.tr()
+            : AppStrings.kAddAppointmentFail.tr(),
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,

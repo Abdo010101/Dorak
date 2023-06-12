@@ -16,18 +16,14 @@ import '../../data/shared/shared_pref.dart';
 import '../../routes/dorak_routes.dart';
 
 class LoginController extends AuthController {
-  TextEditingController emailTextEditingController = TextEditingController();
-  TextEditingController passwordTextEditingController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController changePasswordController = TextEditingController();
   TextEditingController confirmChangePasswordController =
       TextEditingController();
+  final GlobalKey<FormState> formLoginKey = GlobalKey<FormState>();
 
-  final formKey = GlobalKey<FormState>();
-  final formSendOtpKey = GlobalKey<FormState>();
-  final formChangePasswordKey = GlobalKey<FormState>();
-
-  bool isLoading = false;
   bool rememberMe = true;
   bool showPass = true;
   final _sharedPref = locator<SharedPref>();
@@ -38,21 +34,22 @@ class LoginController extends AuthController {
   }
 
   Future<bool> signIn(BuildContext context) async {
-    if (formKey.currentState?.validate() != true) return false;
+    if (formLoginKey.currentState?.validate() != true) return false;
     FocusScope.of(context).unfocus();
     String? firebaseToken = await FirebaseMessaging.instance.getToken();
     isLoading = true;
     notifyListeners();
-    formKey.currentState?.save();
+    formLoginKey.currentState?.save();
     final result = await login(
-        email: emailTextEditingController.text,
-        password: passwordTextEditingController.text,
+        email: emailController.text,
+        password: passwordController.text,
         rememberMe: rememberMe,
         token: firebaseToken);
     isLoading = false;
     notifyListeners();
     if (result is Success<UserResponse?>) {
       if (result.data?.patient?.verifiedAt == null) {
+        context.read<AuthController>().currentUser = result.data;
         Navigator.pushNamed(context, NameRoutes.kOTPScreen);
       } else {
         Navigator.pushNamed(context, NameRoutes.kHomeScreen);
@@ -183,8 +180,19 @@ class LoginController extends AuthController {
     print(user);
   }
 
+  void resetController() {
+    emailController.clear();
+    passwordController.clear();
+    phoneController.clear();
+    changePasswordController.clear();
+    confirmChangePasswordController.clear();
+    rememberMe = true;
+    showPass = true;
+  }
+
   @override
   void disposeValues() {
+    formLoginKey.currentState?.dispose();
     // TODO: implement disposeValues
   }
 }

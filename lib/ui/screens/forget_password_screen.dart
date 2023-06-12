@@ -31,49 +31,62 @@ class ForgetPasswordScreen extends StatelessWidget {
             color: AppColors.black,
           ),
           backgroundColor: AppColors.white),
-      body: Container(
-        padding: EdgeInsets.all(5.0.w),
-        child: EmptyCard(
-          child: Form(
-            key: controller.formPhoneKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(
-                  height: 2.0.h,
-                ),
-                TextFormFieldBuilder(
-                  keyboardType: TextInputType.phone,
-                  controller: controller.phoneController,
-                  hint: AppStrings.kPhone.tr(),
-                  validator: Validators.compose(
-                    [
-                      Validators.required('required'.tr()),
-                    ],
+      body: Stack(
+        children: [
+          EmptyCard(
+            child: Form(
+              key: controller.formPhoneKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    height: 2.0.h,
                   ),
-                ),
-                SizedBox(
-                  height: 2.0.h,
-                ),
-                Text("sent_text_message".tr()),
-                SizedBox(
-                  height: 2.0.h,
-                ),
-                ButtonBuilder(
-                  title: 'send'.tr(),
-                  onPressed: () async {
-                    controller.type = SendOtpType.changPassword;
-                    Navigator.pushNamed(context, NameRoutes.kOTPScreen);
-                    await controller.sendOtp(
-                        context: context,
-                        phone: controller.phoneController.text);
-                  },
-                )
-              ],
+                  TextFormFieldBuilder(
+                    keyboardType: TextInputType.phone,
+                    controller: controller.phoneController,
+                    hint: AppStrings.kPhone.tr(),
+                    validator: Validators.compose(
+                      [
+                        Validators.required('required'.tr()),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 2.0.h,
+                  ),
+                  Text("sent_text_message".tr()),
+                  SizedBox(
+                    height: 2.0.h,
+                  ),
+                  ButtonBuilder(
+                    title: 'send'.tr(),
+                    onPressed: () async {
+                      if (controller.formPhoneKey.currentState?.validate() ==
+                          true) {
+                        bool send = await controller.sendOtp(
+                            context: context,
+                            phone: controller.phoneController.text);
+                        send
+                            ? Navigator.pushNamed(
+                                context, NameRoutes.kOTPScreen)
+                            : null;
+                      }
+                      controller.formPhoneKey.currentState?.save();
+                    },
+                  )
+                ],
+              ),
             ),
           ),
-        ),
+          Selector<VerifyController, bool>(
+            selector: (_, provider) => provider.isLoading,
+            builder: (context, isLoading, child) {
+              return isLoading ? const LoadingWidget() : const SizedBox();
+            },
+          ),
+        ],
       ),
     );
   }

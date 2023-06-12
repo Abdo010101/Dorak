@@ -32,9 +32,9 @@ class ProfileScreen extends StatelessWidget {
               bold: true,
             ),
             ListTileBuilder(
-              title: patient?.name ?? 'User name',
-              subTitle: patient?.phone ?? '00123456789',
-              trailing: patient?.email ?? 'example@mail.com',
+              title: patient?.name ?? '',
+              subTitle: patient?.phone ?? '',
+              trailing: patient?.email ?? '',
               horizontalMargin: 0,
               horizontalPadding: 5.w,
               verticalMargin: 1.h,
@@ -53,7 +53,7 @@ class ProfileScreen extends StatelessWidget {
                     title: AppStrings.kFavorites.tr(),
                     icon: AppAssets.kFavoritesIcon,
                     onTap: () {
-                      // Navigator.of(context).pushNamed(NameRoutes.kReviewScreen);
+                      // Navigator.of(context).pushNamed(NameRoutes.kAppReview);
                     },
                   ),
                   RowMenuCard(
@@ -67,8 +67,8 @@ class ProfileScreen extends StatelessWidget {
                   RowMenuCard(
                     title: AppStrings.kContactUs.tr(),
                     icon: AppAssets.kContactUsIcon,
-                    onTap: () => Util.openWhatsapp(
-                        context: context, phoneNumber: AppStrings.kPhoneNumber),
+                    onTap: () =>
+                        Util.openWhatsapp(phoneNumber: AppStrings.kPhoneNumber),
                   ),
                   RowMenuCard(
                     title: AppStrings.kAppReview.tr(),

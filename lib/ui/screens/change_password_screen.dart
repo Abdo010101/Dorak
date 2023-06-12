@@ -16,6 +16,7 @@ class ChangePasswordScreen extends StatelessWidget {
         Provider.of<RegisterController>(context, listen: false);
     VerifyController verifyController =
         Provider.of<VerifyController>(context, listen: false);
+    final GlobalKey<FormState> formChangePasswordKey = GlobalKey<FormState>();
 
     return Scaffold(
       backgroundColor: AppColors.liteWight,
@@ -32,52 +33,63 @@ class ChangePasswordScreen extends StatelessWidget {
             color: AppColors.black,
           ),
           backgroundColor: AppColors.white),
-      body: Container(
-        padding: EdgeInsets.all(5.0.w),
-        child: EmptyCard(
-          child: Form(
-            key: controller.changePasswordKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(
-                  height: 2.0.h,
-                ),
-                TextFormFieldBuilder(
-                  hint: AppStrings.kPassword.tr(),
-                  controller: controller.passwordController,
-                  validator: Validators.compose([
-                    Validators.required('required'),
-                  ]),
-                ),
-                TextFormFieldBuilder(
-                  hint: AppStrings.kConfirmPassword.tr(),
-                  controller: controller.confirmPasswordController,
-                  validator: Validators.compose([
-                    Validators.required('required'.tr()),
-                    controller.checkPasswordsMatches(
-                      'Not Match '.tr(),
-                    )
-                  ]),
-                ),
-                SizedBox(
-                  height: 2.0.h,
-                ),
-                ButtonBuilder(
-                  title: 'send'.tr(),
-                  onPressed: () {
-                    controller.changePassword(
-                      context,
-                      controller.passwordController.text,
-                      verifyController.phoneController.text,
-                    );
-                  },
-                )
-              ],
+      body: Stack(
+        children: [
+          EmptyCard(
+            child: Form(
+              key: formChangePasswordKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    height: 2.0.h,
+                  ),
+                  TextFormFieldBuilder(
+                    hint: AppStrings.kPassword.tr(),
+                    controller: controller.passwordController,
+                    validator: Validators.compose([
+                      Validators.required('required'),
+                    ]),
+                  ),
+                  TextFormFieldBuilder(
+                    hint: AppStrings.kConfirmPassword.tr(),
+                    controller: controller.confirmPasswordController,
+                    validator: Validators.compose([
+                      Validators.required('required'.tr()),
+                      controller.checkPasswordsMatches(
+                        'Not Match '.tr(),
+                      )
+                    ]),
+                  ),
+                  SizedBox(
+                    height: 2.0.h,
+                  ),
+                  ButtonBuilder(
+                    title: 'send'.tr(),
+                    onPressed: () {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                      (formChangePasswordKey.currentState?.validate() == true)
+                          ? controller.changePassword(
+                              context,
+                              controller.passwordController.text,
+                              verifyController.phoneController.text,
+                            )
+                          : null;
+                      formChangePasswordKey.currentState?.save();
+                    },
+                  )
+                ],
+              ),
             ),
           ),
-        ),
+          Selector<RegisterController, bool>(
+            selector: (_, provider) => provider.isLoading,
+            builder: (context, isLoading, child) {
+              return isLoading ? const LoadingWidget() : const SizedBox();
+            },
+          ),
+        ],
       ),
     );
   }
