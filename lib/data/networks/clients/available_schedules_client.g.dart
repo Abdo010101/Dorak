@@ -37,7 +37,7 @@ class _AvailableAppointmentClient implements AvailableAppointmentClient {
     )
             .compose(
               _dio.options,
-              '{doctorId}available-schedules/${doctorId}',
+              '${doctorId}/available-schedules/${id}',
               queryParameters: queryParameters,
               data: _data,
             )

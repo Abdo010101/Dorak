@@ -16,6 +16,7 @@ class AvailableAppointmentRepository extends BaseRepository {
   }) async {
     if (await checkForConnectivity()) {
       try {
+        print("doctorId== ${doctorId}$id");
         return BaseModel(
             data: await availableAppointmentClient
                 .getAvailableSchedulesByPlace(doctorId: doctorId, id: id)

@@ -1,4 +1,5 @@
 import 'package:dorakpattient/controllers/controllers.dart';
+import 'package:dorakpattient/routes/dorak_routes.dart';
 import 'package:dorakpattient/ui/components/components.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -62,7 +63,16 @@ class DoctorScreen extends StatelessWidget {
                 ),
                 ButtonBuilder(
                   title: AppStrings.kBookAppointment.tr(),
-                  onPressed: () {},
+                  onPressed: () {
+                    Provider.of<ReservationAppointmentController>(context,
+                            listen: false)
+                        .getAvailableSchedules(
+                            doctorId: doctorController
+                                .doctorProfileResponse!.doctor!.id!,
+                            id: place!.id!);
+                    Navigator.of(context)
+                        .pushNamed(NameRoutes.kAddAppointmentScreen);
+                  },
                   width: 77.5.w,
                   height: 6.h,
                 ),

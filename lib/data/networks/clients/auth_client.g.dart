@@ -121,58 +121,6 @@ class _AuthenticationClient implements AuthenticationClient {
   }
 
   @override
-  Future<BaseResponse<Doctor>> verifyOTP(data) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = data;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse<Doctor>>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              'verify',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = BaseResponse<Doctor>.fromJson(
-      _result.data!,
-      (json) => Doctor.fromJson(json as Map<String, dynamic>),
-    );
-    return value;
-  }
-
-  @override
-  Future<BaseResponse<OTPResponse>> resendOTP() async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse<OTPResponse>>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              'resend-otp',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = BaseResponse<OTPResponse>.fromJson(
-      _result.data!,
-      (json) => OTPResponse.fromJson(json as Map<String, dynamic>),
-    );
-    return value;
-  }
-
-  @override
   Future<dynamic> sendOtp(body) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

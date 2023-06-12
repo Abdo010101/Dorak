@@ -8,8 +8,8 @@ import 'package:sizer/sizer.dart';
 import '../../constants/constants.dart';
 import '../components/components.dart';
 
-class AddManualAppointmentScreen extends StatelessWidget {
-  AddManualAppointmentScreen({Key? key}) : super(key: key);
+class AddAppointmentScreen extends StatelessWidget {
+  AddAppointmentScreen({Key? key}) : super(key: key);
 
   final List<Widget> daysOfWeekList = [];
 

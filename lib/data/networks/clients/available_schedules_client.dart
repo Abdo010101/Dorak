@@ -10,9 +10,9 @@ abstract class AvailableAppointmentClient {
   factory AvailableAppointmentClient(Dio dio, {String baseUrl}) =
       _AvailableAppointmentClient;
 
-  @GET('{doctorId}${NetworkConstant.kAvailableSchedulesRequest}/{id}')
+  @GET('{doctorId}/${NetworkConstant.kAvailableSchedulesRequest}/{id}')
   Future<BaseResponse<AvailableSchedulesResponse>> getAvailableSchedulesByPlace(
-      {@Path('id') int? doctorId, @Path('id') int? id});
+      {@Path('doctorId') int? doctorId, @Queries() Map<String, dynamic> prams});
 
   /*@POST(NetworkConstant.kMakeReservations)
   Future<BaseResponse<ReservationResponse>> makeReservations(@Body() data);*/

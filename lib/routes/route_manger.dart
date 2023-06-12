@@ -81,6 +81,9 @@ class RouteManger {
       case NameRoutes.kLanguageScreen:
         return MaterialPageRoute(builder: (context) => const LanguageScreen());
 
+      case NameRoutes.kAddAppointmentScreen:
+        return MaterialPageRoute(builder: (context) =>  AddManualAppointmentScreen());
+
       default:
         return MaterialPageRoute(builder: (context) => const MainTestScreen());
     }

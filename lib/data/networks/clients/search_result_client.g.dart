@@ -19,10 +19,10 @@ class _DoctorsSearchResultClient implements DoctorsSearchResultClient {
   String? baseUrl;
 
   @override
-  Future<BaseResponse<SearchResultResponse>> getDoctorsResults(parms) async {
+  Future<BaseResponse<SearchResultResponse>> getDoctorsResults(prams) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    queryParameters.addAll(parms);
+    queryParameters.addAll(prams);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
