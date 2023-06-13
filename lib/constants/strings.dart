@@ -32,6 +32,8 @@ class AppStrings {
   static const kSubSpecialty = 'sub_specialty';
   static const kClinicName = 'clinic_name';
   static const kAddress = 'address';
+  static const kSelectReservationDate = 'select_reservation_date';
+
   static const kUpcoming = 'upcoming';
   static const kPast = 'past';
   static const kPatReviews = "patients_reviews";

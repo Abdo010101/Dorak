@@ -349,7 +349,9 @@ class PickUpTimeBuilder extends StatelessWidget {
                 controller.timeSlotsList.isEmpty
                     ? Center(
                         child: Text(
-                          AppStrings.kNotAvailableDay.tr(),
+                          controller.selectedDayId == null
+                              ? AppStrings.kSelectReservationDate.tr()
+                              : AppStrings.kNotAvailableDay.tr(),
                           style: TextStyle(fontSize: 12.sp),
                         ),
                       )

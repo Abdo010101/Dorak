@@ -13,9 +13,10 @@ class ResultOfSearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     String ? titleName = Provider.of<GeneralController>(context,listen: false).specializationName ;
     return Scaffold(
       backgroundColor: AppColors.liteWight,
-      appBar: const CustomAppBar(title: 'Specialties Name'),
+      appBar:  CustomAppBar(title: '$titleName'),
       body: EmptyCard(
         color: AppColors.transparent,
         horizontalPadding: 0,

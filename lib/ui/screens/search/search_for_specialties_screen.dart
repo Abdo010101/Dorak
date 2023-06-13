@@ -77,7 +77,7 @@ class SearchForSpecialtiesScreen extends StatelessWidget {
                                   specialModel: specialModel,
                                   specialOnTap: () {
                                     controller.onSpecializationChange(
-                                        specialModel.id!);
+                                        specialModel.id!, specialModel.name!);
                                     Navigator.pushNamed(context,
                                         NameRoutes.kSearchForCityScreen);
                                   },

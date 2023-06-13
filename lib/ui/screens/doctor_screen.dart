@@ -20,7 +20,7 @@ class DoctorScreen extends StatelessWidget {
       builder: (BuildContext context, doctorController, Widget? child) {
         Places? place = doctorController.selectedPlace;
         return Scaffold(
-          appBar: const CustomAppBar(title: 'Specialties Name'),
+          appBar: const CustomAppBar(title: ''),
           backgroundColor: AppColors.liteWight,
           bottomNavigationBar: EmptyCard(
             horizontalMargin: 0,

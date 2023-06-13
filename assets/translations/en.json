@@ -125,5 +125,6 @@
   "no_available_appointment": "There is No Available Appointment",
   "search_for_speciality": "Search for a speciality",
   "get_started": "Get Started",
+  "select_reservation_date": "Please Select Day First",
   "directions": "Directions"
 }

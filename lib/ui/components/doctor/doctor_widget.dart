@@ -16,6 +16,8 @@ class DoctorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isRated =
+        model?.ratingsCount != null && model!.ratingsCount! > 0 ? true : false;
     return InkWell(
       onTap: cardOnTab,
       child: EmptyCard(
@@ -45,15 +47,20 @@ class DoctorWidget extends StatelessWidget {
                       horizontalPadding: 0.5.w,
                       verticalPadding: 0,
                     ),
+                    SizedBox(
+                      height: 1.0.h,
+                    ),
                     Row(
                       children: [
                         RatingBarWidget(
-                          initialRating: 4.5,
+                          initialRating:
+                              isRated ? double.parse(model!.rate!) : 0,
                           itemSize: 10.sp,
                         ),
                         TextBuilder(
-                          text:
-                              '${model?.rate} ( ${model?.ratingsCount} review)',
+                          text: isRated
+                              ? '${model?.rate} ( ${model?.ratingsCount} review)'
+                              : 'لم يتم التقييم بعد ',
                           verticalPadding: 0,
                           horizontalPadding: 0.5.w,
                           color: AppColors.navyBlue,

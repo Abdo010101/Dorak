@@ -1,7 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/data/di/locator.dart';
+import 'package:dorakpattient/routes/dorak_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:provider/provider.dart';
 
 import '../data/models/response/response.dart';
 import '../data/repository/repository.dart';
@@ -16,6 +19,7 @@ class GeneralController extends ChangeNotifier {
 
   double? lng;
 
+  String? specializationName;
   int? specializationId;
   int? cityId;
 
@@ -104,8 +108,9 @@ class GeneralController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onSpecializationChange(int id) {
+  void onSpecializationChange(int id, String name) {
     specializationId = id;
+    specializationName = name;
   }
 
   void onSelectedCity(int id) {
@@ -121,6 +126,10 @@ class GeneralController extends ChangeNotifier {
 
       lat = position.latitude;
       lng = position.longitude;
+
+      Provider.of<SearchResultController>(context, listen: false)
+          .getDoctors(lat: lat, lng: lng, specializationId: specializationId);
+      Navigator.of(context).pushNamed(NameRoutes.kResultOfSearch);
     }
   }
 

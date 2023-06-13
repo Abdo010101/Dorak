@@ -125,5 +125,6 @@
   "no_available_appointment": "لا يوجد موعد متاح",
   "search_for_speciality": "البحث عن متخصص",
   "get_started": "إبدأ الأن",
-  "directions": "الإتجاهات"
+  "directions": "الإتجاهات",
+  "select_reservation_date": "برجاء اختيار اليوم "
 }

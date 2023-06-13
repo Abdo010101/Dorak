@@ -7,7 +7,7 @@ class RatingBarWidget extends StatelessWidget {
     Key? key,
     this.initialRating,
     this.itemSize,
-    this.ignoreGesture = false,
+    this.ignoreGesture = true,
     this.onRateUpdate,
   }) : super(key: key);
   final double? initialRating;
