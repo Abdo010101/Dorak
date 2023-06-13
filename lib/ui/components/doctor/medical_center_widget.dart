@@ -1,4 +1,5 @@
 import 'package:dorakpattient/data/models/response/response.dart';
+import 'package:dorakpattient/utis/util.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -124,7 +125,8 @@ class MedicalCenterWidget extends StatelessWidget {
                           SvgPicture.asset(AppAssets.kMoneyIcon),
                           TextBuilder(
                             width: 30.w,
-                            text: "Fees: ${placeModel?.examinationPrice} LE",
+                            text:
+                                "${AppStrings.kFees.tr()}: ${placeModel?.examinationPrice} LE",
                             size: AppFontSizes.kS2,
                             color: AppColors.navyBlue,
                             verticalPadding: 0,
@@ -145,7 +147,7 @@ class MedicalCenterWidget extends StatelessWidget {
                             ),
                             TextBuilder(
                                 text:
-                                    '${AppStrings.kWaitingTime.tr()} ${placeModel?.examinationDuration} min',
+                                    '${AppStrings.kWaitingTime.tr()} ${placeModel?.examinationDuration} ${AppStrings.kMin.tr()}',
                                 size: AppFontSizes.kS2,
                                 verticalPadding: 0,
                                 horizontalPadding: 1.w,
@@ -153,16 +155,21 @@ class MedicalCenterWidget extends StatelessWidget {
                           ],
                         ),
                         const Spacer(),
-                        EmptyCard(
-                          verticalPadding: 0,
-                          verticalMargin: 0.4.h,
-                          horizontalPadding: 0,
-                          horizontalMargin: 0,
-                          height: 22.5.sp,
-                          width: 22.5.sp,
-                          radius: 50,
-                          color: AppColors.lightPurple,
-                          child: Image.asset(AppAssets.kCallIcon),
+                        InkWell(
+                          onTap: () {
+                            Util.openCall(placeModel?.phone);
+                          },
+                          child: EmptyCard(
+                            verticalPadding: 0,
+                            verticalMargin: 0.4.h,
+                            horizontalPadding: 0,
+                            horizontalMargin: 0,
+                            height: 22.5.sp,
+                            width: 22.5.sp,
+                            radius: 50,
+                            color: AppColors.lightPurple,
+                            child: Image.asset(AppAssets.kCallIcon),
+                          ),
                         ),
                       ],
                     ),

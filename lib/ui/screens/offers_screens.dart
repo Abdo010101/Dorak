@@ -42,10 +42,9 @@ class OffersScreen extends StatelessWidget {
                   controller: controller.offerSearchController,
                   verticalMargin: 0,
                   horizontalMargin: 0,
-                  maxLines: 3,
+                  maxLines: 1,
                   width: 100.w,
                   height: 7.5.h,
-                  padding: EdgeInsets.only(right: 2.5.w, left: 2.5.w, top: 5.h),
                   borderRadius: 15,
                   prefixIcon: IconButton(
                     onPressed: () => controller.getAllOffers(),
@@ -55,6 +54,7 @@ class OffersScreen extends StatelessWidget {
                       color: AppColors.gray,
                     ),
                   ),
+                  onSubmit: (value) => controller.getAllOffers(),
                   color: AppColors.white,
                 ),
                 SizedBox(

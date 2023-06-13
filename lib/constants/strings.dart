@@ -127,5 +127,12 @@ class AppStrings {
   static const kNoAvailableAppointment = 'no_available_appointment';
   static const kSearchForSpeciality = 'search_for_speciality';
   static const kManualAppointmentTitle = 'manual_appointment';
+  static const kAddAppointmentSuccess = 'add_appointment_success';
+  static const kAddAppointmentFail = 'add_appointment_fail';
   static const kDirections = 'directions';
+  static const kToday = 'today';
+  static const kAvailable = 'available';
+  static const kMin = 'min';
+  static const kAddReview = 'add_review';
+  static const kReview = 'review';
 }

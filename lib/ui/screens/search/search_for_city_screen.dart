@@ -1,6 +1,5 @@
 import 'package:dorakpattient/routes/dorak_routes.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 

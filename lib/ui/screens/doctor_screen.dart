@@ -1,4 +1,5 @@
 import 'package:dorakpattient/controllers/controllers.dart';
+import 'package:dorakpattient/routes/dorak_routes.dart';
 import 'package:dorakpattient/ui/components/components.dart';
 import 'package:dorakpattient/utis/util.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -19,7 +20,8 @@ class DoctorScreen extends StatelessWidget {
       builder: (BuildContext context, doctorController, Widget? child) {
         Places? place = doctorController.selectedPlace;
         return Scaffold(
-          appBar: const CustomAppBar(title: 'Specialties Name'),
+          appBar: CustomAppBar(
+              title: doctorController.doctorProfileResponse?.doctor?.name),
           backgroundColor: AppColors.liteWight,
           bottomNavigationBar: EmptyCard(
             horizontalMargin: 0,
@@ -43,7 +45,7 @@ class DoctorScreen extends StatelessWidget {
                         size: 12.5.sp,
                       ),
                       TextBuilder(
-                        text: 'Available',
+                        text: AppStrings.kAvailable.tr(),
                         color: AppColors.blue,
                         size: AppFontSizes.kS2,
                         verticalPadding: 0.75.h,
@@ -52,7 +54,7 @@ class DoctorScreen extends StatelessWidget {
                         width: 1.w,
                       ),
                       TextBuilder(
-                        text: 'today',
+                        text: AppStrings.kToday.tr(),
                         color: AppColors.blue,
                         size: AppFontSizes.kS2,
                         verticalPadding: 0.75.h,
@@ -63,7 +65,16 @@ class DoctorScreen extends StatelessWidget {
                 ),
                 ButtonBuilder(
                   title: AppStrings.kBookAppointment.tr(),
-                  onPressed: () {},
+                  onPressed: () {
+                    Provider.of<ReservationAppointmentController>(context,
+                            listen: false)
+                        .getAvailableSchedules(
+                            doctorId: doctorController
+                                .doctorProfileResponse!.doctor!.id!,
+                            id: place!.id!);
+                    Navigator.of(context)
+                        .pushNamed(NameRoutes.kAddAppointmentScreen);
+                  },
                   width: 77.5.w,
                   height: 6.h,
                 ),
@@ -257,7 +268,7 @@ class PatientsReviews extends StatelessWidget {
               ),
               const Spacer(),
               ButtonBuilder(
-                title: 'Add review',
+                title: AppStrings.kAddReview.tr(),
                 titleStyle: AppStyles.kButtonTextStyle.copyWith(
                     fontSize: AppFontSizes.kS3, color: AppColors.white),
                 prefixIcon: Icon(

@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-import '../constants/constants.dart';
 import '../data/di/locator.dart';
 import '../data/models/response/response.dart';
 import '../data/repository/repository.dart';

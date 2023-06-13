@@ -50,6 +50,13 @@ Future setupLocator() async {
         InjectionClass.dio,
       ));
 
+  locator.registerFactory(() => AvailableAppointmentClient(
+        InjectionClass.dio,
+      ));
+  locator.registerFactory(() => NotificationClient(
+        InjectionClass.dio,
+      ));
+
   locator.registerFactory<AuthenticationRepository>(() =>
       AuthenticationRepository(
           authenticationClient: locator<AuthenticationClient>()));
@@ -77,6 +84,14 @@ Future setupLocator() async {
           searchResultClient: locator<DoctorsSearchResultClient>()));
   locator.registerFactory<RateRepository>(
       () => RateRepository(rateClient: locator<RateClient>()));
+
+  locator.registerFactory<AvailableAppointmentRepository>(() =>
+      AvailableAppointmentRepository(
+          availableAppointmentClient: locator<AvailableAppointmentClient>()));
+
+  locator.registerFactory<NotificationsRepository>(() =>
+      NotificationsRepository(
+          notificationsClient: locator<NotificationClient>()));
 }
 
 abstract class InjectionClass {

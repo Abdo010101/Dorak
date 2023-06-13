@@ -98,4 +98,17 @@ class Util {
         textColor: AppColors.white,
         fontSize: AppFontSizes.kS5);
   }
+
+  static Future<bool?> kToastAddAppointment(UpdatedResult result) {
+    return Fluttertoast.showToast(
+        msg: result == UpdatedResult.success
+            ? AppStrings.kAddAppointmentSuccess.tr()
+            : AppStrings.kAddAppointmentFail.tr(),
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: AppColors.grey,
+        textColor: AppColors.white,
+        fontSize: AppFontSizes.kS5);
+  }
 }

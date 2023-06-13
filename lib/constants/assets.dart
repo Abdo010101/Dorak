@@ -37,7 +37,7 @@ class AppAssets {
   static const kReportIcon = '$kAssets/report.svg';
   static const kBookingCancel = '$kAssets/booking_cancel.svg';
   static const kPayment = '$kAssets/Payment.svg';
-  static const kNewBooking = '$kAssets/new_booking.svg';
+  static const kBookingConfirm = '$kAssets/new_booking.svg';
   static const kNoData = '$kAssets/no_data.svg';
   static const kFacebook = '$kAssets/icon-f.png';
   static const kGoogle = '$kAssets/icon-g.png';

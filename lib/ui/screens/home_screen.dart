@@ -28,6 +28,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    MainScreenController mainController =
+        Provider.of<MainScreenController>(context, listen: false);
     return Scaffold(
         appBar: AppBar(
           leadingWidth: 40.w,
@@ -39,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: EdgeInsetsDirectional.only(end: 4.0.w),
               child: IconButton(
                 onPressed: () {
-                  // context.read<NotificationController>().getNotifications();
+                  context.read<NotificationController>().getNotifications();
                   Navigator.of(context)
                       .pushNamed(NameRoutes.kNotificationScreen);
                 },
@@ -165,7 +167,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                     SectionLabel(
                       title: AppStrings.kOffers.tr(),
-                      seeAllPressed: () {},
+                      seeAllPressed: () {
+                        mainController.onBottomSheetChanged(2, context);
+                      },
                     ),
                     controller.latestOfferList.isEmpty
                         ? Center(
@@ -213,7 +217,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     SectionLabel(
                       title: AppStrings.kMyAppointment.tr(),
-                      seeAllPressed: () {},
+                      seeAllPressed: () {
+                        mainController.onBottomSheetChanged(1, context);
+                      },
                     ),
                     controller.appointmentList.isEmpty
                         ? Center(

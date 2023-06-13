@@ -1,7 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:dorakpattient/controllers/controllers.dart';
+import 'package:dorakpattient/data/networks/base_model.dart';
+import 'package:dorakpattient/utis/util.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
+import '../constants/constants.dart';
 import '../data/di/locator.dart';
 import '../data/models/response/response.dart';
 import '../data/repository/repository.dart';
@@ -32,9 +36,9 @@ class ReservationAppointmentController extends ChangeNotifier {
           availableSchedulesList
             ..clear()
             ..addAll(result.data!.schedules!);
-          if (placeId == null) {
+          /*  if (placeId == null) {
             selectedDayId = availableSchedulesList[0].week?[0].date;
-          }
+          }*/
         }
       }
       {
@@ -51,16 +55,18 @@ class ReservationAppointmentController extends ChangeNotifier {
     }
   }
 
-  /*Future<void> makeReservations(BuildContext context) async {
+  Future<void> makeReservations(
+    BuildContext context, {
+    required int? doctorId,
+  }) async {
     if (formKey.currentState?.validate() == false) return;
     try {
       isLoading = true;
       notifyListeners();
 
       Map<String, dynamic> reservationsData = {
-        "name": nameController.text,
-        "phone": phoneController.text,
         "medical_center_id": placeId == 0 ? '' : placeId,
+        "doctor_id": doctorId,
         "date": selectedDay?.date,
         "time": selectedTime,
         "day_of_week": selectedDay?.name,
@@ -88,7 +94,7 @@ class ReservationAppointmentController extends ChangeNotifier {
       notifyListeners();
       // isLoading.value = false;
     }
-  }*/
+  }
 
 /*  void onPlaceChanged(var id) {
     if (id != placeId) {

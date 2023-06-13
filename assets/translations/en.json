@@ -98,7 +98,7 @@
   "otp_verification": "OTP Verification",
   "an_authentication_code_has_been_sent_to": "An authentication code has been sent to",
   "did_receive_code": "Didn't receive code. ",
-  "sec_left": "ثانية متبقية",
+  "sec_left": "Sec Left",
   "verify_now": "Verify Now",
   "resend_code": "Resend Code",
   "required": "Required",
@@ -125,5 +125,10 @@
   "no_available_appointment": "There is No Available Appointment",
   "search_for_speciality": "Search for a speciality",
   "get_started": "Get Started",
-  "directions": "Directions"
+  "directions": "Directions",
+  "today": "Today",
+  "available": "Available",
+  "min": "Min",
+  "add_review": "Add review",
+  "review": "review"
 }

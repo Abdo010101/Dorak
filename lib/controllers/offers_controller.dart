@@ -16,10 +16,11 @@ class OffersController extends DisposableProvider {
 
   Future<void> getAllOffers({bool? home}) async {
     try {
+      home == true ? offerSearchController.clear() : null;
       isLoading = true;
       notifyListeners();
       var data = {
-        'title': home == true ? '' : offerSearchController.text,
+        'title': offerSearchController.text,
       };
       final result = await _offersRepository.getAllOffers(data);
       if (result.data != null) {

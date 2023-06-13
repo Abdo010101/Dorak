@@ -110,9 +110,5 @@ class VerifyController extends AuthController {
   }
 
   @override
-  void disposeValues() {
-    formVerifyKey.currentState?.dispose();
-    //formPhoneKey.currentState?.dispose();
-    // TODO: implement disposeValues
-  }
+  void disposeValues() {}
 }

@@ -1,4 +1,5 @@
 import 'package:dorakpattient/data/models/response/offer_response.dart';
+import 'package:dorakpattient/routes/dorak_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -33,6 +34,13 @@ class ResultOfSearchScreen extends StatelessWidget {
                       Doctor model = doctorsList[index];
                       return DoctorWidget(
                         home: true,
+                        cardOnTab: () {
+                          Provider.of<DoctorProfileController>(context,
+                                  listen: false)
+                              .getDoctorProfile(context, doctorId: model.id!);
+                          Navigator.of(context)
+                              .pushNamed(NameRoutes.kDoctorScreen);
+                        },
                         model: model,
                       );
                     },

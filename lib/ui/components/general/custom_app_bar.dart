@@ -6,7 +6,7 @@ import '../../../constants/constants.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({Key? key, required this.title}) : super(key: key);
-  final String title;
+  final String? title;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -26,7 +26,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
             TextBuilder(
-              text: title,
+              text: title ?? '',
               color: AppColors.navyBlue,
               verticalPadding: 2.5.h,
               bold: true,

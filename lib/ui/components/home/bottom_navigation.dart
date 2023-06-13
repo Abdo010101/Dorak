@@ -13,6 +13,7 @@ class BottomNavigator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return EmptyCard(
+      shadow: true,
       color: AppColors.white,
       verticalMargin: 0,
       horizontalMargin: 0,
