@@ -87,72 +87,20 @@ class DoctorScreen extends StatelessWidget {
               : Column(
                   children: [
                     SwitchButton(
-                        choose: AppStrings.kClinic.tr(),
+                        choose: doctorController.switchButtonTitle,
                         fTitle: AppStrings.kClinic.tr(),
                         sTitle: AppStrings.kOffers.tr(),
-                        fBOnPressed: () {},
-                        sBOnPressed: () {}),
-                    Expanded(
-                      child: SingleChildScrollView(
-                          child: Column(
-                        children: [
-                          DoctorWidget(
-                              model: doctorController
-                                  .doctorProfileResponse?.doctor),
-                          EmptyCard(
-                            color: Colors.transparent,
-                            verticalPadding: 0,
-                            horizontalPadding: 0,
-                            verticalMargin: 0,
-                            height: 6.25.h,
-                            child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: doctorController
-                                    .doctorProfileResponse?.places!.length,
-                                itemBuilder: (context, index) {
-                                  bool isSelected =
-                                      doctorController.currentPlaceSelected ==
-                                          index;
-                                  Places placeModel = doctorController
-                                      .doctorProfileResponse!.places![index];
-                                  return ButtonBuilder(
-                                    title: '${placeModel.name} ',
-                                    //  width: 25.w,
-                                    height: 4.h,
-                                    buttonColor: isSelected
-                                        ? AppColors.blue
-                                        : AppColors.transparent,
-                                    titleStyle:
-                                        AppStyles.kButtonTextStyle.copyWith(
-                                      fontSize: AppFontSizes.kS3,
-                                      color: isSelected
-                                          ? AppColors.white
-                                          : AppColors.blue,
-                                    ),
-                                    margin: EdgeInsets.symmetric(
-                                        vertical: 1.h, horizontal: 1.w),
-                                    onPressed: () {
-                                      doctorController
-                                          .onChangedSelectPlace(index);
-                                    },
-                                  );
-                                }),
-                          ),
-                          doctorController.currentPlaceSelected == 0
-                              ? ClinicWidget(place: place)
-                              : MedicalCenterWidget(placeModel: place),
-                          AddressWidget(
-                            address: place?.shortAddress,
-                            fullAddress: place?.longAddress,
-                            latitude: place?.lat,
-                            longitude: place?.lng,
-                          ),
-                          PatientsReviews(
-                              rateList: doctorController
-                                  .doctorProfileResponse?.ratings),
-                        ],
-                      )),
-                    ),
+                        fBOnPressed: () {
+                          doctorController
+                              .onChangedProfileType(DoctorProfileType.clinic);
+                        },
+                        sBOnPressed: () {
+                          doctorController
+                              .onChangedProfileType(DoctorProfileType.offers);
+                        }),
+                    DoctorProfileWidget(
+                      doctorController: doctorController,
+                    )
                   ],
                 ),
         );
@@ -300,5 +248,76 @@ class PatientsReviews extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class DoctorProfileWidget extends StatelessWidget {
+  const DoctorProfileWidget({Key? key, required this.doctorController})
+      : super(key: key);
+  final DoctorProfileController doctorController;
+  @override
+  Widget build(BuildContext context) {
+    Places? place = doctorController.selectedPlace;
+    return Expanded(
+      child: SingleChildScrollView(
+          child: Column(
+        children: [
+          DoctorWidget(model: doctorController.doctorProfileResponse?.doctor),
+          EmptyCard(
+            color: Colors.transparent,
+            verticalPadding: 0,
+            horizontalPadding: 0,
+            verticalMargin: 0,
+            height: 6.25.h,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount:
+                    doctorController.doctorProfileResponse?.places!.length,
+                itemBuilder: (context, index) {
+                  bool isSelected =
+                      doctorController.currentPlaceSelected == index;
+                  Places placeModel =
+                      doctorController.doctorProfileResponse!.places![index];
+                  return ButtonBuilder(
+                    title: '${placeModel.name} ',
+                    //  width: 25.w,
+                    height: 4.h,
+                    buttonColor:
+                        isSelected ? AppColors.blue : AppColors.transparent,
+                    titleStyle: AppStyles.kButtonTextStyle.copyWith(
+                      fontSize: AppFontSizes.kS3,
+                      color: isSelected ? AppColors.white : AppColors.blue,
+                    ),
+                    margin:
+                        EdgeInsets.symmetric(vertical: 1.h, horizontal: 1.w),
+                    onPressed: () {
+                      doctorController.onChangedSelectPlace(index);
+                    },
+                  );
+                }),
+          ),
+          doctorController.currentPlaceSelected == 0
+              ? ClinicWidget(place: place)
+              : MedicalCenterWidget(placeModel: place),
+          AddressWidget(
+            address: place?.shortAddress,
+            fullAddress: place?.longAddress,
+            latitude: place?.lat,
+            longitude: place?.lng,
+          ),
+          PatientsReviews(
+              rateList: doctorController.doctorProfileResponse?.ratings),
+        ],
+      )),
+    );
+  }
+}
+
+class OfferWidget extends StatelessWidget {
+  const OfferWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
   }
 }

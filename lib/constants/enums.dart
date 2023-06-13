@@ -29,3 +29,5 @@ enum OtpApiType { check, verify }
 enum Language { ar, en }
 
 enum ImageType { svg, image }
+
+enum DoctorProfileType { clinic, offers }

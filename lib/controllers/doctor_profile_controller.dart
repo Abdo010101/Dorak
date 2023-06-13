@@ -2,14 +2,18 @@ import 'package:dio/dio.dart';
 import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/data/di/locator.dart';
 import 'package:dorakpattient/data/models/response/response.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/repository/repository.dart';
+import '../constants/constants.dart';
 
 class DoctorProfileController extends DisposableProvider {
   bool isLoading = false;
   final _doctorProfileRepository = locator<DoctorProfileRepository>();
   DoctorProfileResponse? doctorProfileResponse;
+  DoctorProfileType profileType = DoctorProfileType.clinic;
+  String switchButtonTitle = AppStrings.kClinic.tr();
   int? currentPlaceSelected;
   Places? selectedPlace;
   Future<void> getDoctorProfile(BuildContext context,
@@ -43,6 +47,16 @@ class DoctorProfileController extends DisposableProvider {
   void onChangedSelectPlace(int index) {
     currentPlaceSelected = index;
     selectedPlace = doctorProfileResponse!.places![index];
+    notifyListeners();
+  }
+
+  void onChangedProfileType(DoctorProfileType type) {
+    profileType = type;
+    if (type == DoctorProfileType.clinic) {
+      switchButtonTitle = AppStrings.kClinic.tr();
+    } else {
+      switchButtonTitle = AppStrings.kOffers.tr();
+    }
     notifyListeners();
   }
 
