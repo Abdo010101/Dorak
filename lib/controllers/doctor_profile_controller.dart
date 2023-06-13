@@ -12,6 +12,7 @@ class DoctorProfileController extends DisposableProvider {
   bool isLoading = false;
   final _doctorProfileRepository = locator<DoctorProfileRepository>();
   DoctorProfileResponse? doctorProfileResponse;
+
   DoctorProfileType profileType = DoctorProfileType.clinic;
   String switchButtonTitle = AppStrings.kClinic.tr();
   int? currentPlaceSelected;

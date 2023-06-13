@@ -69,11 +69,9 @@ class Review extends StatelessWidget {
           review.comment == null
               ? const SizedBox()
               : TextBuilder(
-                  text: review.comment,
+                  text: "${review.comment}",
                   verticalPadding: 1.h,
                   size: AppFontSizes.kS3,
-
-                  ///TODO edit problem here .
                   maxLin: 3,
                   color: AppColors.darkGray,
                 ),

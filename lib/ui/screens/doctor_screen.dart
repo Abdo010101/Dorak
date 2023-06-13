@@ -99,9 +99,11 @@ class DoctorScreen extends StatelessWidget {
                           doctorController
                               .onChangedProfileType(DoctorProfileType.offers);
                         }),
-                    DoctorProfileWidget(
-                      doctorController: doctorController,
-                    )
+                    doctorController.profileType == DoctorProfileType.clinic
+                        ? DoctorProfileWidget(
+                            doctorController: doctorController,
+                          )
+                        : const DoctorOffersWidget()
                   ],
                 ),
         );
@@ -241,7 +243,7 @@ class PatientsReviews extends StatelessWidget {
                 return Review(
                   review: ReviewResponse(
                       name: '${rateModel.name}',
-                      comment: '${rateModel.comment}',
+                      comment: rateModel.comment,
                       rating: rateModel.rating,
                       time: '${rateModel.time}'),
                 );
@@ -314,11 +316,43 @@ class DoctorProfileWidget extends StatelessWidget {
   }
 }
 
-class OfferWidget extends StatelessWidget {
-  const OfferWidget({Key? key}) : super(key: key);
-
+class DoctorOffersWidget extends StatelessWidget {
+  const DoctorOffersWidget({Key? key, required this.controller})
+      : super(key: key);
+  final DoctorProfileController controller;
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Expanded(
+      child: controller.isLoading
+          ? const LoadingWidget(
+              backgroundColor: AppColors.transparent,
+            )
+          : ListView.builder(
+              padding: EdgeInsets.zero,
+              itemCount: controller.offers.length,
+              itemBuilder: (context, index) {
+                return OfferWidget(
+                  offerTittle: controller.offers[index].title,
+                  offerSubTittle: controller.offers[index].description,
+                  offerPic: controller.offers[index].mainPic,
+                  priceBefore: controller.offers[index].priceBefore,
+                  priceAfter: controller.offers[index].priceAfter,
+                  doctorName: controller.offers[index].doctor?.name,
+                  docPic: controller.offers[index].doctor!.image,
+                  rate: controller.offers[index].doctor!.rate,
+                  onPressed: () {
+                    showBottomSheet(
+                        context: context,
+                        backgroundColor: Colors.transparent,
+                        builder: (context) {
+                          return OfferDetailsBottomSheet(
+                            offer: controller.offers[index],
+                          );
+                        });
+                  },
+                );
+              },
+            ),
+    );
   }
 }
