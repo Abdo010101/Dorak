@@ -1,3 +1,4 @@
+import 'package:dorakpattient/ui/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -23,12 +24,15 @@ class DevelopedWidget extends StatelessWidget {
               " W e b s t d y ",
               style: TextStyle(color: AppColors.cyan, fontSize: 10.sp),
             ),
-            SizedBox(
+            EmptyCard(
+              color: AppColors.blue,
+              horizontalPadding: 0,
+              verticalPadding: 0,
+              verticalMargin: 1.h,
+              radius: 25,
               width: 25.0.w,
-              child: const Divider(
-                color: AppColors.blue,
-                thickness: 5.0,
-              ),
+              height: 0.5.h,
+              child: const SizedBox(),
             )
           ],
         ),

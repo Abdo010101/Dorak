@@ -16,15 +16,7 @@ class OfferDetailsBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomSheetBuilder(
-      height: 110.h,
-      bottomWidget: ButtonBuilder(
-        radius: 25,
-        buttonColor: AppColors.blue,
-        title: AppStrings.kBookNow.tr(),
-        width: 100.w,
-        height: 6.5.h,
-        onPressed: () async {},
-      ),
+      height: 112.5.h,
       children: [
         GeometricalAvatar(
           height: 20.h,
@@ -77,7 +69,7 @@ class OfferDetailsBottomSheet extends StatelessWidget {
             SizedBox(
               width: 15.w,
               child: Text(
-                '${offer?.priceBefore ?? '1000'}LE',
+                '${offer?.priceBefore ?? '0'}LE',
                 maxLines: 1,
                 style: AppStyles.kButtonTextStyle.copyWith(
                   decoration: TextDecoration.lineThrough,
@@ -93,7 +85,7 @@ class OfferDetailsBottomSheet extends StatelessWidget {
             SizedBox(
               width: 15.w,
               child: Text(
-                '${offer?.priceAfter ?? '1000'}LE',
+                '${offer?.priceAfter ?? '0'}LE',
                 maxLines: 1,
                 style: AppStyles.kButtonTextStyle.copyWith(
                   color: AppColors.blue,
@@ -107,7 +99,7 @@ class OfferDetailsBottomSheet extends StatelessWidget {
         EmptyCard(
           horizontalMargin: 0,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextBuilder(
                 text: offer?.title,
@@ -120,7 +112,7 @@ class OfferDetailsBottomSheet extends StatelessWidget {
                 width: 100.w,
                 maxLin: 6,
                 horizontalPadding: 0,
-                align: TextAlign.end,
+                align: TextAlign.start,
               ),
             ],
           ),

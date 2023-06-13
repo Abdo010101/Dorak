@@ -17,6 +17,7 @@ class EmptyCard extends StatelessWidget {
     this.horizontalPadding,
     this.url,
     this.borderRadius,
+    this.shadow,
   }) : super(key: key);
 
   final Widget child;
@@ -30,6 +31,7 @@ class EmptyCard extends StatelessWidget {
   final double? horizontalMargin;
   final Color? color;
   final String? url;
+  final bool? shadow;
   final BorderRadiusGeometry? borderRadius;
 
   @override
@@ -44,16 +46,27 @@ class EmptyCard extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-          borderRadius: borderRadius ?? BorderRadius.circular(radius ?? 12.5),
-          color: color ?? AppColors.white,
-          image: url == null
-              ? null
-              : DecorationImage(
-                  image: NetworkImage(
-                    url!,
-                  ),
-                  fit: BoxFit.cover,
-                )),
+        borderRadius: borderRadius ?? BorderRadius.circular(radius ?? 12.5),
+        color: color ?? AppColors.white,
+        image: url == null
+            ? null
+            : DecorationImage(
+                image: NetworkImage(
+                  url!,
+                ),
+                fit: BoxFit.cover,
+              ),
+        boxShadow: shadow == true
+            ? [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.2),
+                  spreadRadius: 7.5,
+                  blurRadius: 7.5,
+                  offset: const Offset(0, 5), // changes position of shadow
+                ),
+              ]
+            : null,
+      ),
       child: child,
     );
   }

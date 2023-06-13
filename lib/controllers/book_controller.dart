@@ -1,12 +1,6 @@
-import 'package:dio/dio.dart';
-
-import 'package:dorakpattient/utis/util.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../constants/enums.dart';
-import '../data/di/locator.dart';
 import '../data/models/response/response.dart';
-import '../data/repository/repository.dart';
 
 class ManualAppointmentController extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
@@ -15,8 +9,7 @@ class ManualAppointmentController extends ChangeNotifier {
   Week? selectedDay;
   String? selectedDayId;
   String? selectedTime;
-  final _availableAppointmentRepository =
-      locator<AvailableAppointmentRepository>();
+
   List<Places> placesList = [];
   List<Schedules> availableSchedulesList = [];
   List<TimeSlots> timeSlotsList = [];

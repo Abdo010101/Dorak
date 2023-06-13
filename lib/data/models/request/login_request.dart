@@ -1,5 +1,3 @@
-import '../response/response.dart';
-
 class LoginRequest {
   String? emailOrPhone;
   String? password;

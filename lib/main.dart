@@ -42,7 +42,9 @@ void main() async {
     if (remoteMessage != null) {}
     await NotificationController.initialize(flutterLocalNotificationsPlugin);
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-  } catch (e) {}
+  } catch (e) {
+    throw 'Notification Error $e';
+  }
   runApp(
     EasyLocalization(
       supportedLocales: LanguageController.allLocales,
@@ -79,6 +81,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => AppReviewController()),
         ChangeNotifierProvider(create: (context) => LanguageController()),
         ChangeNotifierProvider(create: (context) => VerifyController()),
+        ChangeNotifierProvider(create: (context) => NotificationController()),
         ChangeNotifierProvider(
             create: (context) => ReservationAppointmentController()),
       ],

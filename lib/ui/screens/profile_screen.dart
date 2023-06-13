@@ -49,13 +49,13 @@ class ProfileScreen extends StatelessWidget {
               color: AppColors.white,
               child: Column(
                 children: [
-                  RowMenuCard(
-                    title: AppStrings.kFavorites.tr(),
-                    icon: AppAssets.kFavoritesIcon,
-                    onTap: () {
-                      // Navigator.of(context).pushNamed(NameRoutes.kAppReview);
-                    },
-                  ),
+                  // RowMenuCard(
+                  //   title: AppStrings.kFavorites.tr(),
+                  //   icon: AppAssets.kFavoritesIcon,
+                  //   onTap: () {
+                  //     // Navigator.of(context).pushNamed(NameRoutes.kAppReview);
+                  //   },
+                  // ),
                   RowMenuCard(
                     title: AppStrings.kSettings.tr(),
                     icon: AppAssets.kSettingIcon,
@@ -113,7 +113,11 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ],
             ),
-            const DevelopedWidget()
+            const Spacer(),
+            const DevelopedWidget(),
+            SizedBox(
+              height: 5.h,
+            ),
           ],
         ),
       ),

@@ -1,3 +1,4 @@
+import 'package:dorakpattient/utis/util.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -24,7 +25,7 @@ class ClinicWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           TextBuilder(
-            text: '${place?.name}',
+            text: place?.name ?? '',
             size: AppFontSizes.kS4,
             color: AppColors.navyBlue,
             horizontalPadding: 0.5.w,
@@ -65,7 +66,7 @@ class ClinicWidget extends StatelessWidget {
                 SvgPicture.asset(AppAssets.kLocationIcon),
                 TextBuilder(
                   width: 30.w,
-                  text: "${place?.shortAddress}",
+                  text: place?.shortAddress,
                   size: AppFontSizes.kS2,
                   color: AppColors.navyBlue,
                   verticalPadding: 0,
@@ -80,7 +81,7 @@ class ClinicWidget extends StatelessWidget {
                 SvgPicture.asset(AppAssets.kMoneyIcon),
                 TextBuilder(
                   width: 30.w,
-                  text: "${AppStrings.kFees.tr()}: 300 LE",
+                  text: "${AppStrings.kFees.tr()}: ${place?.examinationPrice}",
                   size: AppFontSizes.kS2,
                   color: AppColors.navyBlue,
                   verticalPadding: 0,
@@ -100,7 +101,8 @@ class ClinicWidget extends StatelessWidget {
                     color: AppColors.lightGrey2,
                   ),
                   TextBuilder(
-                      text: '${AppStrings.kWaitingTime.tr()} 40 min',
+                      text:
+                          '${AppStrings.kWaitingTime.tr()} ${place?.examinationDuration} ${AppStrings.kMin.tr()}',
                       size: AppFontSizes.kS2,
                       verticalPadding: 0,
                       horizontalPadding: 1.w,
@@ -108,16 +110,21 @@ class ClinicWidget extends StatelessWidget {
                 ],
               ),
               const Spacer(),
-              EmptyCard(
-                verticalPadding: 0,
-                verticalMargin: 0.4.h,
-                horizontalPadding: 0,
-                horizontalMargin: 0,
-                height: 27.5.sp,
-                width: 27.5.sp,
-                radius: 50,
-                color: AppColors.lightPurple,
-                child: Image.asset(AppAssets.kCallIcon),
+              InkWell(
+                onTap: () {
+                  Util.openCall(place?.phone);
+                },
+                child: EmptyCard(
+                  verticalPadding: 0,
+                  verticalMargin: 0.4.h,
+                  horizontalPadding: 0,
+                  horizontalMargin: 0,
+                  height: 27.5.sp,
+                  width: 27.5.sp,
+                  radius: 50,
+                  color: AppColors.lightPurple,
+                  child: Image.asset(AppAssets.kCallIcon),
+                ),
               ),
             ],
           ),

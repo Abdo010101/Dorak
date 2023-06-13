@@ -91,7 +91,6 @@ class RegisterController extends AuthController {
 
   @override
   void disposeValues() {
-    formRegisterKey.currentState?.dispose();
     resetController();
     // TODO: implement disposeValues
   }

@@ -115,7 +115,7 @@ class OfferWidget extends StatelessWidget {
               SizedBox(
                 width: 15.w,
                 child: Text(
-                  '${priceBefore ?? '1000'}LE',
+                  '${priceBefore ?? '0'}LE',
                   maxLines: 1,
                   style: AppStyles.kButtonTextStyle.copyWith(
                     decoration: TextDecoration.lineThrough,
@@ -129,7 +129,7 @@ class OfferWidget extends StatelessWidget {
               SizedBox(
                 width: 15.w,
                 child: Text(
-                  '${priceAfter ?? '1000'}LE',
+                  '${priceAfter ?? '0'}LE',
                   maxLines: 1,
                   style: AppStyles.kButtonTextStyle.copyWith(
                     color: AppColors.blue,

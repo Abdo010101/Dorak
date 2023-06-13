@@ -20,7 +20,8 @@ class DoctorScreen extends StatelessWidget {
       builder: (BuildContext context, doctorController, Widget? child) {
         Places? place = doctorController.selectedPlace;
         return Scaffold(
-          appBar: const CustomAppBar(title: ''),
+          appBar: CustomAppBar(
+              title: doctorController.doctorProfileResponse?.doctor?.name),
           backgroundColor: AppColors.liteWight,
           bottomNavigationBar: EmptyCard(
             horizontalMargin: 0,
@@ -44,7 +45,7 @@ class DoctorScreen extends StatelessWidget {
                         size: 12.5.sp,
                       ),
                       TextBuilder(
-                        text: 'Available',
+                        text: AppStrings.kAvailable.tr(),
                         color: AppColors.blue,
                         size: AppFontSizes.kS2,
                         verticalPadding: 0.75.h,
@@ -53,7 +54,7 @@ class DoctorScreen extends StatelessWidget {
                         width: 1.w,
                       ),
                       TextBuilder(
-                        text: 'today',
+                        text: AppStrings.kToday.tr(),
                         color: AppColors.blue,
                         size: AppFontSizes.kS2,
                         verticalPadding: 0.75.h,
@@ -215,7 +216,7 @@ class PatientsReviews extends StatelessWidget {
               ),
               const Spacer(),
               ButtonBuilder(
-                title: 'Add review',
+                title: AppStrings.kAddReview.tr(),
                 titleStyle: AppStyles.kButtonTextStyle.copyWith(
                     fontSize: AppFontSizes.kS3, color: AppColors.white),
                 prefixIcon: Icon(

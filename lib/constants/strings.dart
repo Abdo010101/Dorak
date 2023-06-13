@@ -132,4 +132,9 @@ class AppStrings {
   static const kAddAppointmentSuccess = 'add_appointment_success';
   static const kAddAppointmentFail = 'add_appointment_fail';
   static const kDirections = 'directions';
+  static const kToday = 'today';
+  static const kAvailable = 'available';
+  static const kMin = 'min';
+  static const kAddReview = 'add_review';
+  static const kReview = 'review';
 }

@@ -22,12 +22,12 @@ class AppointmentsController extends ChangeNotifier {
   Future<void> getAllAppointments() async {
     try {
       isLoading = true;
+      appointmentsList.clear();
+      notifyListeners();
       final result = await _appointmentsRepository
           .getAllAppointments('reservations/${appointmentDate.toLowerCase()}');
       if (result.data != null) {
-        appointmentsList
-          ..clear()
-          ..addAll(result.data!);
+        appointmentsList.addAll(result.data!);
         isLoading = false;
         notifyListeners();
       }

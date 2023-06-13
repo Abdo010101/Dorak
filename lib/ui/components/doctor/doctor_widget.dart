@@ -1,3 +1,4 @@
+import 'package:dorakpattient/utis/util.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -41,7 +42,7 @@ class DoctorWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextBuilder(
-                      text: '${model?.name}',
+                      text: model?.name ?? '',
                       size: AppFontSizes.kS3,
                       color: AppColors.navyBlue,
                       horizontalPadding: 0.5.w,
@@ -53,14 +54,15 @@ class DoctorWidget extends StatelessWidget {
                     Row(
                       children: [
                         RatingBarWidget(
-                          initialRating:
-                              isRated ? double.parse(model!.rate!) : 0,
+                          initialRating: Util.isNumeric(model?.rate)
+                              ? double.parse(model?.rate ?? '0.0')
+                              : 0.0,
                           itemSize: 10.sp,
                         ),
                         TextBuilder(
                           text: isRated
-                              ? '${model?.rate} ( ${model?.ratingsCount} review)'
-                              : 'لم يتم التقييم بعد ',
+                              ? '${model?.rate} ( ${model?.ratingsCount} ${AppStrings.kReview.tr()} )'
+                              : "${model?.rate}",
                           verticalPadding: 0,
                           horizontalPadding: 0.5.w,
                           color: AppColors.navyBlue,
@@ -73,7 +75,7 @@ class DoctorWidget extends StatelessWidget {
               ],
             ),
             TextBuilder(
-              text: '${model?.bio ?? ''}',
+              text: model?.bio ?? '',
               verticalPadding: 1.h,
               size: AppFontSizes.kS3,
               maxLin: 3,
@@ -110,7 +112,8 @@ class DoctorWidget extends StatelessWidget {
                         SvgPicture.asset(AppAssets.kMoneyIcon),
                         TextBuilder(
                           width: 30.w,
-                          text: "Fees: ${model?.examinationPrice} LE",
+                          text:
+                              "${AppStrings.kFees.tr()}: ${model?.examinationPrice} LE",
                           size: AppFontSizes.kS2,
                           color: AppColors.navyBlue,
                           verticalPadding: 0,
@@ -131,14 +134,15 @@ class DoctorWidget extends StatelessWidget {
                       ),
                       TextBuilder(
                           text:
-                              '${AppStrings.kWaitingTime.tr()} ${model?.examinationDuration} min',
+                              '${AppStrings.kWaitingTime.tr()} ${model?.examinationDuration} ${AppStrings.kMin.tr()}',
                           size: AppFontSizes.kS2,
                           verticalPadding: 0,
                           horizontalPadding: 1.w,
                           color: AppColors.lightGrey2),
                       const Spacer(),
                       ButtonBuilder(
-                        title: "Book",
+                        title: AppStrings.kBookNow.tr(),
+                        margin: EdgeInsets.symmetric(horizontal: 2.5.w),
                         width: 35.w,
                         height: 4.h,
                         titleStyle: AppStyles.kButtonTextStyle.copyWith(

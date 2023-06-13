@@ -192,7 +192,6 @@ class LoginController extends AuthController {
 
   @override
   void disposeValues() {
-    formLoginKey.currentState?.dispose();
     // TODO: implement disposeValues
   }
 }

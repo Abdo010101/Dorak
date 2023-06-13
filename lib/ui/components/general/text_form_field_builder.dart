@@ -121,7 +121,6 @@ class TextFormFieldBuilder extends StatelessWidget {
               suffixIconConstraints:
                   const BoxConstraints(minHeight: 10, minWidth: 10),
               filled: haveBorder,
-
               disabledBorder: OutlineInputBorder(
                 gapPadding: 0.0,
                 borderRadius: BorderRadius.circular(borderRadius),
@@ -130,7 +129,6 @@ class TextFormFieldBuilder extends StatelessWidget {
                   color: borderColor,
                 ),
               ),
-
               errorBorder: haveBorder
                   ? defaultBorder
                       ? UnderlineInputBorder(
@@ -150,8 +148,9 @@ class TextFormFieldBuilder extends StatelessWidget {
                   ? defaultBorder
                       ? UnderlineInputBorder(
                           borderRadius: BorderRadius.circular(borderRadius),
-                          borderSide:
-                              BorderSide(color: AppColors.green, width: 2))
+                          borderSide: const BorderSide(
+                              color: AppColors.green, width: 2),
+                        )
                       : OutlineInputBorder(
                           gapPadding: 0.0,
                           borderRadius: BorderRadius.circular(borderRadius),
@@ -184,7 +183,7 @@ class TextFormFieldBuilder extends StatelessWidget {
                   fontSize: hintSize ?? 12.5.sp, color: AppColors.darkGray),
               label: haveLabel
                   ? Padding(
-                      padding: EdgeInsetsDirectional.only(start: 2.w),
+                      padding: EdgeInsetsDirectional.only(start: 2.5.w),
                       child: Text(
                         hint ?? '',
                         style: TextStyle(

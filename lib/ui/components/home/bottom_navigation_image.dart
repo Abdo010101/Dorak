@@ -18,8 +18,8 @@ class BottomNavigationImage extends StatelessWidget {
     return SvgPicture.asset(
       image,
       color: isCurrentIndex ? AppColors.blue : AppColors.grey.withOpacity(0.5),
-      width: 20.sp,
-      height: 20.sp,
+      width: 17.5.sp,
+      height: 17.5.sp,
       fit: BoxFit.fill,
     );
   }
