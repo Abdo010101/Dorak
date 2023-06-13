@@ -113,7 +113,7 @@ class DoctorWidget extends StatelessWidget {
                         TextBuilder(
                           width: 30.w,
                           text:
-                              "${AppStrings.kFees.tr()}: ${model?.examinationPrice} LE",
+                              "${AppStrings.kFees.tr()}: ${model?.examinationPrice} ${AppStrings.kCurrency.tr()}",
                           size: AppFontSizes.kS2,
                           color: AppColors.navyBlue,
                           verticalPadding: 0,

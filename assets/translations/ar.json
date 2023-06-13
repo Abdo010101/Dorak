@@ -32,7 +32,7 @@
   "clinic_name": "اسم العيادة",
   "address": "عنوان",
   "upcoming": "القادمة",
-  "past": "قديم",
+  "past": "السابقة",
   "patients_reviews": "تقيمات المرضى",
   "see_all": "اظهار الكل",
   "medical_centers": "المراكز الطبية",
@@ -130,6 +130,7 @@
   "today": "اليوم",
   "available": "متاح",
   "min": "دقيقة",
-  "add_review": "إضافة تقيم",
-  "review": "تقيم"
+  "add_review": "إضافة تقييم",
+  "review": "تقييم",
+  "currency": "شيكل"
 }

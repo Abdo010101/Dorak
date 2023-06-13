@@ -69,7 +69,7 @@ class OfferDetailsBottomSheet extends StatelessWidget {
             SizedBox(
               width: 15.w,
               child: Text(
-                '${offer?.priceBefore ?? '0'}LE',
+                '${offer?.priceBefore}${AppStrings.kCurrency.tr()}',
                 maxLines: 1,
                 style: AppStyles.kButtonTextStyle.copyWith(
                   decoration: TextDecoration.lineThrough,
@@ -85,7 +85,7 @@ class OfferDetailsBottomSheet extends StatelessWidget {
             SizedBox(
               width: 15.w,
               child: Text(
-                '${offer?.priceAfter ?? '0'}LE',
+                '${offer?.priceAfter}${AppStrings.kCurrency.tr()}',
                 maxLines: 1,
                 style: AppStyles.kButtonTextStyle.copyWith(
                   color: AppColors.blue,

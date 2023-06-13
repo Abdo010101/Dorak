@@ -67,7 +67,7 @@ class OfferWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TextBuilder(
-                          text: '$doctorName',
+                          text: doctorName,
                           horizontalPadding: 2.5.w,
                           verticalPadding: 0,
                           color: AppColors.black,
@@ -79,14 +79,16 @@ class OfferWidget extends StatelessWidget {
                               margin: EdgeInsetsDirectional.only(
                                   start: 2.5.w, top: 1.h, end: 1.w),
                               height: 2.5.h,
-                              child: Util.isNumeric('$rate')
+                              child: Util.isNumeric(rate)
                                   ? RatingBarWidget(
                                       initialRating: double.parse(rate),
                                       itemSize: 10.sp,
                                     )
                                   : const SizedBox(),
                             ),
-                            Text('$rate'),
+                            Text(Util.isNumeric(rate)
+                                ? rate.toStringAsFixed(1)
+                                : rate),
                           ],
                         )
                       ],
@@ -115,7 +117,7 @@ class OfferWidget extends StatelessWidget {
               SizedBox(
                 width: 15.w,
                 child: Text(
-                  '${priceBefore ?? '0'}LE',
+                  '${double.parse(priceBefore!).toStringAsFixed(1)} ${AppStrings.kCurrency.tr()}',
                   maxLines: 1,
                   style: AppStyles.kButtonTextStyle.copyWith(
                     decoration: TextDecoration.lineThrough,
@@ -129,7 +131,7 @@ class OfferWidget extends StatelessWidget {
               SizedBox(
                 width: 15.w,
                 child: Text(
-                  '${priceAfter ?? '0'}LE',
+                  '${double.parse(priceAfter!).toStringAsFixed(1)} ${AppStrings.kCurrency.tr()}',
                   maxLines: 1,
                   style: AppStyles.kButtonTextStyle.copyWith(
                     color: AppColors.blue,

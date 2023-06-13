@@ -137,4 +137,5 @@ class AppStrings {
   static const kMin = 'min';
   static const kAddReview = 'add_review';
   static const kReview = 'review';
+  static const kCurrency = 'currency';
 }
