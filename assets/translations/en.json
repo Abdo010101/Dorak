@@ -132,5 +132,6 @@
   "min": "Min",
   "add_review": "Add review",
   "review": "review",
-  "currency": "شيكل"
+  "currency": "شيكل",
+  "no_offers":"There is no available offer right now"
 }

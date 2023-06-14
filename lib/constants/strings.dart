@@ -138,4 +138,5 @@ class AppStrings {
   static const kAddReview = 'add_review';
   static const kReview = 'review';
   static const kCurrency = 'currency';
+  static const kNoOffers = 'no_offers';
 }

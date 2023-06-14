@@ -287,10 +287,10 @@ class DoctorProfileWidget extends StatelessWidget {
                 itemBuilder: (context, index) {
                   bool isSelected =
                       doctorController.currentPlaceSelected == index;
-                  Places placeModel =
-                      doctorController.doctorProfileResponse!.places![index];
+                  Places? placeModel =
+                      doctorController.doctorProfileResponse?.places?[index];
                   return ButtonBuilder(
-                    title: '${placeModel.name} ',
+                    title: '${placeModel?.name} ',
                     //  width: 25.w,
                     height: 4.h,
                     buttonColor:
@@ -336,32 +336,38 @@ class DoctorOffersWidget extends StatelessWidget {
           ? const LoadingWidget(
               backgroundColor: AppColors.transparent,
             )
-          : ListView.builder(
-              padding: EdgeInsets.zero,
-              itemCount: controller.offersList.length,
-              itemBuilder: (context, index) {
-                return OfferWidget(
-                  offerTittle: controller.offersList[index].title,
-                  offerSubTittle: controller.offersList[index].description,
-                  offerPic: controller.offersList[index].mainPic,
-                  priceBefore: controller.offersList[index].priceBefore,
-                  priceAfter: controller.offersList[index].priceAfter,
-                  doctorName: controller.offersList[index].doctor?.name,
-                  docPic: controller.offersList[index].doctor!.image,
-                  rate: controller.offersList[index].doctor!.rate,
-                  onPressed: () {
-                    showBottomSheet(
-                        context: context,
-                        backgroundColor: Colors.transparent,
-                        builder: (context) {
-                          return OfferDetailsBottomSheet(
-                            offer: controller.offersList[index],
-                          );
-                        });
+          : controller.offersList.isNotEmpty
+              ? ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemCount: controller.offersList.length,
+                  itemBuilder: (context, index) {
+                    return OfferWidget(
+                      offerTittle: controller.offersList[index].title,
+                      offerSubTittle: controller.offersList[index].description,
+                      offerPic: controller.offersList[index].mainPic,
+                      priceBefore: controller.offersList[index].priceBefore,
+                      priceAfter: controller.offersList[index].priceAfter,
+                      doctorName: controller.offersList[index].doctor?.name,
+                      docPic: controller.offersList[index].doctor!.image,
+                      rate: controller.offersList[index].doctor!.rate,
+                      onPressed: () {
+                        showBottomSheet(
+                            context: context,
+                            backgroundColor: Colors.transparent,
+                            builder: (context) {
+                              return OfferDetailsBottomSheet(
+                                offer: controller.offersList[index],
+                              );
+                            });
+                      },
+                    );
                   },
-                );
-              },
-            ),
+                )
+              : Center(
+                  child: Text(
+                  AppStrings.kNoOffers.tr(),
+                  style: TextStyle(fontSize: 12.sp),
+                )),
     );
   }
 }

@@ -31,6 +31,7 @@ class OfferWidget extends StatelessWidget {
   final dynamic rate;
   @override
   Widget build(BuildContext context) {
+    print("Rateee= ${rate}");
     return Stack(
       children: [
         EmptyCard(

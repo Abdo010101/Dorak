@@ -21,6 +21,7 @@ class DoctorProfileController extends DisposableProvider {
   Future<void> getDoctorProfile(BuildContext context,
       {required int doctorId}) async {
     try {
+      profileType = DoctorProfileType.clinic;
       isLoading = true;
       notifyListeners();
       final result =
