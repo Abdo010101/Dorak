@@ -17,6 +17,7 @@ class DoctorProfileController extends DisposableProvider {
   String switchButtonTitle = AppStrings.kClinic.tr();
   int? currentPlaceSelected;
   Places? selectedPlace;
+  List<OfferResponse> offersList = [];
   Future<void> getDoctorProfile(BuildContext context,
       {required int doctorId}) async {
     try {
@@ -36,6 +37,31 @@ class DoctorProfileController extends DisposableProvider {
       } else {
         //SnackBar(content: Text(result.error?.message), );
       }
+    } on DioError catch (e) {
+      //return Error(errorMessage: DioExceptions.fromDioError(e).message);
+
+      //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
+    } finally {
+      // isLoading.value = false;
+    }
+  }
+
+  Future<void> getDoctorOffers(BuildContext context,
+      {required int doctorId}) async {
+    try {
+      isLoading = true;
+      notifyListeners();
+      final result =
+          await _doctorProfileRepository.getDoctorOffers(doctorId: doctorId);
+      if (result.data != null) {
+        offersList
+          ..clear()
+          ..addAll(result.data!);
+      } else {
+        //SnackBar(content: Text(result.error?.message), );
+      }
+      isLoading = false;
+      notifyListeners();
     } on DioError catch (e) {
       //return Error(errorMessage: DioExceptions.fromDioError(e).message);
 

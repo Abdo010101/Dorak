@@ -23,64 +23,67 @@ class DoctorScreen extends StatelessWidget {
           appBar: CustomAppBar(
               title: doctorController.doctorProfileResponse?.doctor?.name),
           backgroundColor: AppColors.liteWight,
-          bottomNavigationBar: EmptyCard(
-            horizontalMargin: 0,
-            verticalMargin: 0,
-            verticalPadding: 1.h,
-            height: 12.h,
-            borderRadius: const BorderRadius.only(
-              topRight: Radius.circular(25.0),
-              topLeft: Radius.circular(25.0),
-            ),
-            child: Column(
-              children: [
-                Visibility(
-                  visible: place != null && place.reservationStatus!,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+          bottomNavigationBar: doctorController.profileType ==
+                  DoctorProfileType.clinic
+              ? EmptyCard(
+                  horizontalMargin: 0,
+                  verticalMargin: 0,
+                  verticalPadding: 1.h,
+                  height: 12.h,
+                  borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(25.0),
+                    topLeft: Radius.circular(25.0),
+                  ),
+                  child: Column(
                     children: [
-                      Icon(
-                        Icons.check_circle_outline,
-                        color: AppColors.green,
-                        size: 12.5.sp,
+                      Visibility(
+                        visible: place != null && place.reservationStatus!,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.check_circle_outline,
+                              color: AppColors.green,
+                              size: 12.5.sp,
+                            ),
+                            TextBuilder(
+                              text: AppStrings.kAvailable.tr(),
+                              color: AppColors.blue,
+                              size: AppFontSizes.kS2,
+                              verticalPadding: 0.75.h,
+                            ),
+                            SizedBox(
+                              width: 1.w,
+                            ),
+                            TextBuilder(
+                              text: AppStrings.kToday.tr(),
+                              color: AppColors.blue,
+                              size: AppFontSizes.kS2,
+                              verticalPadding: 0.75.h,
+                              bold: true,
+                            ),
+                          ],
+                        ),
                       ),
-                      TextBuilder(
-                        text: AppStrings.kAvailable.tr(),
-                        color: AppColors.blue,
-                        size: AppFontSizes.kS2,
-                        verticalPadding: 0.75.h,
-                      ),
-                      SizedBox(
-                        width: 1.w,
-                      ),
-                      TextBuilder(
-                        text: AppStrings.kToday.tr(),
-                        color: AppColors.blue,
-                        size: AppFontSizes.kS2,
-                        verticalPadding: 0.75.h,
-                        bold: true,
+                      ButtonBuilder(
+                        title: AppStrings.kBookAppointment.tr(),
+                        onPressed: () {
+                          Provider.of<ReservationAppointmentController>(context,
+                                  listen: false)
+                              .getAvailableSchedules(
+                                  doctorId: doctorController
+                                      .doctorProfileResponse!.doctor!.id!,
+                                  id: place!.id!);
+                          Navigator.of(context)
+                              .pushNamed(NameRoutes.kAddAppointmentScreen);
+                        },
+                        width: 77.5.w,
+                        height: 6.h,
                       ),
                     ],
                   ),
-                ),
-                ButtonBuilder(
-                  title: AppStrings.kBookAppointment.tr(),
-                  onPressed: () {
-                    Provider.of<ReservationAppointmentController>(context,
-                            listen: false)
-                        .getAvailableSchedules(
-                            doctorId: doctorController
-                                .doctorProfileResponse!.doctor!.id!,
-                            id: place!.id!);
-                    Navigator.of(context)
-                        .pushNamed(NameRoutes.kAddAppointmentScreen);
-                  },
-                  width: 77.5.w,
-                  height: 6.h,
-                ),
-              ],
-            ),
-          ),
+                )
+              : SizedBox(),
           body: doctorController.isLoading
               ? const LoadingWidget(
                   backgroundColor: AppColors.transparent,
@@ -96,14 +99,17 @@ class DoctorScreen extends StatelessWidget {
                               .onChangedProfileType(DoctorProfileType.clinic);
                         },
                         sBOnPressed: () {
-                          doctorController
-                              .onChangedProfileType(DoctorProfileType.offers);
+                          if (doctorController.profileType !=
+                              DoctorProfileType.offers) {
+                            doctorController
+                                .onChangedProfileType(DoctorProfileType.offers);
+                          }
                         }),
                     doctorController.profileType == DoctorProfileType.clinic
                         ? DoctorProfileWidget(
                             doctorController: doctorController,
                           )
-                        : const DoctorOffersWidget()
+                        : DoctorOffersWidget(controller: doctorController)
                   ],
                 ),
         );
@@ -194,6 +200,7 @@ class AddressWidget extends StatelessWidget {
 class PatientsReviews extends StatelessWidget {
   const PatientsReviews({Key? key, this.rateList}) : super(key: key);
   final List<Ratings>? rateList;
+
   @override
   Widget build(BuildContext context) {
     return EmptyCard(
@@ -239,13 +246,13 @@ class PatientsReviews extends StatelessWidget {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
-                Ratings rateModel = rateList![index];
+                Ratings? rateModel = rateList?[index];
                 return Review(
                   review: ReviewResponse(
-                      name: '${rateModel.name}',
-                      comment: rateModel.comment,
-                      rating: rateModel.rating,
-                      time: '${rateModel.time}'),
+                      name: '${rateModel?.name}',
+                      comment: rateModel?.comment,
+                      rating: rateModel?.rating,
+                      time: '${rateModel?.time}'),
                 );
               }),
         ],
@@ -258,6 +265,7 @@ class DoctorProfileWidget extends StatelessWidget {
   const DoctorProfileWidget({Key? key, required this.doctorController})
       : super(key: key);
   final DoctorProfileController doctorController;
+
   @override
   Widget build(BuildContext context) {
     Places? place = doctorController.selectedPlace;
@@ -320,6 +328,7 @@ class DoctorOffersWidget extends StatelessWidget {
   const DoctorOffersWidget({Key? key, required this.controller})
       : super(key: key);
   final DoctorProfileController controller;
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -329,24 +338,24 @@ class DoctorOffersWidget extends StatelessWidget {
             )
           : ListView.builder(
               padding: EdgeInsets.zero,
-              itemCount: controller.offers.length,
+              itemCount: controller.offersList.length,
               itemBuilder: (context, index) {
                 return OfferWidget(
-                  offerTittle: controller.offers[index].title,
-                  offerSubTittle: controller.offers[index].description,
-                  offerPic: controller.offers[index].mainPic,
-                  priceBefore: controller.offers[index].priceBefore,
-                  priceAfter: controller.offers[index].priceAfter,
-                  doctorName: controller.offers[index].doctor?.name,
-                  docPic: controller.offers[index].doctor!.image,
-                  rate: controller.offers[index].doctor!.rate,
+                  offerTittle: controller.offersList[index].title,
+                  offerSubTittle: controller.offersList[index].description,
+                  offerPic: controller.offersList[index].mainPic,
+                  priceBefore: controller.offersList[index].priceBefore,
+                  priceAfter: controller.offersList[index].priceAfter,
+                  doctorName: controller.offersList[index].doctor?.name,
+                  docPic: controller.offersList[index].doctor!.image,
+                  rate: controller.offersList[index].doctor!.rate,
                   onPressed: () {
                     showBottomSheet(
                         context: context,
                         backgroundColor: Colors.transparent,
                         builder: (context) {
                           return OfferDetailsBottomSheet(
-                            offer: controller.offers[index],
+                            offer: controller.offersList[index],
                           );
                         });
                   },

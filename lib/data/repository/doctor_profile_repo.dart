@@ -28,14 +28,13 @@ class DoctorProfileRepository extends BaseRepository {
     }
   }
 
-  ///TODO offer here tomorrow  ....
-  /*Future<BaseModel<DoctorProfileResponse>> getDoctorProfile(
+  Future<BaseModel<List<OfferResponse>>> getDoctorOffers(
       {int? doctorId}) async {
     if (await checkForConnectivity()) {
       try {
         return BaseModel(
             data: await doctorProfileClient
-                .getDoctorProfile(id: doctorId)
+                .getDoctorOffers(id: doctorId)
                 .then((value) {
           return value.data;
         }));
@@ -45,5 +44,5 @@ class DoctorProfileRepository extends BaseRepository {
     } else {
       return BaseModel.noNetworkConnection();
     }
-  }*/
+  }
 }

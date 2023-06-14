@@ -12,4 +12,9 @@ abstract class DoctorProfileClient {
   @GET("${NetworkConstant.kDoctorProfileRequest}/{id}")
   Future<BaseResponse<DoctorProfileResponse>> getDoctorProfile(
       {@Path('id') int? id});
+
+  @GET(
+      "${NetworkConstant.kDoctorProfileRequest}/{id}/${NetworkConstant.kAllOffers}")
+  Future<BaseResponseList<OfferResponse>> getDoctorOffers(
+      {@Path('id') int? id});
 }

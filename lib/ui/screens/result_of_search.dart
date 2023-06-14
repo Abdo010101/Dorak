@@ -13,10 +13,11 @@ class ResultOfSearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     String ? titleName = Provider.of<GeneralController>(context,listen: false).specializationName ;
+    String? titleName = Provider.of<GeneralController>(context, listen: false)
+        .specializationName;
     return Scaffold(
       backgroundColor: AppColors.liteWight,
-      appBar:  CustomAppBar(title: '$titleName'),
+      appBar: CustomAppBar(title: '$titleName'),
       body: EmptyCard(
         color: AppColors.transparent,
         horizontalPadding: 0,
@@ -39,6 +40,10 @@ class ResultOfSearchScreen extends StatelessWidget {
                           Provider.of<DoctorProfileController>(context,
                                   listen: false)
                               .getDoctorProfile(context, doctorId: model.id!);
+                          Provider.of<DoctorProfileController>(context,
+                                  listen: false)
+                              .getDoctorOffers(context, doctorId: model.id!);
+
                           Navigator.of(context)
                               .pushNamed(NameRoutes.kDoctorScreen);
                         },

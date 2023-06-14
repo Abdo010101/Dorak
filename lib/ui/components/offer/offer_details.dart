@@ -126,6 +126,9 @@ class OfferDetailsBottomSheet extends StatelessWidget {
           onPressed: () async {
             Provider.of<DoctorProfileController>(context, listen: false)
                 .getDoctorProfile(context, doctorId: offer!.doctor!.id!);
+            Provider.of<DoctorProfileController>(context, listen: false)
+                .getDoctorOffers(context, doctorId: offer!.doctor!.id!);
+
             Navigator.of(context).pushNamed(NameRoutes.kDoctorScreen);
           },
         )
