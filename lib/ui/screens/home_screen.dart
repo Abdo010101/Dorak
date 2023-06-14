@@ -194,6 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   offerSubTittle: '${offerModel.description}',
                                   offerPic: offerModel.mainPic,
                                   priceBefore: offerModel.priceBefore,
+                                  priceAfter: offerModel.priceAfter,
                                   doctorName: offerModel.doctor!.name,
                                   docPic: offerModel.doctor!.image,
                                   rate: offerModel.doctor!.rate,

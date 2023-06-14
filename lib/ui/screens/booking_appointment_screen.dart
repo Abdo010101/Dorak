@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
 import '../../constants/constants.dart';
 import '../../controllers/controllers.dart';
 import '../../data/models/response/response.dart';
@@ -26,7 +27,6 @@ class ReservationScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         centerTitle: true,
         title: Text(
-          /// TODO to be change text here ..
           AppStrings.kBookAppointment.tr(),
           style: const TextStyle(color: AppColors.navyBlue),
         ),
@@ -130,7 +130,7 @@ class ReservationScreen extends StatelessWidget {
                                   ),
                                   TextBuilder(
                                       text:
-                                          '${AppStrings.kWaitingTime.tr()} ${doctorProfileController.selectedPlace?.examinationDuration} min',
+                                          '${AppStrings.kWaitingTime.tr()} ${doctorProfileController.selectedPlace?.examinationDuration} ${AppStrings.kMin.tr()}',
                                       size: AppFontSizes.kS2,
                                       verticalPadding: 0,
                                       horizontalPadding: 1.w,
