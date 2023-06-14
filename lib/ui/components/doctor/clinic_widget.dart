@@ -81,7 +81,8 @@ class ClinicWidget extends StatelessWidget {
                 SvgPicture.asset(AppAssets.kMoneyIcon),
                 TextBuilder(
                   width: 30.w,
-                  text: "${AppStrings.kFees.tr()}: ${place?.examinationPrice}",
+                  text:
+                      "${double.parse(place?.examinationPrice ?? '0').toStringAsFixed(1)} ${AppStrings.kCurrency.tr()}",
                   size: AppFontSizes.kS2,
                   color: AppColors.navyBlue,
                   verticalPadding: 0,

@@ -65,33 +65,42 @@ class OffersScreen extends StatelessWidget {
                       ? const LoadingWidget(
                           backgroundColor: AppColors.transparent,
                         )
-                      : ListView.builder(
-                          padding: EdgeInsets.zero,
-                          itemCount: controller.offers.length,
-                          itemBuilder: (context, index) {
-                            return OfferWidget(
-                              offerTittle: controller.offers[index].title,
-                              offerSubTittle:
-                                  controller.offers[index].description,
-                              offerPic: controller.offers[index].mainPic,
-                              priceBefore: controller.offers[index].priceBefore,
-                              priceAfter: controller.offers[index].priceAfter,
-                              doctorName: controller.offers[index].doctor?.name,
-                              docPic: controller.offers[index].doctor!.image,
-                              rate: controller.offers[index].doctor!.rate,
-                              onPressed: () {
-                                showBottomSheet(
-                                    context: context,
-                                    backgroundColor: Colors.transparent,
-                                    builder: (context) {
-                                      return OfferDetailsBottomSheet(
-                                        offer: controller.offers[index],
-                                      );
-                                    });
+                      : controller.offers.isEmpty
+                          ? NoDataWidget(
+                              text: AppStrings.kNoOffers.tr(),
+                              backgroundColor: Colors.transparent,
+                            )
+                          : ListView.builder(
+                              padding: EdgeInsets.zero,
+                              itemCount: controller.offers.length,
+                              itemBuilder: (context, index) {
+                                return OfferWidget(
+                                  offerTittle: controller.offers[index].title,
+                                  offerSubTittle:
+                                      controller.offers[index].description,
+                                  offerPic: controller.offers[index].mainPic,
+                                  priceBefore:
+                                      controller.offers[index].priceBefore,
+                                  priceAfter:
+                                      controller.offers[index].priceAfter,
+                                  doctorName:
+                                      controller.offers[index].doctor?.name,
+                                  docPic:
+                                      controller.offers[index].doctor!.image,
+                                  rate: controller.offers[index].doctor!.rate,
+                                  onPressed: () {
+                                    showBottomSheet(
+                                        context: context,
+                                        backgroundColor: Colors.transparent,
+                                        builder: (context) {
+                                          return OfferDetailsBottomSheet(
+                                            offer: controller.offers[index],
+                                          );
+                                        });
+                                  },
+                                );
                               },
-                            );
-                          },
-                        ),
+                            ),
                 ),
                 SizedBox(
                   height: 10.h,

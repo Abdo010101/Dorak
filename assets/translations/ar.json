@@ -69,7 +69,7 @@
   "confirm_password": "تأكيد الرقم السرى",
   "policy": "من خلال إنشاء حساب فإنك توافق على ",
   "developed_by": "تم تطويره بواسطة",
-  "no_appointments_u": "لا يوجد مواعيد قادمة",
+  "no_appointments": "لا توجد مواعيد",
   "no_appointments_p": "لا يوجد مواعيد قديمة",
   "home": "الصفحة الرئيسية",
   "next": "التالى",
@@ -132,6 +132,10 @@
   "min": "دقيقة",
   "add_review": "إضافة تقييم",
   "review": "تقييم",
-  "currency": "شيكل",
-  "no_offers": "لا توجد عروض متاحة الان"
+  "no_offers": "لا توجد عروض متاحة الان",
+  "currency": " ₪ ",
+  "continue": "التالى",
+  "which_one": "أيهم أنت؟",
+  "customized_experience": "لمنحك تجربة مخصصة. ",
+  "know_gender": "نحن بحاجة لمعرفة جنسك"
 }

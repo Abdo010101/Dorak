@@ -69,7 +69,7 @@
   "confirm_password": "Confirm Password",
   "policy": "By creating an account you agree to our",
   "developed_by": "Developed by",
-  "no_appointments_u": "No appointments Upcoming!",
+  "no_appointments": "No appointments !",
   "no_appointments_p": "No appointments Past!",
   "home": "Home",
   "next": "Next",
@@ -132,6 +132,10 @@
   "min": "Min",
   "add_review": "Add review",
   "review": "review",
-  "currency": "شيكل",
-  "no_offers":"There is no available offer right now"
+  "no_offers":"There is no available offer right now",
+  "currency": " ₪ ",
+  "continue": "Continue",
+  "which_one": "Which one are you?",
+  "customized_experience": "To give you a customized experience. ",
+  "know_gender": "We need to know your gender"
 }

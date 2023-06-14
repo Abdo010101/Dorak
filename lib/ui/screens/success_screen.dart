@@ -41,7 +41,8 @@ class SuccessScreen extends StatelessWidget {
                 ButtonBuilder(
                   buttonColor: AppColors.blue,
                   onPressed: () {
-                    Navigator.pushNamed(context, NameRoutes.kHomeScreen);
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, NameRoutes.kHomeScreen, (_) => false);
                   },
                   title: AppStrings.kAccCreated[2].tr(),
                   height: 6.h,

@@ -174,6 +174,9 @@ class LoginScreen extends StatelessWidget {
                                       onPressed: () async {
                                         final isSuccess =
                                             await controller.signIn(context);
+                                        isSuccess == true
+                                            ? print('Login isSuccess')
+                                            : null;
                                       }),
                                 ],
                               ),

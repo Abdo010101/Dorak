@@ -11,4 +11,8 @@ abstract class HomeClient {
   factory HomeClient(Dio dio, {String baseUrl}) = _HomeClient;
   @GET(NetworkConstant.kHomeRequest)
   Future<BaseResponse<HomeResponse>> getHomeData();
+
+
+  @GET(NetworkConstant.kBestDoctors)
+  Future<BaseResponseList<Doctor>> getBestDoctors();
 }

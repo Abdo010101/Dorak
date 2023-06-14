@@ -22,7 +22,7 @@ class NetworkConstant {
 
   static const String kHomeRequest = "home";
   static const String kDoctorProfileRequest = "doctors";
-
+  static const String kBestDoctors = "best-doctors";
   static const String kAllOffers = "offers";
   static const String kLoginRequest = "login";
   static const String kRegisterRequest = "register";
@@ -46,4 +46,5 @@ class NetworkConstant {
   static const String kVerifyOtpRequest = "verify";
   static const String kTerms = "terms-of-service";
   static const String kPolicy = "privacy-policy";
+  static const String kCompleteData = "complete-profile-data";
 }

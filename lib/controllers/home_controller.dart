@@ -14,7 +14,7 @@ class HomeController extends ChangeNotifier {
   List<Doctor> bestDoctorsList = [];
   List<OfferResponse> latestOfferList = [];
   List<AppointmentResponse> appointmentList = [];
-
+  List<Doctor> allBestDoctorsList = [];
   Future<void> getHomeData(BuildContext context) async {
     try {
       isLoading = true;
@@ -51,6 +51,36 @@ class HomeController extends ChangeNotifier {
       //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
     } finally {
       // isLoading.value = false;
+    }
+  }
+
+  Future<void> getBestDoctors(BuildContext context) async {
+    try {
+      isLoading = true;
+      notifyListeners();
+
+      final result = await _homeRepository.getBestDoctors();
+      if (result.data != null) {
+        allBestDoctorsList
+          ..clear()
+          ..addAll(result.data!);
+      } else {
+        if (result.error?.statusCode == 401) {
+          if (context.mounted) {
+            AppProviders.disposeAllDisposableProviders(context);
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                NameRoutes.kLoginScreen, (route) => false);
+          }
+        }
+        //SnackBar(content: Text(result.error?.message), );
+      }
+    } on DioError catch (e) {
+      //return Error(errorMessage: DioExceptions.fromDioError(e).message);
+
+      //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
+    } finally {
+      isLoading = false;
+      notifyListeners();
     }
   }
 }

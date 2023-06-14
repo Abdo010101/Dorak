@@ -3,7 +3,7 @@ import 'package:dorakpattient/routes/dorak_routes.dart';
 import 'package:dorakpattient/ui/components/components.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -45,100 +45,111 @@ class GenderScreen extends StatelessWidget {
         color: AppColors.liteWight,
         child:
             Consumer<RegisterController>(builder: (context, controller, child) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          return Stack(
             children: [
-              TextBuilder(
-                text: 'Which one are you?',
-                color: AppColors.navyBlue,
-                size: AppFontSizes.kS5,
-                verticalPadding: 1.h,
-              ),
-              TextBuilder(
-                text: 'To give you a cusomize experience.',
-                verticalPadding: 1.h,
-              ),
-              const TextBuilder(
-                text: 'We need to know your gender.',
-                verticalPadding: 0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  InkWell(
-                    // onTap: () =>
-                    //     controller.choseGender(AppStrings.kGenderList[1]),
-                    child: EmptyCard(
-                      verticalPadding: 2.h,
-                      horizontalMargin: 3.5.w,
-                      horizontalPadding: 9.w,
-                      // color: controller.gender == AppStrings.kGenderList[1]
-                      //     ? AppColors.navyBlue
-                      //     : null,
-                      child: Column(
-                        children: [
-                          SvgPicture.asset(AppAssets.kMaleIcon),
-                          TextBuilder(
-                            text: AppStrings.kGenderList[1].tr(),
-                            color:
-                                // controller.gender == AppStrings.kGenderList[1]
-                                //     ? AppColors.white
-                                //     :
-                                AppColors.navyBlue,
-                            verticalPadding: 1.5.h,
-                          ),
-                        ],
-                      ),
-                    ),
+                  TextBuilder(
+                    text: AppStrings.kWhichOne.tr(),
+                    color: AppColors.navyBlue,
+                    size: AppFontSizes.kS5,
+                    verticalPadding: 1.h,
                   ),
-                  InkWell(
-                    // onTap: () =>
-                    //     controller.choseGender(AppStrings.kGenderList[0]),
-                    child: EmptyCard(
-                      verticalPadding: 2.h,
-                      horizontalMargin: 3.5.w,
-                      horizontalPadding: 9.w,
-                      // color: controller.gender == AppStrings.kGenderList[0]
-                      //     ? AppColors.navyBlue
-                      //     : null,
-                      child: Column(
-                        children: [
-                          SvgPicture.asset(AppAssets.kMaleIcon),
-                          TextBuilder(
-                            text: AppStrings.kGenderList[0].tr(),
-                            color:
-                                // controller.gender == AppStrings.kGenderList[0]
-                                //     ? AppColors.white
-                                //     :
-                                AppColors.navyBlue,
-                            verticalPadding: 1.5.h,
-                          ),
-                        ],
-                      ),
-                    ),
+                  TextBuilder(
+                    text: AppStrings.kCustomizedExperience.tr(),
+                    verticalPadding: 1.h,
                   ),
+                  TextBuilder(
+                    text: AppStrings.kKnowGender.tr(),
+                    verticalPadding: 0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: () =>
+                            controller.choseGender(AppStrings.kGenderList[1]),
+                        child: EmptyCard(
+                          verticalPadding: 2.h,
+                          horizontalMargin: 3.5.w,
+                          horizontalPadding: 9.w,
+                          color: controller.gender == AppStrings.kGenderList[1]
+                              ? AppColors.navyBlue
+                              : null,
+                          child: Column(
+                            children: [
+                              SvgPicture.asset(AppAssets.kFemaleIcon),
+                              TextBuilder(
+                                text: AppStrings.kGenderList[1].tr(),
+                                color: controller.gender ==
+                                        AppStrings.kGenderList[1]
+                                    ? AppColors.white
+                                    : AppColors.navyBlue,
+                                verticalPadding: 1.5.h,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () =>
+                            controller.choseGender(AppStrings.kGenderList[0]),
+                        child: EmptyCard(
+                          verticalPadding: 2.h,
+                          horizontalMargin: 3.5.w,
+                          horizontalPadding: 9.w,
+                          color: controller.gender == AppStrings.kGenderList[0]
+                              ? AppColors.navyBlue
+                              : null,
+                          child: Column(
+                            children: [
+                              SvgPicture.asset(
+                                AppAssets.kMaleIcon,
+                              ),
+                              TextBuilder(
+                                text: AppStrings.kGenderList[0].tr(),
+                                color: controller.gender ==
+                                        AppStrings.kGenderList[0]
+                                    ? AppColors.white
+                                    : AppColors.navyBlue,
+                                verticalPadding: 1.5.h,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  ButtonBuilder(
+                    title: AppStrings.kContinue.tr(),
+                    margin: EdgeInsets.symmetric(vertical: 2.5.h),
+                    borderColor: AppColors.transparent,
+                    onPressed: controller.gender == null
+                        ? null
+                        : () async {
+                            await controller.completeData(
+                                gender: controller.gender!);
+                            Navigator.pushNamed(
+                                context, NameRoutes.kSuccessScreen);
+                          },
+                  ),
+                  // ButtonBuilder(
+                  //   title: AppStrings.kSkip.tr(),
+                  //   titleColor: AppColors.red,
+                  //   buttonColor: AppColors.red.withOpacity(0.15),
+                  //   borderColor: AppColors.transparent,
+                  //   onPressed: () {
+                  //     Navigator.pushNamed(context, NameRoutes.kRegisterScreen);
+                  //   },
+                  // ),
                 ],
               ),
-              ButtonBuilder(
-                title: 'Continue',
-                margin: EdgeInsets.symmetric(vertical: 2.5.h),
-                borderColor: AppColors.transparent,
-                // onPressed: controller.gender == null
-                //     ? null
-                //     : () {
-                //         Navigator.pushNamed(
-                //             context, NameRoutes.kRegisterScreen);
-                //       },
-              ),
-              ButtonBuilder(
-                title: AppStrings.kSkip.tr(),
-                titleColor: AppColors.red,
-                buttonColor: AppColors.red.withOpacity(0.15),
-                borderColor: AppColors.transparent,
-                onPressed: () {
-                  Navigator.pushNamed(context, NameRoutes.kRegisterScreen);
-                },
-              ),
+              controller.isLoading
+                  ? const LoadingWidget(
+                      backgroundColor: AppColors.transparent,
+                    )
+                  : const SizedBox(),
             ],
           );
         }),

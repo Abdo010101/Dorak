@@ -54,12 +54,13 @@ class DoctorWidget extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        RatingBarWidget(
-                          initialRating: Util.isNumeric(model?.rate)
-                              ? double.parse(model?.rate ?? '0.0')
-                              : 0.0,
-                          itemSize: 10.sp,
-                        ),
+                        Util.isNumeric(model?.rate)
+                            ? RatingBarWidget(
+                                initialRating:
+                                    double.parse(model?.rate ?? '0.0'),
+                                itemSize: 10.sp,
+                              )
+                            : const SizedBox(),
                         TextBuilder(
                           text: isRated
                               ? '${model?.rate} ( ${model?.ratingsCount} ${AppStrings.kReview.tr()} )'
@@ -114,7 +115,7 @@ class DoctorWidget extends StatelessWidget {
                         TextBuilder(
                           width: 30.w,
                           text:
-                              "${AppStrings.kFees.tr()}: ${model?.examinationPrice} ${AppStrings.kCurrency.tr()}",
+                              "${double.parse(model?.examinationPrice ?? '0').toStringAsFixed(1)} ${AppStrings.kCurrency.tr()}",
                           size: AppFontSizes.kS2,
                           color: AppColors.navyBlue,
                           verticalPadding: 0,
@@ -143,7 +144,7 @@ class DoctorWidget extends StatelessWidget {
                       const Spacer(),
                       ButtonBuilder(
                         title: AppStrings.kBookNow.tr(),
-                        margin: EdgeInsets.symmetric(horizontal: 2.5.w),
+                        margin: EdgeInsets.symmetric(horizontal: 0.5.w),
                         width: 35.w,
                         height: 4.h,
                         titleStyle: AppStyles.kButtonTextStyle.copyWith(

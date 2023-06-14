@@ -11,6 +11,21 @@ class AuthenticationRepository extends BaseRepository {
 
   AuthenticationRepository({required this.authenticationClient});
 
+  Future<BaseModel<Patient>> completeData({required var body}) async {
+    if (await checkForConnectivity()) {
+      try {
+        return BaseModel(
+            data: await authenticationClient.completeData(body).then((value) {
+          return value.data;
+        }));
+      } on DioError catch (e) {
+        return BaseModel(error: ErrorResponse(dioError: e));
+      }
+    } else {
+      return BaseModel.noNetworkConnection();
+    }
+  }
+
   Future<BaseModel<UserResponse>> loginWithEmailAndPassword(
       LoginRequest model) async {
     if (await checkForConnectivity()) {

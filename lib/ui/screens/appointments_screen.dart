@@ -11,8 +11,6 @@ class AppointmentsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AppointmentsController controller =
-        Provider.of<AppointmentsController>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.liteWight,
@@ -52,16 +50,22 @@ class AppointmentsScreen extends StatelessWidget {
                 Expanded(
                   child: Stack(
                     children: [
-                      ListView.builder(
-                          padding: EdgeInsets.zero,
-                          itemCount: controller.appointmentsList.length,
-                          itemBuilder: (context, index) {
-                            return AppointmentWidget(
-                              appointment: controller.appointmentsList[index],
-                              declineAppointment: () =>
-                                  controller.declineAppointment(index),
-                            );
-                          }),
+                      controller.appointmentsList.isEmpty
+                          ? NoDataWidget(
+                              backgroundColor: Colors.transparent,
+                              text: AppStrings.kNoAppointments.tr(),
+                            )
+                          : ListView.builder(
+                              padding: EdgeInsets.zero,
+                              itemCount: controller.appointmentsList.length,
+                              itemBuilder: (context, index) {
+                                return AppointmentWidget(
+                                  appointment:
+                                      controller.appointmentsList[index],
+                                  declineAppointment: () =>
+                                      controller.declineAppointment(index),
+                                );
+                              }),
                       controller.isLoading
                           ? const LoadingWidget(
                               backgroundColor: AppColors.transparent,

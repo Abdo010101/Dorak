@@ -74,7 +74,7 @@ class AppStrings {
   static const kSignUp = 'sign_up';
   static const kContactUs = 'contact_us';
   static const kLogout = 'logout';
-  static const kNoAppointmentsU = 'no_appointments_u';
+  static const kNoAppointments = 'no_appointments';
   static const kNoAppointmentsP = 'no_appointments_p';
   static const kNoReviews = 'no_reviews';
   static const kRepresentativesContact = 'representatives_contact';
@@ -139,4 +139,8 @@ class AppStrings {
   static const kReview = 'review';
   static const kCurrency = 'currency';
   static const kNoOffers = 'no_offers';
+  static const kContinue = 'continue';
+  static const kWhichOne = 'which_one';
+  static const kCustomizedExperience = 'customized_experience';
+  static const kKnowGender = 'know_gender';
 }
