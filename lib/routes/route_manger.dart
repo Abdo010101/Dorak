@@ -99,6 +99,9 @@ class RouteManger {
       case NameRoutes.kAddAppointmentScreen:
         return MaterialPageRoute(builder: (context) => ReservationScreen());
 
+      case NameRoutes.kBestDoctorsScreen:
+        return MaterialPageRoute(builder: (context) => BestDoctorsScreen());
+
       default:
         return MaterialPageRoute(builder: (context) => SplashScreen());
     }

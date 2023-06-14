@@ -32,9 +32,8 @@ class AuthController extends DisposableProvider {
       final result = await _authenticationRepository.completeData(
         body: data,
       );
-      isLoading = false;
-      notifyListeners();
       if (result.data != null) {
+        currentUser?.patient?.gender = gender;
         return Success(result.data!);
       } else {
         return Error(errorMessage: result.error?.message);
@@ -42,6 +41,8 @@ class AuthController extends DisposableProvider {
     } on DioError catch (e) {
       return Error(errorMessage: DioExceptions.fromDioError(e).message);
     } finally {
+      isLoading = false;
+      notifyListeners();
       //Dismiss Dialog .
       // Get.back();
     }

@@ -122,7 +122,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     SectionLabel(
                       title: AppStrings.kBestDoctors.tr(),
-                      seeAllPressed: () {},
+                      seeAllPressed: () {
+                        Provider.of<HomeController>(context, listen: false)
+                            .getBestDoctors(
+                          context,
+                        );
+                        Navigator.pushNamed(
+                            context, NameRoutes.kBestDoctorsScreen);
+                      },
                     ),
                     controller.isLoading
                         ? const LoadingWidget(

@@ -82,7 +82,7 @@ class ClinicWidget extends StatelessWidget {
                 TextBuilder(
                   width: 30.w,
                   text:
-                      "${AppStrings.kFees.tr()}: ${double.parse(place?.examinationPrice ?? '0').toStringAsFixed(1)}",
+                      "${double.parse(place?.examinationPrice ?? '0').toStringAsFixed(1)} ${AppStrings.kCurrency.tr()}",
                   size: AppFontSizes.kS2,
                   color: AppColors.navyBlue,
                   verticalPadding: 0,

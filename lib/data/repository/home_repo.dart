@@ -24,4 +24,19 @@ class HomeRepository extends BaseRepository {
       return BaseModel.noNetworkConnection();
     }
   }
+
+  Future<BaseModel<List<Doctor>>> getBestDoctors() async {
+    if (await checkForConnectivity()) {
+      try {
+        return BaseModel(
+            data: await homeClient.getBestDoctors().then((value) {
+          return value.data;
+        }));
+      } on DioError catch (e) {
+        return BaseModel(error: ErrorResponse(dioError: e));
+      }
+    } else {
+      return BaseModel.noNetworkConnection();
+    }
+  }
 }

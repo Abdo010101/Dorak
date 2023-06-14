@@ -59,7 +59,7 @@ class ReservationScreen extends StatelessWidget {
                     EmptyCard(
                       radius: 15.0,
                       verticalMargin: 0.5.h,
-                      horizontalMargin: 2.w,
+                      horizontalMargin: 5.w,
                       verticalPadding: 1.h,
                       width: 90.w,
                       child: Column(
@@ -109,7 +109,7 @@ class ReservationScreen extends StatelessWidget {
                                 TextBuilder(
                                   width: 30.w,
                                   text:
-                                      "${AppStrings.kFees.tr()}: ${doctorProfileController.selectedPlace?.examinationPrice} LE",
+                                      "${double.parse(doctorProfileController.selectedPlace?.examinationPrice ?? '0').toStringAsFixed(1)} ${AppStrings.kCurrency.tr()}",
                                   size: AppFontSizes.kS2,
                                   color: AppColors.navyBlue,
                                   verticalPadding: 0,
@@ -265,7 +265,7 @@ class PickUpTimeBuilder extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsetsDirectional.only(start: 5.0.w),
+                  padding: EdgeInsetsDirectional.symmetric(horizontal: 5.0.w),
                   height: 16.h,
                   child: ListView.separated(
                     separatorBuilder: (_, context) => SizedBox(
@@ -307,7 +307,7 @@ class PickUpTimeBuilder extends StatelessWidget {
                                               color: AppColors.grey,
                                               fontSize: AppFontSizes.kS1),
                                         )
-                                      : SizedBox()
+                                      : const SizedBox()
                                 ],
                               ),
                               SizedBox(

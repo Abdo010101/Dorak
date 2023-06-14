@@ -31,7 +31,7 @@ class InformationText extends StatelessWidget {
                 size: 10.sp,
                 bold: false,
                 verticalPadding: 1.h,
-                width: 30.w,
+                width: 22.5.w,
               ),
               TextBuilder(
                 text: subTitle ?? '',

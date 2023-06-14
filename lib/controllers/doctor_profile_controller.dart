@@ -21,6 +21,7 @@ class DoctorProfileController extends DisposableProvider {
   Future<void> getDoctorProfile(BuildContext context,
       {required int doctorId}) async {
     try {
+      resetController();
       isLoading = true;
       notifyListeners();
       final result =
@@ -60,8 +61,6 @@ class DoctorProfileController extends DisposableProvider {
       } else {
         //SnackBar(content: Text(result.error?.message), );
       }
-      isLoading = false;
-      notifyListeners();
     } on DioError catch (e) {
       //return Error(errorMessage: DioExceptions.fromDioError(e).message);
 
@@ -85,6 +84,14 @@ class DoctorProfileController extends DisposableProvider {
       switchButtonTitle = AppStrings.kOffers.tr();
     }
     notifyListeners();
+  }
+
+  void resetController() {
+    profileType = DoctorProfileType.clinic;
+
+    doctorProfileResponse = null;
+    currentPlaceSelected = null;
+    selectedPlace = null;
   }
 
   @override
