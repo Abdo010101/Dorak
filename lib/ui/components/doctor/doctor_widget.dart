@@ -34,7 +34,8 @@ class DoctorWidget extends StatelessWidget {
             Row(
               children: [
                 GeometricalAvatar(
-                  path: AppAssets.kDoctorImage,
+                  //path: AppAssets.kDoctorImage,
+                  url: model?.image,
                   radius: 30.sp,
                   margin: EdgeInsetsDirectional.only(end: 2.w),
                 ),
@@ -149,7 +150,7 @@ class DoctorWidget extends StatelessWidget {
                             fontWeight: FontWeight.normal,
                             color: AppColors.white,
                             fontSize: AppFontSizes.kS3),
-                        onPressed: () {},
+                        onPressed: cardOnTab,
                       ),
                     ],
                   )
