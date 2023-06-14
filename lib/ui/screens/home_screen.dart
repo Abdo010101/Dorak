@@ -152,6 +152,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 listen: false)
                                             .getDoctorProfile(context,
                                                 doctorId: doctorModel!.id!);
+                                        Provider.of<DoctorProfileController>(
+                                                context,
+                                                listen: false)
+                                            .getDoctorOffers(context,
+                                                doctorId: doctorModel.id!);
                                         Navigator.of(context).pushNamed(
                                             NameRoutes.kDoctorScreen);
                                       },
