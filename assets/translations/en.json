@@ -132,5 +132,10 @@
   "min": "Min",
   "add_review": "Add review",
   "review": "review",
-  "currency": "شيكل"
+  "currency": " ₪ ",
+  "continue": "Continue",
+  "which_one": "Which one are you?",
+  "customized_experience": "To give you a customized experience. ",
+  "know_gender": "We need to know your gender"
+
 }

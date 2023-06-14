@@ -19,9 +19,8 @@ class LoginController extends AuthController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
-  TextEditingController changePasswordController = TextEditingController();
-  TextEditingController confirmChangePasswordController =
-      TextEditingController();
+  TextEditingController changePassController = TextEditingController();
+  TextEditingController confirmChangePassController = TextEditingController();
   final GlobalKey<FormState> formLoginKey = GlobalKey<FormState>();
 
   bool rememberMe = true;
@@ -48,8 +47,8 @@ class LoginController extends AuthController {
     isLoading = false;
     notifyListeners();
     if (result is Success<UserResponse?>) {
+      context.read<AuthController>().currentUser = result.data;
       if (result.data?.patient?.verifiedAt == null) {
-        context.read<AuthController>().currentUser = result.data;
         Navigator.pushNamed(context, NameRoutes.kOTPScreen);
       } else {
         Navigator.pushNamed(context, NameRoutes.kHomeScreen);
@@ -184,14 +183,15 @@ class LoginController extends AuthController {
     emailController.clear();
     passwordController.clear();
     phoneController.clear();
-    changePasswordController.clear();
-    confirmChangePasswordController.clear();
+    changePassController.clear();
+    confirmChangePassController.clear();
     rememberMe = true;
     showPass = true;
   }
 
   @override
   void disposeValues() {
+    resetController();
     // TODO: implement disposeValues
   }
 }

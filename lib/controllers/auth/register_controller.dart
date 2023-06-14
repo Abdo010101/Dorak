@@ -19,6 +19,12 @@ class RegisterController extends AuthController {
   bool agreeTermsCondition = false;
   bool showConfPass = true;
   bool showPass = true;
+  String? gender;
+
+  void choseGender(String value) {
+    gender = value;
+    notifyListeners();
+  }
 
   void onChangeTermsCondition(bool? value) {
     agreeTermsCondition = value!;

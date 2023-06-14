@@ -12,6 +12,9 @@ abstract class AuthenticationClient {
   factory AuthenticationClient(Dio dio, {String baseUrl}) =
       _AuthenticationClient;
 
+  @POST(NetworkConstant.kCompleteData)
+  Future<BaseResponse<Patient>> completeData(@Body() var body);
+
   @POST(NetworkConstant.kLoginRequest)
   Future<BaseResponse<UserResponse>> login(
     @Body() LoginRequest model,

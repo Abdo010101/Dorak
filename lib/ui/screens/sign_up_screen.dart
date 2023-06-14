@@ -47,16 +47,19 @@ class SignUpScreen extends StatelessWidget {
                         height: 2.0.h,
                       ),
                       TextFormFieldBuilder(
+                        textInputAction: TextInputAction.next,
                         hint: AppStrings.kName.tr(),
                         controller: controller.userNameController,
                         validator: Validators.required('required'.tr()),
                       ),
                       TextFormFieldBuilder(
+                          textInputAction: TextInputAction.next,
                           hint: AppStrings.kPhone.tr(),
                           controller: controller.phoneController,
                           keyboardType: TextInputType.number,
                           validator: Validators.required('required'.tr())),
                       TextFormFieldBuilder(
+                        textInputAction: TextInputAction.next,
                         hint: AppStrings.kEmail.tr(),
                         controller: controller.emailController,
                         keyboardType: TextInputType.emailAddress,
@@ -66,6 +69,7 @@ class SignUpScreen extends StatelessWidget {
                         ]),
                       ),
                       TextFormFieldBuilder(
+                        textInputAction: TextInputAction.next,
                         hint: AppStrings.kPassword.tr(),
                         controller: controller.passwordController,
                         obscureText: controller.showPass,

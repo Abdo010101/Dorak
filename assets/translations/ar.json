@@ -132,5 +132,9 @@
   "min": "دقيقة",
   "add_review": "إضافة تقييم",
   "review": "تقييم",
-  "currency": "شيكل"
+  "currency": " ₪ ",
+  "continue": "التالى",
+  "which_one": "أيهم أنت؟",
+  "customized_experience": "لمنحك تجربة مخصصة. ",
+  "know_gender": "نحن بحاجة لمعرفة جنسك"
 }

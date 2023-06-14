@@ -46,4 +46,5 @@ class NetworkConstant {
   static const String kVerifyOtpRequest = "verify";
   static const String kTerms = "terms-of-service";
   static const String kPolicy = "privacy-policy";
+  static const String kCompleteData = "complete-profile-data";
 }

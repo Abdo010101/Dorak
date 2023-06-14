@@ -113,7 +113,7 @@ class DoctorWidget extends StatelessWidget {
                         TextBuilder(
                           width: 30.w,
                           text:
-                              "${AppStrings.kFees.tr()}: ${model?.examinationPrice} ${AppStrings.kCurrency.tr()}",
+                              "${AppStrings.kFees.tr()}: ${double.parse(model?.examinationPrice ?? '0').toStringAsFixed(1)} ${AppStrings.kCurrency.tr()}",
                           size: AppFontSizes.kS2,
                           color: AppColors.navyBlue,
                           verticalPadding: 0,
@@ -142,7 +142,7 @@ class DoctorWidget extends StatelessWidget {
                       const Spacer(),
                       ButtonBuilder(
                         title: AppStrings.kBookNow.tr(),
-                        margin: EdgeInsets.symmetric(horizontal: 2.5.w),
+                        margin: EdgeInsets.symmetric(horizontal: 0.5.w),
                         width: 35.w,
                         height: 4.h,
                         titleStyle: AppStyles.kButtonTextStyle.copyWith(

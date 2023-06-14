@@ -22,13 +22,37 @@ class AuthController extends DisposableProvider {
   bool isLoggedIn = false;
   bool isLoading = false;
 
+  Future<Result<Patient?>> completeData({required String gender}) async {
+    try {
+      isLoading = true;
+      notifyListeners();
+      var data = dio.FormData.fromMap({
+        'gender': gender,
+      });
+      final result = await _authenticationRepository.completeData(
+        body: data,
+      );
+      isLoading = false;
+      notifyListeners();
+      if (result.data != null) {
+        return Success(result.data!);
+      } else {
+        return Error(errorMessage: result.error?.message);
+      }
+    } on DioError catch (e) {
+      return Error(errorMessage: DioExceptions.fromDioError(e).message);
+    } finally {
+      //Dismiss Dialog .
+      // Get.back();
+    }
+  }
+
   Future<Result<UserResponse?>> login(
       {required String email,
       required String password,
       required String? token,
       required bool rememberMe}) async {
     try {
-      //Loading().loading(context);
       LoginRequest loginRequest =
           LoginRequest(emailOrPhone: email, password: password, token: token);
 

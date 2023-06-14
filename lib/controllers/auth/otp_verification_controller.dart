@@ -75,7 +75,7 @@ class VerifyController extends AuthController {
         isLoading = false;
         notifyListeners();
         if (type == SendOtpType.non)
-          Navigator.pushNamed(context, NameRoutes.kSuccessScreen);
+          Navigator.pushNamed(context, NameRoutes.kGenderScreen);
         else {
           Navigator.pushNamed(context, NameRoutes.kChangePasswordScreen);
         }

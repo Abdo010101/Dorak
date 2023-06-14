@@ -138,4 +138,8 @@ class AppStrings {
   static const kAddReview = 'add_review';
   static const kReview = 'review';
   static const kCurrency = 'currency';
+  static const kContinue = 'continue';
+  static const kWhichOne = 'which_one';
+  static const kCustomizedExperience = 'customized_experience';
+  static const kKnowGender = 'know_gender';
 }

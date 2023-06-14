@@ -11,8 +11,6 @@ class AppointmentsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AppointmentsController controller =
-        Provider.of<AppointmentsController>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.liteWight,

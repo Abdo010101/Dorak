@@ -126,7 +126,7 @@ class MedicalCenterWidget extends StatelessWidget {
                           TextBuilder(
                             width: 30.w,
                             text:
-                                "${AppStrings.kFees.tr()}: ${placeModel?.examinationPrice} ${AppStrings.kCurrency.tr()}",
+                                "${AppStrings.kFees.tr()}: ${double.parse(placeModel?.examinationPrice ?? '0').toStringAsFixed(1)} ${AppStrings.kCurrency.tr()}",
                             size: AppFontSizes.kS2,
                             color: AppColors.navyBlue,
                             verticalPadding: 0,

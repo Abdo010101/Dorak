@@ -28,7 +28,7 @@ class OfferWidget extends StatelessWidget {
   final String? offerPic;
   final String? docPic;
   final String? doctorName;
-  final dynamic rate;
+  final String? rate;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -81,14 +81,14 @@ class OfferWidget extends StatelessWidget {
                               height: 2.5.h,
                               child: Util.isNumeric(rate)
                                   ? RatingBarWidget(
-                                      initialRating: double.parse(rate),
+                                      initialRating: double.parse(rate ?? '0'),
                                       itemSize: 10.sp,
                                     )
                                   : const SizedBox(),
                             ),
                             Text(Util.isNumeric(rate)
-                                ? rate.toStringAsFixed(1)
-                                : rate),
+                                ? double.parse(rate ?? '').toStringAsFixed(1)
+                                : rate ?? '0'),
                           ],
                         )
                       ],

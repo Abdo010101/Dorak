@@ -80,7 +80,7 @@ class OfferDetailsBottomSheet extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: 0.5.w,
+              width: 1.5.w,
             ),
             SizedBox(
               width: 15.w,
