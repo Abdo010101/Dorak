@@ -1,4 +1,5 @@
 import 'package:dorakpattient/routes/dorak_routes.dart';
+import 'package:dorakpattient/utis/util.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -36,8 +37,8 @@ class SignUpScreen extends StatelessWidget {
                 Icons.arrow_back_ios,
                 color: Colors.black,
               ),
-              onPressed: () => Navigator.pushReplacementNamed(
-                  context, NameRoutes.kWelcomeScreen),
+              onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                  context, NameRoutes.kWelcomeScreen, (_) => false),
               color: AppColors.black,
             ),
             backgroundColor: AppColors.white),
@@ -268,7 +269,9 @@ class SignUpScreen extends StatelessWidget {
                             if (!isSuccess) {
                             } else {
                               if (authProvider.currentUser?.patient?.phone !=
-                                  null) {
+                                      null &&
+                                  authProvider.currentUser?.patient?.phone !=
+                                      '') {
                                 if (context.mounted) {
                                   if (authProvider
                                           .currentUser?.patient?.verifiedAt ==
@@ -282,12 +285,12 @@ class SignUpScreen extends StatelessWidget {
                                 }
                               } else {
                                 if (context.mounted) {
-                                  controller.emailController.text = authProvider
-                                          .currentUser?.patient?.email ??
-                                      '';
-                                  controller.userNameController.text =
-                                      authProvider.currentUser?.patient?.name ??
-                                          '';
+                                  Util.kToastLoginMessage(
+                                      AppStrings.kCompleteInfo.tr());
+                                  Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      NameRoutes.kProfileDetailsScreen,
+                                      (route) => false);
                                 }
                               }
                             }

@@ -54,9 +54,10 @@ class LoginController extends AuthController {
     if (result is Success<UserResponse?>) {
       context.read<AuthController>().currentUser = result.data;
       if (result.data?.patient?.verifiedAt == null) {
-        Navigator.pushNamed(context, NameRoutes.kOTPScreen);
+        Navigator.pushReplacementNamed(context, NameRoutes.kOTPScreen);
       } else {
-        Navigator.pushNamed(context, NameRoutes.kHomeScreen);
+        Navigator.pushNamedAndRemoveUntil(
+            context, NameRoutes.kHomeScreen, (_) => false);
       }
       return true;
     } else {

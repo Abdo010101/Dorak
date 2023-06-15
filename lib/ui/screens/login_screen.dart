@@ -7,6 +7,7 @@ import 'package:wc_form_validators/wc_form_validators.dart';
 import '../../constants/constants.dart';
 import '../../controllers/controllers.dart';
 import '../../routes/dorak_routes.dart';
+import '../../utis/util.dart';
 import '../components/components.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -16,8 +17,6 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     AuthController authProvider =
         Provider.of<AuthController>(context, listen: false);
-    RegisterController registerController =
-        Provider.of<RegisterController>(context, listen: false);
     LoginController controller =
         Provider.of<LoginController>(context, listen: false);
     return WillPopScope(
@@ -36,8 +35,8 @@ class LoginScreen extends StatelessWidget {
             centerTitle: true,
             leading: IconButton(
               icon: const Icon(Icons.arrow_back_ios),
-              onPressed: () => Navigator.pushReplacementNamed(
-                  context, NameRoutes.kWelcomeScreen),
+              onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                  context, NameRoutes.kWelcomeScreen, (_) => false),
               color: AppColors.black,
             ),
             backgroundColor: AppColors.white),
@@ -258,8 +257,11 @@ class LoginScreen extends StatelessWidget {
                                   if (!isSuccess) {
                                   } else {
                                     if (authProvider
-                                            .currentUser?.patient?.phone !=
-                                        null) {
+                                                .currentUser?.patient?.phone !=
+                                            '' &&
+                                        authProvider
+                                                .currentUser?.patient?.phone !=
+                                            null) {
                                       if (context.mounted) {
                                         if (authProvider.currentUser?.patient
                                                 ?.verifiedAt ==
@@ -275,16 +277,12 @@ class LoginScreen extends StatelessWidget {
                                       }
                                     } else {
                                       if (context.mounted) {
-                                        registerController
-                                            .emailController.text = authProvider
-                                                .currentUser?.patient?.email ??
-                                            '';
-                                        registerController.userNameController
-                                            .text = authProvider
-                                                .currentUser?.patient?.name ??
-                                            '';
-                                        Navigator.pushNamed(context,
-                                            NameRoutes.kRegisterScreen);
+                                        Util.kToastLoginMessage(
+                                            AppStrings.kCompleteInfo.tr());
+                                        Navigator.pushNamedAndRemoveUntil(
+                                            context,
+                                            NameRoutes.kProfileDetailsScreen,
+                                            (route) => false);
                                       }
                                     }
                                   }

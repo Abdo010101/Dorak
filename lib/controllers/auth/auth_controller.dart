@@ -23,7 +23,8 @@ class AuthController extends DisposableProvider {
   bool isLoading = false;
 
   Future<bool> onWillPop(BuildContext context) async {
-    Navigator.pushReplacementNamed(context, NameRoutes.kWelcomeScreen);
+    Navigator.pushNamedAndRemoveUntil(
+        context, NameRoutes.kWelcomeScreen, (_) => false);
     return false;
   }
 

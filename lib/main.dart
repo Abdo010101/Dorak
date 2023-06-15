@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:dorakpattient/controllers/controllers.dart';
-import 'package:dorakpattient/controllers/home_controller.dart';
 import 'package:dorakpattient/routes/dorak_routes.dart';
 import 'package:dorakpattient/routes/route_manger.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -98,7 +97,7 @@ class MyApp extends StatelessWidget {
             locale: EasyLocalization.of(context)?.currentLocale,
             onGenerateRoute: RouteManger.generateRouter,
             debugShowCheckedModeBanner: false,
-            title: AppStrings.kAppName.tr(),
+            title: AppStrings.kAppName,
             initialRoute: NameRoutes.kSplashScreen,
             theme: ThemeData(
               primarySwatch: Colors.blue,

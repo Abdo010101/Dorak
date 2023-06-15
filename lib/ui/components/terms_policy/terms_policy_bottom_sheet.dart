@@ -28,7 +28,7 @@ class TermsAndPolicyBottomSheet extends StatelessWidget {
                     borderRadius: BorderRadius.only(
                         topRight: Radius.circular(25.0),
                         topLeft: Radius.circular(25.0))),
-                padding: EdgeInsets.all(5.0.w),
+                padding: EdgeInsets.symmetric(vertical: 5.0.w),
                 child: SingleChildScrollView(
                   child: Column(
                     children: [

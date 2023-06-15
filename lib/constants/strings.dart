@@ -1,6 +1,6 @@
 class AppStrings {
   static const kPhoneNumber = '970595945569';
-  static const kAppName = 'app_name';
+  static const kAppName = 'Dorak Patient';
   static const kRegister = 'register';
   static const kLogin = 'login';
   static const kOffers = 'offers';
@@ -146,4 +146,5 @@ class AppStrings {
   static const kRatQuality = 'rat_quality';
   static const kDoctorReview = 'doctor_review';
   static const kNoInternet = 'on_internet';
+  static const kCompleteInfo = 'complete_info';
 }
