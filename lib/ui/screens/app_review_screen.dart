@@ -81,7 +81,7 @@ class AppReview extends StatelessWidget {
                           maxLines: 6,
                           controller: controller.rateController,
                           validator: Validators.compose([
-                            Validators.required('required'),
+                            Validators.required('required'.tr()),
                           ]),
                           textInputAction: TextInputAction.done,
                         ),

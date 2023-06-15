@@ -6,6 +6,7 @@ import 'package:dorakpattient/utis/helpers/app_providers.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../data/models/response/response.dart';
+import '../constants/enums.dart';
 
 class HomeController extends ChangeNotifier {
   final _homeRepository = locator<HomeRepository>();
@@ -29,7 +30,6 @@ class HomeController extends ChangeNotifier {
         latestOfferList
           ..clear()
           ..addAll(homeData!.latestOffers!);
-
         appointmentList
           ..clear()
           ..addAll(homeData!.patientReservations!);
@@ -77,6 +77,28 @@ class HomeController extends ChangeNotifier {
     } on DioError catch (e) {
       //return Error(errorMessage: DioExceptions.fromDioError(e).message);
 
+      //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> declineAppointment(int index) async {
+    isLoading = true;
+    notifyListeners();
+    try {
+      var data = {
+        'id': appointmentList[index].id,
+      };
+      final result = await _homeRepository.declineAppointment(data);
+      if (result.data != null) {
+        appointmentList[index].status = AppStatus.cancelled.name;
+      } else {
+        //SnackBar(content: Text(result.error?.message), );
+      }
+    } on DioError catch (e) {
+      //return Error(errorMessage: DioExceptions.fromDioError(e).message);
       //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
     } finally {
       isLoading = false;

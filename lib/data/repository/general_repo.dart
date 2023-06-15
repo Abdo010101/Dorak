@@ -3,6 +3,7 @@ import 'package:dorakpattient/data/networks/base_model.dart';
 import 'package:dorakpattient/data/networks/clients/general_client.dart';
 import 'package:dorakpattient/data/repository/base_repo.dart';
 
+import '../../utis/util.dart';
 import '../models/response/response.dart';
 
 class GeneralRepository extends BaseRepository {
@@ -21,6 +22,7 @@ class GeneralRepository extends BaseRepository {
         return BaseModel(error: ErrorResponse(dioError: e));
       }
     } else {
+      Util.kToastNOInternet();
       return BaseModel.noNetworkConnection();
     }
   }
@@ -36,6 +38,7 @@ class GeneralRepository extends BaseRepository {
         return BaseModel(error: ErrorResponse(dioError: e));
       }
     } else {
+      Util.kToastNOInternet();
       return BaseModel.noNetworkConnection();
     }
   }
@@ -86,6 +89,7 @@ class GeneralRepository extends BaseRepository {
         return BaseModel(error: ErrorResponse(dioError: e));
       }
     } else {
+      Util.kToastNOInternet();
       return BaseModel.noNetworkConnection();
     }
   }
@@ -101,6 +105,7 @@ class GeneralRepository extends BaseRepository {
         return BaseModel(error: ErrorResponse(dioError: e));
       }
     } else {
+      Util.kToastNOInternet();
       return BaseModel.noNetworkConnection();
     }
   }

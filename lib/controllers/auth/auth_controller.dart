@@ -22,6 +22,11 @@ class AuthController extends DisposableProvider {
   bool isLoggedIn = false;
   bool isLoading = false;
 
+  Future<bool> onWillPop(BuildContext context) async {
+    Navigator.pushReplacementNamed(context, NameRoutes.kWelcomeScreen);
+    return false;
+  }
+
   Future<Result<Patient?>> completeData({required String gender}) async {
     try {
       isLoading = true;

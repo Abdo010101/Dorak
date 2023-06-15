@@ -56,6 +56,7 @@ class Doctor {
   String? address;
   String? rate;
   int? ratingsCount;
+  bool? canRate;
 
   Doctor(
       {this.id,
@@ -66,7 +67,8 @@ class Doctor {
       this.examinationDuration,
       this.address,
       this.rate,
-      this.ratingsCount});
+      this.ratingsCount,
+      this.canRate});
 
   Doctor.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -78,6 +80,7 @@ class Doctor {
     address = json['address'];
     rate = json['rate'];
     ratingsCount = json['ratings_count'];
+    canRate = json['can_rate'];
   }
 
   Map<String, dynamic> toJson() {
@@ -91,6 +94,7 @@ class Doctor {
     data['address'] = this.address;
     data['rate'] = this.rate;
     data['ratings_count'] = this.ratingsCount;
+    data['can_rate'] = this.canRate;
     return data;
   }
 }

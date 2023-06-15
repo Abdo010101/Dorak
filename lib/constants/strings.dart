@@ -127,7 +127,7 @@ class AppStrings {
   static const kNoAvailableOffers = 'no_available_offers';
   static const kMyAppointment = 'my_appointment';
   static const kNoAvailableAppointment = 'no_available_appointment';
-  static const kSearchForSpeciality = 'search_for_speciality';
+  static const kSearchForOffer = 'search_for_offer';
   static const kManualAppointmentTitle = 'manual_appointment';
   static const kAddAppointmentSuccess = 'add_appointment_success';
   static const kAddAppointmentFail = 'add_appointment_fail';
@@ -143,4 +143,7 @@ class AppStrings {
   static const kWhichOne = 'which_one';
   static const kCustomizedExperience = 'customized_experience';
   static const kKnowGender = 'know_gender';
+  static const kRatQuality = 'rat_quality';
+  static const kDoctorReview = 'doctor_review';
+  static const kNoInternet = 'on_internet';
 }

@@ -33,4 +33,5 @@ abstract class NameRoutes {
   static const kLanguageScreen = '$kProfileScreen/language_screen';
   static const kAddAppointmentScreen = '$kHomeScreen/add_appointment_screen';
   static const kBestDoctorsScreen = '$kHomeScreen/best_doctors_screen';
+  static const kDoctorReviewScreen = '$kDoctorScreen/doctor_review_screen';
 }

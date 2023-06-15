@@ -3,8 +3,8 @@ import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/data/networks/base_model.dart';
 import 'package:dorakpattient/utis/util.dart';
 import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
+
 import '../constants/constants.dart';
 import '../data/di/locator.dart';
 import '../data/models/response/response.dart';
@@ -76,6 +76,7 @@ class ReservationAppointmentController extends ChangeNotifier {
       if (result.data != null) {
         Util.kToastAddAppointment(UpdatedResult.success);
         context.read<AppointmentsController>().getAllAppointments();
+        context.read<HomeController>().getHomeData(context);
         Navigator.pop(context);
       } else {
         Util.showSnackBar(context,

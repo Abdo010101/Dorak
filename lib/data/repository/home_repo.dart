@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:dorakpattient/data/repository/repository.dart';
 
+import '../../utis/util.dart';
 import '../models/response/response.dart';
 import '../networks/base_model.dart';
 import '../networks/clients/clients.dart';
@@ -21,6 +22,7 @@ class HomeRepository extends BaseRepository {
         return BaseModel(error: ErrorResponse(dioError: e));
       }
     } else {
+      Util.kToastNOInternet();
       return BaseModel.noNetworkConnection();
     }
   }
@@ -36,6 +38,23 @@ class HomeRepository extends BaseRepository {
         return BaseModel(error: ErrorResponse(dioError: e));
       }
     } else {
+      Util.kToastNOInternet();
+      return BaseModel.noNetworkConnection();
+    }
+  }
+
+  Future<BaseModel<AppointmentResponse>> declineAppointment(var type) async {
+    if (await checkForConnectivity()) {
+      try {
+        return BaseModel(
+            data: await homeClient.declineAppointment(type).then((value) {
+          return value.data;
+        }));
+      } on DioError catch (e) {
+        return BaseModel(error: ErrorResponse(dioError: e));
+      }
+    } else {
+      Util.kToastNOInternet();
       return BaseModel.noNetworkConnection();
     }
   }

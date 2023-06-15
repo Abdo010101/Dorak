@@ -111,4 +111,15 @@ class Util {
         textColor: AppColors.white,
         fontSize: AppFontSizes.kS5);
   }
+
+  static Future<bool?> kToastNOInternet() {
+    return Fluttertoast.showToast(
+        msg: AppStrings.kNoInternet.tr(),
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: AppColors.grey,
+        textColor: AppColors.white,
+        fontSize: AppFontSizes.kS5);
+  }
 }

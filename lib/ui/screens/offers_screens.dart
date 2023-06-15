@@ -38,7 +38,7 @@ class OffersScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextFormFieldBuilder(
-                  hint: AppStrings.kSearchForSpeciality.tr(),
+                  hint: AppStrings.kSearchForOffer.tr(),
                   controller: controller.offerSearchController,
                   verticalMargin: 0,
                   horizontalMargin: 0,

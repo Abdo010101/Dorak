@@ -1,4 +1,3 @@
-import 'package:dorakpattient/controllers/home_controller.dart';
 import 'package:dorakpattient/data/models/response/response.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -183,48 +182,53 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainController.onBottomSheetChanged(2, context);
                       },
                     ),
-                    controller.latestOfferList.isEmpty
-                        ? Center(
-                            child: Text(AppStrings.kNoAvailableOffers.tr()),
+                    controller.isLoading
+                        ? const LoadingWidget(
+                            backgroundColor: AppColors.transparent,
                           )
-                        : Container(
-                            margin: EdgeInsets.symmetric(vertical: 1.h),
-                            height: 32.h,
-                            child: ListView.separated(
-                              itemCount: controller.latestOfferList.length,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
-                                var offerModel =
-                                    controller.latestOfferList[index];
-                                return OfferWidget(
-                                  offerTittle: offerModel.title,
-                                  offerSubTittle: '${offerModel.description}',
-                                  offerPic: offerModel.mainPic,
-                                  priceBefore: offerModel.priceBefore,
-                                  priceAfter: offerModel.priceAfter,
-                                  doctorName: offerModel.doctor!.name,
-                                  docPic: offerModel.doctor!.image,
-                                  rate: offerModel.doctor!.rate,
-                                  onPressed: () {
-                                    showBottomSheet(
-                                        context: context,
-                                        backgroundColor: Colors.transparent,
-                                        builder: (context) {
-                                          return OfferDetailsBottomSheet(
-                                            offer: offerModel,
-                                          );
-                                        });
+                        : controller.latestOfferList.isEmpty
+                            ? Center(
+                                child: Text(AppStrings.kNoAvailableOffers.tr()),
+                              )
+                            : Container(
+                                margin: EdgeInsets.symmetric(vertical: 1.h),
+                                height: 32.h,
+                                child: ListView.separated(
+                                  itemCount: controller.latestOfferList.length,
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index) {
+                                    var offerModel =
+                                        controller.latestOfferList[index];
+                                    return OfferWidget(
+                                      offerTittle: offerModel.title,
+                                      offerSubTittle:
+                                          '${offerModel.description}',
+                                      offerPic: offerModel.mainPic,
+                                      priceBefore: offerModel.priceBefore,
+                                      priceAfter: offerModel.priceAfter,
+                                      doctorName: offerModel.doctor!.name,
+                                      docPic: offerModel.doctor!.image,
+                                      rate: offerModel.doctor!.rate,
+                                      onPressed: () {
+                                        showBottomSheet(
+                                            context: context,
+                                            backgroundColor: Colors.transparent,
+                                            builder: (context) {
+                                              return OfferDetailsBottomSheet(
+                                                offer: offerModel,
+                                              );
+                                            });
+                                      },
+                                    );
                                   },
-                                );
-                              },
-                              separatorBuilder:
-                                  (BuildContext context, int index) {
-                                return SizedBox(
-                                  width: 3.w,
-                                );
-                              },
-                            ),
-                          ),
+                                  separatorBuilder:
+                                      (BuildContext context, int index) {
+                                    return SizedBox(
+                                      width: 3.w,
+                                    );
+                                  },
+                                ),
+                              ),
                     SizedBox(
                       height: 1.h,
                     ),
@@ -234,23 +238,30 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainController.onBottomSheetChanged(1, context);
                       },
                     ),
-                    controller.appointmentList.isEmpty
-                        ? Center(
-                            child:
-                                Text(AppStrings.kNoAvailableAppointment.tr()),
+                    controller.isLoading
+                        ? const LoadingWidget(
+                            backgroundColor: AppColors.transparent,
                           )
-                        : ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: controller.appointmentList.length,
-                            itemBuilder: (context, index) {
-                              return AppointmentWidget(
-                                appointment: controller.appointmentList[index],
-                              );
-                            },
-                          ),
+                        : controller.appointmentList.isEmpty
+                            ? Center(
+                                child: Text(
+                                    AppStrings.kNoAvailableAppointment.tr()),
+                              )
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: controller.appointmentList.length,
+                                itemBuilder: (context, index) {
+                                  return AppointmentWidget(
+                                    appointment:
+                                        controller.appointmentList[index],
+                                    declineAppointment: () =>
+                                        controller.declineAppointment(index),
+                                  );
+                                },
+                              ),
                     SizedBox(
-                      height: 15.0.h,
+                      height: 1.h,
                     ),
                     /*     SectionLabel(
                       title: 'Nearest Medical Center ',

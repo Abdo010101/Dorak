@@ -22,6 +22,16 @@ class MainScreenController extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<bool> onWillPop(BuildContext context) async {
+    if (currentIndex == 0) {
+      return true;
+    } else {
+      currentIndex = 0;
+      notifyListeners();
+      return false;
+    }
+  }
+
   List<Widget> homeScreensList = [
     const HomeScreen(),
     const AppointmentsScreen(),

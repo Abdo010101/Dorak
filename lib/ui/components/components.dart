@@ -12,6 +12,7 @@ export 'general/dialog.dart';
 export 'general/divider_builder.dart';
 export 'general/drop_down_builder.dart';
 export 'general/empty_card.dart';
+export 'general/full_screen_widget.dart';
 export 'general/geometrical_avatar.dart';
 export 'general/gneral_line.dart';
 export 'general/list_tile_builder.dart';

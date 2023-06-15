@@ -123,7 +123,7 @@
   "no_available_offers": "لا توجد عروض متاحة الآن",
   "my_appointment": "المواعيد الخاصة بي",
   "no_available_appointment": "لا يوجد موعد متاح",
-  "search_for_speciality": "البحث عن متخصص",
+  "search_for_offer": "ابحث عن العرض المناسب لك",
   "get_started": "إبدأ الأن",
   "directions": "الإتجاهات",
   "select_reservation_date": "برجاء اختيار اليوم ",
@@ -137,5 +137,8 @@
   "continue": "التالى",
   "which_one": "أيهم أنت؟",
   "customized_experience": "لمنحك تجربة مخصصة. ",
-  "know_gender": "نحن بحاجة لمعرفة جنسك"
+  "know_gender": "نحن بحاجة لمعرفة جنسك",
+  "rat_quality": "يرجى تقييم جودة الخدمة",
+  "doctor_review": "تقييم الدكتور أو الخدمة",
+  "on_internet": "لا يوجد انترنت يرجى الأتصال بالأنترنت والمحاولة مرة أخرى"
 }

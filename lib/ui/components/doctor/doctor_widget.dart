@@ -33,12 +33,18 @@ class DoctorWidget extends StatelessWidget {
           children: [
             Row(
               children: [
-                GeometricalAvatar(
-                  //path: AppAssets.kDoctorImage,
-                  url: model?.image,
+                FullScreenWidgetBuilder(
+                  url: model!.image!,
                   radius: 30.sp,
-                  margin: EdgeInsetsDirectional.only(end: 2.w),
+                  width: 30.sp,
+                  height: 30.sp,
                 ),
+                // GeometricalAvatar(
+                //   //path: AppAssets.kDoctorImage,
+                //   url: model?.image,
+                //   radius: 30.sp,
+                //   margin: EdgeInsetsDirectional.only(end: 2.w),
+                // ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

@@ -12,14 +12,21 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<MainScreenController>(
         builder: (context, controller, child) {
-      return Scaffold(
-        extendBody: true,
-        backgroundColor: AppColors.liteWight,
-        bottomNavigationBar: BottomNavigator(
-          onChanged: (index) => controller.onBottomSheetChanged(index, context),
-          index: controller.currentIndex,
+      return WillPopScope(
+        onWillPop: () async {
+          print("Hello From Backkk");
+          return await controller.onWillPop(context);
+        },
+        child: Scaffold(
+          extendBody: true,
+          backgroundColor: AppColors.liteWight,
+          bottomNavigationBar: BottomNavigator(
+            onChanged: (index) =>
+                controller.onBottomSheetChanged(index, context),
+            index: controller.currentIndex,
+          ),
+          body: controller.homeScreensList[controller.currentIndex],
         ),
-        body: controller.homeScreensList[controller.currentIndex],
       );
     });
   }

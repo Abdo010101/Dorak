@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:dorakpattient/data/repository/repository.dart';
 
+import '../../utis/util.dart';
 import '../models/response/response.dart';
 import '../networks/base_model.dart';
 import '../networks/clients/clients.dart';
@@ -21,6 +22,7 @@ class OffersRepository extends BaseRepository {
         return BaseModel(error: ErrorResponse(dioError: e));
       }
     } else {
+      Util.kToastNOInternet();
       return BaseModel.noNetworkConnection();
     }
   }

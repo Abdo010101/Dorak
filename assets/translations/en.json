@@ -123,7 +123,7 @@
   "no_available_offers": "There is No Available Offers Now",
   "my_appointment": "My Appointment",
   "no_available_appointment": "There is No Available Appointment",
-  "search_for_speciality": "Search for a speciality",
+  "search_for_offer": "Find the right offer for you",
   "get_started": "Get Started",
   "select_reservation_date": "Please Select Day First",
   "directions": "Directions",
@@ -137,5 +137,9 @@
   "continue": "Continue",
   "which_one": "Which one are you?",
   "customized_experience": "To give you a customized experience. ",
-  "know_gender": "We need to know your gender"
+  "know_gender": "We need to know your gender",
+  "rat_quality": "Please rate the quality of service",
+  "doctor_review": "Rate Doctor Or Service",
+  "on_internet": "There is no internet, please connect to the internet and try again"
+
 }

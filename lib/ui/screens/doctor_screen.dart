@@ -83,7 +83,7 @@ class DoctorScreen extends StatelessWidget {
                     ],
                   ),
                 )
-              : SizedBox(),
+              : const SizedBox(),
           body: doctorController.isLoading
               ? const LoadingWidget(
                   backgroundColor: AppColors.transparent,
@@ -92,8 +92,8 @@ class DoctorScreen extends StatelessWidget {
                   children: [
                     SwitchButton(
                         choose: doctorController.switchButtonTitle,
-                        fTitle: AppStrings.kClinic.tr(),
-                        sTitle: AppStrings.kOffers.tr(),
+                        fTitle: AppStrings.kClinic,
+                        sTitle: AppStrings.kOffers,
                         fBOnPressed: () {
                           doctorController
                               .onChangedProfileType(DoctorProfileType.clinic);
@@ -198,9 +198,10 @@ class AddressWidget extends StatelessWidget {
 }
 
 class PatientsReviews extends StatelessWidget {
-  const PatientsReviews({Key? key, this.rateList}) : super(key: key);
+  const PatientsReviews({Key? key, this.rateList, required this.canRate})
+      : super(key: key);
   final List<Ratings>? rateList;
-
+  final bool canRate;
   @override
   Widget build(BuildContext context) {
     return EmptyCard(
@@ -224,18 +225,23 @@ class PatientsReviews extends StatelessWidget {
                 ],
               ),
               const Spacer(),
-              ButtonBuilder(
-                title: AppStrings.kAddReview.tr(),
-                titleStyle: AppStyles.kButtonTextStyle.copyWith(
-                    fontSize: AppFontSizes.kS3, color: AppColors.white),
-                prefixIcon: Icon(
-                  Icons.add,
-                  size: AppFontSizes.kS4,
-                ),
-                height: 4.5.h,
-                width: 35.w,
-                onPressed: () {},
-              ),
+              canRate
+                  ? ButtonBuilder(
+                      title: AppStrings.kAddReview.tr(),
+                      titleStyle: AppStyles.kButtonTextStyle.copyWith(
+                          fontSize: AppFontSizes.kS3, color: AppColors.white),
+                      prefixIcon: Icon(
+                        Icons.add,
+                        size: AppFontSizes.kS4,
+                      ),
+                      height: 4.5.h,
+                      width: 35.w,
+                      onPressed: () {
+                        Navigator.pushNamed(
+                            context, NameRoutes.kDoctorReviewScreen);
+                      },
+                    )
+                  : const SizedBox(),
             ],
           ),
           SizedBox(
@@ -316,8 +322,16 @@ class DoctorProfileWidget extends StatelessWidget {
             latitude: place?.lat,
             longitude: place?.lng,
           ),
-          PatientsReviews(
-              rateList: doctorController.doctorProfileResponse?.ratings),
+          doctorController.doctorProfileResponse?.ratings?.length == 0 &&
+                  doctorController.doctorProfileResponse?.doctor?.canRate ==
+                      false
+              ? const SizedBox()
+              : PatientsReviews(
+                  rateList: doctorController.doctorProfileResponse?.ratings,
+                  canRate:
+                      doctorController.doctorProfileResponse?.doctor?.canRate ??
+                          false,
+                ),
         ],
       )),
     );
@@ -341,25 +355,29 @@ class DoctorOffersWidget extends StatelessWidget {
                   padding: EdgeInsets.zero,
                   itemCount: controller.offersList.length,
                   itemBuilder: (context, index) {
-                    return OfferWidget(
-                      offerTittle: controller.offersList[index].title,
-                      offerSubTittle: controller.offersList[index].description,
-                      offerPic: controller.offersList[index].mainPic,
-                      priceBefore: controller.offersList[index].priceBefore,
-                      priceAfter: controller.offersList[index].priceAfter,
-                      doctorName: controller.offersList[index].doctor?.name,
-                      docPic: controller.offersList[index].doctor!.image,
-                      rate: controller.offersList[index].doctor!.rate,
-                      onPressed: () {
-                        showBottomSheet(
-                            context: context,
-                            backgroundColor: Colors.transparent,
-                            builder: (context) {
-                              return OfferDetailsBottomSheet(
-                                offer: controller.offersList[index],
-                              );
-                            });
-                      },
+                    return Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5.w),
+                      child: OfferWidget(
+                        offerTittle: controller.offersList[index].title,
+                        offerSubTittle:
+                            controller.offersList[index].description,
+                        offerPic: controller.offersList[index].mainPic,
+                        priceBefore: controller.offersList[index].priceBefore,
+                        priceAfter: controller.offersList[index].priceAfter,
+                        doctorName: controller.offersList[index].doctor?.name,
+                        docPic: controller.offersList[index].doctor!.image,
+                        rate: controller.offersList[index].doctor!.rate,
+                        onPressed: () {
+                          showBottomSheet(
+                              context: context,
+                              backgroundColor: Colors.transparent,
+                              builder: (context) {
+                                return OfferDetailsBottomSheet(
+                                  offer: controller.offersList[index],
+                                );
+                              });
+                        },
+                      ),
                     );
                   },
                 )

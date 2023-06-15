@@ -1,7 +1,9 @@
 export 'app_review_screen.dart';
 export 'appointments_screen.dart';
+export 'best_doctors_screen.dart';
 export 'booking_appointment_screen.dart';
 export 'change_password_screen.dart';
+export 'doctor_review_screen.dart';
 export 'doctor_screen.dart';
 export 'edit_profile_screen.dart';
 export 'forget_password_screen.dart';
@@ -24,4 +26,3 @@ export 'sign_up_screen.dart';
 export 'splash_screen.dart';
 export 'success_screen.dart';
 export 'welcome_screen.dart';
-export 'best_doctors_screen.dart';

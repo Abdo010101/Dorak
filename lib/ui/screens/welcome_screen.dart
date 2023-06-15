@@ -23,10 +23,15 @@ class WelcomeScreen extends StatelessWidget {
           margin: EdgeInsets.symmetric(horizontal: 2.0.w),
           child: Column(
             children: [
-              Image.asset(AppAssets.kWelcomeLogo),
+              Image.asset(
+                AppAssets.kWelcomeLogo,
+                fit: BoxFit.fill,
+                height: 30.h,
+              ),
               Expanded(
                 child: EmptyCard(
                   verticalPadding: 2.h,
+                  verticalMargin: 0,
                   height: double.infinity,
                   child: Column(
                     children: [

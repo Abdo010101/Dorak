@@ -6,8 +6,10 @@ part 'rate_request.g.dart';
 class RateRequest {
   String? comment;
   int? rate;
+  @JsonKey(name: 'doctor_id')
+  int? doctorId;
 
-  RateRequest({this.comment, this.rate});
+  RateRequest({this.comment, this.rate, this.doctorId});
 
   factory RateRequest.fromJson(Map<String, dynamic> json) =>
       _$RateRequestFromJson(json);

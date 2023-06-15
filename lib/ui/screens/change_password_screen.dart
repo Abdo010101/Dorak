@@ -49,7 +49,7 @@ class ChangePasswordScreen extends StatelessWidget {
                     hint: AppStrings.kPassword.tr(),
                     controller: controller.passwordController,
                     validator: Validators.compose([
-                      Validators.required('required'),
+                      Validators.required('required'.tr()),
                     ]),
                   ),
                   TextFormFieldBuilder(

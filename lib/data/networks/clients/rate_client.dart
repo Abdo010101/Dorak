@@ -12,4 +12,6 @@ abstract class RateClient {
 
   @POST(NetworkConstant.kAppRatings)
   Future<BaseResponse> addRate(@Body() var body);
+  @POST(NetworkConstant.kRatings)
+  Future<BaseResponse<Ratings>> doctorRate(@Body() var body);
 }

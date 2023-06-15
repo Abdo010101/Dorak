@@ -41,6 +41,7 @@ class TextBuilder extends StatelessWidget {
         '$text',
         textAlign: align,
         style: AppStyles.kButtonTextStyle.copyWith(
+            fontFamily: 'Tajawal',
             decoration: underline == true
                 ? TextDecoration.underline
                 : underline == false

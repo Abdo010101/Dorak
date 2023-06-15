@@ -33,20 +33,16 @@ class ClinicWidget extends StatelessWidget {
             verticalPadding: 0,
           ),
           const GeneralLine(),
-          SizedBox(
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 1.5.h),
             height: 11.h,
             child: ListView.builder(
               itemCount: place?.images?.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 String? image = place?.images?[index];
-                return GeometricalAvatar(
-                  backgroundColor: AppColors.transparent,
-                  url: image,
-                  radius: 10.sp,
-                  width: 20.w,
-                  margin: EdgeInsetsDirectional.symmetric(
-                      vertical: 0.5.h, horizontal: 1.w),
+                return FullScreenWidgetBuilder(
+                  url: image!,
                 );
               },
             ),

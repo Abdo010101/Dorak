@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/data/di/locator.dart';
 import 'package:dorakpattient/data/models/response/response.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/repository/repository.dart';
@@ -14,7 +13,7 @@ class DoctorProfileController extends DisposableProvider {
   DoctorProfileResponse? doctorProfileResponse;
 
   DoctorProfileType profileType = DoctorProfileType.clinic;
-  String switchButtonTitle = AppStrings.kClinic.tr();
+  String switchButtonTitle = AppStrings.kClinic;
   int? currentPlaceSelected;
   Places? selectedPlace;
   List<OfferResponse> offersList = [];
@@ -79,9 +78,9 @@ class DoctorProfileController extends DisposableProvider {
   void onChangedProfileType(DoctorProfileType type) {
     profileType = type;
     if (type == DoctorProfileType.clinic) {
-      switchButtonTitle = AppStrings.kClinic.tr();
+      switchButtonTitle = AppStrings.kClinic;
     } else {
-      switchButtonTitle = AppStrings.kOffers.tr();
+      switchButtonTitle = AppStrings.kOffers;
     }
     notifyListeners();
   }

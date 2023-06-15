@@ -27,6 +27,11 @@ class LoginController extends AuthController {
   bool showPass = true;
   final _sharedPref = locator<SharedPref>();
 
+  void changeShowPass() {
+    showPass = !showPass;
+    notifyListeners();
+  }
+
   onChangedRememberMe(bool? value) {
     rememberMe = value!;
     notifyListeners();
