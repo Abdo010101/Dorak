@@ -7,10 +7,13 @@ import 'package:provider/provider.dart';
 import '../data/di/locator.dart';
 import '../data/models/response/response.dart';
 import '../data/repository/repository.dart';
+import '../data/shared/shared_pref.dart';
+import '../routes/dorak_routes.dart';
 import '../utis/util.dart';
 
 class PatientProfileController extends DisposableProvider {
   bool isLoading = false;
+  final _sharedPref = locator<SharedPref>();
   final GlobalKey<FormState> profileFormKey = GlobalKey<FormState>();
   final _profileRepository = locator<ProfileRepository>();
   TextEditingController nameController = TextEditingController();
@@ -54,8 +57,10 @@ class PatientProfileController extends DisposableProvider {
       notifyListeners();
       if (result.data != null) {
         context.read<AuthController>().currentUser?.patient = result.data;
+        await _sharedPref.storeLoginInfo(result.data!);
         notifyListeners();
-        Navigator.pop(context);
+        Navigator.pushNamedAndRemoveUntil(
+            context, NameRoutes.kHomeScreen, (_) => false);
         return true;
       } else {
         Util.showSnackBar(context, message: result.error?.message);
