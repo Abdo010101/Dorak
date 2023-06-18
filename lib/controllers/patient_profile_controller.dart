@@ -7,10 +7,13 @@ import 'package:provider/provider.dart';
 import '../data/di/locator.dart';
 import '../data/models/response/response.dart';
 import '../data/repository/repository.dart';
+import '../data/shared/shared_pref.dart';
+import '../routes/dorak_routes.dart';
 import '../utis/util.dart';
 
 class PatientProfileController extends DisposableProvider {
   bool isLoading = false;
+  final _sharedPref = locator<SharedPref>();
   final GlobalKey<FormState> profileFormKey = GlobalKey<FormState>();
   final _profileRepository = locator<ProfileRepository>();
   TextEditingController nameController = TextEditingController();
@@ -53,9 +56,15 @@ class PatientProfileController extends DisposableProvider {
       isLoading = false;
       notifyListeners();
       if (result.data != null) {
-        context.read<AuthController>().currentUser?.patient = result.data;
+        AuthController auth =
+            Provider.of<AuthController>(context, listen: false);
+        auth.currentUser?.patient = result.data;
+        await _sharedPref.storeLoginInfo(
+          UserResponse(token: auth.currentUser?.token, patient: result.data),
+        );
         notifyListeners();
-        Navigator.pop(context);
+        Navigator.pushNamedAndRemoveUntil(
+            context, NameRoutes.kHomeScreen, (_) => false);
         return true;
       } else {
         Util.showSnackBar(context, message: result.error?.message);
@@ -78,6 +87,7 @@ class PatientProfileController extends DisposableProvider {
       final result = await _profileRepository.getProfileData();
       if (result.data != null) {
         profile = result.data!;
+        context.read<AuthController>().currentUser?.patient = profile;
       }
     } on DioError catch (e) {
       Util.showSnackBar(context, message: e.message);

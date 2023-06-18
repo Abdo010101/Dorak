@@ -3,6 +3,7 @@ import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/data/networks/base_model.dart';
 import 'package:dorakpattient/utis/util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/constants.dart';
@@ -61,9 +62,8 @@ class ReservationAppointmentController extends ChangeNotifier {
   }) async {
     if (formKey.currentState?.validate() == false) return;
     try {
-      isLoading = true;
+      EasyLoading.show();
       notifyListeners();
-
       Map<String, dynamic> reservationsData = {
         "medical_center_id": placeId == 0 ? '' : placeId,
         "doctor_id": doctorId,
@@ -85,15 +85,11 @@ class ReservationAppointmentController extends ChangeNotifier {
     } on DioError catch (e) {
       Util.showSnackBar(context, message: e.message);
       Util.kToastAddAppointment(UpdatedResult.fail);
-      isLoading = false;
-      notifyListeners();
       //return Error(errorMessage: DioExceptions.fromDioError(e).message);
-
       //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
     } finally {
-      isLoading = false;
+      EasyLoading.dismiss();
       notifyListeners();
-      // isLoading.value = false;
     }
   }
 

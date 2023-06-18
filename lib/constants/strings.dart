@@ -99,7 +99,7 @@ class AppStrings {
   static const kSkip = 'skip';
   static const kAllowNotificationsManually = 'allow_notifications_manually';
   static const kNoNotification = 'no_notification';
-  static const kConfirmDeletion = 'confirm_deletion';
+  static const kConfirmDecline = 'confirm_decline';
   static const kSureDeletion = 'are_you_sure_delete';
   static const kDataUpdatedSuccess = 'data_updated_success';
   static const kDataUpdatedFail = 'data_updated_fail';

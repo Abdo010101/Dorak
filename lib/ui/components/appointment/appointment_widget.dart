@@ -205,7 +205,12 @@ class AppointmentWidget extends StatelessWidget {
                           color: AppColors.error, fontSize: AppFontSizes.kS4),
                       buttonColor: AppColors.transparent,
                       borderColor: AppColors.transparent,
-                      onPressed: declineAppointment ?? () => () {},
+                      onPressed: () => Util.confirmDeletionDialog(context,
+                          cancelTab: () => Navigator.pop(context),
+                          confirmTab: () {
+                            Navigator.pop(context);
+                            declineAppointment!();
+                          }),
                     ),
                     const Spacer(),
                     ButtonBuilder(

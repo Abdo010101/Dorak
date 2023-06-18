@@ -16,6 +16,8 @@ class MainScreenController extends ChangeNotifier {
             .changeAppointmentDate(AppStrings.kUpcoming);
       } else if (index == 2) {
         context.read<OffersController>().getAllOffers(home: true);
+      } else if (index == 3) {
+        context.read<PatientProfileController>().getProfileData(context);
       }
     }
     currentIndex = index;

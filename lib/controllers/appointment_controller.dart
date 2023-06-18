@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import '../constants/constants.dart';
 import '../data/di/locator.dart';
@@ -47,7 +48,7 @@ class AppointmentsController extends ChangeNotifier {
 
   Future<void> declineAppointment(int index) async {
     try {
-      isLoading = true;
+      EasyLoading.show();
       notifyListeners();
       var data = {
         'id': appointmentsList[index].id,
@@ -55,8 +56,6 @@ class AppointmentsController extends ChangeNotifier {
       final result = await _appointmentsRepository.declineAppointment(data);
       if (result.data != null) {
         appointmentsList[index].status = AppStatus.cancelled.name;
-        isLoading = false;
-        notifyListeners();
       } else {
         //SnackBar(content: Text(result.error?.message), );
       }
@@ -64,7 +63,8 @@ class AppointmentsController extends ChangeNotifier {
       //return Error(errorMessage: DioExceptions.fromDioError(e).message);
       //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
     } finally {
-      // isLoading.value = false;
+      EasyLoading.dismiss();
+      notifyListeners();
     }
   }
 }

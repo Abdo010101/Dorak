@@ -7,6 +7,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -91,7 +92,9 @@ class MyApp extends StatelessWidget {
               EasyLocalization.of(context)?.currentLocale == const Locale('en')
                   ? 'English'
                   : 'عربى';
+
           return MaterialApp(
+            builder: EasyLoading.init(),
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,
             locale: EasyLocalization.of(context)?.currentLocale,

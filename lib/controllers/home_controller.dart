@@ -4,6 +4,7 @@ import 'package:dorakpattient/data/repository/home_repo.dart';
 import 'package:dorakpattient/routes/dorak_routes.dart';
 import 'package:dorakpattient/utis/helpers/app_providers.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import '../../data/models/response/response.dart';
 import '../constants/enums.dart';
@@ -11,6 +12,7 @@ import '../constants/enums.dart';
 class HomeController extends ChangeNotifier {
   final _homeRepository = locator<HomeRepository>();
   bool isLoading = false;
+  bool isLoadingAppointment = false;
   HomeResponse? homeData;
   List<Doctor> bestDoctorsList = [];
   List<OfferResponse> latestOfferList = [];
@@ -85,7 +87,7 @@ class HomeController extends ChangeNotifier {
   }
 
   Future<void> declineAppointment(int index) async {
-    isLoading = true;
+    EasyLoading.show();
     notifyListeners();
     try {
       var data = {
@@ -101,7 +103,7 @@ class HomeController extends ChangeNotifier {
       //return Error(errorMessage: DioExceptions.fromDioError(e).message);
       //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
     } finally {
-      isLoading = false;
+      EasyLoading.dismiss();
       notifyListeners();
     }
   }
