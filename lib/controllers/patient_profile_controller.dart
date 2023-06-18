@@ -76,6 +76,22 @@ class PatientProfileController extends DisposableProvider {
     }
   }
 
+  Future<void> getProfileData(BuildContext context) async {
+    try {
+      isLoading = true;
+      notifyListeners();
+      final result = await _profileRepository.getProfileData();
+      if (result.data != null) {
+        profile = result.data!;
+      }
+    } on DioError catch (e) {
+      Util.showSnackBar(context, message: e.message);
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
+  }
+
   @override
   void disposeValues() {
     // TODO: implement disposeValues

@@ -12,4 +12,7 @@ abstract class ProfileClient {
 
   @POST(NetworkConstant.kUpdateProfile)
   Future<BaseResponse<Patient>> updateProfile(@Body() var body);
+
+  @GET(NetworkConstant.kProfile)
+  Future<BaseResponse<Patient>> getProfileData();
 }
