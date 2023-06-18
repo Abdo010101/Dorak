@@ -27,56 +27,62 @@ class AppointmentsScreen extends StatelessWidget {
         leadingWidth: 50.w,
       ),
       backgroundColor: AppColors.liteWight,
-      body: EmptyCard(
-        verticalPadding: 0,
-        verticalMargin: 0,
-        horizontalMargin: 0,
-        horizontalPadding: 4.w,
-        color: AppColors.transparent,
-        child: Consumer<AppointmentsController>(
-          builder: (context, controller, child) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SwitchButton(
-                  choose: controller.appointmentDate.tr(),
-                  fTitle: AppStrings.kUpcoming.tr(),
-                  sTitle: AppStrings.kPast.tr(),
-                  fBOnPressed: () =>
-                      controller.changeAppointmentDate(AppStrings.kUpcoming),
-                  sBOnPressed: () =>
-                      controller.changeAppointmentDate(AppStrings.kPast),
-                ),
-                Expanded(
-                  child: Stack(
-                    children: [
-                      controller.appointmentsList.isEmpty
-                          ? NoDataWidget(
-                              backgroundColor: Colors.transparent,
-                              text: AppStrings.kNoAppointments.tr(),
-                            )
-                          : ListView.builder(
-                              padding: EdgeInsets.zero,
-                              itemCount: controller.appointmentsList.length,
-                              itemBuilder: (context, index) {
-                                return AppointmentWidget(
-                                  appointment:
-                                      controller.appointmentsList[index],
-                                  declineAppointment: () =>
-                                      controller.declineAppointment(index),
-                                );
-                              }),
-                      controller.isLoading
-                          ? const LoadingWidget(
-                              backgroundColor: AppColors.transparent,
-                            )
-                          : const SizedBox(),
-                    ],
+      body: RefreshIndicator(
+        onRefresh: () async {
+          Provider.of<AppointmentsController>(context, listen: false)
+              .changeAppointmentDate(AppStrings.kUpcoming);
+        },
+        child: EmptyCard(
+          verticalPadding: 0,
+          verticalMargin: 0,
+          horizontalMargin: 0,
+          horizontalPadding: 4.w,
+          color: AppColors.transparent,
+          child: Consumer<AppointmentsController>(
+            builder: (context, controller, child) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SwitchButton(
+                    choose: controller.appointmentDate.tr(),
+                    fTitle: AppStrings.kUpcoming.tr(),
+                    sTitle: AppStrings.kPast.tr(),
+                    fBOnPressed: () =>
+                        controller.changeAppointmentDate(AppStrings.kUpcoming),
+                    sBOnPressed: () =>
+                        controller.changeAppointmentDate(AppStrings.kPast),
                   ),
-                ),
-              ],
-            );
-          },
+                  Expanded(
+                    child: Stack(
+                      children: [
+                        controller.appointmentsList.isEmpty
+                            ? NoDataWidget(
+                                backgroundColor: Colors.transparent,
+                                text: AppStrings.kNoAppointments.tr(),
+                              )
+                            : ListView.builder(
+                                padding: EdgeInsets.zero,
+                                itemCount: controller.appointmentsList.length,
+                                itemBuilder: (context, index) {
+                                  return AppointmentWidget(
+                                    appointment:
+                                        controller.appointmentsList[index],
+                                    declineAppointment: () =>
+                                        controller.declineAppointment(index),
+                                  );
+                                }),
+                        controller.isLoading
+                            ? const LoadingWidget(
+                                backgroundColor: AppColors.transparent,
+                              )
+                            : const SizedBox(),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );
