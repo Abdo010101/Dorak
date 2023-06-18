@@ -1,3 +1,5 @@
+import 'package:dorakpattient/utis/util.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -73,8 +75,15 @@ class _SplashScreenState extends State<SplashScreen>
     animationController.addStatusListener((status) async {
       if (status == AnimationStatus.completed) {
         if (authController.isLoggedIn) {
-          Navigator.pushNamedAndRemoveUntil(
-              context, NameRoutes.kHomeScreen, (_) => false);
+          if (authController.currentUser?.patient?.phone == null ||
+              authController.currentUser?.patient?.phone == '') {
+            Util.kToastLoginMessage(AppStrings.kCompleteInfo.tr());
+            Navigator.pushNamedAndRemoveUntil(
+                context, NameRoutes.kProfileDetailsScreen, (_) => false);
+          } else {
+            Navigator.pushNamedAndRemoveUntil(
+                context, NameRoutes.kHomeScreen, (_) => false);
+          }
         } else {
           Navigator.pushReplacementNamed(
               context,

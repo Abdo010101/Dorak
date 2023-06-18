@@ -91,7 +91,7 @@
   "back": "Back",
   "no_notification": "You haven't received any notifications yet",
   "are_you_sure_delete": "Are you sure ? you can\\'t undo this",
-  "confirm_deletion": "Confirm Deletion",
+  "confirm_decline": "Confirm Deletion",
   "data_updated_success": "The data has been modified successfully",
   "data_updated_fail": "The data has not been modified",
   "phone_verification": "Phone Verification",

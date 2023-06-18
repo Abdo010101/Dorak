@@ -56,8 +56,12 @@ class PatientProfileController extends DisposableProvider {
       isLoading = false;
       notifyListeners();
       if (result.data != null) {
-        context.read<AuthController>().currentUser?.patient = result.data;
-        await _sharedPref.storeLoginInfo(result.data!);
+        AuthController auth =
+            Provider.of<AuthController>(context, listen: false);
+        auth.currentUser?.patient = result.data;
+        await _sharedPref.storeLoginInfo(
+          UserResponse(token: auth.currentUser?.token, patient: result.data),
+        );
         notifyListeners();
         Navigator.pushNamedAndRemoveUntil(
             context, NameRoutes.kHomeScreen, (_) => false);
@@ -83,6 +87,7 @@ class PatientProfileController extends DisposableProvider {
       final result = await _profileRepository.getProfileData();
       if (result.data != null) {
         profile = result.data!;
+        context.read<AuthController>().currentUser?.patient = profile;
       }
     } on DioError catch (e) {
       Util.showSnackBar(context, message: e.message);

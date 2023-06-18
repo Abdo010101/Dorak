@@ -87,7 +87,7 @@ class LoginController extends AuthController {
         return true;
       } else {
         Util.showSnackBar(context,
-            message: (result as Error<UserResponse?>).errorMessage!);
+            message: (result as Error<UserResponse?>).errorMessage);
         isLoading = false;
         notifyListeners();
         return false;

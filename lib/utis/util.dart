@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../constants/constants.dart';
+import '../ui/components/components.dart';
 
 class Util {
   static showSnackBar(BuildContext context, {required String? message}) {
@@ -26,18 +27,18 @@ class Util {
   //       });
   // }
 
-  // static void confirmDeletionDialog(BuildContext context,
-  //     {required VoidCallback confirmTab, required VoidCallback cancelTab}) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (context) {
-  //       return ConfirmDeletion(
-  //         confirmTab: confirmTab,
-  //         cancelTab: cancelTab,
-  //       );
-  //     },
-  //   );
-  // }
+  static void confirmDeletionDialog(BuildContext context,
+      {required VoidCallback confirmTab, required VoidCallback cancelTab}) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return ConfirmDeletion(
+          confirmTab: confirmTab,
+          cancelTab: cancelTab,
+        );
+      },
+    );
+  }
 
   static void openCall(phone) async {
     Uri url = Uri.parse('tel:$phone');

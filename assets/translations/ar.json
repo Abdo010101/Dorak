@@ -91,7 +91,7 @@
   "back": "العودة",
   "no_notification": "لم تصلك إشعارات بعد",
   "are_you_sure_delete": "هل أنت متأكد ؟ لا يمكنك التراجع عن هذا",
-  "confirm_deletion": " تأكيد الحذف",
+  "confirm_decline": "تأكيد الحذف",
   "data_updated_success": "تم تعديل البيانات بنجاح",
   "data_updated_fail": "لم يتم تعديل البيانات",
   "phone_verification": "التحقق من الهاتف",

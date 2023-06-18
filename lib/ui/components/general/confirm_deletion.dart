@@ -26,22 +26,24 @@ class ConfirmDeletion extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            TextBuilder(text: "${AppStrings.kConfirmDeletion.tr()} "),
+            TextBuilder(text: "${AppStrings.kSureDeletion.tr()} "),
             Row(
               children: [
                 ButtonBuilder(
                   width: 30.w,
+                  height: 5.h,
                   title: AppStrings.kConfirm.tr(),
-                  margin: EdgeInsets.symmetric(vertical: 1.h),
+                  margin:
+                      EdgeInsets.symmetric(vertical: 1.h, horizontal: 1.5.w),
                   onPressed: confirmTab,
                 ),
                 const Spacer(),
                 ButtonBuilder(
                   width: 30.w,
+                  height: 5.h,
                   title: AppStrings.kCancel.tr(),
-                  margin: EdgeInsets.symmetric(
-                    vertical: 1.h,
-                  ),
+                  margin:
+                      EdgeInsets.symmetric(vertical: 1.h, horizontal: 1.5.w),
                   onPressed: cancelTab,
                 ),
               ],
