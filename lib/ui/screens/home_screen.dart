@@ -1,6 +1,7 @@
 import 'package:dorakpattient/data/models/response/response.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -29,6 +30,15 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     MainScreenController mainController =
         Provider.of<MainScreenController>(context, listen: false);
+    EasyLoading.instance
+      ..indicatorColor = AppColors.liteBlueWO
+      ..textColor = AppColors.white
+      ..maskColor = AppColors.transparent
+      ..maskType = EasyLoadingMaskType.custom
+      ..backgroundColor = AppColors.white
+      ..loadingStyle = EasyLoadingStyle.custom
+      ..indicatorType = EasyLoadingIndicatorType.cubeGrid;
+
     return Scaffold(
         appBar: AppBar(
           leadingWidth: 40.w,

@@ -207,7 +207,10 @@ class AppointmentWidget extends StatelessWidget {
                       borderColor: AppColors.transparent,
                       onPressed: () => Util.confirmDeletionDialog(context,
                           cancelTab: () => Navigator.pop(context),
-                          confirmTab: () => declineAppointment),
+                          confirmTab: () {
+                            Navigator.pop(context);
+                            declineAppointment!();
+                          }),
                     ),
                     const Spacer(),
                     ButtonBuilder(
