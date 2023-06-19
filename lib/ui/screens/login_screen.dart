@@ -279,10 +279,8 @@ class LoginScreen extends StatelessWidget {
                                       if (context.mounted) {
                                         Util.kToastLoginMessage(
                                             AppStrings.kCompleteInfo.tr());
-                                        Navigator.pushNamedAndRemoveUntil(
-                                            context,
-                                            NameRoutes.kProfileDetailsScreen,
-                                            (route) => false);
+                                        Navigator.pushReplacementNamed(context,
+                                            NameRoutes.kChangePhoneScreen);
                                       }
                                     }
                                   }

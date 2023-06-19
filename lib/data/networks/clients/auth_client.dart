@@ -42,6 +42,9 @@ abstract class AuthenticationClient {
   @POST(NetworkConstant.kVerifyOtp)
   Future<dynamic> verifyOtp(@Body() var body);
 
+  @POST(NetworkConstant.kChangePhone)
+  Future<dynamic> changePhone(@Body() var body);
+
   @POST("${NetworkConstant.kChangePassword}/{phone}")
   Future<dynamic> changePassword(@Path('phone') String phone, @Body() var body);
 }

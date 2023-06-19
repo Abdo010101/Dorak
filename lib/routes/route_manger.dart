@@ -102,8 +102,13 @@ class RouteManger {
       case NameRoutes.kBestDoctorsScreen:
         return MaterialPageRoute(
             builder: (context) => const BestDoctorsScreen());
+
       case NameRoutes.kDoctorReviewScreen:
         return MaterialPageRoute(builder: (context) => const DoctorReview());
+
+      case NameRoutes.kChangePhoneScreen:
+        return MaterialPageRoute(
+            builder: (context) => const ChangePhoneScreen());
 
       default:
         return MaterialPageRoute(builder: (context) => SplashScreen());

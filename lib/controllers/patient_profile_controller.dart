@@ -20,7 +20,7 @@ class PatientProfileController extends DisposableProvider {
   TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   String? gender;
-  Patient profile = Patient();
+  Patient? profile;
 
   resetProfileData({Patient? patient}) {
     nameController.text = patient?.name ?? '';
@@ -38,10 +38,10 @@ class PatientProfileController extends DisposableProvider {
 
   Future<bool> updateProfile(BuildContext context) async {
     if (profileFormKey.currentState?.validate() != true) return false;
-    if (nameController.text == profile.name &&
-        phoneController.text == profile.phone &&
-        emailController.text == profile.email &&
-        profile.gender == gender) return false;
+    if (nameController.text == profile?.name &&
+        phoneController.text == profile?.phone &&
+        emailController.text == profile?.email &&
+        profile?.gender == gender) return false;
     isLoading = true;
     notifyListeners();
     Patient patient = Patient(
@@ -58,6 +58,7 @@ class PatientProfileController extends DisposableProvider {
       if (result.data != null) {
         AuthController auth =
             Provider.of<AuthController>(context, listen: false);
+        profile = result.data;
         auth.currentUser?.patient = result.data;
         await _sharedPref.storeLoginInfo(
           UserResponse(token: auth.currentUser?.token, patient: result.data),

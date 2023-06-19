@@ -141,5 +141,9 @@
   "rat_quality": "Please rate the quality of service",
   "doctor_review": "Rate Doctor Or Service",
   "on_internet": "There is no internet, please connect to the internet and try again",
-  "complete_info": "Complete Info"
+  "complete_info": "Complete Info",
+  "add_phone": "Add Your Phone",
+  "change_phone_message": "We will send a text message to this phone number to validate it"
+
+
 }

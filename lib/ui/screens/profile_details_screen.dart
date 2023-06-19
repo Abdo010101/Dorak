@@ -13,7 +13,6 @@ class ProfileDetailsScreen extends StatelessWidget {
   const ProfileDetailsScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final patient = Provider.of<AuthController>(context).currentUser?.patient;
     final controller = Provider.of<PatientProfileController>(context);
 
     return Scaffold(
@@ -36,7 +35,8 @@ class ProfileDetailsScreen extends StatelessWidget {
                       minWidth: 5.w,
                       padding: EdgeInsets.zero,
                       onPressed: () {
-                        controller.resetProfileData(patient: patient);
+                        controller.resetProfileData(
+                            patient: controller.profile);
                         Navigator.pushNamed(
                             context, NameRoutes.kEditProfileScreen);
                       },
@@ -62,19 +62,19 @@ class ProfileDetailsScreen extends StatelessWidget {
                 ),
                 InformationText(
                   title: AppStrings.kName.tr(),
-                  subTitle: patient?.name ?? '',
+                  subTitle: controller.profile?.name ?? '',
                 ),
                 InformationText(
                   title: AppStrings.kPhone.tr(),
-                  subTitle: patient?.phone ?? '',
+                  subTitle: controller.profile?.phone ?? '',
                 ),
                 InformationText(
                   title: AppStrings.kEmail.tr(),
-                  subTitle: patient?.email ?? '',
+                  subTitle: controller.profile?.email ?? '',
                 ),
                 InformationText(
                   title: AppStrings.kGender.tr(),
-                  subTitle: patient?.gender ?? '',
+                  subTitle: controller.profile?.gender ?? 'ddd',
                   divider: false,
                 ),
               ],

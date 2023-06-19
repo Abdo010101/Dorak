@@ -3,7 +3,6 @@ import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/ui/components/components.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -12,14 +11,6 @@ class AppointmentsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    EasyLoading.instance
-      ..indicatorColor = AppColors.liteBlueWO
-      ..textColor = AppColors.white
-      ..maskColor = AppColors.transparent
-      ..maskType = EasyLoadingMaskType.custom
-      ..backgroundColor = AppColors.white
-      ..loadingStyle = EasyLoadingStyle.custom
-      ..indicatorType = EasyLoadingIndicatorType.cubeGrid;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.liteWight,

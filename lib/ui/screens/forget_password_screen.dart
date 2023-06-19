@@ -56,7 +56,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                   SizedBox(
                     height: 2.0.h,
                   ),
-                  Text("sent_text_message".tr()),
+                  Text(AppStrings.kSentTextMassage.tr()),
                   SizedBox(
                     height: 2.0.h,
                   ),
