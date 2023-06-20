@@ -129,6 +129,22 @@ class AuthenticationRepository extends BaseRepository {
     }
   }
 
+  Future<BaseModel<dynamic>> changePhone({required var body}) async {
+    if (await checkForConnectivity()) {
+      try {
+        return BaseModel(
+            data: await authenticationClient.changePhone(body).then((value) {
+          return value;
+        }));
+      } on DioError catch (e) {
+        return BaseModel(error: ErrorResponse(dioError: e));
+      }
+    } else {
+      Util.kToastNOInternet();
+      return BaseModel.noNetworkConnection();
+    }
+  }
+
   Future<BaseModel<dynamic>> changePassword(
       {required String phone, required var body}) async {
     if (await checkForConnectivity()) {

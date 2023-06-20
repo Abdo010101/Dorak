@@ -5,8 +5,10 @@ import 'package:sizer/sizer.dart';
 import '../../../constants/constants.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({Key? key, required this.title}) : super(key: key);
+  const CustomAppBar({Key? key, required this.title, this.onpOp})
+      : super(key: key);
   final String? title;
+  final VoidCallback? onpOp;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -19,7 +21,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: Row(
           children: [
             IconButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: onpOp ?? () => Navigator.pop(context),
               icon: const Icon(
                 Icons.arrow_back_ios,
                 color: AppColors.blue,

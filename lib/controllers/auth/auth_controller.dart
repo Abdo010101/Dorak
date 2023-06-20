@@ -221,7 +221,6 @@ class AuthController extends DisposableProvider {
   Future<Result<dynamic>> verifyOtp(
       {required BuildContext context, required String otp}) async {
     try {
-      print('phone : phone');
       isLoading = true;
       notifyListeners();
       var data = dio.FormData.fromMap({
@@ -239,6 +238,36 @@ class AuthController extends DisposableProvider {
       }
     } on DioError catch (e) {
       return Error(errorMessage: DioExceptions.fromDioError(e).message);
+    } finally {
+      //Dismiss Dialog .
+      // Get.back();
+    }
+  }
+
+  Future<bool> changePhone(
+      {required BuildContext context, required String phone}) async {
+    try {
+      isLoading = true;
+      notifyListeners();
+      var data = dio.FormData.fromMap({
+        'phone': phone,
+      });
+      final result = await _authenticationRepository.changePhone(
+        body: data,
+      );
+      isLoading = false;
+      notifyListeners();
+      if (result.data != null) {
+        await _sharedPref.storeLoginInfo(
+          UserResponse(
+              token: currentUser?.token, patient: currentUser?.patient),
+        );
+        return true;
+      } else {
+        return false;
+      }
+    } on DioError catch (e) {
+      return false;
     } finally {
       //Dismiss Dialog .
       // Get.back();

@@ -148,4 +148,7 @@ class AppStrings {
   static const kNoInternet = 'on_internet';
   static const kCompleteInfo = 'complete_info';
   static const kNoDataFound = 'no_data_found';
+  static const kAddPhone = 'add_phone';
+  static const kSentTextMassage = 'sent_text_message';
+  static const kChangePhoneMassage = 'change_phone_message';
 }

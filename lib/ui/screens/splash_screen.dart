@@ -78,8 +78,8 @@ class _SplashScreenState extends State<SplashScreen>
           if (authController.currentUser?.patient?.phone == null ||
               authController.currentUser?.patient?.phone == '') {
             Util.kToastLoginMessage(AppStrings.kCompleteInfo.tr());
-            Navigator.pushNamedAndRemoveUntil(
-                context, NameRoutes.kProfileDetailsScreen, (_) => false);
+            Navigator.pushReplacementNamed(
+                context, NameRoutes.kChangePhoneScreen);
           } else {
             Navigator.pushNamedAndRemoveUntil(
                 context, NameRoutes.kHomeScreen, (_) => false);

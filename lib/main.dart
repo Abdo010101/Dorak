@@ -93,6 +93,15 @@ class MyApp extends StatelessWidget {
                   ? 'English'
                   : 'عربى';
 
+          EasyLoading.instance
+            ..indicatorColor = AppColors.liteBlueWO
+            ..textColor = AppColors.white
+            ..maskColor = AppColors.transparent
+            ..maskType = EasyLoadingMaskType.custom
+            ..backgroundColor = AppColors.white
+            ..loadingStyle = EasyLoadingStyle.custom
+            ..indicatorType = EasyLoadingIndicatorType.cubeGrid;
+
           return MaterialApp(
             builder: EasyLoading.init(),
             localizationsDelegates: context.localizationDelegates,

@@ -42,6 +42,7 @@ class NetworkConstant {
   static const String kCancelReservation = "$kAppointment/cancel-reservation";
   static const String kCheckOtp = "check-otp";
   static const String kVerifyOtp = "verify";
+  static const String kChangePhone = "change-phone";
   static const String kSendOtp = "send-otp";
   static const String kChangePassword = "change-password";
   static const String kSendOtpRequest = "resend-otp";

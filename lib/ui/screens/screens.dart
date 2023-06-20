@@ -3,6 +3,7 @@ export 'appointments_screen.dart';
 export 'best_doctors_screen.dart';
 export 'booking_appointment_screen.dart';
 export 'change_password_screen.dart';
+export 'change_phone.dart';
 export 'doctor_review_screen.dart';
 export 'doctor_screen.dart';
 export 'edit_profile_screen.dart';
