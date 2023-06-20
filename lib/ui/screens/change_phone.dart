@@ -68,7 +68,7 @@ class ChangePhoneScreen extends StatelessWidget {
                             phone: controller.phoneController.text);
 
                         addPhone
-                            ? Navigator.pushNamed(
+                            ? Navigator.pushReplacementNamed(
                                 context, NameRoutes.kOTPScreen)
                             : null;
                       }
