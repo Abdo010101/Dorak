@@ -27,11 +27,11 @@ class GeneralRepository extends BaseRepository {
     }
   }
 
-  Future<BaseModel<List<Titles>>> getAreas() async {
+  Future<BaseModel<List<Titles>>> getCityByArea(int? id) async {
     if (await checkForConnectivity()) {
       try {
         return BaseModel(
-            data: await generalClient.getAreas().then((value) {
+            data: await generalClient.getCitiesByArea(id).then((value) {
           return value.data;
         }));
       } on DioError catch (e) {

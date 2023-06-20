@@ -45,9 +45,10 @@ class _GeneralClient implements GeneralClient {
   }
 
   @override
-  Future<BaseResponseList<Titles>> getAreas() async {
+  Future<BaseResponseList<Titles>> getCitiesByArea(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -58,7 +59,7 @@ class _GeneralClient implements GeneralClient {
     )
             .compose(
               _dio.options,
-              'areas',
+              'cities/${id}/areas',
               queryParameters: queryParameters,
               data: _data,
             )

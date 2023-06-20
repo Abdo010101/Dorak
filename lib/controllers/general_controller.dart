@@ -13,15 +13,16 @@ class GeneralController extends ChangeNotifier {
   final _generalRepository = locator<GeneralRepository>();
   GeneralResponse? generalResponse;
   List<Titles> specializationList = [];
+  List<Titles> citiesList = [];
   List<Titles> areaList = [];
   List<Titles> originalAreaList = [];
+  List<Titles> originalCityList = [];
   double? lat;
-
   double? lng;
-
   String? specializationName;
   int? specializationId;
   int? cityId;
+  int? areaId;
 
   /* List<GeneralData> subSpecializationList = [];
   List<GeneralData> areaList = [];
@@ -32,7 +33,6 @@ class GeneralController extends ChangeNotifier {
 
   getData() async {
     await getGeneralData();
-    await getAreas();
     /*   await getMedicalCenters();
   */
   }
@@ -45,6 +45,12 @@ class GeneralController extends ChangeNotifier {
         specializationList
           ..clear()
           ..addAll(generalResponse!.mainSpecializations!);
+        originalAreaList
+          ..clear()
+          ..addAll(generalResponse!.cities!);
+        areaList
+          ..clear()
+          ..addAll(generalResponse!.cities!);
         notifyListeners();
       } else {
         // GetSnackBar(message: (result.error?.message));
@@ -57,18 +63,19 @@ class GeneralController extends ChangeNotifier {
     }
   }
 
-  Future<void> getAreas() async {
+  Future<void> getCities(int id) async {
     try {
-      final result = await _generalRepository.getAreas();
+      isLoading = true;
+      notifyListeners();
+      final result = await _generalRepository.getCityByArea(id);
       if (result.data != null) {
-        originalAreaList
-          ..clear()
-          ..addAll(result.data!);
-        areaList
+        originalCityList
           ..clear()
           ..addAll(result.data!);
 
-        notifyListeners();
+        citiesList
+          ..clear()
+          ..addAll(result.data!);
       } else {
         // GetSnackBar(message: (result.error?.message));
       }
@@ -77,6 +84,8 @@ class GeneralController extends ChangeNotifier {
       // GetSnackBar(message: (DioExceptions.fromDioError(e).message));
     } finally {
       // isLoading.value = false;
+      isLoading = false;
+      notifyListeners();
     }
   }
 

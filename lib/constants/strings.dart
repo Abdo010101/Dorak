@@ -147,4 +147,5 @@ class AppStrings {
   static const kDoctorReview = 'doctor_review';
   static const kNoInternet = 'on_internet';
   static const kCompleteInfo = 'complete_info';
+  static const kNoDataFound = 'no_data_found';
 }

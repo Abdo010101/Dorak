@@ -14,6 +14,8 @@ abstract class NameRoutes {
   static const kAppointmentsScreen = '$kLoginScreen/appointments_screen';
   static const kReviewScreen = '$kHomeScreen/reviews_screen';
   static const kSearchForCityScreen = '$kHomeScreen/search_for_city_screen';
+  static const kSearchForAreaScreen = '$kHomeScreen/search_for_area_screen';
+
   static const kResultOfSearch = '$kSearchForCityScreen/result_of_search';
   static const kSearchForSpecialtiesScreen =
       '$kHomeScreen/search_for_specialties_screen';

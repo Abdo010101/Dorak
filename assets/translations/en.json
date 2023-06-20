@@ -141,5 +141,6 @@
   "rat_quality": "Please rate the quality of service",
   "doctor_review": "Rate Doctor Or Service",
   "on_internet": "There is no internet, please connect to the internet and try again",
-  "complete_info": "Complete Info"
+  "complete_info": "Complete Info",
+  "no_data_found": "no result available"
 }

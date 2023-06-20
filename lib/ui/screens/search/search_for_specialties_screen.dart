@@ -79,7 +79,7 @@ class SearchForSpecialtiesScreen extends StatelessWidget {
                                     controller.onSpecializationChange(
                                         specialModel.id!, specialModel.name!);
                                     Navigator.pushNamed(context,
-                                        NameRoutes.kSearchForCityScreen);
+                                        NameRoutes.kSearchForAreaScreen);
                                   },
                                 );
                               },
