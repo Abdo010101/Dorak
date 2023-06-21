@@ -1,5 +1,3 @@
-import 'package:dorakpattient/utis/util.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -77,9 +75,7 @@ class _SplashScreenState extends State<SplashScreen>
         if (authController.isLoggedIn) {
           if (authController.currentUser?.patient?.phone == null ||
               authController.currentUser?.patient?.phone == '') {
-            Util.kToastLoginMessage(AppStrings.kCompleteInfo.tr());
-            Navigator.pushReplacementNamed(
-                context, NameRoutes.kChangePhoneScreen);
+            Navigator.pushReplacementNamed(context, NameRoutes.kWelcomeScreen);
           } else {
             Navigator.pushNamedAndRemoveUntil(
                 context, NameRoutes.kHomeScreen, (_) => false);
