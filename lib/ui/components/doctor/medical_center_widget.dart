@@ -94,6 +94,8 @@ class MedicalCenterWidget extends StatelessWidget {
                   ],
                 )
               : Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     EmptyCard(
                       horizontalMargin: 0,
@@ -102,36 +104,67 @@ class MedicalCenterWidget extends StatelessWidget {
                       horizontalPadding: 1.5.w,
                       radius: 50,
                       width: 100.w,
-                      height: 4.h,
                       color: AppColors.liteBlue2,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SvgPicture.asset(AppAssets.kLocationIcon),
-                          TextBuilder(
-                            width: 30.w,
-                            text: "${placeModel?.shortAddress}",
-                            size: AppFontSizes.kS2,
-                            color: AppColors.navyBlue,
-                            verticalPadding: 0,
-                            horizontalPadding: 2.w,
+                          SvgPicture.asset(
+                            AppAssets.kLocationIcon,
+                            height: 2.h,
                           ),
+                          Container(
+                            width: 30.w,
+                            padding: EdgeInsets.symmetric(horizontal: 1.5.w),
+                            child: Text(
+                              "${placeModel?.shortAddress}",
+                              style: TextStyle(
+                                color: AppColors.navyBlue,
+                                fontSize: AppFontSizes.kS2,
+                                fontFamily: 'Tajawal',
+                              ),
+                            ),
+                          ),
+                          // TextBuilder(
+                          //   width: 30.w,
+                          //   height: 5.h,
+                          //   text: "${placeModel?.shortAddress}",
+                          //   size: AppFontSizes.kS3,
+                          //   color: AppColors.navyBlue,
+                          //   verticalPadding: 1.5.h,
+                          //   horizontalPadding: 1.5.w,
+                          // ),
                           VerticalDividerBuilder(
                             dividerColor: AppColors.white,
                             width: 0.25.w,
-                            height: 3.h,
                             horizontalMargin: 2.5.w,
                           ),
-                          SvgPicture.asset(AppAssets.kMoneyIcon),
-                          TextBuilder(
-                            width: 30.w,
-                            text:
-                                "${double.parse(placeModel?.examinationPrice ?? '0').toStringAsFixed(1)} ${AppStrings.kCurrency.tr()}",
-                            size: AppFontSizes.kS2,
-                            color: AppColors.navyBlue,
-                            verticalPadding: 0,
-                            horizontalPadding: 2.w,
+                          SvgPicture.asset(
+                            AppAssets.kMoneyIcon,
+                            height: 1.5.h,
                           ),
+                          Container(
+                            width: 30.w,
+                            padding: EdgeInsets.symmetric(horizontal: 1.5.w),
+                            child: Text(
+                              "${double.parse(placeModel?.examinationPrice ?? '0').toStringAsFixed(1)} ${AppStrings.kCurrency.tr()}",
+                              style: TextStyle(
+                                color: AppColors.navyBlue,
+                                fontSize: AppFontSizes.kS2,
+                                fontFamily: 'Tajawal',
+                              ),
+                            ),
+                          ),
+                          // TextBuilder(
+                          //   width: 30.w,
+                          //   height: 5.h,
+                          //   text:
+                          //       "${double.parse(placeModel?.examinationPrice ?? '0').toStringAsFixed(1)} ${AppStrings.kCurrency.tr()}",
+                          //   size: AppFontSizes.kS3,
+                          //   color: AppColors.navyBlue,
+                          //   verticalPadding: 1.5.h,
+                          //   horizontalPadding: 1.5.w,
+                          // ),
                         ],
                       ),
                     ),
@@ -164,11 +197,14 @@ class MedicalCenterWidget extends StatelessWidget {
                             verticalMargin: 0.4.h,
                             horizontalPadding: 0,
                             horizontalMargin: 0,
-                            height: 22.5.sp,
-                            width: 22.5.sp,
+                            height: 25.sp,
+                            width: 25.sp,
                             radius: 50,
-                            color: AppColors.lightPurple,
-                            child: Image.asset(AppAssets.kCallIcon),
+                            color: AppColors.green,
+                            child: Image.asset(
+                              AppAssets.kCallIcon,
+                              color: AppColors.white,
+                            ),
                           ),
                         ),
                       ],

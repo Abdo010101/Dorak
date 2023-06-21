@@ -30,7 +30,10 @@ class NotificationController extends ChangeNotifier {
       print(
           "...........................................onMessage..........................");
       print(
-          "onForeGround : ${message.notification?.title}/${message.notification?.body}/${message.notification?.titleLocKey}");
+          "onForeGround : ${message.notification?.title}/${message.notification?.body}/${message.notification?.toMap().toString()}");
+      print(message.data);
+      print(
+          "...........................................onMessage..........................");
       flutterLocalNotificationsPlugin.show(
         1,
         message.notification?.title ?? 'Title',

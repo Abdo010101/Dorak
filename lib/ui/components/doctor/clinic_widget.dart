@@ -116,8 +116,8 @@ class ClinicWidget extends StatelessWidget {
                   verticalMargin: 0.4.h,
                   horizontalPadding: 0,
                   horizontalMargin: 0,
-                  height: 27.5.sp,
-                  width: 27.5.sp,
+                  height: 25.sp,
+                  width: 25.sp,
                   radius: 50,
                   color: AppColors.green,
                   child: Image.asset(
