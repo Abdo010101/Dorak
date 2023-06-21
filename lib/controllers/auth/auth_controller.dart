@@ -255,8 +255,6 @@ class AuthController extends DisposableProvider {
       final result = await _authenticationRepository.changePhone(
         body: data,
       );
-      isLoading = false;
-      notifyListeners();
       if (result.data != null) {
         await _sharedPref.storeLoginInfo(
           UserResponse(
@@ -269,8 +267,8 @@ class AuthController extends DisposableProvider {
     } on DioError catch (e) {
       return false;
     } finally {
-      //Dismiss Dialog .
-      // Get.back();
+      isLoading = false;
+      notifyListeners();
     }
   }
 

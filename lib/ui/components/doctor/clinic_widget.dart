@@ -119,8 +119,11 @@ class ClinicWidget extends StatelessWidget {
                   height: 27.5.sp,
                   width: 27.5.sp,
                   radius: 50,
-                  color: AppColors.lightPurple,
-                  child: Image.asset(AppAssets.kCallIcon),
+                  color: AppColors.green,
+                  child: Image.asset(
+                    AppAssets.kCallIcon,
+                    color: AppColors.white,
+                  ),
                 ),
               ),
             ],
