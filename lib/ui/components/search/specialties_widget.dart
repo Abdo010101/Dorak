@@ -28,7 +28,7 @@ class SpecialtiesWidget extends StatelessWidget {
             GeometricalAvatar(
               height: 30.sp,
               width: 30.sp,
-              path: AppAssets.kDoctorImage,
+              url: specialModel.icon,
             ),
             SizedBox(width: 3.w),
             TextBuilder(

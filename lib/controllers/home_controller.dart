@@ -5,7 +5,6 @@ import 'package:dorakpattient/routes/dorak_routes.dart';
 import 'package:dorakpattient/utis/helpers/app_providers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-
 import '../../data/models/response/response.dart';
 import '../constants/enums.dart';
 

@@ -1,5 +1,6 @@
 import 'package:dorakpattient/routes/dorak_routes.dart';
 import 'package:dorakpattient/ui/screens/screens.dart';
+import 'package:dorakpattient/ui/screens/search/search_for_area_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -70,6 +71,10 @@ class RouteManger {
       case NameRoutes.kSearchForCityScreen:
         return MaterialPageRoute(
             builder: (context) => const SearchForCityScreen());
+
+      case NameRoutes.kSearchForAreaScreen:
+        return MaterialPageRoute(
+            builder: (context) => const SearchForAreaScreen());
 
       case NameRoutes.kResultOfSearch:
         return MaterialPageRoute(

@@ -1,4 +1,5 @@
 import 'package:dorakpattient/routes/dorak_routes.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -57,34 +58,29 @@ class SearchForCityScreen extends StatelessWidget {
               verticalPadding: 1.5.h,
               horizontalPadding: 0,
             ),
-            CityWidget(
-              cityName: 'Current Location',
-              specialOnTap: () async {
-                await generalController.getCurrentLocation(context);
-              },
-              color: AppColors.blue,
-              bold: true,
-            ),
             Consumer<GeneralController>(builder: (cont, controller, child) {
-              List<Titles> areaList = controller.areaList;
+              List<Titles> cityList = controller.citiesList;
               return controller.isLoading
                   ? const LoadingWidget(
                       backgroundColor: AppColors.transparent,
                     )
-                  : areaList.isEmpty
-                      ? Center(child: Text("لا توجد نتائج متاحة"))
+                  : cityList.isEmpty
+                      ? NoDataWidget(
+                          backgroundColor: Colors.transparent,
+                          text: AppStrings.kNoDataFound.tr(),
+                        )
                       : Expanded(
                           child: ListView.builder(
                             shrinkWrap: true,
-                            itemCount: areaList.length,
+                            itemCount: cityList.length,
                             scrollDirection: Axis.vertical,
                             itemBuilder: (context, index) {
-                              Titles areaModel = areaList[index];
+                              Titles cityModel = cityList[index];
 
                               return CityWidget(
-                                cityName: '${areaModel.name}',
+                                cityName: '${cityModel.name}',
                                 specialOnTap: () {
-                                  controller.onSelectedCity(areaModel.id!);
+                                  controller.onSelectedCity(cityModel.id!);
                                   Provider.of<SearchResultController>(context,
                                           listen: false)
                                       .getDoctors(

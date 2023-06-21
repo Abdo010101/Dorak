@@ -142,8 +142,6 @@
   "doctor_review": "Rate Doctor Or Service",
   "on_internet": "There is no internet, please connect to the internet and try again",
   "complete_info": "Complete Info",
+  "no_data_found": "no result available",
   "add_phone": "Add Your Phone",
-  "change_phone_message": "We will send a text message to this phone number to validate it"
-
-
-}
+  "change_phone_message": "We will send a text message to this phone number to validate it"}
