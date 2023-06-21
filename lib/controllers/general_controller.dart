@@ -13,6 +13,9 @@ class GeneralController extends ChangeNotifier {
   final _generalRepository = locator<GeneralRepository>();
   GeneralResponse? generalResponse;
   List<Titles> specializationList = [];
+  List<Titles> originalSubSpecializationList = [];
+  List<Titles> subSpecializationList = [];
+
   List<Titles> citiesList = [];
   List<Titles> areaList = [];
   List<Titles> originalAreaList = [];
@@ -89,6 +92,32 @@ class GeneralController extends ChangeNotifier {
     }
   }
 
+  Future<void> getSubSpeciality(int id) async {
+    try {
+      isLoading = true;
+      notifyListeners();
+      final result = await _generalRepository.getSubSpeciality(id);
+      if (result.data != null) {
+        originalSubSpecializationList
+          ..clear()
+          ..addAll(result.data!);
+
+        subSpecializationList
+          ..clear()
+          ..addAll(result.data!);
+      } else {
+        // GetSnackBar(message: (result.error?.message));
+      }
+    } on DioError catch (e) {
+      // return Error(errorMessage: DioExceptions.fromDioError(e).message);
+      // GetSnackBar(message: (DioExceptions.fromDioError(e).message));
+    } finally {
+      // isLoading.value = false;
+      isLoading = false;
+      notifyListeners();
+    }
+  }
+
   Future<void> search(String text) async {
     if (text.isNotEmpty) {
       specializationList
@@ -113,6 +142,20 @@ class GeneralController extends ChangeNotifier {
       areaList
         ..clear()
         ..addAll(originalAreaList);
+    }
+    notifyListeners();
+  }
+
+  Future<void> citySearch(String text) async {
+    if (text.isNotEmpty) {
+      citiesList
+        ..clear()
+        ..addAll(originalCityList
+            .where((element) => element.name!.toLowerCase().contains(text)));
+    } else {
+      citiesList
+        ..clear()
+        ..addAll(originalCityList);
     }
     notifyListeners();
   }

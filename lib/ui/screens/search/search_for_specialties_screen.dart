@@ -76,10 +76,13 @@ class SearchForSpecialtiesScreen extends StatelessWidget {
                                 return SpecialtiesWidget(
                                   specialModel: specialModel,
                                   specialOnTap: () {
-                                    controller.onSpecializationChange(
-                                        specialModel.id!, specialModel.name!);
-                                    Navigator.pushNamed(context,
-                                        NameRoutes.kSearchForAreaScreen);
+                                    controller
+                                        .getSubSpeciality(specialModel.id!);
+
+                                    Navigator.pushNamed(
+                                        context,
+                                        NameRoutes
+                                            .kSearchForSubSpecialtiesScreen);
                                   },
                                 );
                               },

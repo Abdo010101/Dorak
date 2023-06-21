@@ -19,6 +19,8 @@ abstract class NameRoutes {
   static const kResultOfSearch = '$kSearchForCityScreen/result_of_search';
   static const kSearchForSpecialtiesScreen =
       '$kHomeScreen/search_for_specialties_screen';
+  static const kSearchForSubSpecialtiesScreen =
+      '$kHomeScreen/search_for_sub_specialties_screen';
   static const kDoctorScreen = '$kHomeScreen/doctor_Screen';
   static const kReportScreen = '$kHomeScreen/report_Screen';
   static const kProfileScreen = '$kHomeScreen/profile_screen';

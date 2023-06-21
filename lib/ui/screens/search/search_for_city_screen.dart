@@ -35,7 +35,7 @@ class SearchForCityScreen extends StatelessWidget {
               horizontalMargin: 0,
               textInputAction: TextInputAction.done,
               onChange: (text) {
-                generalController.areaSearch(text);
+                generalController.citySearch(text);
               },
               maxLines: 1,
               width: 100.w,
@@ -76,7 +76,7 @@ class SearchForCityScreen extends StatelessWidget {
                             scrollDirection: Axis.vertical,
                             itemBuilder: (context, index) {
                               Titles cityModel = cityList[index];
-
+                              print("idddd= ${controller.specializationId}");
                               return CityWidget(
                                 cityName: '${cityModel.name}',
                                 specialOnTap: () {

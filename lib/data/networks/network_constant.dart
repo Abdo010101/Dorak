@@ -12,7 +12,7 @@ class NetworkConstant {
   static const kAndroidPackage = '';
   static const kAppleId = '';
   static const kAuthorizationHeader = "authorization";
-  static const kBaseUrl = _kDevBaseUrl;
+  static const kBaseUrl = _kReleaseBaseUrl;
   static const kGoogleApiKey = 'AIzaSyBZFRav3jNg1pH9RAQxO1IhOGb7keLaoDM';
 
 /*  static const kTestToken =
@@ -29,6 +29,8 @@ class NetworkConstant {
   static const String kGeneralRequest = "general";
   static const String kCitiesRequest = "cities";
   static const String kAreasRequest = "areas";
+  static const String kMainSpecialization = "main-specializations";
+  static const String kSubSpecialization = "sub-specializations";
   static const String kDoctorsRequest = "doctors";
   static const String kAvailableSchedulesRequest = "available-schedules";
   static const String kUpdateProfile = "update-profile";

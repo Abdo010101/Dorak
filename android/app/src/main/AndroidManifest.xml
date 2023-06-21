@@ -28,7 +28,7 @@
     </queries>
 
     <application
-        android:label="Dorak Patient"
+        android:label="Dorak"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon"
         tools:ignore="ExtraText">

@@ -21,7 +21,7 @@ class SearchResultController extends ChangeNotifier {
         prams['lng'] = lng;
       }
       if (specializationId != null) {
-        prams['specializations[]'] = 2;
+        prams['specializations[]'] = specializationId;
       }
 
       isLoading = true;

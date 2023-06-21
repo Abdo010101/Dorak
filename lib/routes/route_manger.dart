@@ -1,6 +1,7 @@
 import 'package:dorakpattient/routes/dorak_routes.dart';
 import 'package:dorakpattient/ui/screens/screens.dart';
 import 'package:dorakpattient/ui/screens/search/search_for_area_screen.dart';
+import 'package:dorakpattient/ui/screens/search/search_for_sub_specialties_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -67,6 +68,10 @@ class RouteManger {
       case NameRoutes.kSearchForSpecialtiesScreen:
         return MaterialPageRoute(
             builder: (context) => const SearchForSpecialtiesScreen());
+
+      case NameRoutes.kSearchForSubSpecialtiesScreen:
+        return MaterialPageRoute(
+            builder: (context) => const SearchForSubSpecialtiesScreen());
 
       case NameRoutes.kSearchForCityScreen:
         return MaterialPageRoute(
