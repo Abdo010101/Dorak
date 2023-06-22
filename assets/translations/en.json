@@ -144,4 +144,17 @@
   "complete_info": "Complete Info",
   "no_data_found": "no result available",
   "add_phone": "Add Your Phone",
-  "change_phone_message": "We will send a text message to this phone number to validate it"}
+  "change_phone_message": "We will send a text message to this phone number to validate it",
+  "main_specialties": "Main Specialties",
+  "search_speciality": "Search for a main speciality",
+  "popular_specialties": "Most Popular Specialties",
+  "sub_specialties": "Sub Specialties",
+  "search_sub_speciality": "Search for a sub speciality",
+  "areas": "Areas",
+  "search_for_area": "Search For area",
+  "choose_area": "Choose the area",
+  "current_location": "Current Location",
+  "cities": "Cities",
+  "search_for_city": "Search For City",
+  "choose_city": "Choose the city"
+}

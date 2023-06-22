@@ -1,6 +1,7 @@
 import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/data/models/response/response.dart';
 import 'package:dorakpattient/routes/dorak_routes.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -17,7 +18,7 @@ class SearchForSpecialtiesScreen extends StatelessWidget {
         Provider.of<GeneralController>(context, listen: false);
     return Scaffold(
       backgroundColor: AppColors.liteWight,
-      appBar: const CustomAppBar(title: 'Specialties'),
+      appBar: CustomAppBar(title: AppStrings.kMainSpecialties.tr()),
       body: EmptyCard(
         color: AppColors.transparent,
         verticalPadding: 0,
@@ -29,7 +30,7 @@ class SearchForSpecialtiesScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextFormFieldBuilder(
-              hint: 'Search for a speciality',
+              hint: AppStrings.kSearchSpeciality.tr(),
               verticalMargin: 0,
               textInputAction: TextInputAction.done,
               onChange: (text) {
@@ -51,7 +52,7 @@ class SearchForSpecialtiesScreen extends StatelessWidget {
               height: 0.5.h,
             ),
             TextBuilder(
-              text: 'Most Popular Specialties',
+              text: AppStrings.kPopularSpecialties.tr(),
               color: AppColors.navyBlue,
               bold: true,
               verticalPadding: 1.5.h,
@@ -65,7 +66,7 @@ class SearchForSpecialtiesScreen extends StatelessWidget {
                         backgroundColor: AppColors.transparent,
                       )
                     : specialList.isEmpty
-                        ? Center(child: Text("لا توجد نتائج متاحة"))
+                        ? Center(child: Text(AppStrings.kNoDataFound.tr()))
                         : Expanded(
                             child: ListView.builder(
                               shrinkWrap: true,

@@ -151,4 +151,16 @@ class AppStrings {
   static const kAddPhone = 'add_phone';
   static const kSentTextMassage = 'sent_text_message';
   static const kChangePhoneMassage = 'change_phone_message';
+  static const kMainSpecialties = 'main_specialties';
+  static const kSearchSpeciality = 'search_speciality';
+  static const kPopularSpecialties = 'popular_specialties';
+  static const kSubSpecialties = 'sub_specialties';
+  static const kSearchSubSpeciality = 'search_sub_speciality';
+  static const kAreas = 'areas';
+  static const kSearchForArea = 'search_for_area';
+  static const kChooseArea = 'choose_area';
+  static const kCurrentLocation = 'current_location';
+  static const kCities = 'cities';
+  static const kSearchForCity = 'search_for_city';
+  static const kChooseCity = 'choose_city';
 }

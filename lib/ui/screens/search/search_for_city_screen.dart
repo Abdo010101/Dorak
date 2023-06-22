@@ -18,7 +18,7 @@ class SearchForCityScreen extends StatelessWidget {
         Provider.of<GeneralController>(context, listen: false);
     return Scaffold(
       backgroundColor: AppColors.liteWight,
-      appBar: const CustomAppBar(title: 'Cities'),
+      appBar: CustomAppBar(title: AppStrings.kChooseCity.tr()),
       body: EmptyCard(
         color: AppColors.transparent,
         verticalPadding: 0,
@@ -30,7 +30,7 @@ class SearchForCityScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextFormFieldBuilder(
-              hint: 'Search for a city',
+              hint: AppStrings.kSearchForCity.tr(),
               verticalMargin: 0,
               horizontalMargin: 0,
               textInputAction: TextInputAction.done,
@@ -52,7 +52,7 @@ class SearchForCityScreen extends StatelessWidget {
               height: 0.5.h,
             ),
             TextBuilder(
-              text: 'Choose the city',
+              text: AppStrings.kChooseCity.tr(),
               color: AppColors.navyBlue,
               bold: true,
               verticalPadding: 1.5.h,
@@ -76,7 +76,6 @@ class SearchForCityScreen extends StatelessWidget {
                             scrollDirection: Axis.vertical,
                             itemBuilder: (context, index) {
                               Titles cityModel = cityList[index];
-                              print("idddd= ${controller.specializationId}");
                               return CityWidget(
                                 cityName: '${cityModel.name}',
                                 specialOnTap: () {
