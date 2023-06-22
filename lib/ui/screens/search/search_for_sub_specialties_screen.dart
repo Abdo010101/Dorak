@@ -33,7 +33,7 @@ class SearchForSubSpecialtiesScreen extends StatelessWidget {
               verticalMargin: 0,
               textInputAction: TextInputAction.done,
               onChange: (text) {
-                generalController.search(text);
+                generalController.searchSubSpecialization(text);
               },
               horizontalMargin: 0,
               maxLines: 1,

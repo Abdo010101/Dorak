@@ -132,6 +132,20 @@ class GeneralController extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> searchSubSpecialization(String text) async {
+    if (text.isNotEmpty) {
+      subSpecializationList
+        ..clear()
+        ..addAll(originalSubSpecializationList
+            .where((element) => element.name!.toLowerCase().contains(text)));
+    } else {
+      subSpecializationList
+        ..clear()
+        ..addAll(originalSubSpecializationList);
+    }
+    notifyListeners();
+  }
+
   Future<void> areaSearch(String text) async {
     if (text.isNotEmpty) {
       areaList

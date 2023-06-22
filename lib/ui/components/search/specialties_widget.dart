@@ -15,7 +15,6 @@ class SpecialtiesWidget extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    print("sadasd= ${specialModel.icon}");
     return InkWell(
       onTap: specialOnTap,
       //Navigator.pushNamed(context, NameRoutes.kSearchForCityScreen);
