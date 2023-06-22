@@ -18,7 +18,7 @@ class SearchForAreaScreen extends StatelessWidget {
         Provider.of<GeneralController>(context, listen: false);
     return Scaffold(
       backgroundColor: AppColors.liteWight,
-      appBar: const CustomAppBar(title: 'Area'),
+      appBar: CustomAppBar(title: AppStrings.kAreas.tr()),
       body: EmptyCard(
         color: AppColors.transparent,
         verticalPadding: 0,
@@ -30,7 +30,7 @@ class SearchForAreaScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextFormFieldBuilder(
-              hint: 'Search for a Area',
+              hint: AppStrings.kSearchForArea.tr(),
               verticalMargin: 0,
               horizontalMargin: 0,
               textInputAction: TextInputAction.done,
@@ -52,14 +52,14 @@ class SearchForAreaScreen extends StatelessWidget {
               height: 0.5.h,
             ),
             TextBuilder(
-              text: 'Choose the area',
+              text: AppStrings.kChooseArea.tr(),
               color: AppColors.navyBlue,
               bold: true,
               verticalPadding: 1.5.h,
               horizontalPadding: 0,
             ),
             CityWidget(
-              cityName: 'Current Location',
+              cityName: AppStrings.kCurrentLocation.tr(),
               specialOnTap: () async {
                 await generalController.getCurrentLocation(context);
               },
@@ -74,9 +74,9 @@ class SearchForAreaScreen extends StatelessWidget {
                     )
                   : areaList.isEmpty
                       ? NoDataWidget(
-                backgroundColor: Colors.transparent,
-                text: AppStrings.kNoDataFound.tr(),
-              )
+                          backgroundColor: Colors.transparent,
+                          text: AppStrings.kNoDataFound.tr(),
+                        )
                       : Expanded(
                           child: ListView.builder(
                             shrinkWrap: true,
