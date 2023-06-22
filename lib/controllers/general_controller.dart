@@ -24,6 +24,9 @@ class GeneralController extends ChangeNotifier {
   double? lng;
   String? specializationName;
   int? specializationId;
+
+  // For Save value of SpecializationId
+  int? specId;
   int? cityId;
   int? areaId;
 
@@ -93,6 +96,7 @@ class GeneralController extends ChangeNotifier {
   }
 
   Future<void> getSubSpeciality(int id) async {
+    specializationId = id;
     try {
       isLoading = true;
       notifyListeners();
@@ -176,6 +180,7 @@ class GeneralController extends ChangeNotifier {
 
   void onSpecializationChange(int id, String name) {
     specializationId = id;
+    specId = id;
     specializationName = name;
   }
 
@@ -336,5 +341,11 @@ class GeneralController extends ChangeNotifier {
     } finally {
       // isLoading.value = false;
     }
+  }
+
+  Future<bool> onWillPop(BuildContext context) async {
+    specializationId = specId;
+    Navigator.pop(context);
+    return false;
   }
 }

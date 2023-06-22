@@ -58,6 +58,18 @@ class SearchForSubSpecialtiesScreen extends StatelessWidget {
               verticalPadding: 1.5.h,
               horizontalPadding: 0,
             ),
+            CityWidget(
+              cityName: AppStrings.kAll.tr(),
+              specialOnTap: () async {
+                generalController.onSpecializationChange(
+                  generalController.specializationId!,
+                  AppStrings.kAllSubSpecializations.tr(),
+                );
+                Navigator.pushNamed(context, NameRoutes.kSearchForAreaScreen);
+              },
+              color: AppColors.blue,
+              bold: true,
+            ),
             Consumer<GeneralController>(
               builder: (cont, controller, child) {
                 List<Titles> specialList = controller.subSpecializationList;

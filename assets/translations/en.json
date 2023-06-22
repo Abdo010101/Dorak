@@ -156,5 +156,7 @@
   "current_location": "Current Location",
   "cities": "Cities",
   "search_for_city": "Search For City",
-  "choose_city": "Choose the city"
+  "choose_city": "Choose the city",
+  "all": "All",
+  "all_sub": "All Sub Specializations"
 }

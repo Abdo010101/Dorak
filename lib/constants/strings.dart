@@ -163,4 +163,6 @@ class AppStrings {
   static const kCities = 'cities';
   static const kSearchForCity = 'search_for_city';
   static const kChooseCity = 'choose_city';
+  static const kAllSubSpecializations = 'all_sub';
+  static const kAll = 'all';
 }

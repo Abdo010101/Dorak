@@ -24,6 +24,7 @@ class SearchResultController extends ChangeNotifier {
         prams['specializations[]'] = specializationId;
       }
 
+      print("sdadas= ${prams}");
       isLoading = true;
       final result = await _doctorsRepository.getDoctors(prams);
       if (result.data != null) {

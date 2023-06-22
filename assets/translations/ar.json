@@ -156,5 +156,7 @@
   "current_location": "موقعك الحالى",
   "cities": "المدن",
   "search_for_city": "ابحث عن المدينة",
-  "choose_city": "أختر المدينة"
+  "choose_city": "أختر المدينة",
+  "all": "الكل",
+  "all_sub": "كل التخصصات الفرعية"
 }
