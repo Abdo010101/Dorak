@@ -159,8 +159,13 @@ class LoginController extends AuthController {
   }
 
   static final googleSignIn = GoogleSignIn(
-      clientId:
-          '1007375530455-eok55o0ge601agqaaih0ngvomgbv1gaf.apps.googleusercontent.com');
+    clientId: '',
+    scopes: [
+      'email',
+      'https://www.googleapis.com/auth/contacts.readonly',
+    ],
+    hostedDomain: "",
+  );
   dynamic user;
 
   Future<LoginWithSocialRequest> loginWithGoogleAccount() async {
