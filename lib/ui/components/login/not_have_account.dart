@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../constants/constants.dart';
-import '../../../controller/controllers.dart';
+import '../../../controllers/controllers.dart';
 import '../../../routes/dorak_routes.dart';
 import '../components.dart';
 

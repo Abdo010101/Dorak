@@ -201,7 +201,6 @@ class SignUpScreen extends StatelessWidget {
                             )
                           ],
                         ),
-                        //  Spacer(),
                         ButtonBuilder(
                             title: AppStrings.kSignUp.tr(),
                             buttonColor: controller.agreeTermsCondition
@@ -322,57 +321,7 @@ class SignUpScreen extends StatelessWidget {
                         SizedBox(
                           height: 3.h,
                         ),
-                        Center(
-                          child: Padding(
-                            padding: EdgeInsets.only(bottom: 2.h),
-                            child: RichText(
-                              textAlign: TextAlign.center,
-                              text: TextSpan(
-                                style: TextStyle(
-                                  fontFamily: 'Tajawal',
-                                  fontSize: 11.sp,
-                                ),
-                                children: [
-                                  // TextSpan(
-                                  //   text: AppStrings.kHaveAccount.tr(),
-                                  //   style: TextStyle(
-                                  //     fontFamily: 'Tajawal',
-                                  //     color: AppColors.darkBlue.withOpacity(0.6),
-                                  //     fontSize: 12.sp,
-                                  //     fontWeight: FontWeight.w600,
-                                  //   ),
-                                  // ),
-                                  WidgetSpan(
-                                    alignment: PlaceholderAlignment.top,
-                                    child: GestureDetector(
-                                      onTap: () => Navigator.of(context)
-                                          .pushNamed(NameRoutes.kLoginScreen),
-                                      child: TextBuilder(
-                                        verticalPadding: 1.h,
-                                        horizontalPadding: 1.w,
-                                        text: AppStrings.kSignIn.tr(),
-                                        size: 11.sp,
-                                        color: AppColors.blue,
-                                      ),
-                                    ),
-                                  ),
-                                  WidgetSpan(
-                                    alignment: PlaceholderAlignment.top,
-                                    child: TextBuilder(
-                                      verticalPadding: 1.h,
-                                      horizontalPadding: 1.w,
-                                      text: AppStrings.kHaveAccount.tr(),
-                                      size: 11.sp,
-                                      bold: true,
-                                      color:
-                                          AppColors.darkBlue.withOpacity(0.6),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
+                        const AlreadyHaveAccountWidget(),
                       ],
                     ),
                   ),

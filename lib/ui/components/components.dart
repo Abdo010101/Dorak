@@ -35,6 +35,7 @@ export 'intro/title_intro_screen.dart';
 export 'login/already_have_account.dart';
 export 'login/content_of_signup_button.dart';
 export 'login/divider_login_screen.dart';
+export 'login/not_have_account.dart';
 export 'menu/developed_widget.dart';
 export 'menu/row_menu_card.dart';
 export 'notification/notification_card.dart';

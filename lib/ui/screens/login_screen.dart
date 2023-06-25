@@ -254,36 +254,7 @@ class LoginScreen extends StatelessWidget {
                                   final isSuccess =
                                       await controller.signInWithSocial(
                                           context, LoginSocialType.facebook);
-                                  if (!isSuccess) {
-                                  } else {
-                                    if (authProvider
-                                                .currentUser?.patient?.phone !=
-                                            '' &&
-                                        authProvider
-                                                .currentUser?.patient?.phone !=
-                                            null) {
-                                      if (context.mounted) {
-                                        if (authProvider.currentUser?.patient
-                                                ?.verifiedAt ==
-                                            null) {
-                                          Navigator.of(context)
-                                              .pushReplacementNamed(
-                                                  NameRoutes.kOTPScreen);
-                                        } else {
-                                          Navigator.of(context)
-                                              .pushReplacementNamed(
-                                                  NameRoutes.kHomeScreen);
-                                        }
-                                      }
-                                    } else {
-                                      if (context.mounted) {
-                                        Util.kToastLoginMessage(
-                                            AppStrings.kCompleteInfo.tr());
-                                        Navigator.pushReplacementNamed(context,
-                                            NameRoutes.kChangePhoneScreen);
-                                      }
-                                    }
-                                  }
+                                  if (!isSuccess) {}
                                 },
                                 margin: EdgeInsets.symmetric(
                                     vertical: 1.h, horizontal: 2.5.w),
@@ -309,9 +280,34 @@ class LoginScreen extends StatelessWidget {
                                             context, LoginSocialType.google);
                                     if (!isSuccess) {
                                     } else {
-                                      Navigator.of(context)
-                                          .pushReplacementNamed(
-                                              NameRoutes.kHomeScreen);
+                                      if (authProvider.currentUser?.patient
+                                                  ?.phone !=
+                                              '' &&
+                                          authProvider.currentUser?.patient
+                                                  ?.phone !=
+                                              null) {
+                                        if (context.mounted) {
+                                          if (authProvider.currentUser?.patient
+                                                  ?.verifiedAt ==
+                                              null) {
+                                            Navigator.of(context)
+                                                .pushReplacementNamed(
+                                                    NameRoutes.kOTPScreen);
+                                          } else {
+                                            Navigator.of(context)
+                                                .pushReplacementNamed(
+                                                    NameRoutes.kHomeScreen);
+                                          }
+                                        }
+                                      } else {
+                                        if (context.mounted) {
+                                          Util.kToastLoginMessage(
+                                              AppStrings.kCompleteInfo.tr());
+                                          Navigator.pushReplacementNamed(
+                                              context,
+                                              NameRoutes.kChangePhoneScreen);
+                                        }
+                                      }
                                     }
                                   },
                                   margin: EdgeInsets.symmetric(
@@ -326,7 +322,7 @@ class LoginScreen extends StatelessWidget {
                             : const SizedBox(),
                       ],
                     ),
-                    const AlreadyHaveAccountWidget()
+                    const NotHaveAccountWidget()
                   ],
                 ),
               ),

@@ -15,56 +15,28 @@ class AlreadyHaveAccountWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     GeneralController generalController =
         Provider.of<GeneralController>(context, listen: false);
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.only(bottom: 10.h, top: 2.h),
-        child: RichText(
-          text: TextSpan(
-            style: TextStyle(
-              fontSize: 11.sp,
-            ),
-            children: [
-              // TextSpan(
-              //   text: AppStrings.kNotHaveAccount.tr(),
-              //   style: const TextStyle(
-              //     color: AppColors.black,
-              //   ),
-              // ),
-              WidgetSpan(
-                alignment: PlaceholderAlignment.top,
-                child: GestureDetector(
-                  onTap: () {
-                    if (generalController.policy?.privacy == null ||
-                        generalController.terms?.terms == null) {
-                      generalController.getTermsAndPolicy();
-                    }
-                    Navigator.of(context).pushNamed(NameRoutes.kRegisterScreen);
-                  },
-                  child: TextBuilder(
-                    color: AppColors.blue,
-                    text: AppStrings.kSignUp.tr(),
-                    size: 11.sp,
-                    verticalPadding: 1.h,
-                    horizontalPadding: 1.w,
-                    bold: false,
-                  ),
-                ),
-              ),
-              WidgetSpan(
-                alignment: PlaceholderAlignment.top,
-                child: TextBuilder(
-                  verticalPadding: 1.h,
-                  horizontalPadding: 1.w,
-                  text: AppStrings.kNotHaveAccount.tr(),
-                  size: 11.sp,
-                  bold: true,
-                  color: AppColors.darkBlue.withOpacity(0.6),
-                ),
-              ),
-            ],
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        TextBuilder(
+          verticalPadding: 2.5.h,
+          horizontalPadding: 1.w,
+          text: AppStrings.kHaveAccount.tr(),
+          size: 11.sp,
+          bold: true,
+          color: AppColors.darkBlue.withOpacity(0.6),
+        ),
+        GestureDetector(
+          onTap: () => Navigator.of(context).pushNamed(NameRoutes.kLoginScreen),
+          child: TextBuilder(
+            verticalPadding: 1.h,
+            horizontalPadding: 2.w,
+            text: AppStrings.kSignIn.tr(),
+            size: 11.sp,
+            color: AppColors.blue,
           ),
         ),
-      ),
+      ],
     );
   }
 }
