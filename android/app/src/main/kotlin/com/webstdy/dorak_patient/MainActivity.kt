@@ -1,4 +1,4 @@
-package com.example.dorakpattient
+package com.webstdy.dorak_patient
 
 import io.flutter.embedding.android.FlutterActivity
 

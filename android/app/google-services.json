@@ -8,51 +8,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:101557805399:android:a74d0438c431f52d359e12",
-        "android_client_info": {
-          "package_name": "com.example.dorakpattient"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "101557805399-2vl9vhdl37vvs8pcpsp6100u45ugth90.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.dorakpattient",
-            "certificate_hash": "d1c8c58c571edc1ccfc0bbcc25e606c815d02a1b"
-          }
-        },
-        {
-          "client_id": "101557805399-ktdtlm8omg4n0uhpeccsufhrqcfjnvu3.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBVLShj-ZwYk8A33qYRFGlGML2Ul8TzcbI"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "101557805399-54tlb1t0ksdpjt1jbo68pok9cg0f0on5.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "101557805399-lsb5pk3hlorqeqitfpr6cin68ia7fa6n.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.webstdy.dorak",
-                "app_store_id": "6448953200"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:101557805399:android:ab38ee1c9b796d3d359e12",
         "android_client_info": {
           "package_name": "com.webstdy.dorak"
@@ -84,7 +39,44 @@
           }
         },
         {
-          "client_id": "101557805399-ktdtlm8omg4n0uhpeccsufhrqcfjnvu3.apps.googleusercontent.com",
+          "client_id": "101557805399-t8fq51gk438llg06hohu8r4v1g099u73.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVLShj-ZwYk8A33qYRFGlGML2Ul8TzcbI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "101557805399-54tlb1t0ksdpjt1jbo68pok9cg0f0on5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "101557805399-lsb5pk3hlorqeqitfpr6cin68ia7fa6n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.webstdy.dorak",
+                "app_store_id": "6448953200"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:101557805399:android:bba7739736978102359e12",
+        "android_client_info": {
+          "package_name": "com.webstdy.dorak_patient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "101557805399-t8fq51gk438llg06hohu8r4v1g099u73.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
