@@ -106,6 +106,7 @@ class LoginScreen extends StatelessWidget {
                                       height: 3.0.h,
                                     ),
                                     TextFormFieldBuilder(
+                                      keyboardType: TextInputType.emailAddress,
                                       controller: controller.emailController,
                                       textInputAction: TextInputAction.next,
                                       validator: Validators.compose(

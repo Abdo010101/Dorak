@@ -16,17 +16,21 @@ class NotificationController extends ChangeNotifier {
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     var androidInitialize =
         const AndroidInitializationSettings('@mipmap/launcher_icon');
+
     var iosInitialize = const DarwinInitializationSettings();
+
     var initializationSettings =
         InitializationSettings(android: androidInitialize, iOS: iosInitialize);
+
     flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
     );
+
     await FirebaseMessaging.instance
         .setForegroundNotificationPresentationOptions(
             alert: true, badge: true, sound: true);
 
-    await FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       print(
           "...........................................onMessage..........................");
       print(
@@ -54,9 +58,6 @@ class NotificationController extends ChangeNotifier {
           ),
         ),
       );
-    });
-    FirebaseMessaging.onMessageOpenedApp.listen((event) {
-      print('Print Open Notification');
     });
   }
 

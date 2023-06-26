@@ -18,11 +18,12 @@ import 'firebase_options.dart';
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print(
-      "onBackGround: ${message.notification?.title}/${message.notification?.body}/${message.notification?.titleLocKey}");
-  print("Handling a background message: ${message.messageId}");
+      "onBackGround: ${message.notification?.title}/${message.notification?.body}");
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
 }
+
+String? notificationsRoute;
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -40,7 +41,9 @@ void main() async {
     final RemoteMessage? remoteMessage =
         await FirebaseMessaging.instance.getInitialMessage();
     if (remoteMessage != null) {}
-    await NotificationController.initialize(flutterLocalNotificationsPlugin);
+    await NotificationController.initialize(
+      flutterLocalNotificationsPlugin,
+    );
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   } catch (e) {
     throw 'Notification Error $e';
@@ -101,6 +104,19 @@ class MyApp extends StatelessWidget {
             ..backgroundColor = AppColors.white
             ..loadingStyle = EasyLoadingStyle.custom
             ..indicatorType = EasyLoadingIndicatorType.cubeGrid;
+
+          FirebaseMessaging.onMessageOpenedApp.listen((event) {
+            print("${event.data['action']}");
+            notificationsRoute = event.data['action'];
+            print('Print Open Notification');
+
+            if (notificationsRoute != null) {
+              context.read<AppointmentsController>().getAllAppointments();
+              context
+                  .read<MainScreenController>()
+                  .onBottomSheetChanged(1, context);
+            }
+          });
 
           return MaterialApp(
             builder: EasyLoading.init(),
