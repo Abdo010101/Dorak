@@ -77,6 +77,7 @@ class ReservationAppointmentController extends ChangeNotifier {
         Util.kToastAddAppointment(UpdatedResult.success);
         context.read<AppointmentsController>().getAllAppointments();
         context.read<HomeController>().getHomeData(context);
+        resetController();
         Navigator.pop(context);
       } else {
         Util.showSnackBar(context,
