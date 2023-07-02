@@ -57,4 +57,5 @@ class AppAssets {
   static const kMaleIcon = '$kAssets/male_icon.svg';
   static const kFemaleIcon = '$kAssets/female_icon.svg';
   static const kDirections = '$kAssets/directions.svg';
+  static const kFilterIcon = '$kAssets/filter_icon.svg';
 }
