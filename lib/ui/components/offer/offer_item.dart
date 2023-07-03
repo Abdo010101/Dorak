@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../constants/constants.dart';
+import '../../../data/models/response/response.dart';
 import '../components.dart';
 
 class OfferItemSelection extends StatelessWidget {
@@ -9,29 +11,42 @@ class OfferItemSelection extends StatelessWidget {
     super.key,
     required this.tittle,
     required this.items,
-    required this.itemChosen,
+    required this.onSelect,
+    required this.onClose,
   });
   final String tittle;
-  final String itemChosen;
-  final List<String> items;
+  final List<Titles?> items;
+  final Function(int) onSelect;
+  final VoidCallback onClose;
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextBuilder(
-          text: tittle,
-          color: AppColors.darkBlue,
-          verticalPadding: 0.25.h,
+        Row(
+          children: [
+            TextBuilder(
+              text: tittle,
+              color: AppColors.darkBlue,
+              verticalPadding: 0.25.h,
+              size: AppFontSizes.kS4,
+            ),
+            const Spacer(),
+            InkWell(
+              onTap: onClose,
+              child: Icon(
+                CupertinoIcons.chevron_down,
+                color: AppColors.darkGray.withOpacity(0.75),
+              ),
+            ),
+            SizedBox(
+              width: 2.5.w,
+            ),
+          ],
         ),
         Row(
           children: [
-            Container(
-              margin: EdgeInsetsDirectional.only(start: 4.w),
-              width: 0.5.w,
-              height: 12.5.h,
-              color: AppColors.blue,
-            ),
             SizedBox(
               width: 80.w,
               child: ListView.builder(
@@ -39,10 +54,14 @@ class OfferItemSelection extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    return OfferCheckBox(
-                        onChanged: (value) {},
-                        value: itemChosen == items[index],
-                        tittle: items[index]);
+                    return Row(
+                      children: [
+                        OfferCheckBox(
+                            onChanged: (value) => onSelect(index),
+                            value: items[index]?.icon == '1',
+                            tittle: items[index]?.name ?? ''),
+                      ],
+                    );
                   }),
             )
           ],

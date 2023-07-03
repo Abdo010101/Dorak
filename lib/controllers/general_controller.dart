@@ -12,6 +12,7 @@ import '../data/repository/repository.dart';
 class GeneralController extends ChangeNotifier {
   final _generalRepository = locator<GeneralRepository>();
   GeneralResponse? generalResponse;
+  List<Titles> tittleList = [];
   List<Titles> specializationList = [];
   List<Titles> originalSubSpecializationList = [];
   List<Titles> subSpecializationList = [];
@@ -48,6 +49,9 @@ class GeneralController extends ChangeNotifier {
       final result = await _generalRepository.getGeneralData();
       if (result.data != null) {
         generalResponse = result.data;
+        tittleList
+          ..clear()
+          ..addAll(generalResponse!.titles!);
         specializationList
           ..clear()
           ..addAll(generalResponse!.mainSpecializations!);

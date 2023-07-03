@@ -17,7 +17,7 @@ class OfferDropDown extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        GestureDetector(
+        InkWell(
           onTap: onPressed,
           child: Row(
             children: [
