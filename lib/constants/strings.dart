@@ -120,6 +120,7 @@ class AppStrings {
   static const kNotAvailableDay = 'day_not_available';
   static const kGenderList = ['male', 'female'];
   static const kBookNow = 'book_now';
+  static const kApplyFilter = 'apply_filter';
   static const kBookAppointment = 'book_appointment';
   static const kFindDoctor = 'Find_doctor';
   static const kBestDoctors = 'best_doctors';

@@ -3,6 +3,7 @@ import 'package:dorakpattient/controllers/offers_controller.dart';
 import 'package:dorakpattient/ui/components/components.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -10,6 +11,8 @@ class OffersScreen extends StatelessWidget {
   const OffersScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    OffersController offerController =
+        Provider.of<OffersController>(context, listen: false);
     return Scaffold(
       backgroundColor: AppColors.liteWight,
       appBar: AppBar(
@@ -18,17 +21,38 @@ class OffersScreen extends StatelessWidget {
         leading: TextBuilder(
           text: AppStrings.kOffers.tr(),
           color: AppColors.navyBlue,
-          verticalPadding: 1.h,
-          height: 2,
-          horizontalPadding: 7.5.w,
+          verticalPadding: 2.25.h,
+          align: TextAlign.center,
+          horizontalPadding: 5.w,
           size: 12.5.sp,
           bold: true,
         ),
         leadingWidth: 35.w,
+        actions: [
+          GeometricalAvatar(
+            backgroundColor: AppColors.transparent,
+            radius: 10.w,
+            margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
+            child: SvgPicture.asset(
+              AppAssets.kFilterIcon,
+              fit: BoxFit.scaleDown,
+            ),
+            onTap: () {
+              showBottomSheet(
+                  context: context,
+                  backgroundColor: Colors.transparent,
+                  builder: (context) {
+                    return Padding(
+                        padding: EdgeInsets.only(top: 10.h),
+                        child: const OfferFilterBottomSheet());
+                  });
+            },
+          ),
+        ],
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          context.read<OffersController>().getAllOffers(home: true);
+          offerController.getAllOffers(home: true);
         },
         child: EmptyCard(
           horizontalMargin: 0,
