@@ -16,7 +16,6 @@ import 'constants/constants.dart';
 import 'data/di/locator.dart';
 import 'firebase_options.dart';
 import 'dart:async';
-import 'dart:io';
 import 'package:uni_links/uni_links.dart';
 import 'package:flutter/services.dart' show PlatformException;
 
