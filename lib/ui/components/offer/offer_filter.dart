@@ -26,17 +26,20 @@ class OfferFilterBottomSheet extends StatelessWidget {
             Row(
               children: [
                 TextBuilder(
-                  text: 'Filter by',
+                  text: AppStrings.kFilterBy.tr(),
                   color: AppColors.darkBlue,
                   bold: true,
                   size: AppFontSizes.kS5,
                   verticalPadding: 0,
                 ),
                 const Spacer(),
-                const TextBuilder(
-                  text: 'Reset',
-                  color: AppColors.blue,
-                  underline: true,
+                InkWell(
+                  onTap: controller.resetData,
+                  child: TextBuilder(
+                    text: AppStrings.kReset.tr(),
+                    color: AppColors.blue,
+                    underline: true,
+                  ),
                 ),
               ],
             ),
@@ -83,10 +86,10 @@ class OfferFilterBottomSheet extends StatelessWidget {
             Visibility(
               visible: controller.availabilityToggle,
               replacement: OfferDropDown(
-                  tittle: 'Availability',
+                  tittle: AppStrings.kAvailability.tr(),
                   onPressed: controller.openAvailability),
               child: OfferItemSelection(
-                tittle: 'Availability',
+                tittle: AppStrings.kAvailability.tr(),
                 items: controller.availabilityList,
                 onSelect: controller.availabilitySelect,
                 onClose: controller.openAvailability,
@@ -121,16 +124,39 @@ class OfferFilterBottomSheet extends StatelessWidget {
             ),
             controller.minPrice == null || controller.maxPrice == null
                 ? const SizedBox()
-                : RangeSlider(
-                    values: controller.currentRangeValues!,
-                    labels: RangeLabels(
-                        '${controller.currentRangeValues!.start}',
-                        '${controller.currentRangeValues!.start}'),
-                    onChanged: controller.changeRange,
-                    min: double.parse(controller.minPrice!),
-                    max: double.parse(controller.maxPrice!),
-                    activeColor: AppColors.blue,
-                    inactiveColor: AppColors.blue.withOpacity(0.25),
+                : SliderTheme(
+                    data: SliderThemeData(
+                      trackHeight: 2,
+                      activeTrackColor: AppColors.blue,
+                      inactiveTrackColor: AppColors.blue.withOpacity(0.25),
+                      thumbColor: AppColors.white,
+                    ),
+                    child: RangeSlider(
+                      values: controller.currentRangeValues!,
+                      labels: RangeLabels(
+                          '${controller.currentRangeValues!.start}',
+                          '${controller.currentRangeValues!.start}'),
+                      onChanged: controller.changeRange,
+                      min: double.parse(controller.minPrice!),
+                      max: double.parse(controller.maxPrice!),
+                    ),
+                  ),
+            controller.minPrice == null || controller.maxPrice == null
+                ? const SizedBox()
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextBuilder(
+                        text:
+                            '${AppStrings.kCurrency.tr()} ${controller.currentRangeValues?.start.toInt()} ',
+                        horizontalPadding: 2.5.w,
+                      ),
+                      TextBuilder(
+                        text:
+                            '${AppStrings.kCurrency.tr()} ${controller.currentRangeValues?.end.toInt()} ',
+                        horizontalPadding: 2.5.w,
+                      ),
+                    ],
                   ),
             ButtonBuilder(
               radius: 25,
@@ -139,12 +165,11 @@ class OfferFilterBottomSheet extends StatelessWidget {
               margin: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.5.h),
               width: 90.w,
               height: 6.5.h,
-              onPressed: () async {},
+              onPressed: () async {
+                Navigator.pop(context);
+                await controller.getAllOffers();
+              },
             ),
-
-            // SizedBox(
-            //   height: 10.h,
-            // ),
           ],
         );
       },

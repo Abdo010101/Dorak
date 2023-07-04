@@ -159,5 +159,10 @@
   "search_for_city": "Search For City",
   "choose_city": "Choose the city",
   "all": "All",
-  "all_sub": "All Sub Specializations"
+  "all_sub": "All Sub Specializations",
+  "filter_by": "Filter by",
+  "reset": "Reset",
+  "availability": "Availability",
+  "any_day": "Any Day",
+  "tomorrow": "Tomorrow"
 }

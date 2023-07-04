@@ -15,7 +15,6 @@ class OffersController extends DisposableProvider {
   bool genderToggle = false;
   bool titleToggle = false;
   int? mainSpecialtyIndex;
-  int? tittleIndex;
   String? maxPrice;
   String? minPrice;
   RangeValues? currentRangeValues;
@@ -24,19 +23,44 @@ class OffersController extends DisposableProvider {
   List<Titles> subSpecialtyList = [];
   List<Titles> titlesList = [];
   List<Titles> availabilityList = [
-    Titles(name: 'Any day'),
+    Titles(name: AppStrings.kAnyDay),
     Titles(name: AppStrings.kToday),
-    Titles(name: 'Tomorrow')
+    Titles(name: AppStrings.kTomorrow)
   ];
   List<Titles> genderList = [
     Titles(name: AppStrings.kGenderList[0]),
     Titles(name: AppStrings.kGenderList[1]),
   ];
   List<OfferResponse> offers = [];
-  List<int> subSpecialtyChosen = [];
   AllOffersResponse searchResult = AllOffersResponse();
   final _offersRepository = locator<OffersRepository>();
   TextEditingController offerSearchController = TextEditingController();
+
+  resetData() {
+    if (mainSpecialtyIndex != null) {
+      mainSpecialtyList[mainSpecialtyIndex!].icon = '0';
+    }
+    subSpecialtyList = [];
+    titlesList = [];
+    availabilityList = [
+      Titles(name: AppStrings.kAnyDay),
+      Titles(name: AppStrings.kToday),
+      Titles(name: AppStrings.kTomorrow)
+    ];
+    genderList = [
+      Titles(name: AppStrings.kGenderList[0]),
+      Titles(name: AppStrings.kGenderList[1]),
+    ];
+    specialtyMainToggle = false;
+    subSpecialtyToggle = false;
+    availabilityToggle = false;
+    genderToggle = false;
+    titleToggle = false;
+    mainSpecialtyIndex = null;
+    currentRangeValues = RangeValues(
+        double.parse(minPrice ?? '0'), double.parse(maxPrice ?? '0'));
+    notifyListeners();
+  }
 
   openMainSpecialty() {
     specialtyMainToggle = !specialtyMainToggle;
@@ -114,13 +138,8 @@ class OffersController extends DisposableProvider {
   tittleSelect(int index) {
     if (titlesList[index].icon == '1') {
       titlesList[index].icon = '0';
-      tittleIndex = null;
     } else {
       titlesList[index].icon = '1';
-      if (tittleIndex != null) {
-        titlesList[tittleIndex!].icon = '0';
-      }
-      tittleIndex = index;
     }
     notifyListeners();
   }
@@ -130,14 +149,51 @@ class OffersController extends DisposableProvider {
     notifyListeners();
   }
 
-  Future<void> getAllOffers({bool? home}) async {
+  Future getAllOffers({bool? home}) async {
     try {
+      String? genderName;
+      for (var gender in genderList) {
+        if (gender.icon == '1') {
+          genderName = gender.name;
+        }
+      }
+      String? availabilityName;
+      for (var availability in availabilityList) {
+        if (availability.icon == '1' &&
+            availability.name != AppStrings.kAnyDay) {
+          availabilityName = availability.name;
+        }
+      }
+      List<int> tittlesId = [];
+      for (var tittle in titlesList) {
+        if (tittle.icon == '1') {
+          tittlesId.add(tittle.id!.toInt());
+        }
+      }
+      List<int> subSpecialtiesId = [];
+      for (var subSpecialty in subSpecialtyList) {
+        if (subSpecialty.icon == '1') {
+          subSpecialtiesId.add(subSpecialty.id!.toInt());
+        }
+      }
+      if (mainSpecialtyIndex != null) {
+        subSpecialtiesId.add(mainSpecialtyList[mainSpecialtyIndex!].id!);
+      }
+
       home == true ? offerSearchController.clear() : null;
       isLoading = true;
       notifyListeners();
       var data = {
+        'sub_specializations[]': subSpecialtiesId,
+        'availability': availabilityName,
+        'gender': genderName,
+        'title_ids[]': tittlesId,
+        'minPrice': currentRangeValues?.start.toInt(),
+        'maxPrice': currentRangeValues?.end.toInt(),
         'title': offerSearchController.text,
       };
+      print('Daaaaaaaaaaaaaaata');
+      print(data);
       final result = await _offersRepository.getAllOffers(data);
       if (result.data != null) {
         searchResult = result.data!;

@@ -166,4 +166,9 @@ class AppStrings {
   static const kChooseCity = 'choose_city';
   static const kAllSubSpecializations = 'all_sub';
   static const kAll = 'all';
+  static const kFilterBy = 'filter_by';
+  static const kReset = 'reset';
+  static const kAvailability = 'availability';
+  static const kAnyDay = 'any_day';
+  static const kTomorrow = 'tomorrow';
 }
