@@ -1,8 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../constants/constants.dart';
+import '../../../controllers/controllers.dart';
 import '../components.dart';
 
 class OfferFilterBottomSheet extends StatelessWidget {
@@ -11,66 +14,140 @@ class OfferFilterBottomSheet extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return BottomSheetBuilder(
-      backgroundColor: AppColors.white,
-      bottomWidget: ButtonBuilder(
-        radius: 25,
-        buttonColor: AppColors.blue,
-        title: AppStrings.kApplyFilter.tr(),
-        margin: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.5.h),
-        width: 100.w,
-        height: 6.5.h,
-        onPressed: () async {},
-      ),
-      crossAlignment: CrossAxisAlignment.start,
-      height: 112.5.h,
-      children: [
-        const Row(
+    return Consumer<OffersController>(
+      builder: (context, controller, child) {
+        GeneralController generalController =
+            Provider.of<GeneralController>(context, listen: false);
+        return BottomSheetBuilder(
+          backgroundColor: AppColors.white,
+          crossAlignment: CrossAxisAlignment.start,
+          height: 110.h,
           children: [
-            TextBuilder(
-              text: 'Filter by',
-              color: AppColors.darkBlue,
+            Row(
+              children: [
+                TextBuilder(
+                  text: 'Filter by',
+                  color: AppColors.darkBlue,
+                  bold: true,
+                  size: AppFontSizes.kS5,
+                  verticalPadding: 0,
+                ),
+                const Spacer(),
+                const TextBuilder(
+                  text: 'Reset',
+                  color: AppColors.blue,
+                  underline: true,
+                ),
+              ],
             ),
-            Spacer(),
-            TextBuilder(
-              text: 'Reset',
-              color: AppColors.blue,
-              underline: true,
+            Visibility(
+              visible: controller.specialtyMainToggle,
+              replacement: OfferDropDown(
+                  tittle: AppStrings.kMainSpecialty.tr(),
+                  onPressed: () {
+                    controller.openMainSpecialty();
+                  }),
+              child: OfferItemSelection(
+                tittle: AppStrings.kMainSpecialty.tr(),
+                items: controller.mainSpecialtyList,
+                onSelect: controller.mainSpecialtySelect,
+                onClose: controller.openMainSpecialty,
+              ),
             ),
+            controller.mainSpecialtyIndex != null
+                ? Visibility(
+                    visible: controller.subSpecialtyToggle,
+                    replacement: OfferDropDown(
+                      tittle: AppStrings.kSubSpecialties.tr(),
+                      onPressed: () async {
+                        if (controller.subSpecialtyList.isEmpty) {
+                          EasyLoading.show();
+                          await generalController.getSubSpeciality(controller
+                              .mainSpecialtyList[controller.mainSpecialtyIndex!]
+                              .id!);
+                          EasyLoading.dismiss();
+                          controller.subSpecialtyList =
+                              generalController.subSpecializationList;
+                        }
+                        controller.openSubSpecialty();
+                      },
+                    ),
+                    child: OfferItemSelection(
+                      tittle: AppStrings.kSubSpecialties.tr(),
+                      items: controller.subSpecialtyList,
+                      onSelect: controller.subSpecialtySelect,
+                      onClose: controller.openSubSpecialty,
+                    ),
+                  )
+                : const SizedBox(),
+            Visibility(
+              visible: controller.availabilityToggle,
+              replacement: OfferDropDown(
+                  tittle: 'Availability',
+                  onPressed: controller.openAvailability),
+              child: OfferItemSelection(
+                tittle: 'Availability',
+                items: controller.availabilityList,
+                onSelect: controller.availabilitySelect,
+                onClose: controller.openAvailability,
+              ),
+            ),
+            Visibility(
+              visible: controller.genderToggle,
+              replacement: OfferDropDown(
+                  tittle: AppStrings.kGender.tr(),
+                  onPressed: controller.openGender),
+              child: OfferItemSelection(
+                tittle: AppStrings.kGender.tr(),
+                items: controller.genderList,
+                onSelect: controller.genderSelect,
+                onClose: controller.openGender,
+              ),
+            ),
+            Visibility(
+              visible: controller.titleToggle,
+              replacement: OfferDropDown(
+                  tittle: AppStrings.kTitle.tr(),
+                  onPressed: controller.openTitle),
+              child: OfferItemSelection(
+                tittle: AppStrings.kTitle,
+                items: controller.titlesList,
+                onSelect: controller.tittleSelect,
+                onClose: controller.openTitle,
+              ),
+            ),
+            SizedBox(
+              height: 2.h,
+            ),
+            controller.minPrice == null || controller.maxPrice == null
+                ? const SizedBox()
+                : RangeSlider(
+                    values: controller.currentRangeValues!,
+                    labels: RangeLabels(
+                        '${controller.currentRangeValues!.start}',
+                        '${controller.currentRangeValues!.start}'),
+                    onChanged: controller.changeRange,
+                    min: double.parse(controller.minPrice!),
+                    max: double.parse(controller.maxPrice!),
+                    activeColor: AppColors.blue,
+                    inactiveColor: AppColors.blue.withOpacity(0.25),
+                  ),
+            ButtonBuilder(
+              radius: 25,
+              buttonColor: AppColors.blue,
+              title: AppStrings.kApplyFilter.tr(),
+              margin: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.5.h),
+              width: 90.w,
+              height: 6.5.h,
+              onPressed: () async {},
+            ),
+
+            // SizedBox(
+            //   height: 10.h,
+            // ),
           ],
-        ),
-        const OfferDropDown(tittle: 'Specialty'),
-        const OfferDropDown(tittle: 'Sub specialty'),
-        SizedBox(height: 1.h),
-        const OfferItemSelection(
-          tittle: 'Availability',
-          items: [
-            'Any day',
-            'Today',
-            'Tomorrow',
-          ],
-          itemChosen: 'Any day',
-        ),
-        SizedBox(height: 1.h),
-        const OfferItemSelection(
-          tittle: 'Gender',
-          items: [
-            'Male',
-            'Female',
-          ],
-          itemChosen: 'Male',
-        ),
-        const OfferItemSelection(
-          tittle: 'Title',
-          items: [
-            'Professor',
-            'Professor',
-            'Consultant',
-            'Specialist',
-          ],
-          itemChosen: 'Professor',
-        ),
-      ],
+        );
+      },
     );
   }
 }

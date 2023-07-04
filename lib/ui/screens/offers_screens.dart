@@ -1,5 +1,5 @@
 import 'package:dorakpattient/constants/constants.dart';
-import 'package:dorakpattient/controllers/offers_controller.dart';
+import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/ui/components/components.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +38,10 @@ class OffersScreen extends StatelessWidget {
               fit: BoxFit.scaleDown,
             ),
             onTap: () {
+              offerController.mainSpecialtyList =
+                  context.read<GeneralController>().specializationList;
+              offerController.titlesList =
+                  context.read<GeneralController>().tittleList;
               showBottomSheet(
                   context: context,
                   backgroundColor: Colors.transparent,

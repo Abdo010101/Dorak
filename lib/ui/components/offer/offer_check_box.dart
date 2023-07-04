@@ -1,4 +1,5 @@
 import 'package:dorakpattient/ui/components/components.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -25,6 +26,14 @@ class OfferCheckBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
+        SizedBox(
+          width: 3.w,
+        ),
+        VerticalDividerBuilder(
+          dividerColor: AppColors.blue,
+          width: 0.35.w,
+          height: 5.75.h,
+        ),
         Transform.scale(
           scale: size ?? 0.8,
           child: Checkbox(
@@ -40,8 +49,8 @@ class OfferCheckBox extends StatelessWidget {
           ),
         ),
         TextBuilder(
-          text: tittle,
-          verticalPadding: 1.h,
+          text: tittle.tr(),
+          verticalPadding: 0,
           color: value ? AppColors.blue : AppColors.darkGray,
         ),
       ],
