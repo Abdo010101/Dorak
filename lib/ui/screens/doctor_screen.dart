@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../constants/constants.dart';
 import '../../data/models/response/response.dart';
 
@@ -21,7 +20,12 @@ class DoctorScreen extends StatelessWidget {
         Places? place = doctorController.selectedPlace;
         return Scaffold(
           appBar: CustomAppBar(
-              title: doctorController.doctorProfileResponse?.doctor?.name),
+            title: doctorController.doctorProfileResponse?.doctor?.name,
+            shareClick: () {
+              Util.shareLink(' https://unitester2910://unitest000.com');
+            },
+            hasShare: true,
+          ),
           backgroundColor: AppColors.liteWight,
           bottomNavigationBar: doctorController.profileType ==
                   DoctorProfileType.clinic

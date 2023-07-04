@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../constants/constants.dart';
 import '../ui/components/components.dart';
+import 'package:share_plus/share_plus.dart';
 
 class Util {
   static showSnackBar(BuildContext context, {required String? message}) {
@@ -70,6 +71,10 @@ class Util {
         backgroundColor: AppColors.grey,
         textColor: AppColors.white,
         fontSize: AppFontSizes.kS5);
+  }
+
+  static void shareLink(String? link) {
+    Share.share('$link');
   }
 
   static Future<bool?> kToastUpdatedResult(UpdatedResult result) {

@@ -166,4 +166,5 @@ class AppStrings {
   static const kChooseCity = 'choose_city';
   static const kAllSubSpecializations = 'all_sub';
   static const kAll = 'all';
+  static const kSponsored = 'sponsored';
 }

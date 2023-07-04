@@ -44,6 +44,7 @@ class Places {
   List<String>? images;
   String? name;
   String? phone;
+  String? description;
   String? shortAddress;
   String? longAddress;
   String? lat;
@@ -59,6 +60,7 @@ class Places {
       this.phone,
       this.shortAddress,
       this.longAddress,
+      this.description,
       this.lat,
       this.lng,
       this.examinationPrice,
@@ -74,6 +76,7 @@ class Places {
     longAddress = json['long_address'];
     lat = json['lat'];
     lng = json['lng'];
+    description = json['description'];
     examinationPrice = json['examination_price'];
     examinationDuration = json['examination_duration'];
     reservationStatus = json['reservation_status'];

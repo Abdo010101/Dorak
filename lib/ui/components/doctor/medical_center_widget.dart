@@ -49,10 +49,7 @@ class MedicalCenterWidget extends StatelessWidget {
             ],
           ),
           TextBuilder(
-            text:
-
-                ///TODO add description to place here in Model ...
-                'sadasd',
+            text: placeModel?.description ?? "",
             verticalPadding: 0.75.h,
             size: AppFontSizes.kS2,
             maxLin: 3,

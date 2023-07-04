@@ -58,18 +58,6 @@ class SearchForSubSpecialtiesScreen extends StatelessWidget {
               verticalPadding: 1.5.h,
               horizontalPadding: 0,
             ),
-            CityWidget(
-              cityName: AppStrings.kAll.tr(),
-              specialOnTap: () async {
-                generalController.onSpecializationChange(
-                  generalController.specializationId!,
-                  AppStrings.kAllSubSpecializations.tr(),
-                );
-                Navigator.pushNamed(context, NameRoutes.kSearchForAreaScreen);
-              },
-              color: AppColors.blue,
-              bold: true,
-            ),
             Consumer<GeneralController>(
               builder: (cont, controller, child) {
                 List<Titles> specialList = controller.subSpecializationList;
@@ -80,22 +68,42 @@ class SearchForSubSpecialtiesScreen extends StatelessWidget {
                     : specialList.isEmpty
                         ? Center(child: Text(AppStrings.kNoDataFound.tr()))
                         : Expanded(
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: specialList.length,
-                              scrollDirection: Axis.vertical,
-                              itemBuilder: (context, index) {
-                                Titles specialModel = specialList[index];
-                                return SpecialtiesWidget(
-                                  specialModel: specialModel,
-                                  specialOnTap: () {
-                                    controller.onSpecializationChange(
-                                        specialModel.id!, specialModel.name!);
+                            child: Column(
+                              children: [
+                                CityWidget(
+                                  cityName: AppStrings.kAll.tr(),
+                                  specialOnTap: () async {
+                                    generalController.onSpecializationChange(
+                                      generalController.specializationId!,
+                                      AppStrings.kAllSubSpecializations.tr(),
+                                    );
                                     Navigator.pushNamed(context,
                                         NameRoutes.kSearchForAreaScreen);
                                   },
-                                );
-                              },
+                                  color: AppColors.blue,
+                                  bold: true,
+                                ),
+                                Expanded(
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: specialList.length,
+                                    scrollDirection: Axis.vertical,
+                                    itemBuilder: (context, index) {
+                                      Titles specialModel = specialList[index];
+                                      return SpecialtiesWidget(
+                                        specialModel: specialModel,
+                                        specialOnTap: () {
+                                          controller.onSpecializationChange(
+                                              specialModel.id!,
+                                              specialModel.name!);
+                                          Navigator.pushNamed(context,
+                                              NameRoutes.kSearchForAreaScreen);
+                                        },
+                                      );
+                                    },
+                                  ),
+                                )
+                              ],
                             ),
                           );
               },

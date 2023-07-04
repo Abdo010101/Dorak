@@ -57,6 +57,7 @@ class Doctor {
   String? rate;
   int? ratingsCount;
   bool? canRate;
+  bool? isSponsored;
 
   Doctor(
       {this.id,
@@ -68,6 +69,7 @@ class Doctor {
       this.address,
       this.rate,
       this.ratingsCount,
+      this.isSponsored,
       this.canRate});
 
   Doctor.fromJson(Map<String, dynamic> json) {
@@ -81,20 +83,23 @@ class Doctor {
     rate = json['rate'];
     ratingsCount = json['ratings_count'];
     canRate = json['can_rate'];
+    isSponsored = json['is_sponsored'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['image'] = this.image;
-    data['bio'] = this.bio;
-    data['examination_price'] = this.examinationPrice;
-    data['examination_duration'] = this.examinationDuration;
-    data['address'] = this.address;
-    data['rate'] = this.rate;
-    data['ratings_count'] = this.ratingsCount;
-    data['can_rate'] = this.canRate;
+    data['id'] = id;
+    data['name'] = name;
+    data['image'] = image;
+    data['bio'] = bio;
+    data['examination_price'] = examinationPrice;
+    data['examination_duration'] = examinationDuration;
+    data['address'] = address;
+    data['rate'] = rate;
+    data['ratings_count'] = ratingsCount;
+    data['can_rate'] = canRate;
+    data['is_sponsored'] = isSponsored;
+
     return data;
   }
 }

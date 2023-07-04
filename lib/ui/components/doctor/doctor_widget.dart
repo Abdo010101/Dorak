@@ -32,55 +32,77 @@ class DoctorWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                home
-                    ? GeometricalAvatar(
-                        //path: AppAssets.kDoctorImage,
-                        url: model?.image,
-                        radius: 30.sp,
-                        margin: EdgeInsetsDirectional.only(end: 2.w),
-                      )
-                    : FullScreenWidgetBuilder(
-                        url: model!.image!,
-                        radius: 30.sp,
-                        width: 30.sp,
-                        height: 30.sp,
-                      ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Row(
                   children: [
-                    TextBuilder(
-                      text: model?.name ?? '',
-                      size: AppFontSizes.kS3,
-                      color: AppColors.navyBlue,
-                      horizontalPadding: 0.5.w,
-                      verticalPadding: 0,
-                    ),
-                    SizedBox(
-                      height: 1.0.h,
-                    ),
-                    Row(
+                    home
+                        ? GeometricalAvatar(
+                            //path: AppAssets.kDoctorImage,
+                            url: model?.image,
+                            radius: 30.sp,
+                            margin: EdgeInsetsDirectional.only(end: 2.w),
+                          )
+                        : FullScreenWidgetBuilder(
+                            url: model!.image!,
+                            radius: 30.sp,
+                            width: 30.sp,
+                            height: 30.sp,
+                          ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Util.isNumeric(model?.rate)
-                            ? RatingBarWidget(
-                                initialRating:
-                                    double.parse(model?.rate ?? '0.0'),
-                                itemSize: 10.sp,
-                              )
-                            : const SizedBox(),
                         TextBuilder(
-                          text: isRated
-                              ? '${model?.rate} ( ${model?.ratingsCount} ${AppStrings.kReview.tr()} )'
-                              : "${model?.rate}",
-                          verticalPadding: 0,
-                          horizontalPadding: 0.5.w,
+                          text: model?.name ?? '',
+                          size: AppFontSizes.kS3,
                           color: AppColors.navyBlue,
-                          size: AppFontSizes.kS1,
+                          horizontalPadding: 0.5.w,
+                          verticalPadding: 0,
+                        ),
+                        SizedBox(
+                          height: 1.0.h,
+                        ),
+                        Row(
+                          children: [
+                            Util.isNumeric(model?.rate)
+                                ? RatingBarWidget(
+                                    initialRating:
+                                        double.parse(model?.rate ?? '0.0'),
+                                    itemSize: 10.sp,
+                                  )
+                                : const SizedBox(),
+                            TextBuilder(
+                              text: isRated
+                                  ? '${model?.rate} ( ${model?.ratingsCount} ${AppStrings.kReview.tr()} )'
+                                  : "${model?.rate}",
+                              verticalPadding: 0,
+                              horizontalPadding: 0.5.w,
+                              color: AppColors.navyBlue,
+                              size: AppFontSizes.kS1,
+                            )
+                          ],
                         )
                       ],
-                    )
+                    ),
                   ],
                 ),
+                Visibility(
+                  visible: model?.isSponsored ?? false,
+                  child: Row(
+                    children: [
+                      Image.asset(AppAssets.kSponsoredIcon),
+                      SizedBox(
+                        width: 1.0.w,
+                      ),
+                      Text(
+                        AppStrings.kSponsored.tr(),
+                        style:
+                            TextStyle(color: AppColors.orange, fontSize: 8.sp),
+                      )
+                    ],
+                  ),
+                )
               ],
             ),
             TextBuilder(

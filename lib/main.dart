@@ -15,7 +15,12 @@ import 'package:sizer/sizer.dart';
 import 'constants/constants.dart';
 import 'data/di/locator.dart';
 import 'firebase_options.dart';
+import 'dart:async';
+import 'dart:io';
+import 'package:uni_links/uni_links.dart';
+import 'package:flutter/services.dart' show PlatformException;
 
+//IMPORT THESE PACKAGES ^^^
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print(
       "onBackGround: ${message.notification?.title}/${message.notification?.body}");
@@ -61,8 +66,19 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  Future<void> initUniLinks() async {
+    try {
+      Uri? initialLink = await getInitialUri();
+      print(initialLink);
+    } on PlatformException {
+      print('platfrom exception unilink');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    initUniLinks();
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<LoginController>(

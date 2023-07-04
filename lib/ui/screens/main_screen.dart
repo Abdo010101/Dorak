@@ -14,7 +14,6 @@ class MainScreen extends StatelessWidget {
         builder: (context, controller, child) {
       return WillPopScope(
         onWillPop: () async {
-          print("Hello From Backkk");
           return await controller.onWillPop(context);
         },
         child: Scaffold(
