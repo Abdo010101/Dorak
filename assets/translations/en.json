@@ -160,5 +160,10 @@
   "choose_city": "Choose the city",
   "all": "All",
   "all_sub": "All Sub Specializations",
-  "sponsored": "Sponsored"
+  "sponsored": "Sponsored",
+  "filter_by": "Filter by",
+  "reset": "Reset",
+  "availability": "Availability",
+  "any_day": "Any Day",
+  "tomorrow": "Tomorrow"
 }

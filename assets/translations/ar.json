@@ -160,5 +160,10 @@
   "choose_city": "أختر المدينة",
   "all": "الكل",
   "all_sub": "كل التخصصات الفرعية",
-  "sponsored": "ممول"
+  "sponsored": "ممول",
+  "filter_by": "التصفية بواسطة",
+  "reset": "إعادة ظبط",
+  "availability": "متاح",
+  "any_day": "أى يوم",
+  "tomorrow": "غدا"
 }
