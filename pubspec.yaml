@@ -51,7 +51,6 @@ dependencies:
   cached_network_image: ^3.2.3
   geocoding: ^2.0.5
   provider: ^6.0.5
-  image_picker: ^0.8.6+1
   another_flutter_splash_screen: ^1.1.4
   url_launcher: ^6.1.10
   material_dialogs: ^1.1.4
@@ -69,7 +68,6 @@ dependencies:
   firebase_core: ^2.8.0
   flutter_local_notifications: ^14.1.1
   carousel_slider: ^4.2.1
-  image_cropper: ^3.0.2
   permission_handler: ^10.2.0
   sign_in_with_apple: ^4.3.0
   full_screen_image: ^2.0.0

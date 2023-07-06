@@ -54,7 +54,7 @@ class OffersScreen extends StatelessWidget {
                   builder: (context) {
                     return Padding(
                         padding: EdgeInsets.only(top: 10.h),
-                        child: const OfferFilterBottomSheet());
+                        child: const FilterBottomSheet());
                   });
             },
           ),

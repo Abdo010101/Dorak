@@ -8,8 +8,8 @@ import '../../../constants/constants.dart';
 import '../../../controllers/controllers.dart';
 import '../components.dart';
 
-class OfferFilterBottomSheet extends StatelessWidget {
-  const OfferFilterBottomSheet({
+class FilterBottomSheet extends StatelessWidget {
+  const FilterBottomSheet({
     Key? key,
   }) : super(key: key);
   @override
