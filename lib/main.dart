@@ -77,7 +77,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     initUniLinks();
-
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<LoginController>(

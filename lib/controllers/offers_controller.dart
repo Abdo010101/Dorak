@@ -22,14 +22,16 @@ class OffersController extends DisposableProvider {
       isLoading = true;
       notifyListeners();
       data["title"] = offerSearchController.text;
+      print("sdadas= ${data}");
+
       final result = await _offersRepository.getAllOffers(data);
       if (result.data != null) {
         searchResult = result.data!;
         offers = searchResult.offers!.data!;
         maxPrice = searchResult.maxPrice;
         minPrice = searchResult.minPrice;
-        currentRangeValues = RangeValues(
-            double.parse(minPrice ?? '0'), double.parse(maxPrice ?? '0'));
+        currentRangeValues =
+            RangeValues(double.parse(minPrice!), double.parse(maxPrice!));
         isLoading = false;
         notifyListeners();
       } else {

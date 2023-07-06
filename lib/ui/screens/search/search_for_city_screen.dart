@@ -82,12 +82,16 @@ class SearchForCityScreen extends StatelessWidget {
                                   controller.onSelectedCity(cityModel.id!);
                                   Provider.of<SearchResultController>(context,
                                           listen: false)
+                                      .prams = {};
+                                  Provider.of<SearchResultController>(context,
+                                          listen: false)
                                       .getDoctors(
                                           cityId: controller.cityId,
                                           lat: controller.lat,
                                           lng: controller.lng,
                                           specializationId:
                                               controller.specializationId);
+
                                   Navigator.of(context)
                                       .pushNamed(NameRoutes.kResultOfSearch);
                                 },

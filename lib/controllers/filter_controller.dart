@@ -182,6 +182,55 @@ class FilterController extends DisposableProvider {
     context.read<OffersController>().data = filterData;
   }
 
+  filterDoctors(BuildContext context) {
+    Map<String, dynamic> filterData = {};
+    String? genderName;
+    for (var gender in genderList) {
+      if (gender.icon == '1') {
+        genderName = gender.name;
+      }
+    }
+    if (genderName != null) {
+      filterData['gender'] = genderName;
+    }
+
+    String? availabilityName;
+    for (var availability in availabilityList) {
+      if (availability.icon == '1' && availability.name != AppStrings.kAnyDay) {
+        availabilityName = availability.name;
+      }
+    }
+    if (availabilityName != null) {
+      filterData['availability'] = availabilityName;
+    }
+
+    List<int> tittlesId = [];
+    for (var tittle in titlesList) {
+      if (tittle.icon == '1') {
+        tittlesId.add(tittle.id!.toInt());
+      }
+    }
+    if (tittlesId.isNotEmpty) {
+      filterData['titles[]'] = tittlesId;
+    }
+
+    List<int> subSpecialtiesId = [];
+    for (var subSpecialty in subSpecialtyList) {
+      if (subSpecialty.icon == '1') {
+        subSpecialtiesId.add(subSpecialty.id!.toInt());
+      }
+    }
+    if (mainSpecialtyIndex != null) {
+      subSpecialtiesId.add(mainSpecialtyList[mainSpecialtyIndex!].id!);
+    }
+    if (subSpecialtiesId != []) {
+      filterData['specializations[]'] = subSpecialtiesId;
+    }
+    filterData['minPrice'] = currentRangeValues?.start.toInt();
+    filterData['maxPrice'] = currentRangeValues?.end.toInt();
+    context.read<SearchResultController>().prams = filterData;
+  }
+
   @override
   void disposeValues() {
     // TODO: implement disposeValues
