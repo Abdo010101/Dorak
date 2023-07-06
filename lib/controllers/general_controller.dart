@@ -21,6 +21,7 @@ class GeneralController extends ChangeNotifier {
   List<Titles> areaList = [];
   List<Titles> originalAreaList = [];
   List<Titles> originalCityList = [];
+
   double? lat;
   double? lng;
   String? specializationName;

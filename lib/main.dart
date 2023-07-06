@@ -50,13 +50,13 @@ void main() async {
     );
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   } catch (e) {
-    throw 'Notification Error $e';
+    throw 'Notification Err or $e';
   }
   runApp(
     EasyLocalization(
       supportedLocales: LanguageController.allLocales,
       path: 'assets/translations',
-      startLocale: const Locale("ar"),
+      // startLocale: const Locale("ar"),
       child: const MyApp(),
     ),
   );
@@ -137,7 +137,8 @@ class MyApp extends StatelessWidget {
             builder: EasyLoading.init(),
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,
-            locale: EasyLocalization.of(context)?.currentLocale,
+            locale:
+                context.locale /* EasyLocalization.of(context)?.currentLocale*/,
             onGenerateRoute: RouteManger.generateRouter,
             debugShowCheckedModeBanner: false,
             title: AppStrings.kAppName,

@@ -154,6 +154,7 @@ class AppStrings {
   static const kChangePhoneMassage = 'change_phone_message';
   static const kMainSpecialties = 'main_specialties';
   static const kSearchSpeciality = 'search_speciality';
+
   static const kPopularSpecialties = 'popular_specialties';
   static const kSubSpecialties = 'sub_specialties';
   static const kSearchSubSpeciality = 'search_sub_speciality';
@@ -172,4 +173,5 @@ class AppStrings {
   static const kAvailability = 'availability';
   static const kAnyDay = 'any_day';
   static const kTomorrow = 'tomorrow';
+  static const kResult = 'result';
 }

@@ -27,3 +27,6 @@ export 'sign_up_screen.dart';
 export 'splash_screen.dart';
 export 'success_screen.dart';
 export 'welcome_screen.dart';
+export 'search/search_by_doctor_screen.dart';
+export 'search/search_for_area_screen.dart';
+export 'search/search_for_sub_specialties_screen.dart';

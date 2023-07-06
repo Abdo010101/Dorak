@@ -28,26 +28,16 @@ class NotificationScreen extends StatelessWidget {
                       text: AppStrings.kNoNotification.tr(),
                       backgroundColor: AppColors.transparent,
                     )
-                  : SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 1.5.h,
-                          ),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            primary: false,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: controller.notificationsList.length,
-                            itemBuilder: (context, index) {
-                              return NotificationCard(
-                                notification:
-                                    controller.notificationsList[index],
-                              );
-                            },
-                          ),
-                        ],
-                      ),
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      primary: false,
+                      //physics: const NeverScrollableScrollPhysics(),
+                      itemCount: controller.notificationsList.length,
+                      itemBuilder: (context, index) {
+                        return NotificationCard(
+                          notification: controller.notificationsList[index],
+                        );
+                      },
                     );
         },
       ),

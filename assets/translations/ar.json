@@ -147,7 +147,7 @@
   "add_phone": "أضف هاتفك",
   "change_phone_message": "سنرسل رسالة نصية إلى رقم الهاتف هذا للتحقق من صحته",
   "main_specialties": "التخصصات الرئيسية",
-  "search_speciality": "ابحث عن التخصص الرئيسى",
+  "search_speciality": "ابحث عن دكتور, تخصص او مستشفي",
   "popular_specialties": "أكثر التخصصات المطلوبة",
   "sub_specialties": "التخصصات الفرعية",
   "search_sub_speciality": "ابحث عن التخصص الفرعى",
@@ -165,5 +165,7 @@
   "reset": "إعادة ظبط",
   "availability": "متاح",
   "any_day": "أى يوم",
-  "tomorrow": "غدا"
+  "tomorrow": "غدا",
+  "result": "النتائج"
+
 }

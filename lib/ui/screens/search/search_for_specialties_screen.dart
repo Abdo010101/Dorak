@@ -33,9 +33,13 @@ class SearchForSpecialtiesScreen extends StatelessWidget {
               hint: AppStrings.kSearchSpeciality.tr(),
               verticalMargin: 0,
               textInputAction: TextInputAction.done,
-              onChange: (text) {
+              /*onChange: (text) {
                 generalController.search(text);
+              },*/
+              onTap: () {
+                Navigator.of(context).pushNamed(NameRoutes.kSearchDoctorScreen);
               },
+              isEnabled: false,
               horizontalMargin: 0,
               maxLines: 1,
               width: 100.w,

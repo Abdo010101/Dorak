@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,9 +30,12 @@ class _SplashScreenState extends State<SplashScreen>
     animationController =
         AnimationController(duration: const Duration(seconds: 1), vsync: this);
     startAnimation();
+
     authController = Provider.of<AuthController>(context, listen: false);
     await authController.checkUserLoggedIn().then((value) => startAnimation());
     if (context.mounted) {
+      InjectionClass.dio.options.headers
+          .addAll({'Content-language': context.locale});
       Provider.of<GeneralController>(context, listen: false).getData();
     }
   }

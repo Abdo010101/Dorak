@@ -1,10 +1,7 @@
 import 'package:dorakpattient/routes/dorak_routes.dart';
 import 'package:dorakpattient/ui/screens/screens.dart';
-import 'package:dorakpattient/ui/screens/search/search_for_area_screen.dart';
-import 'package:dorakpattient/ui/screens/search/search_for_sub_specialties_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../controllers/controllers.dart';
 
 class RouteManger {
@@ -119,6 +116,10 @@ class RouteManger {
       case NameRoutes.kChangePhoneScreen:
         return MaterialPageRoute(
             builder: (context) => const ChangePhoneScreen());
+
+      case NameRoutes.kSearchDoctorScreen:
+        return MaterialPageRoute(
+            builder: (context) => const SearchByDoctorScreen());
 
       default:
         return MaterialPageRoute(builder: (context) => SplashScreen());

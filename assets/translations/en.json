@@ -147,7 +147,7 @@
   "add_phone": "Add Your Phone",
   "change_phone_message": "We will send a text message to this phone number to validate it",
   "main_specialties": "Main Specialties",
-  "search_speciality": "Search for a main speciality",
+  "search_speciality": "Search for doctor, speciality or hospital",
   "popular_specialties": "Most Popular Specialties",
   "sub_specialties": "Sub Specialties",
   "search_sub_speciality": "Search for a sub speciality",
@@ -165,5 +165,7 @@
   "reset": "Reset",
   "availability": "Availability",
   "any_day": "Any Day",
-  "tomorrow": "Tomorrow"
+  "tomorrow": "Tomorrow",
+  "result": "Result"
+
 }
