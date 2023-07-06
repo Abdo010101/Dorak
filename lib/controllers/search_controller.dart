@@ -23,7 +23,7 @@ class SearchResultController extends ChangeNotifier {
         prams['lng'] = lng;
       }
       if (specializationId != null) {
-        prams['specializations[0]'] = specializationId;
+        prams['specializations[]'] = specializationId;
       }
 
       print("sdadas= ${prams}");
