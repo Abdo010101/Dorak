@@ -8,13 +8,13 @@ import '../../../constants/constants.dart';
 import '../../../controllers/controllers.dart';
 import '../components.dart';
 
-class OfferFilterBottomSheet extends StatelessWidget {
-  const OfferFilterBottomSheet({
+class FilterBottomSheet extends StatelessWidget {
+  const FilterBottomSheet({
     Key? key,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Consumer<OffersController>(
+    return Consumer<FilterController>(
       builder: (context, controller, child) {
         GeneralController generalController =
             Provider.of<GeneralController>(context, listen: false);
@@ -53,7 +53,17 @@ class OfferFilterBottomSheet extends StatelessWidget {
               child: OfferItemSelection(
                 tittle: AppStrings.kMainSpecialty.tr(),
                 items: controller.mainSpecialtyList,
-                onSelect: controller.mainSpecialtySelect,
+                onSelect: (value) async {
+                  controller.mainSpecialtySelect(value);
+                  if (controller.subSpecialtyList.isEmpty) {
+                    EasyLoading.show();
+                    await generalController.getSubSpeciality(controller
+                        .mainSpecialtyList[controller.mainSpecialtyIndex!].id!);
+                    EasyLoading.dismiss();
+                    controller.subSpecialtyList =
+                        generalController.subSpecializationList;
+                  }
+                },
                 onClose: controller.openMainSpecialty,
               ),
             ),
@@ -167,7 +177,8 @@ class OfferFilterBottomSheet extends StatelessWidget {
               height: 6.5.h,
               onPressed: () async {
                 Navigator.pop(context);
-                await controller.getAllOffers();
+                controller.filterOffer(context);
+                await context.read<OffersController>().getAllOffers();
               },
             ),
           ],

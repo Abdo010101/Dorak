@@ -6,6 +6,7 @@ export 'auth/otp_verification_controller.dart';
 export 'auth/register_controller.dart';
 export 'disposable_controller.dart';
 export 'doctor_profile_controller.dart';
+export 'filter_controller.dart';
 export 'general_controller.dart';
 export 'home_controller.dart';
 export 'language_controller.dart';

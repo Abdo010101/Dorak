@@ -38,11 +38,11 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsLocalNetworking</key>
-		<true/>
-	</dict>
-	<key>NSLocationAlwaysUsageDescription</key>
+    	<dict>
+    		<key>NSAllowsLocalNetworking</key>
+    		<true/>
+    	</dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>We need access to Location to get Location of patient to get nearest Clinic</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Program requires GPS to get current Location of patient</string>
