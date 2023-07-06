@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:dorakpattient/controllers/controllers.dart';
@@ -7,17 +8,16 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show PlatformException;
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:uni_links/uni_links.dart';
 
 import 'constants/constants.dart';
 import 'data/di/locator.dart';
 import 'firebase_options.dart';
-import 'dart:async';
-import 'package:uni_links/uni_links.dart';
-import 'package:flutter/services.dart' show PlatformException;
 
 //IMPORT THESE PACKAGES ^^^
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -100,6 +100,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => LanguageController()),
         ChangeNotifierProvider(create: (context) => VerifyController()),
         ChangeNotifierProvider(create: (context) => NotificationController()),
+        ChangeNotifierProvider(create: (context) => FilterController()),
         ChangeNotifierProvider(
             create: (context) => ReservationAppointmentController()),
       ],
