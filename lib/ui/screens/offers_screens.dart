@@ -11,7 +11,9 @@ class OffersScreen extends StatelessWidget {
   const OffersScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    OffersController offerController =
+    FilterController filterController =
+        Provider.of<FilterController>(context, listen: false);
+    OffersController offersController =
         Provider.of<OffersController>(context, listen: false);
     return Scaffold(
       backgroundColor: AppColors.liteWight,
@@ -38,10 +40,14 @@ class OffersScreen extends StatelessWidget {
               fit: BoxFit.scaleDown,
             ),
             onTap: () {
-              offerController.mainSpecialtyList =
+              filterController.mainSpecialtyList =
                   context.read<GeneralController>().specializationList;
-              offerController.titlesList =
+              filterController.titlesList =
                   context.read<GeneralController>().tittleList;
+              filterController.maxPrice = offersController.maxPrice;
+              filterController.minPrice = offersController.minPrice;
+              filterController.currentRangeValues ??=
+                  offersController.currentRangeValues;
               showBottomSheet(
                   context: context,
                   backgroundColor: Colors.transparent,
@@ -56,7 +62,7 @@ class OffersScreen extends StatelessWidget {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          offerController.getAllOffers(home: true);
+          offersController.getAllOffers(home: true);
         },
         child: EmptyCard(
           horizontalMargin: 0,
