@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_image/flutter_svg_image.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:full_screen_image/full_screen_image.dart';
 import 'package:sizer/sizer.dart';
 
@@ -28,8 +28,10 @@ class FullScreenWidgetBuilder extends StatelessWidget {
                   height: height,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: SvgImage.cachedNetwork(url),
-                    ),
+                        image: Svg(
+                      url,
+                      source: SvgSource.network,
+                    )),
                   ),
                   child: const SizedBox())
               : CachedNetworkImage(

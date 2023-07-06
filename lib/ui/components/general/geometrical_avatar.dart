@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_image/flutter_svg_image.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../constants/constants.dart';
@@ -47,7 +47,10 @@ class GeometricalAvatar extends StatelessWidget {
               : url != null
                   ? DecorationImage(
                       image: url!.split('.').last == 'svg'
-                          ? SvgImage.cachedNetwork(url!) as ImageProvider
+                          ? Svg(
+                              url!,
+                              source: SvgSource.network,
+                            ) as ImageProvider
                           : CachedNetworkImageProvider(url!),
                       fit: BoxFit.cover,
                     )
