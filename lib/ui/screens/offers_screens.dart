@@ -46,15 +46,19 @@ class OffersScreen extends StatelessWidget {
                   context.read<GeneralController>().tittleList;
               filterController.maxPrice = offersController.maxPrice;
               filterController.minPrice = offersController.minPrice;
-              filterController.currentRangeValues ??=
-                  offersController.currentRangeValues;
+              filterController.currentRangeValues == const RangeValues(0.0, 0.0)
+                  ? filterController.currentRangeValues =
+                      offersController.currentRangeValues
+                  : null;
               showBottomSheet(
                   context: context,
                   backgroundColor: Colors.transparent,
                   builder: (context) {
                     return Padding(
                         padding: EdgeInsets.only(top: 10.h),
-                        child: const FilterBottomSheet());
+                        child: const FilterBottomSheet(
+                          filterType: 'Offer',
+                        ));
                   });
             },
           ),

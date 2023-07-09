@@ -73,8 +73,8 @@ class SearchForSubSpecialtiesScreen extends StatelessWidget {
                                 CityWidget(
                                   cityName: AppStrings.kAll.tr(),
                                   specialOnTap: () async {
-                                    generalController.onSpecializationChange(
-                                      generalController.specializationId!,
+                                    controller.onSpecializationChange(
+                                      controller.specializationId!,
                                       AppStrings.kAllSubSpecializations.tr(),
                                     );
                                     Navigator.pushNamed(context,

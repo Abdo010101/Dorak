@@ -11,7 +11,9 @@ import '../components.dart';
 class FilterBottomSheet extends StatelessWidget {
   const FilterBottomSheet({
     Key? key,
+    this.filterType,
   }) : super(key: key);
+  final String? filterType;
   @override
   Widget build(BuildContext context) {
     return Consumer<FilterController>(
@@ -60,6 +62,8 @@ class FilterBottomSheet extends StatelessWidget {
                     await generalController.getSubSpeciality(controller
                         .mainSpecialtyList[controller.mainSpecialtyIndex!].id!);
                     EasyLoading.dismiss();
+                    controller.openMainSpecialty();
+                    controller.openSubSpecialty();
                     controller.subSpecialtyList =
                         generalController.subSpecializationList;
                   }
@@ -177,8 +181,12 @@ class FilterBottomSheet extends StatelessWidget {
               height: 6.5.h,
               onPressed: () async {
                 Navigator.pop(context);
-                controller.filterOffer(context);
-                await context.read<OffersController>().getAllOffers();
+                filterType == 'Offer'
+                    ? controller.filterOffer(context)
+                    : controller.filterDoctors(context);
+                filterType == 'Offer'
+                    ? await context.read<OffersController>().getAllOffers()
+                    : await context.read<SearchResultController>().getDoctors();
               },
             ),
           ],
