@@ -2,7 +2,6 @@ import 'package:dorakpattient/data/models/response/general_response.dart';
 import 'package:dorakpattient/ui/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../constants/constants.dart';
 
 class SpecialtiesWidget extends StatelessWidget {
@@ -18,7 +17,6 @@ class SpecialtiesWidget extends StatelessWidget {
     return InkWell(
       onTap: specialOnTap,
       //Navigator.pushNamed(context, NameRoutes.kSearchForCityScreen);
-
       child: EmptyCard(
         verticalMargin: 0.75.h,
         verticalPadding: 1.h,

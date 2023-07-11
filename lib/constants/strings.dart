@@ -174,4 +174,5 @@ class AppStrings {
   static const kAnyDay = 'any_day';
   static const kTomorrow = 'tomorrow';
   static const kResult = 'result';
+  static const kSearch = 'search';
 }

@@ -21,7 +21,7 @@ class GeneralController extends ChangeNotifier {
   List<Titles> areaList = [];
   List<Titles> originalAreaList = [];
   List<Titles> originalCityList = [];
-
+  SearchResultResponse? searchResultResponse;
   double? lat;
   double? lng;
   String? specializationName;
@@ -139,6 +139,28 @@ class GeneralController extends ChangeNotifier {
         ..addAll(generalResponse!.mainSpecializations!);
     }
     notifyListeners();
+  }
+
+  Future<void> searchByName(String text) async {
+    try {
+      Map<String, dynamic> prams = {'name': text, 'lat': lat, 'lng': lng};
+
+      isLoading = true;
+      notifyListeners();
+      final result = await _generalRepository.getSearchByName(prams);
+      if (result.data != null) {
+        searchResultResponse = result.data;
+      } else {
+        // GetSnackBar(message: (result.error?.message));
+      }
+    } on DioError catch (e) {
+      // return Error(errorMessage: DioExceptions.fromDioError(e).message);
+      // GetSnackBar(message: (DioExceptions.fromDioError(e).message));
+    } finally {
+      // isLoading.value = false;
+      isLoading = false;
+      notifyListeners();
+    }
   }
 
   Future<void> searchSubSpecialization(String text) async {

@@ -13,9 +13,11 @@ class SearchResultController extends ChangeNotifier {
   List<Doctor> doctorsList = [];
   final _doctorsRepository = locator<DoctorsSearchResultRepository>();
   Map<String, dynamic> prams = {};
+
   Future<void> getDoctors(
       {int? cityId, double? lat, double? lng, int? specializationId}) async {
     try {
+      prams = {};
       if (cityId != null) {
         prams['area_id'] = cityId;
       } else if (lat != null && lng != null) {
@@ -26,7 +28,6 @@ class SearchResultController extends ChangeNotifier {
         prams['specializations[]'] = specializationId;
       }
 
-      print("sdadas= ${prams}");
       isLoading = true;
       final result = await _doctorsRepository.getDoctors(prams);
       if (result.data != null) {

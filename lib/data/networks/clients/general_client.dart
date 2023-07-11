@@ -16,6 +16,10 @@ abstract class GeneralClient {
       '${NetworkConstant.kCitiesRequest}/{id}/${NetworkConstant.kAreasRequest}')
   Future<BaseResponseList<Titles>> getCitiesByArea(@Path('id') int? id);
 
+  @GET(NetworkConstant.kSearchByName)
+  Future<BaseResponse<SearchResultResponse>> getSearchByName(
+      @Queries() Map<String, dynamic> prams);
+
   @GET(
       '${NetworkConstant.kMainSpecialization}/{id}/${NetworkConstant.kSubSpecialization}')
   Future<BaseResponseList<Titles>> getSubSpecilization(@Path('id') int? id);

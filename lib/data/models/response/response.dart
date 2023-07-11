@@ -14,3 +14,5 @@ export 'reservation_response.dart';
 export 'review_response.dart';
 export 'search_result_response.dart';
 export 'terms_policy_response.dart';
+export 'medical_center_response.dart';
+export 'search_by_doctor_result_response.dart';

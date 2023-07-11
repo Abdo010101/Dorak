@@ -53,4 +53,5 @@ class NetworkConstant {
   static const String kPolicy = "privacy-policy";
   static const String kCompleteData = "complete-profile-data";
   static const String kProfile = "profile";
+  static const String kSearchByName = "search-by-name";
 }

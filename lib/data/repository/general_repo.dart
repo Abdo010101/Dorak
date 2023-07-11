@@ -59,6 +59,23 @@ class GeneralRepository extends BaseRepository {
     }
   }
 
+  Future<BaseModel<SearchResultResponse>> getSearchByName(
+      Map<String, dynamic> prams) async {
+    if (await checkForConnectivity()) {
+      try {
+        return BaseModel(
+            data: await generalClient.getSearchByName(prams).then((value) {
+          return value.data;
+        }));
+      } on DioError catch (e) {
+        return BaseModel(error: ErrorResponse(dioError: e));
+      }
+    } else {
+      Util.kToastNOInternet();
+      return BaseModel.noNetworkConnection();
+    }
+  }
+
   /*Future<BaseModel<SpecializationResponse>> getSupSpecialization(
       {required int specialId}) async {
     if (await checkForConnectivity()) {

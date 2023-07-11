@@ -51,3 +51,4 @@ export 'search/city_widget.dart';
 export 'search/specialties_widget.dart';
 export 'settings/settings_components.dart';
 export 'terms_policy/terms_policy_bottom_sheet.dart';
+export 'search/search_card_widget.dart';

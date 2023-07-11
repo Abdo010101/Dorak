@@ -16,9 +16,10 @@ class SearchByDoctorScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     GeneralController generalController =
         Provider.of<GeneralController>(context, listen: false);
+
     return Scaffold(
       backgroundColor: AppColors.liteWight,
-      appBar: CustomAppBar(title: AppStrings.kMainSpecialties.tr()),
+      appBar: CustomAppBar(title: AppStrings.kSearch.tr()),
       body: EmptyCard(
         color: AppColors.transparent,
         verticalPadding: 0,
@@ -33,10 +34,9 @@ class SearchByDoctorScreen extends StatelessWidget {
               hint: AppStrings.kSearchSpeciality.tr(),
               verticalMargin: 0,
               textInputAction: TextInputAction.done,
-              /*onChange: (text) {
-                generalController.search(text);
-              },*/
-              onTap: () {},
+              onChange: (text) {
+                generalController.searchByName(text);
+              } /*  onTap: () {}*/,
               isEnabled: false,
               horizontalMargin: 0,
               maxLines: 1,
@@ -76,17 +76,8 @@ class SearchByDoctorScreen extends StatelessWidget {
                               scrollDirection: Axis.vertical,
                               itemBuilder: (context, index) {
                                 Titles specialModel = specialList[index];
-                                return SpecialtiesWidget(
-                                  specialModel: specialModel,
-                                  specialOnTap: () {
-                                    controller
-                                        .getSubSpeciality(specialModel.id!);
-
-                                    Navigator.pushNamed(
-                                        context,
-                                        NameRoutes
-                                            .kSearchForSubSpecialtiesScreen);
-                                  },
+                                return SearchCardWidget(
+                                  specialOnTap: () {},
                                 );
                               },
                             ),
