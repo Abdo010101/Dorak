@@ -81,7 +81,7 @@ class AppointmentWidget extends StatelessWidget {
                         ),
                         TextBuilder(
                           text: appointment?.date,
-                          verticalPadding: 1.h,
+                          verticalPadding: 0.5.h,
                           horizontalPadding: 2.w,
                           size: AppFontSizes.kS3,
                         )
@@ -130,7 +130,7 @@ class AppointmentWidget extends StatelessWidget {
             children: [
               GeometricalAvatar(
                 url: appointment?.image,
-                radius: 30.sp,
+                radius: 40.sp,
                 margin: EdgeInsetsDirectional.only(end: 2.w),
               ),
               Column(
@@ -138,7 +138,7 @@ class AppointmentWidget extends StatelessWidget {
                 children: [
                   TextBuilder(
                     text: appointment?.name,
-                    size: AppFontSizes.kS3,
+                    size: AppFontSizes.kS4,
                     color: AppColors.navyBlue,
                     horizontalPadding: 0.5.w,
                     verticalPadding: 0,
@@ -156,7 +156,7 @@ class AppointmentWidget extends StatelessWidget {
                         verticalPadding: 0,
                         horizontalPadding: 0.5.w,
                         color: AppColors.navyBlue,
-                        size: AppFontSizes.kS1,
+                        size: AppFontSizes.kS2,
                       )
                     ],
                   )

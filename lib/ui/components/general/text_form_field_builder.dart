@@ -178,16 +178,16 @@ class TextFormFieldBuilder extends StatelessWidget {
 
               prefixIcon: prefixIcon,
               //suffix: suffixIcon,
-              hintText: haveLabel ? '' : "$hint sssssss",
+              hintText: haveLabel ? '' : "$hint ",
               hintStyle: TextStyle(
-                  fontSize: hintSize ?? 12.5.sp, color: AppColors.darkGray),
+                  fontSize: hintSize ?? 13.5.sp, color: AppColors.darkGray),
               label: haveLabel
                   ? Padding(
                       padding: EdgeInsetsDirectional.only(start: 2.5.w),
                       child: Text(
                         hint ?? '',
                         style: TextStyle(
-                            fontSize: hintSize ?? 12.5.sp,
+                            fontSize: hintSize ?? 13.5.sp,
                             color: AppColors.darkGray),
                       ),
                     )

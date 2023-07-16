@@ -32,7 +32,7 @@ class CityWidget extends StatelessWidget {
           bold: bold ?? false,
           verticalPadding: 0,
           horizontalPadding: 0,
-          size: AppFontSizes.kS3,
+          size: AppFontSizes.kS4,
           color: color ?? AppColors.navyBlue,
         ),
       ),

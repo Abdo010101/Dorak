@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../data/di/locator.dart';
 import '../data/models/response/response.dart';
@@ -14,20 +16,40 @@ class SearchResultController extends ChangeNotifier {
   final _doctorsRepository = locator<DoctorsSearchResultRepository>();
   Map<String, dynamic> prams = {};
 
-  Future<void> getDoctors(
-      {int? cityId, double? lat, double? lng, int? specializationId}) async {
+  Future<void> getDoctors(BuildContext context,
+      {int? cityId,
+      int? areaId,
+      double? lat,
+      double? lng,
+      int? doctor,
+      int? specializationId,
+      int? medicalCenterId}) async {
     try {
       prams = {};
       if (cityId != null) {
         prams['area_id'] = cityId;
+      } else if (areaId != null) {
+        prams['city_id'] = areaId;
       } else if (lat != null && lng != null) {
         prams['lat'] = lat;
         prams['lng'] = lng;
       }
-      if (specializationId != null) {
-        prams['specializations[]'] = specializationId;
-      }
 
+      if (medicalCenterId != null) {
+        prams['medical_center_id'] = medicalCenterId;
+      }
+      if (specializationId != null) {
+        if (context.mounted) {
+          bool mainSpec = Provider.of<GeneralController>(context, listen: false)
+              .isMainSpecialization;
+
+          if (mainSpec) {
+            prams['main_specialization_id'] = specializationId;
+          } else {
+            prams['specializations[]'] = specializationId;
+          }
+        }
+      }
       isLoading = true;
       final result = await _doctorsRepository.getDoctors(prams);
       if (result.data != null) {

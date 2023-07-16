@@ -20,7 +20,7 @@ class SectionLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 4.h,
+      //height: 5.h,
       padding: EdgeInsets.symmetric(
           horizontal: horizontalPadding ?? 0, vertical: verticalPadding ?? 0),
       child: Row(
@@ -37,7 +37,7 @@ class SectionLabel extends StatelessWidget {
             onPressed: seeAllPressed,
             child: TextBuilder(
               text: AppStrings.kSeeAll.tr(),
-              size: AppFontSizes.kS3,
+              size: AppFontSizes.kS4,
               verticalPadding: 0,
             ),
           ),

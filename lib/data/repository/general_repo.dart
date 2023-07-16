@@ -59,7 +59,7 @@ class GeneralRepository extends BaseRepository {
     }
   }
 
-  Future<BaseModel<SearchResultResponse>> getSearchByName(
+  Future<BaseModel<SearchResultData>> getSearchByName(
       Map<String, dynamic> prams) async {
     if (await checkForConnectivity()) {
       try {

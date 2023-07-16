@@ -186,7 +186,9 @@ class FilterBottomSheet extends StatelessWidget {
                     : controller.filterDoctors(context);
                 filterType == 'Offer'
                     ? await context.read<OffersController>().getAllOffers()
-                    : await context.read<SearchResultController>().getDoctors();
+                    : await context
+                        .read<SearchResultController>()
+                        .getDoctors(context);
               },
             ),
           ],

@@ -28,7 +28,7 @@ class ResultOfSearchScreen extends StatelessWidget {
         backgroundColor: AppColors.liteWight,
         elevation: 0,
         leading: TextBuilder(
-          text: titleName,
+          text: titleName ?? AppStrings.kResult.tr(),
           color: AppColors.navyBlue,
           verticalPadding: 2.25.h,
           align: TextAlign.center,

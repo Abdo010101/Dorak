@@ -40,7 +40,10 @@ class SearchCardWidget extends StatelessWidget {
               color: AppColors.navyBlue,
             ),
             Spacer(),
-            Text('SPacer')
+            Text(
+              '${trailingText}',
+              style: TextStyle(fontSize: 10.sp, color: AppColors.grey),
+            )
           ],
         ),
       ),

@@ -11,7 +11,6 @@ class TextBuilder extends StatelessWidget {
       this.horizontalPadding,
       this.color,
       this.maxLin,
-      this.textHeight,
       this.size,
       this.bold = false,
       this.width,
@@ -29,7 +28,6 @@ class TextBuilder extends StatelessWidget {
   final double? width;
   final TextAlign? align;
   final bool? underline;
-  final double? textHeight;
   final double? height;
   @override
   Widget build(BuildContext context) {
@@ -50,7 +48,7 @@ class TextBuilder extends StatelessWidget {
                 : underline == false
                     ? TextDecoration.lineThrough
                     : TextDecoration.none,
-            height: textHeight ?? 1,
+            // height: textHeight ?? 1,
             overflow: TextOverflow.clip,
             color: color ?? AppColors.darkGray,
             fontSize: size ?? 12.5.sp,

@@ -24,7 +24,7 @@ class DoctorScreen extends StatelessWidget {
             shareClick: () {
               Util.shareLink(' https://unitester2910://unitest000.com');
             },
-            hasShare: true,
+            hasShare: false,
           ),
           backgroundColor: AppColors.liteWight,
           bottomNavigationBar: doctorController.profileType ==

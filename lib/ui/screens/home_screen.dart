@@ -29,6 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     MainScreenController mainController =
         Provider.of<MainScreenController>(context, listen: false);
+    GeneralController generalController =
+        Provider.of<GeneralController>(context, listen: false);
 
     return Scaffold(
         appBar: AppBar(
@@ -99,7 +101,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         bold: true,
                       ),
                       InkWell(
-                        onTap: () {
+                        onTap: () async {
+                          await generalController.getCurrentLocation(context);
+
                           Navigator.pushNamed(
                               context, NameRoutes.kSearchForSpecialtiesScreen);
                         },
@@ -120,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 text: AppStrings.kFindDoctor.tr(),
                                 verticalPadding: 0,
                                 horizontalPadding: 3.w,
-                                size: AppFontSizes.kS3,
+                                size: AppFontSizes.kS4,
                               ),
                             ],
                           ),
@@ -149,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               : Container(
                                   margin:
                                       EdgeInsets.symmetric(vertical: 0.75.h),
-                                  height: 24.h,
+                                  height: 30.h,
                                   child: ListView.separated(
                                     itemCount: controller
                                         .homeData!.bestDoctors!.length,
@@ -241,7 +245,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                       SizedBox(
-                        height: 1.h,
+                        height: 2.h,
                       ),
                       SectionLabel(
                         title: AppStrings.kMyAppointment.tr(),

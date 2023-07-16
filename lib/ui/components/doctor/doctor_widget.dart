@@ -25,7 +25,7 @@ class DoctorWidget extends StatelessWidget {
         radius: 15.0,
         verticalMargin: 0.5.h,
         horizontalMargin: 0,
-        verticalPadding: 2.h,
+        verticalPadding: 1.h,
         width: 90.w,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,21 +41,21 @@ class DoctorWidget extends StatelessWidget {
                         ? GeometricalAvatar(
                             //path: AppAssets.kDoctorImage,
                             url: model?.image,
-                            radius: 30.sp,
+                            radius: 40.sp,
                             margin: EdgeInsetsDirectional.only(end: 2.w),
                           )
                         : FullScreenWidgetBuilder(
                             url: model!.image!,
-                            radius: 30.sp,
-                            width: 30.sp,
-                            height: 30.sp,
+                            radius: 40.sp,
+                            width: 40.sp,
+                            height: 40.sp,
                           ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TextBuilder(
                           text: model?.name ?? '',
-                          size: AppFontSizes.kS3,
+                          size: AppFontSizes.kS4,
                           color: AppColors.navyBlue,
                           horizontalPadding: 0.5.w,
                           verticalPadding: 0,
@@ -64,12 +64,13 @@ class DoctorWidget extends StatelessWidget {
                           height: 1.0.h,
                         ),
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Util.isNumeric(model?.rate)
                                 ? RatingBarWidget(
                                     initialRating:
                                         double.parse(model?.rate ?? '0.0'),
-                                    itemSize: 10.sp,
+                                    itemSize: 12.sp,
                                   )
                                 : const SizedBox(),
                             TextBuilder(
@@ -79,7 +80,7 @@ class DoctorWidget extends StatelessWidget {
                               verticalPadding: 0,
                               horizontalPadding: 0.5.w,
                               color: AppColors.navyBlue,
-                              size: AppFontSizes.kS1,
+                              size: AppFontSizes.kS2,
                             )
                           ],
                         )
@@ -91,14 +92,18 @@ class DoctorWidget extends StatelessWidget {
                   visible: model?.isSponsored ?? false,
                   child: Row(
                     children: [
-                      Image.asset(AppAssets.kSponsoredIcon),
+                      Image.asset(
+                        AppAssets.kSponsoredIcon,
+                        width: 5.0.w,
+                        height: 5.0.w,
+                      ),
                       SizedBox(
                         width: 1.0.w,
                       ),
                       Text(
                         AppStrings.kSponsored.tr(),
                         style:
-                            TextStyle(color: AppColors.orange, fontSize: 8.sp),
+                            TextStyle(color: AppColors.orange, fontSize: 10.sp),
                       )
                     ],
                   ),
@@ -108,7 +113,7 @@ class DoctorWidget extends StatelessWidget {
             TextBuilder(
               text: model?.bio ?? '',
               verticalPadding: 1.h,
-              size: AppFontSizes.kS3,
+              size: AppFontSizes.kS4,
               maxLin: 3,
               color: AppColors.darkGray,
             ),
@@ -125,11 +130,15 @@ class DoctorWidget extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SvgPicture.asset(AppAssets.kLocationIcon),
+                        SvgPicture.asset(
+                          AppAssets.kLocationIcon,
+                          width: 3.0.w,
+                          height: 3.0.w,
+                        ),
                         TextBuilder(
                           width: 30.w,
                           text: "${model?.address}",
-                          size: AppFontSizes.kS2,
+                          size: AppFontSizes.kS3,
                           color: AppColors.navyBlue,
                           verticalPadding: 0,
                           horizontalPadding: 2.w,
@@ -140,12 +149,16 @@ class DoctorWidget extends StatelessWidget {
                           height: 3.h,
                           horizontalMargin: 2.5.w,
                         ),
-                        SvgPicture.asset(AppAssets.kMoneyIcon),
+                        SvgPicture.asset(
+                          AppAssets.kMoneyIcon,
+                          width: 3.0.w,
+                          height: 3.0.w,
+                        ),
                         TextBuilder(
                           width: 30.w,
                           text:
                               "${double.parse(model?.examinationPrice ?? '0').toStringAsFixed(1)} ${AppStrings.kCurrency.tr()}",
-                          size: AppFontSizes.kS2,
+                          size: AppFontSizes.kS3,
                           color: AppColors.navyBlue,
                           verticalPadding: 0,
                           horizontalPadding: 2.w,

@@ -16,12 +16,12 @@ class GeneralController extends ChangeNotifier {
   List<Titles> specializationList = [];
   List<Titles> originalSubSpecializationList = [];
   List<Titles> subSpecializationList = [];
-
   List<Titles> citiesList = [];
   List<Titles> areaList = [];
   List<Titles> originalAreaList = [];
   List<Titles> originalCityList = [];
-  SearchResultResponse? searchResultResponse;
+  bool isMainSpecialization = false;
+  SearchResultData? searchResultResponse;
   double? lat;
   double? lng;
   String? specializationName;
@@ -77,6 +77,7 @@ class GeneralController extends ChangeNotifier {
   Future<void> getCities(int id) async {
     try {
       isLoading = true;
+
       notifyListeners();
       final result = await _generalRepository.getCityByArea(id);
       if (result.data != null) {
@@ -87,6 +88,7 @@ class GeneralController extends ChangeNotifier {
         citiesList
           ..clear()
           ..addAll(result.data!);
+        areaId = id;
       } else {
         // GetSnackBar(message: (result.error?.message));
       }
@@ -102,6 +104,7 @@ class GeneralController extends ChangeNotifier {
 
   Future<void> getSubSpeciality(int id) async {
     specializationId = id;
+    specId = id;
     try {
       isLoading = true;
       notifyListeners();
@@ -207,7 +210,11 @@ class GeneralController extends ChangeNotifier {
 
   void onSpecializationChange(int id, String name) {
     specializationId = id;
-    specId = id;
+    specializationName = name;
+  }
+
+  void onMainSpecializationChange(String name) {
+    specializationId = specId;
     specializationName = name;
   }
 
@@ -225,8 +232,11 @@ class GeneralController extends ChangeNotifier {
       lat = position.latitude;
       lng = position.longitude;
 
-      Provider.of<SearchResultController>(context, listen: false)
-          .getDoctors(lat: lat, lng: lng, specializationId: specializationId);
+      Provider.of<SearchResultController>(context, listen: false).getDoctors(
+          context,
+          lat: lat,
+          lng: lng,
+          specializationId: specializationId);
       Navigator.of(context).pushNamed(NameRoutes.kResultOfSearch);
     }
   }

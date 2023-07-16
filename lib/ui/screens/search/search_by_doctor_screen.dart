@@ -19,6 +19,7 @@ class SearchByDoctorScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColors.liteWight,
+      resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(title: AppStrings.kSearch.tr()),
       body: EmptyCard(
         color: AppColors.transparent,
@@ -37,7 +38,7 @@ class SearchByDoctorScreen extends StatelessWidget {
               onChange: (text) {
                 generalController.searchByName(text);
               } /*  onTap: () {}*/,
-              isEnabled: false,
+              isEnabled: true,
               horizontalMargin: 0,
               maxLines: 1,
               width: 100.w,
@@ -62,24 +63,112 @@ class SearchByDoctorScreen extends StatelessWidget {
             ),
             Consumer<GeneralController>(
               builder: (cont, controller, child) {
-                List<Titles> specialList = controller.specializationList;
+                List<Doctor> doctorList =
+                    controller.searchResultResponse?.doctors ?? [];
+                List<Titles>? specializationList =
+                    controller.searchResultResponse?.specialization ?? [];
+                List<MedicalsCenter>? medicalCenterList =
+                    controller.searchResultResponse?.medicalsCenters ?? [];
+
                 return controller.isLoading
                     ? const LoadingWidget(
                         backgroundColor: AppColors.transparent,
                       )
-                    : specialList.isEmpty
+                    : doctorList.isEmpty &&
+                            specializationList.isEmpty &&
+                            medicalCenterList.isEmpty
                         ? Center(child: Text(AppStrings.kNoDataFound.tr()))
                         : Expanded(
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: specialList.length,
-                              scrollDirection: Axis.vertical,
-                              itemBuilder: (context, index) {
-                                Titles specialModel = specialList[index];
-                                return SearchCardWidget(
-                                  specialOnTap: () {},
-                                );
-                              },
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  ListView.builder(
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemCount: specializationList.length,
+                                    scrollDirection: Axis.vertical,
+                                    itemBuilder: (context, index) {
+                                      Titles model = specializationList[index];
+                                      return SearchCardWidget(
+                                        name: model.name,
+                                        icon: model.icon,
+                                        trailingText: AppStrings.kSpeciality,
+                                        specialOnTap: () {
+                                          Provider.of<SearchResultController>(
+                                                  context,
+                                                  listen: false)
+                                              .getDoctors(
+                                            context,
+                                            lat: controller.lat,
+                                            lng: controller.lng,
+                                          );
+
+                                          Navigator.of(context).pushNamed(
+                                              NameRoutes.kResultOfSearch);
+                                        },
+                                      );
+                                    },
+                                  ),
+                                  ListView.builder(
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemCount: doctorList.length,
+                                    scrollDirection: Axis.vertical,
+                                    itemBuilder: (context, index) {
+                                      Doctor model = doctorList[index];
+                                      return SearchCardWidget(
+                                        specialOnTap: () {
+                                          Provider.of<DoctorProfileController>(
+                                                  context,
+                                                  listen: false)
+                                              .getDoctorProfile(context,
+                                                  doctorId: model.id!);
+                                          Provider.of<DoctorProfileController>(
+                                                  context,
+                                                  listen: false)
+                                              .getDoctorOffers(context,
+                                                  doctorId: model.id!);
+                                          Navigator.of(context).pushNamed(
+                                              NameRoutes.kDoctorScreen);
+                                        },
+                                        name: model.name,
+                                        icon: model.image,
+                                        trailingText: AppStrings.kDoctor,
+                                      );
+                                    },
+                                  ),
+                                  ListView.builder(
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemCount: medicalCenterList.length,
+                                    scrollDirection: Axis.vertical,
+                                    itemBuilder: (context, index) {
+                                      MedicalsCenter model =
+                                          medicalCenterList[index];
+                                      return SearchCardWidget(
+                                        specialOnTap: () {
+                                          Provider.of<SearchResultController>(
+                                                  context,
+                                                  listen: false)
+                                              .getDoctors(context,
+                                                  lat: controller.lat,
+                                                  lng: controller.lng,
+                                                  medicalCenterId: model.id);
+
+                                          Navigator.of(context).pushNamed(
+                                              NameRoutes.kResultOfSearch);
+                                        },
+                                        name: model.name,
+                                        icon: model.logo,
+                                        trailingText: AppStrings.kMedicalCenter,
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
                             ),
                           );
               },

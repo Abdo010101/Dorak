@@ -175,4 +175,6 @@ class AppStrings {
   static const kTomorrow = 'tomorrow';
   static const kResult = 'result';
   static const kSearch = 'search';
+  static const kSpeciality = 'speciality';
+  static const kDoctor = 'doctor';
 }

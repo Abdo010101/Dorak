@@ -38,20 +38,20 @@ class NotificationCard extends StatelessWidget {
                 child: Text(
                   notification?.title ?? '',
                   style:
-                      TextStyle(fontSize: 10.5.sp, fontWeight: FontWeight.bold),
+                      TextStyle(fontSize: 12.5.sp, fontWeight: FontWeight.bold),
                 ),
               ),
               SizedBox(
                 width: 60.0.w,
                 child: Text(
                   notification?.description ?? '',
-                  style: TextStyle(color: AppColors.darkGray, fontSize: 8.sp),
+                  style: TextStyle(color: AppColors.darkGray, fontSize: 10.sp),
                 ),
               ),
               Text(
                 notification?.date ?? '',
                 style: TextStyle(
-                    color: AppColors.darkGray, height: 2.0, fontSize: 7.sp),
+                    color: AppColors.darkGray, height: 2.0, fontSize: 9.sp),
               ),
             ],
           ),

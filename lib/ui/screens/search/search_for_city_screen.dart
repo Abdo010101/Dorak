@@ -58,6 +58,21 @@ class SearchForCityScreen extends StatelessWidget {
               verticalPadding: 1.5.h,
               horizontalPadding: 0,
             ),
+            CityWidget(
+              cityName: AppStrings.kAll.tr(),
+              specialOnTap: () async {
+                Provider.of<SearchResultController>(context, listen: false)
+                    .prams = {};
+                Provider.of<SearchResultController>(context, listen: false)
+                    .getDoctors(context,
+                        areaId: generalController.areaId,
+                        specializationId: generalController.specializationId);
+
+                Navigator.of(context).pushNamed(NameRoutes.kResultOfSearch);
+              },
+              color: AppColors.blue,
+              bold: true,
+            ),
             Consumer<GeneralController>(builder: (cont, controller, child) {
               List<Titles> cityList = controller.citiesList;
               return controller.isLoading
@@ -85,7 +100,7 @@ class SearchForCityScreen extends StatelessWidget {
                                       .prams = {};
                                   Provider.of<SearchResultController>(context,
                                           listen: false)
-                                      .getDoctors(
+                                      .getDoctors(context,
                                           cityId: controller.cityId,
                                           lat: controller.lat,
                                           lng: controller.lng,

@@ -73,8 +73,8 @@ class SearchForSubSpecialtiesScreen extends StatelessWidget {
                                 CityWidget(
                                   cityName: AppStrings.kAll.tr(),
                                   specialOnTap: () async {
-                                    controller.onSpecializationChange(
-                                      controller.specializationId!,
+                                    controller.isMainSpecialization = true;
+                                    controller.onMainSpecializationChange(
                                       AppStrings.kAllSubSpecializations.tr(),
                                     );
                                     Navigator.pushNamed(context,
@@ -93,6 +93,8 @@ class SearchForSubSpecialtiesScreen extends StatelessWidget {
                                       return SpecialtiesWidget(
                                         specialModel: specialModel,
                                         specialOnTap: () {
+                                          controller.isMainSpecialization =
+                                              false;
                                           controller.onSpecializationChange(
                                               specialModel.id!,
                                               specialModel.name!);

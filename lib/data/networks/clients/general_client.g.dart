@@ -72,14 +72,14 @@ class _GeneralClient implements GeneralClient {
   }
 
   @override
-  Future<BaseResponse<SearchResultResponse>> getSearchByName(prams) async {
+  Future<BaseResponse<SearchResultData>> getSearchByName(prams) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.addAll(prams);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse<SearchResultResponse>>(Options(
+        _setStreamType<BaseResponse<SearchResultData>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -91,9 +91,9 @@ class _GeneralClient implements GeneralClient {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = BaseResponse<SearchResultResponse>.fromJson(
+    final value = BaseResponse<SearchResultData>.fromJson(
       _result.data!,
-      (json) => SearchResultResponse.fromJson(json as Map<String, dynamic>),
+      (json) => SearchResultData.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }

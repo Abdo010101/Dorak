@@ -59,11 +59,15 @@ class ClinicWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SvgPicture.asset(AppAssets.kLocationIcon),
+                SvgPicture.asset(
+                  AppAssets.kLocationIcon,
+                  width: 3.0.w,
+                  height: 3.0.w,
+                ),
                 TextBuilder(
                   width: 30.w,
                   text: place?.shortAddress,
-                  size: AppFontSizes.kS2,
+                  size: AppFontSizes.kS3,
                   color: AppColors.navyBlue,
                   verticalPadding: 0,
                   horizontalPadding: 2.w,
@@ -74,12 +78,16 @@ class ClinicWidget extends StatelessWidget {
                   height: 3.h,
                   horizontalMargin: 2.5.w,
                 ),
-                SvgPicture.asset(AppAssets.kMoneyIcon),
+                SvgPicture.asset(
+                  AppAssets.kMoneyIcon,
+                  width: 3.0.w,
+                  height: 3.0.w,
+                ),
                 TextBuilder(
                   width: 30.w,
                   text:
                       "${double.parse(place?.examinationPrice ?? '0').toStringAsFixed(1)} ${AppStrings.kCurrency.tr()}",
-                  size: AppFontSizes.kS2,
+                  size: AppFontSizes.kS3,
                   color: AppColors.navyBlue,
                   verticalPadding: 0,
                   horizontalPadding: 2.w,
@@ -94,13 +102,13 @@ class ClinicWidget extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.access_time,
-                    size: 9.sp,
+                    size: 11.sp,
                     color: AppColors.lightGrey2,
                   ),
                   TextBuilder(
                       text:
                           '${AppStrings.kWaitingTime.tr()} ${place?.examinationDuration} ${AppStrings.kMin.tr()}',
-                      size: AppFontSizes.kS2,
+                      size: AppFontSizes.kS3,
                       verticalPadding: 0,
                       horizontalPadding: 1.w,
                       color: AppColors.lightGrey2),

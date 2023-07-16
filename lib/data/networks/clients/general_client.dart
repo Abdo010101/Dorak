@@ -17,7 +17,7 @@ abstract class GeneralClient {
   Future<BaseResponseList<Titles>> getCitiesByArea(@Path('id') int? id);
 
   @GET(NetworkConstant.kSearchByName)
-  Future<BaseResponse<SearchResultResponse>> getSearchByName(
+  Future<BaseResponse<SearchResultData>> getSearchByName(
       @Queries() Map<String, dynamic> prams);
 
   @GET(
