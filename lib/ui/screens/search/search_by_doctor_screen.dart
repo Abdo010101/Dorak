@@ -98,11 +98,11 @@ class SearchByDoctorScreen extends StatelessWidget {
                                           Provider.of<SearchResultController>(
                                                   context,
                                                   listen: false)
-                                              .getDoctors(
-                                            context,
-                                            lat: controller.lat,
-                                            lng: controller.lng,
-                                          );
+                                              .getDoctors(context,
+                                                  lat: controller.lat,
+                                                  lng: controller.lng,
+                                                  doctorsBySpecialization:
+                                                      model.id);
 
                                           Navigator.of(context).pushNamed(
                                               NameRoutes.kResultOfSearch);

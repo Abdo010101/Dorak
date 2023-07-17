@@ -1,13 +1,16 @@
 import 'package:dio/dio.dart';
+import 'package:dorakpattient/constants/constants.dart';
 import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/data/di/locator.dart';
 import 'package:dorakpattient/routes/dorak_routes.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
 import '../data/models/response/response.dart';
 import '../data/repository/repository.dart';
+import '../utis/util.dart';
 
 class GeneralController extends ChangeNotifier {
   final _generalRepository = locator<GeneralRepository>();

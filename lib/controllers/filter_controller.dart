@@ -1,4 +1,8 @@
+import 'dart:math';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/strings.dart';
@@ -34,7 +38,6 @@ class FilterController extends DisposableProvider {
       mainSpecialtyList[mainSpecialtyIndex!].icon = '0';
     }
     subSpecialtyList = [];
-    titlesList = [];
     availabilityList = [
       Titles(name: AppStrings.kAnyDay),
       Titles(name: AppStrings.kToday),
@@ -85,6 +88,7 @@ class FilterController extends DisposableProvider {
       mainSpecialtyList[index].icon = '0';
       mainSpecialtyIndex = null;
     } else {
+      EasyLoading.show();
       mainSpecialtyList[index].icon = '1';
       subSpecialtyToggle = false;
       subSpecialtyList.clear();
@@ -144,6 +148,7 @@ class FilterController extends DisposableProvider {
 
   filterOffer(BuildContext context) {
     String? genderName;
+
     for (var gender in genderList) {
       if (gender.icon == '1') {
         genderName = gender.name;
@@ -182,53 +187,72 @@ class FilterController extends DisposableProvider {
     context.read<OffersController>().data = filterData;
   }
 
-  filterDoctors(BuildContext context) {
-    Map<String, dynamic> filterData = {};
-    String? genderName;
-    for (var gender in genderList) {
-      if (gender.icon == '1') {
-        genderName = gender.name;
-      }
-    }
-    if (genderName != null) {
-      filterData['gender'] = genderName;
-    }
+  filterDoctors(BuildContext context,
+      {double? lat, double? lng, int? cityId, int? city, int? areaId}) {
+    try {
+      Map<String, dynamic> filterData = {};
 
-    String? availabilityName;
-    for (var availability in availabilityList) {
-      if (availability.icon == '1' && availability.name != AppStrings.kAnyDay) {
-        availabilityName = availability.name;
+      String? genderName;
+      for (var gender in genderList) {
+        if (gender.icon == '1') {
+          genderName = gender.name;
+        }
       }
-    }
-    if (availabilityName != null) {
-      filterData['availability'] = availabilityName;
-    }
+      if (genderName != null) {
+        filterData['gender'] = genderName;
+      }
 
-    List<int> tittlesId = [];
-    for (var tittle in titlesList) {
-      if (tittle.icon == '1') {
-        tittlesId.add(tittle.id!.toInt());
+      if (lat != null) {
+        filterData['lat'] = lat;
       }
-    }
-    if (tittlesId.isNotEmpty) {
-      filterData['titles[]'] = tittlesId;
-    }
+      if (lng != null) {
+        filterData['lng'] = lng;
+      }
+      if (cityId != null) {
+        filterData['city_id'] = cityId;
+      } else if (areaId != null) {
+        filterData['area_id'] = areaId;
+      }
+      String? availabilityName;
+      for (var availability in availabilityList) {
+        if (availability.icon == '1' &&
+            availability.name != AppStrings.kAnyDay) {
+          availabilityName = availability.name;
+        }
+      }
+      if (availabilityName != null) {
+        filterData['availability'] = availabilityName;
+      }
 
-    List<int> subSpecialtiesId = [];
-    for (var subSpecialty in subSpecialtyList) {
-      if (subSpecialty.icon == '1') {
-        subSpecialtiesId.add(subSpecialty.id!.toInt());
+      List<int> tittlesId = [];
+      for (var tittle in titlesList) {
+        if (tittle.icon == '1') {
+          tittlesId.add(tittle.id!.toInt());
+        }
       }
-    }
-    if (mainSpecialtyIndex != null) {
-      subSpecialtiesId.add(mainSpecialtyList[mainSpecialtyIndex!].id!);
-    }
-    if (subSpecialtiesId != []) {
-      filterData['specializations[]'] = subSpecialtiesId;
-    }
-    filterData['minPrice'] = currentRangeValues?.start.toInt();
-    filterData['maxPrice'] = currentRangeValues?.end.toInt();
-    context.read<SearchResultController>().prams = filterData;
+      if (tittlesId.isNotEmpty) {
+        filterData['titles[]'] = tittlesId;
+      }
+
+      List<int> subSpecialtiesId = [];
+      for (var subSpecialty in subSpecialtyList) {
+        if (subSpecialty.icon == '1') {
+          subSpecialtiesId.add(subSpecialty.id!.toInt());
+        }
+      }
+      if (mainSpecialtyIndex != null) {
+        subSpecialtiesId.add(mainSpecialtyList[mainSpecialtyIndex!].id!);
+      }
+      if (subSpecialtiesId != []) {
+        filterData['specializations[]'] = subSpecialtiesId;
+      }
+      filterData['minPrice'] = currentRangeValues?.start.toInt();
+      filterData['maxPrice'] = currentRangeValues?.end.toInt();
+      context
+          .read<SearchResultController>()
+          .getDoctors(context, data: filterData);
+    } on DioError catch (e) {
+    } finally {}
   }
 
   @override

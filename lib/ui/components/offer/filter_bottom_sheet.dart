@@ -14,12 +14,13 @@ class FilterBottomSheet extends StatelessWidget {
     this.filterType,
   }) : super(key: key);
   final String? filterType;
+
   @override
   Widget build(BuildContext context) {
+    GeneralController generalController =
+        Provider.of<GeneralController>(context, listen: false);
     return Consumer<FilterController>(
       builder: (context, controller, child) {
-        GeneralController generalController =
-            Provider.of<GeneralController>(context, listen: false);
         return BottomSheetBuilder(
           backgroundColor: AppColors.white,
           crossAlignment: CrossAxisAlignment.start,
@@ -58,7 +59,6 @@ class FilterBottomSheet extends StatelessWidget {
                 onSelect: (value) async {
                   controller.mainSpecialtySelect(value);
                   if (controller.subSpecialtyList.isEmpty) {
-                    EasyLoading.show();
                     await generalController.getSubSpeciality(controller
                         .mainSpecialtyList[controller.mainSpecialtyIndex!].id!);
                     EasyLoading.dismiss();
@@ -71,8 +71,10 @@ class FilterBottomSheet extends StatelessWidget {
                 onClose: controller.openMainSpecialty,
               ),
             ),
-            controller.mainSpecialtyIndex != null
-                ? Visibility(
+            controller.mainSpecialtyIndex == null ||
+                    controller.subSpecialtyList.isEmpty
+                ? const SizedBox()
+                : Visibility(
                     visible: controller.subSpecialtyToggle,
                     replacement: OfferDropDown(
                       tittle: AppStrings.kSubSpecialties.tr(),
@@ -95,8 +97,7 @@ class FilterBottomSheet extends StatelessWidget {
                       onSelect: controller.subSpecialtySelect,
                       onClose: controller.openSubSpecialty,
                     ),
-                  )
-                : const SizedBox(),
+                  ),
             Visibility(
               visible: controller.availabilityToggle,
               replacement: OfferDropDown(
@@ -127,7 +128,7 @@ class FilterBottomSheet extends StatelessWidget {
                   tittle: AppStrings.kTitle.tr(),
                   onPressed: controller.openTitle),
               child: OfferItemSelection(
-                tittle: AppStrings.kTitle,
+                tittle: AppStrings.kTitle.tr(),
                 items: controller.titlesList,
                 onSelect: controller.tittleSelect,
                 onClose: controller.openTitle,
@@ -183,12 +184,16 @@ class FilterBottomSheet extends StatelessWidget {
                 Navigator.pop(context);
                 filterType == 'Offer'
                     ? controller.filterOffer(context)
-                    : controller.filterDoctors(context);
-                filterType == 'Offer'
-                    ? await context.read<OffersController>().getAllOffers()
-                    : await context
-                        .read<SearchResultController>()
-                        .getDoctors(context);
+                    : controller.filterDoctors(
+                        context,
+                        lng: generalController.lng,
+                        lat: generalController.lat,
+                        /*cityId: generalController.cityId,
+                        areaId: generalController.areaId*/
+                      );
+                if (filterType == 'Offer') {
+                  await context.read<OffersController>().getAllOffers();
+                }
               },
             ),
           ],

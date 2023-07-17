@@ -62,7 +62,7 @@ class Util {
     return double.tryParse(value) != null;
   }
 
-  static Future<bool?> kToastLoginMessage(var message) {
+  static Future<bool?> kToastWithMessage(var message) {
     return Fluttertoast.showToast(
         msg: "$message",
         toastLength: Toast.LENGTH_LONG,

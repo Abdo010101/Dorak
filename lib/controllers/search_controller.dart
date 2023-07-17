@@ -17,15 +17,22 @@ class SearchResultController extends ChangeNotifier {
   Map<String, dynamic> prams = {};
 
   Future<void> getDoctors(BuildContext context,
-      {int? cityId,
+      {Map<String, dynamic>? data,
+      int? cityId,
       int? areaId,
       double? lat,
       double? lng,
-      int? doctor,
+      int? doctorsBySpecialization,
       int? specializationId,
       int? medicalCenterId}) async {
     try {
+      isLoading = true;
+      notifyListeners();
       prams = {};
+
+      if (data != null) {
+        prams = data;
+      }
       if (cityId != null) {
         prams['area_id'] = cityId;
       } else if (areaId != null) {
@@ -37,6 +44,9 @@ class SearchResultController extends ChangeNotifier {
 
       if (medicalCenterId != null) {
         prams['medical_center_id'] = medicalCenterId;
+      }
+      if (doctorsBySpecialization != null) {
+        prams['specialization_id'] = doctorsBySpecialization;
       }
       if (specializationId != null) {
         if (context.mounted) {

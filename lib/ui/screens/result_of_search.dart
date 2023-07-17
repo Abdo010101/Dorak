@@ -55,6 +55,7 @@ class ResultOfSearchScreen extends StatelessWidget {
               filterController.minPrice = searchResultController.minPrice;
               filterController.currentRangeValues ??=
                   searchResultController.currentRangeValues;
+              filterController.resetData();
               showModalBottomSheet(
                   isScrollControlled: true,
                   context: context,
