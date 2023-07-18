@@ -342,7 +342,7 @@ class SignUpScreen extends StatelessWidget {
                                   }
                                 } else {
                                   if (context.mounted) {
-                                    Util.kToastLoginMessage(
+                                    Util.kToastWithMessage(
                                         AppStrings.kCompleteInfo.tr());
                                     Navigator.pushNamedAndRemoveUntil(
                                         context,
@@ -400,7 +400,7 @@ class SignUpScreen extends StatelessWidget {
                                   }
                                 } else {
                                   if (context.mounted) {
-                                    Util.kToastLoginMessage(
+                                    Util.kToastWithMessage(
                                         AppStrings.kCompleteInfo.tr());
                                     Navigator.pushNamedAndRemoveUntil(
                                         context,

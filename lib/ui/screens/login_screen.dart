@@ -280,7 +280,7 @@ class LoginScreen extends StatelessWidget {
                                       }
                                     } else {
                                       if (context.mounted) {
-                                        Util.kToastLoginMessage(
+                                        Util.kToastWithMessage(
                                             AppStrings.kCompleteInfo.tr());
                                         Navigator.pushNamedAndRemoveUntil(
                                             context,
@@ -399,7 +399,7 @@ class LoginScreen extends StatelessWidget {
                                             }
                                           } else {
                                             if (context.mounted) {
-                                              Util.kToastLoginMessage(AppStrings
+                                              Util.kToastWithMessage(AppStrings
                                                   .kCompleteInfo
                                                   .tr());
                                               Navigator.pushNamedAndRemoveUntil(
