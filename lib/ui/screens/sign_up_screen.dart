@@ -288,8 +288,10 @@ class SignUpScreen extends StatelessWidget {
                                       AppStrings.kCompleteInfo.tr());
                                   Navigator.pushNamedAndRemoveUntil(
                                       context,
-                                      NameRoutes.kProfileDetailsScreen,
+                                      NameRoutes.kChangePhoneScreen,
                                       (route) => false);
+                                  context.read<VerifyController>().type =
+                                      SendOtpType.login;
                                 }
                               }
                             }
@@ -315,7 +317,101 @@ class SignUpScreen extends StatelessWidget {
                             height: 6.5.h,
                             buttonColor: AppColors.white,
                             borderColor: AppColors.transparent,
-                            onPressed: () {},
+                            onPressed: () async {
+                              final isSuccess =
+                                  await loginController.signInWithSocial(
+                                      context, LoginSocialType.google);
+                              if (!isSuccess) {
+                              } else {
+                                if (authProvider.currentUser?.patient?.phone !=
+                                        null &&
+                                    authProvider.currentUser?.patient?.phone !=
+                                        '') {
+                                  if (context.mounted) {
+                                    if (authProvider
+                                            .currentUser?.patient?.verifiedAt ==
+                                        null) {
+                                      Navigator.of(context)
+                                          .pushReplacementNamed(
+                                              NameRoutes.kOTPScreen);
+                                    } else {
+                                      Navigator.of(context)
+                                          .pushReplacementNamed(
+                                              NameRoutes.kHomeScreen);
+                                    }
+                                  }
+                                } else {
+                                  if (context.mounted) {
+                                    Util.kToastLoginMessage(
+                                        AppStrings.kCompleteInfo.tr());
+                                    Navigator.pushNamedAndRemoveUntil(
+                                        context,
+                                        NameRoutes.kChangePhoneScreen,
+                                        (route) => false);
+                                    context.read<VerifyController>().type =
+                                        SendOtpType.login;
+                                  }
+                                }
+                              }
+                            },
+                            margin: EdgeInsets.symmetric(
+                                vertical: 1.h, horizontal: 2.5.w)),
+                        ButtonBuilder(
+                            title: AppStrings.kLoginApple.tr(),
+                            titleColor: AppColors.black,
+                            titleStyle: TextStyle(
+                                fontSize: AppFontSizes.kS3,
+                                color: AppColors.black,
+                                fontWeight: FontWeight.w900),
+                            elevation: 2,
+                            suffixIcon: Padding(
+                              padding: EdgeInsetsDirectional.only(
+                                  end: 3.w, start: 1.w),
+                              child: const Icon(
+                                Icons.apple_rounded,
+                                color: AppColors.black,
+                              ),
+                            ),
+                            height: 6.5.h,
+                            buttonColor: AppColors.white,
+                            borderColor: AppColors.transparent,
+                            onPressed: () async {
+                              final isSuccess =
+                                  await loginController.signInWithSocial(
+                                      context, LoginSocialType.apple);
+                              if (!isSuccess) {
+                              } else {
+                                if (authProvider.currentUser?.patient?.phone !=
+                                        null &&
+                                    authProvider.currentUser?.patient?.phone !=
+                                        '') {
+                                  if (context.mounted) {
+                                    if (authProvider
+                                            .currentUser?.patient?.verifiedAt ==
+                                        null) {
+                                      Navigator.of(context)
+                                          .pushReplacementNamed(
+                                              NameRoutes.kOTPScreen);
+                                    } else {
+                                      Navigator.of(context)
+                                          .pushReplacementNamed(
+                                              NameRoutes.kHomeScreen);
+                                    }
+                                  }
+                                } else {
+                                  if (context.mounted) {
+                                    Util.kToastLoginMessage(
+                                        AppStrings.kCompleteInfo.tr());
+                                    Navigator.pushNamedAndRemoveUntil(
+                                        context,
+                                        NameRoutes.kChangePhoneScreen,
+                                        (route) => false);
+                                    context.read<VerifyController>().type =
+                                        SendOtpType.login;
+                                  }
+                                }
+                              }
+                            },
                             margin: EdgeInsets.symmetric(
                                 vertical: 1.h, horizontal: 2.5.w)),
                         SizedBox(

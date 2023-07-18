@@ -56,11 +56,11 @@
               "client_type": 3
             },
             {
-              "client_id": "101557805399-lsb5pk3hlorqeqitfpr6cin68ia7fa6n.apps.googleusercontent.com",
+              "client_id": "101557805399-lb1q22jjiqt7pikjmv8gbo3e1gvqhe0l.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.webstdy.dorak",
-                "app_store_id": "6448953200"
+                "bundle_id": "com.webstdy.dorak.patient",
+                "app_store_id": "6450953527"
               }
             }
           ]
@@ -75,6 +75,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "101557805399-honbejhb0lh40r4d279s0akq4fgs65jv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.webstdy.dorak_patient",
+            "certificate_hash": "0e7aa1edf9c48b9d9611ba2084e3f6456d68bb00"
+          }
+        },
         {
           "client_id": "101557805399-t8fq51gk438llg06hohu8r4v1g099u73.apps.googleusercontent.com",
           "client_type": 3
@@ -93,11 +101,11 @@
               "client_type": 3
             },
             {
-              "client_id": "101557805399-lsb5pk3hlorqeqitfpr6cin68ia7fa6n.apps.googleusercontent.com",
+              "client_id": "101557805399-lb1q22jjiqt7pikjmv8gbo3e1gvqhe0l.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.webstdy.dorak",
-                "app_store_id": "6448953200"
+                "bundle_id": "com.webstdy.dorak.patient",
+                "app_store_id": "6450953527"
               }
             }
           ]

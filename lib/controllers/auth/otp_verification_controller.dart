@@ -96,7 +96,8 @@ class VerifyController extends AuthController {
       // return Error(errorMessage: DioExceptions.fromDioError(e).message);
       //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
     } finally {
-      // isLoading.value = false;
+      isLoading = false;
+      notifyListeners();
     }
   }
 

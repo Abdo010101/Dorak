@@ -27,8 +27,38 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+    	<array>
+    		<dict>
+    			<key>CFBundleTypeRole</key>
+    			<string>Editor</string>
+    			<key>CFBundleURLSchemes</key>
+    			<array>
+    				<string>https</string>
+    				<string>fb248201231090615</string>
+    			</array>
+    		</dict>
+    		<dict>
+            	<key>CFBundleTypeRole</key>
+            	<string>Editor</string>
+            	<key>CFBundleURLSchemes</key>
+            	<array>
+	                <string>com.googleusercontent.apps.101557805399-lb1q22jjiqt7pikjmv8gbo3e1gvqhe0l</string>
+            	</array>
+            </dict>
+    	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>FacebookAdvertiserIDCollectionEnabled</key>
+    	<false/>
+    	<key>FacebookAppID</key>
+    	<string>248201231090615</string>
+    	<key>FacebookAutoLogAppEventsEnabled</key>
+    	<false/>
+    	<key>FacebookClientToken</key>
+    	<string>a05d56ee7382fb12217583cee41c1433</string>
+    	<key>FacebookDisplayName</key>
+    	<string>DorakApp</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>

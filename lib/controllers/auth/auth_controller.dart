@@ -223,9 +223,11 @@ class AuthController extends DisposableProvider {
     try {
       isLoading = true;
       notifyListeners();
-      var data = dio.FormData.fromMap({
+      Map<String, dynamic> data = {
         'otp': otp,
-      });
+      };
+      print(data);
+      print("ddddddddd");
       final result = await _authenticationRepository.verifyOtp(
         body: data,
       );

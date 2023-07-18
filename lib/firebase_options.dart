@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBVLShj-ZwYk8A33qYRFGlGML2Ul8TzcbI',
-    appId: '1:101557805399:android:ab38ee1c9b796d3d359e12',
+    appId: '1:101557805399:android:bba7739736978102359e12',
     messagingSenderId: '101557805399',
     projectId: 'dorak-e98ba',
     databaseURL: 'https://dorak-e98ba-default-rtdb.firebaseio.com',
@@ -60,12 +60,13 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBgw4Y77Ag5rNTwdKbgcFYCJ5EkuGEs1pc',
-    appId: '1:101557805399:ios:4847d64b7f6b39a9359e12',
+    appId: '1:101557805399:ios:4d39d7cae432bdc0359e12',
     messagingSenderId: '101557805399',
     projectId: 'dorak-e98ba',
     databaseURL: 'https://dorak-e98ba-default-rtdb.firebaseio.com',
     storageBucket: 'dorak-e98ba.appspot.com',
-    iosClientId: '101557805399-r2f750dlrm0lu78561i9i44lv5ea663o.apps.googleusercontent.com',
-    iosBundleId: 'com.webstdy.dorak',
+    androidClientId: '101557805399-2vl9vhdl37vvs8pcpsp6100u45ugth90.apps.googleusercontent.com',
+    iosClientId: '101557805399-lb1q22jjiqt7pikjmv8gbo3e1gvqhe0l.apps.googleusercontent.com',
+    iosBundleId: 'com.webstdy.dorak.patient',
   );
 }

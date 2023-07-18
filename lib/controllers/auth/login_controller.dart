@@ -63,7 +63,6 @@ class LoginController extends AuthController {
     } else {
       Util.showSnackBar(context,
           message: (result as Error<UserResponse?>).errorMessage!);
-
       return false;
     }
   }
@@ -84,6 +83,8 @@ class LoginController extends AuthController {
       isLoading = false;
       notifyListeners();
       if (result is Success<UserResponse?>) {
+        context.read<AuthController>().currentUser = result.data;
+        print(result.data);
         return true;
       } else {
         Util.showSnackBar(context,
@@ -159,12 +160,10 @@ class LoginController extends AuthController {
   }
 
   static final googleSignIn = GoogleSignIn(
-    clientId: '',
     scopes: [
       'email',
       'https://www.googleapis.com/auth/contacts.readonly',
     ],
-    hostedDomain: "",
   );
   dynamic user;
 

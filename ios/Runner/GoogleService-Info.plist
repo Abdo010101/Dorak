@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>101557805399-lb1q22jjiqt7pikjmv8gbo3e1gvqhe0l.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.101557805399-lb1q22jjiqt7pikjmv8gbo3e1gvqhe0l</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>101557805399-2vl9vhdl37vvs8pcpsp6100u45ugth90.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBgw4Y77Ag5rNTwdKbgcFYCJ5EkuGEs1pc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>101557805399</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.webstdy.dorak.patient</string>
+	<key>PROJECT_ID</key>
+	<string>dorak-e98ba</string>
+	<key>STORAGE_BUCKET</key>
+	<string>dorak-e98ba.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:101557805399:ios:4d39d7cae432bdc0359e12</string>
+	<key>DATABASE_URL</key>
+	<string>https://dorak-e98ba-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>

@@ -10,7 +10,7 @@ class AppStrings {
   static const kClinic = 'clinic';
   static const kMedicalCenter = 'medical';
   static const kName = 'full_name';
-  static const kPhone = 'phone_number';
+  static const kPhone = 'pkLoginApplehone_number';
   static const kEmail = 'email';
   static const kProfile = 'profile';
   static const kEditProfile = 'edit_profile';
@@ -87,6 +87,7 @@ class AppStrings {
   static const kOrLoginScreen = 'or';
   static const kLoginFacebook = 'login_facebook';
   static const kLoginGoogle = 'login_google';
+  static const kLoginApple = 'login_apple';
   static const kRegisterFacebook = 'register_facebook';
   static const kRegisterGoogle = 'register_google';
   static const kOnBoardingTitles = [
