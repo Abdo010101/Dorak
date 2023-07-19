@@ -211,7 +211,9 @@ class LoginScreen extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              Container(
+
+                              ///TODO Remove This Comment After Upload in AppStoreConnect //////
+                              /*   Container(
                                 margin: EdgeInsets.only(bottom: 1.h),
                                 height: 2.75.h,
                                 child: Row(
@@ -415,7 +417,8 @@ class LoginScreen extends StatelessWidget {
                                       },
                                       margin: EdgeInsets.symmetric(
                                           vertical: 1.h, horizontal: 2.5.w))
-                                  : const SizedBox(),
+                                  : const SizedBox(),*/
+                              /// --------------------------------------------------------------
                             ],
                           ),
                         ),
