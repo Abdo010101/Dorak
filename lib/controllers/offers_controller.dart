@@ -28,9 +28,8 @@ class OffersController extends DisposableProvider {
         offers = searchResult.offers!.data!;
         maxPrice = searchResult.maxPrice;
         minPrice = searchResult.minPrice;
-        currentRangeValues =  RangeValues(double.parse(minPrice!), double.parse(maxPrice!));
-        isLoading = false;
-        notifyListeners();
+        currentRangeValues =
+            RangeValues(double.parse(minPrice!), double.parse(maxPrice!));
       } else {
         //SnackBar(content: Text(result.error?.message), );
       }
@@ -39,6 +38,8 @@ class OffersController extends DisposableProvider {
       //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
     } finally {
       // isLoading.value = false;
+      isLoading = false;
+      notifyListeners();
     }
   }
 

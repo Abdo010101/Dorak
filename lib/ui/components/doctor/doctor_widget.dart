@@ -178,7 +178,7 @@ class DoctorWidget extends StatelessWidget {
                       ),
                       TextBuilder(
                           text:
-                              '${AppStrings.kWaitingTime.tr()} ${model?.examinationDuration} ${AppStrings.kMin.tr()}',
+                              '${AppStrings.kWaitingTime.tr()} ${model?.examinationDuration ?? '--'} ${AppStrings.kMin.tr()}',
                           size: AppFontSizes.kS2,
                           verticalPadding: 0,
                           horizontalPadding: 1.w,

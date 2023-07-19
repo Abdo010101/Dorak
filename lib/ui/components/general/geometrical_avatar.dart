@@ -18,6 +18,7 @@ class GeometricalAvatar extends StatelessWidget {
     this.onTap,
     this.path,
     this.url,
+    this.fit,
   }) : super(key: key);
   final double? radius;
   final double? height;
@@ -29,6 +30,7 @@ class GeometricalAvatar extends StatelessWidget {
   final VoidCallback? onTap;
   final String? path;
   final String? url;
+  final BoxFit? fit;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -52,7 +54,7 @@ class GeometricalAvatar extends StatelessWidget {
                               source: SvgSource.network,
                             ) as ImageProvider
                           : CachedNetworkImageProvider(url!),
-                      fit: BoxFit.cover,
+                      fit: fit ?? BoxFit.cover,
                     )
                   : null,
         ),

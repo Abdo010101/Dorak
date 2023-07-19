@@ -24,9 +24,12 @@ class SpecialtiesWidget extends StatelessWidget {
         child: Row(
           children: [
             GeometricalAvatar(
-              height: 30.sp,
-              width: 30.sp,
+              height: 28.sp,
+              width: 28.sp,
               url: specialModel.icon,
+              radius: 0.0,
+              fit: BoxFit.scaleDown,
+              backgroundColor: AppColors.transparent,
             ),
             SizedBox(width: 3.w),
             TextBuilder(

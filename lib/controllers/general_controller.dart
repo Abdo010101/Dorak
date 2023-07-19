@@ -231,7 +231,8 @@ class GeneralController extends ChangeNotifier {
     if (result) {
       Position? position = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
-
+      cityId = null;
+      areaId = null;
       lat = position.latitude;
       lng = position.longitude;
 

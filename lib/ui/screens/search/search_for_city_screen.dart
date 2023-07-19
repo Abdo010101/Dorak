@@ -102,8 +102,6 @@ class SearchForCityScreen extends StatelessWidget {
                                           listen: false)
                                       .getDoctors(context,
                                           cityId: controller.cityId,
-                                          lat: controller.lat,
-                                          lng: controller.lng,
                                           specializationId:
                                               controller.specializationId);
 
