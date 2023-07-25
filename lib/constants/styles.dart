@@ -25,7 +25,7 @@ class AppStyles {
       fontWeight: FontWeight.w400,
       color: AppColors.blue);
   static final kButtonTextStyle = TextStyle(
-      fontSize: AppFontSizes.kS4,
+      fontSize: AppFontSizes.kS3,
       fontWeight: FontWeight.bold,
       color: AppColors.blue);
   // BoxDecoration Of All Cards .

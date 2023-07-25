@@ -34,16 +34,16 @@ class OfferWidget extends StatelessWidget {
     return Stack(
       children: [
         EmptyCard(
-          verticalMargin: 1.h,
+          verticalMargin: 0,
           verticalPadding: 1.5.h,
           horizontalMargin: 0,
-          height: 30.h,
           width: 90.w,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               EmptyCard(
                 width: 82.w,
-                height: 17.5.h,
+                height: 17.h,
                 verticalMargin: 0,
                 verticalPadding: 0,
                 horizontalMargin: 0,
@@ -54,10 +54,11 @@ class OfferWidget extends StatelessWidget {
                         imageUrl: offerPic!, fit: BoxFit.cover)),
               ),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   GeometricalAvatar(
-                    margin: EdgeInsets.only(top: 2.5.h),
-                    radius: 35.sp,
+                    margin: EdgeInsets.only(top: 2.h),
+                    radius: 6.h,
                     url: docPic,
                     child: const SizedBox(),
                   ),
@@ -72,25 +73,30 @@ class OfferWidget extends StatelessWidget {
                           verticalPadding: 0,
                           color: AppColors.black,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: EdgeInsetsDirectional.only(
-                                  start: 2.5.w, top: 1.h, end: 1.w),
-                              height: 2.5.h,
-                              child: Util.isNumeric(rate)
+                        Container(
+                          margin: EdgeInsetsDirectional.only(
+                              start: 2.5.w, top: 1.h, end: 1.w),
+                          height: 2.5.h,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Util.isNumeric(rate)
                                   ? RatingBarWidget(
                                       initialRating: double.parse(rate ?? '0'),
                                       itemSize: 10.sp,
                                     )
                                   : const SizedBox(),
-                            ),
-                            Text(Util.isNumeric(rate)
-                                ? double.parse(rate ?? '').toStringAsFixed(1)
-                                : rate ?? '0'),
-                          ],
-                        )
+                              Text(
+                                Util.isNumeric(rate)
+                                    ? double.parse(rate ?? '')
+                                        .toStringAsFixed(1)
+                                    : rate ?? '0',
+                                style: TextStyle(fontSize: AppFontSizes.kS2),
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   )
@@ -101,8 +107,8 @@ class OfferWidget extends StatelessWidget {
         ),
         Container(
           width: 82.w,
-          height: 17.5.h,
-          margin: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.5.h),
+          height: 17.h,
+          margin: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.5.h),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.5),
             color: AppColors.darkBlue.withOpacity(0.25),
@@ -151,8 +157,8 @@ class OfferWidget extends StatelessWidget {
             height: 4.h,
             width: 30.w,
             buttonColor: AppColors.blue,
+            titleColor: AppColors.white,
             title: AppStrings.kOfferDetails.tr(),
-            titleStyle: const TextStyle(color: AppColors.white),
           ),
         ),
         PositionedDirectional(

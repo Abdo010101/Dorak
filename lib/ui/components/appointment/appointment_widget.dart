@@ -28,7 +28,6 @@ class AppointmentWidget extends StatelessWidget {
                 verticalMargin: 0,
                 verticalPadding: 0.5.h,
                 horizontalPadding: 2.w,
-                height: 9.h,
                 color: AppColors.liteWight2,
                 child: Row(
                   children: [
@@ -95,7 +94,7 @@ class AppointmentWidget extends StatelessWidget {
                 end: 0,
                 child: Container(
                   width: 25.w,
-                  // height: 4.h,
+                  height: 4.h,
                   padding:
                       EdgeInsets.symmetric(horizontal: 1.5.w, vertical: 0.4.h),
                   decoration: BoxDecoration(
@@ -115,7 +114,8 @@ class AppointmentWidget extends StatelessWidget {
                           : appointment?.status == AppStatus.confirmed.name
                               ? AppStrings.kConfirmed.tr()
                               : AppStrings.kCanceled.tr(),
-                      style: const TextStyle(color: AppColors.white),
+                      style: TextStyle(
+                          color: AppColors.white, fontSize: AppFontSizes.kS3),
                       textAlign: TextAlign.center,
                     ),
                   ),

@@ -22,7 +22,7 @@ class NotificationCard extends StatelessWidget {
         children: [
           GeometricalAvatar(
             radius: 50.sp,
-            child: SvgPicture.asset(notification?.type == "booking_cancel"
+            child: SvgPicture.asset(notification?.type == "reservation_cancel"
                 ? AppAssets.kBookingCancel
                 : AppAssets.kBookingConfirm),
           ),
