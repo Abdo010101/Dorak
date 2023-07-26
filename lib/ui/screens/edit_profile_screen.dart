@@ -40,6 +40,8 @@ class EditProfileScreen extends StatelessWidget {
                     children: [
                       TextFormFieldBuilder(
                         controller: controller.nameController,
+                        height: 5.h,
+                        color: AppColors.lightGrey,
                         validator: Validators.compose(
                           [
                             Validators.required('required'.tr()),
@@ -49,6 +51,8 @@ class EditProfileScreen extends StatelessWidget {
                       ),
                       TextFormFieldBuilder(
                         controller: controller.phoneController,
+                        height: 5.h,
+                        color: AppColors.lightGrey,
                         keyboardType: TextInputType.phone,
                         validator: Validators.compose(
                           [
@@ -59,6 +63,8 @@ class EditProfileScreen extends StatelessWidget {
                       ),
                       TextFormFieldBuilder(
                         controller: controller.emailController,
+                        height: 5.h,
+                        color: AppColors.lightGrey,
                         validator: Validators.compose(
                           [
                             Validators.required('required'.tr()),

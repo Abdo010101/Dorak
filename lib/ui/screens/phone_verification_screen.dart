@@ -37,6 +37,7 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
     return Scaffold(
       backgroundColor: AppColors.liteWight,
       appBar: AppBar(
+          toolbarHeight: 7.h,
           elevation: 0.0,
           title: Text(
             AppStrings.kPhoneVerification.tr(),

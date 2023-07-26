@@ -130,7 +130,7 @@ class AppointmentWidget extends StatelessWidget {
             children: [
               GeometricalAvatar(
                 url: appointment?.image,
-                radius: 40.sp,
+                radius: 35.sp,
                 margin: EdgeInsetsDirectional.only(end: 2.w),
               ),
               Column(
@@ -165,7 +165,7 @@ class AppointmentWidget extends StatelessWidget {
               const Spacer(),
               appointment?.status != AppStatus.pending.name
                   ? ButtonBuilder(
-                      height: 3.25.h,
+                      height: 4.h,
                       width: 25.w,
                       title: AppStrings.kCall.tr(),
                       titleStyle: TextStyle(fontSize: AppFontSizes.kS3),
@@ -196,9 +196,10 @@ class AppointmentWidget extends StatelessWidget {
                       title: AppStrings.kDecline.tr(),
                       prefixIcon: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 1.w),
-                        child: const Icon(
+                        child: Icon(
                           Icons.cancel_outlined,
                           color: AppColors.error,
+                          size: 15.sp,
                         ),
                       ),
                       titleStyle: TextStyle(
@@ -214,7 +215,7 @@ class AppointmentWidget extends StatelessWidget {
                     ),
                     const Spacer(),
                     ButtonBuilder(
-                      height: 3.25.h,
+                      height: 4.h,
                       width: 25.w,
                       title: AppStrings.kCall.tr(),
                       titleStyle: TextStyle(fontSize: AppFontSizes.kS3),

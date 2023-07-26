@@ -47,6 +47,8 @@ class DoctorWidget extends StatelessWidget {
                         : FullScreenWidgetBuilder(
                             url: model!.image!,
                             radius: 35.sp,
+                            width: 35.sp,
+                            height: 35.sp,
                           ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

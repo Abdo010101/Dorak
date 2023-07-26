@@ -34,9 +34,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(8.5.h),
+          preferredSize: Size.fromHeight(7.5.h),
           child: AppBar(
-            toolbarHeight: 8.5.h,
+            toolbarHeight: 7.5.h,
             leadingWidth: 40.w,
             centerTitle: true,
             elevation: 0,
@@ -106,7 +106,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       InkWell(
                         onTap: () async {
                           await generalController.getCurrentLocation(context);
-
                           Navigator.pushNamed(
                               context, NameRoutes.kSearchForSpecialtiesScreen);
                         },
@@ -119,9 +118,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: AppColors.white,
                           child: Row(
                             children: [
-                              const Icon(
+                              Icon(
                                 Icons.search,
                                 color: AppColors.gray,
+                                size: 15.sp,
                               ),
                               TextBuilder(
                                 text: AppStrings.kFindDoctor.tr(),
@@ -150,9 +150,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             )
                           : controller.bestDoctorsList.isEmpty
                               ? Center(
-                                  child:
-                                      Text(AppStrings.kNoAvailableDoctors.tr()),
-                                )
+                                  child: NoDataWidget(
+                                  backgroundColor: AppColors.transparent,
+                                  text: AppStrings.kNoAvailableDoctors.tr(),
+                                ))
                               : Container(
                                   margin:
                                       EdgeInsets.symmetric(vertical: 0.75.h),
@@ -203,8 +204,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             )
                           : controller.latestOfferList.isEmpty
                               ? Center(
-                                  child:
-                                      Text(AppStrings.kNoAvailableOffers.tr()),
+                                  child: NoDataWidget(
+                                      backgroundColor: AppColors.transparent,
+                                      text: AppStrings.kNoAvailableOffers.tr()),
                                 )
                               : Container(
                                   margin: EdgeInsets.symmetric(vertical: 0.h),
@@ -262,8 +264,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             )
                           : controller.appointmentList.isEmpty
                               ? Center(
-                                  child: Text(
-                                      AppStrings.kNoAvailableAppointment.tr()),
+                                  child: NoDataWidget(
+                                      backgroundColor: AppColors.transparent,
+                                      text: AppStrings.kNoAvailableAppointment
+                                          .tr()),
                                 )
                               : ListView.builder(
                                   shrinkWrap: true,

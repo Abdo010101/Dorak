@@ -54,6 +54,7 @@ class ProfileScreen extends StatelessWidget {
                     horizontalPadding: 5.w,
                     color: AppColors.white,
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         // RowMenuCard(
                         //   title: AppStrings.kFavorites.tr(),

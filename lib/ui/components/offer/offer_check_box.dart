@@ -25,6 +25,7 @@ class OfferCheckBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SizedBox(
           width: 3.w,
@@ -35,7 +36,7 @@ class OfferCheckBox extends StatelessWidget {
           height: 5.75.h,
         ),
         Transform.scale(
-          scale: size ?? 0.8,
+          scale: size ?? 0.5.sp,
           child: Checkbox(
             value: value,
             checkColor: Colors.white,

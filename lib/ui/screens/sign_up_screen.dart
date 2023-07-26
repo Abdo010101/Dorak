@@ -1,5 +1,4 @@
 import 'package:dorakpattient/routes/dorak_routes.dart';
-import 'package:dorakpattient/utis/util.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -57,19 +56,28 @@ class SignUpScreen extends StatelessWidget {
                         ),
                         TextFormFieldBuilder(
                           textInputAction: TextInputAction.next,
+                          hintSize: 8.sp,
+                          height: 5.h,
+                          color: AppColors.lightGrey,
                           hint: AppStrings.kName.tr(),
                           controller: controller.userNameController,
                           validator: Validators.required('required'.tr()),
                         ),
                         TextFormFieldBuilder(
                             textInputAction: TextInputAction.next,
+                            hintSize: 8.sp,
+                            height: 5.h,
+                            color: AppColors.lightGrey,
                             hint: AppStrings.kPhone.tr(),
                             controller: controller.phoneController,
                             keyboardType: TextInputType.number,
                             validator: Validators.required('required'.tr())),
                         TextFormFieldBuilder(
                           textInputAction: TextInputAction.next,
+                          hintSize: 8.sp,
+                          height: 5.h,
                           hint: AppStrings.kEmail.tr(),
+                          color: AppColors.lightGrey,
                           controller: controller.emailController,
                           keyboardType: TextInputType.emailAddress,
                           validator: Validators.compose([
@@ -80,6 +88,9 @@ class SignUpScreen extends StatelessWidget {
                         TextFormFieldBuilder(
                           textInputAction: TextInputAction.next,
                           hint: AppStrings.kPassword.tr(),
+                          hintSize: 8.sp,
+                          height: 5.h,
+                          color: AppColors.lightGrey,
                           controller: controller.passwordController,
                           obscureText: controller.showPass,
                           suffixIcon: IconButton(
@@ -94,6 +105,9 @@ class SignUpScreen extends StatelessWidget {
                         ),
                         TextFormFieldBuilder(
                           hint: AppStrings.kConfirmPassword.tr(),
+                          hintSize: 8.sp,
+                          height: 5.h,
+                          color: AppColors.lightGrey,
                           controller: controller.confirmPasswordController,
                           obscureText: controller.showConfPass,
                           suffixIcon: IconButton(
@@ -116,8 +130,10 @@ class SignUpScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             CheckBoxBuilder(
-                                onChanged: controller.onChangeTermsCondition,
-                                value: controller.agreeTermsCondition),
+                              onChanged: controller.onChangeTermsCondition,
+                              value: controller.agreeTermsCondition,
+                              size: 0.6.sp,
+                            ),
                             Expanded(
                               child: RichText(
                                 text: TextSpan(

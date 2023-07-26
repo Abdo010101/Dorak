@@ -79,7 +79,11 @@ class GenderScreen extends StatelessWidget {
                               : null,
                           child: Column(
                             children: [
-                              SvgPicture.asset(AppAssets.kFemaleIcon),
+                              SvgPicture.asset(
+                                AppAssets.kFemaleIcon,
+                                width: 12.w,
+                                height: 12.w,
+                              ),
                               TextBuilder(
                                 text: AppStrings.kGenderList[1].tr(),
                                 color: controller.gender ==
@@ -106,6 +110,8 @@ class GenderScreen extends StatelessWidget {
                             children: [
                               SvgPicture.asset(
                                 AppAssets.kMaleIcon,
+                                width: 12.w,
+                                height: 12.w,
                               ),
                               TextBuilder(
                                 text: AppStrings.kGenderList[0].tr(),

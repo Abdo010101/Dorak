@@ -31,6 +31,7 @@ class SearchForCityScreen extends StatelessWidget {
           children: [
             TextFormFieldBuilder(
               hint: AppStrings.kSearchForCity.tr(),
+              hintSize: 10.sp,
               verticalMargin: 0,
               horizontalMargin: 0,
               textInputAction: TextInputAction.done,
@@ -42,9 +43,14 @@ class SearchForCityScreen extends StatelessWidget {
               height: 7.5.h,
               padding: EdgeInsets.only(right: 2.5.w, left: 2.5.w, top: 5.h),
               borderRadius: 15,
-              prefixIcon: const Icon(
-                Icons.search,
-                color: AppColors.gray,
+              borderColor: AppColors.transparent,
+              prefixIcon: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 2.w),
+                child: Icon(
+                  Icons.search,
+                  color: AppColors.gray,
+                  size: 15.sp,
+                ),
               ),
               color: AppColors.white,
             ),

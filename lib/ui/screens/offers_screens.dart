@@ -18,15 +18,16 @@ class OffersScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.liteWight,
       appBar: AppBar(
+        toolbarHeight: 6.h,
         backgroundColor: AppColors.liteWight,
         elevation: 0,
         leading: TextBuilder(
           text: AppStrings.kOffers.tr(),
           color: AppColors.navyBlue,
-          verticalPadding: 2.25.h,
+          verticalPadding: 1.5.h,
           align: TextAlign.center,
           horizontalPadding: 5.w,
-          size: 12.5.sp,
+          size: 13.sp,
           bold: true,
         ),
         leadingWidth: 35.w,
@@ -34,10 +35,12 @@ class OffersScreen extends StatelessWidget {
           GeometricalAvatar(
             backgroundColor: AppColors.transparent,
             radius: 10.w,
-            margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
+            margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 0.h),
             child: SvgPicture.asset(
               AppAssets.kFilterIcon,
               fit: BoxFit.scaleDown,
+              width: 3.0.w,
+              height: 3.0.w,
             ),
             onTap: () {
               filterController.mainSpecialtyList =
@@ -86,18 +89,20 @@ class OffersScreen extends StatelessWidget {
                     horizontalMargin: 0,
                     maxLines: 1,
                     width: 100.w,
-                    height: 7.5.h,
+                    height: 6.h,
+                    hintSize: 7.5.sp,
                     borderRadius: 15,
                     prefixIcon: IconButton(
                       onPressed: () => controller.getAllOffers(),
                       icon: Icon(
                         Icons.search,
-                        size: AppFontSizes.kS6,
+                        size: 12.5.sp,
                         color: AppColors.gray,
                       ),
                     ),
                     onSubmit: (value) => controller.getAllOffers(),
                     color: AppColors.white,
+                    borderColor: AppColors.white,
                   ),
                   SizedBox(
                     height: 1.5.h,

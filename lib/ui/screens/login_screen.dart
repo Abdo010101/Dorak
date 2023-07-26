@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +7,6 @@ import 'package:wc_form_validators/wc_form_validators.dart';
 import '../../constants/constants.dart';
 import '../../controllers/controllers.dart';
 import '../../routes/dorak_routes.dart';
-import '../../utis/util.dart';
 import '../components/components.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -29,6 +26,7 @@ class LoginScreen extends StatelessWidget {
         backgroundColor: AppColors.liteWight,
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
+            toolbarHeight: 7.h,
             elevation: 0.0,
             title: Text(
               AppStrings.kSignIn.tr(),
@@ -117,8 +115,15 @@ class LoginScreen extends StatelessWidget {
                                         ],
                                       ),
                                       hint: 'johndoe@mail.com',
-                                      prefixIcon: const Icon(Icons.email,
-                                          color: AppColors.blue),
+                                      color: AppColors.lightGrey,
+                                      hintSize: 8.sp,
+                                      height: 5.h,
+                                      prefixIcon: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 4.w),
+                                        child: const Icon(Icons.email,
+                                            color: AppColors.blue),
+                                      ),
                                     ),
                                     SizedBox(
                                       height: 2.0.h,
@@ -140,17 +145,28 @@ class LoginScreen extends StatelessWidget {
                                                   'Password Must be a More than 5 Characters')
                                             ]),
                                             hint: '',
-                                            prefixIcon: const Icon(
-                                              Icons.lock_open_sharp,
-                                              color: AppColors.blue,
+                                            color: AppColors.lightGrey,
+                                            hintSize: 8.sp,
+                                            height: 5.h,
+                                            prefixIcon: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 4.w),
+                                              child: const Icon(
+                                                Icons.lock_open_sharp,
+                                                color: AppColors.blue,
+                                              ),
                                             ),
-                                            suffixIcon: IconButton(
-                                              icon: Icon(controller.showPass
-                                                  ? Icons.visibility_rounded
-                                                  : Icons
-                                                      .visibility_off_rounded),
-                                              onPressed: () =>
-                                                  controller.changeShowPass(),
+                                            suffixIcon: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 4.w),
+                                              child: IconButton(
+                                                icon: Icon(controller.showPass
+                                                    ? Icons.visibility_rounded
+                                                    : Icons
+                                                        .visibility_off_rounded),
+                                                onPressed: () =>
+                                                    controller.changeShowPass(),
+                                              ),
                                             ),
                                           );
                                         }),

@@ -69,6 +69,7 @@ class DoctorReview extends StatelessWidget {
                           borderRadius: 10,
                           hint: AppStrings.kNoteHint.tr(),
                           maxLines: 6,
+                          hintSize: 10.sp,
                           controller: controller.rateController,
                           validator: Validators.compose([
                             Validators.required('required'.tr()),
@@ -84,7 +85,7 @@ class DoctorReview extends StatelessWidget {
                                 doctorProfileControllerController
                                     .doctorProfileResponse?.doctor?.id);
                             if (result == true) {
-                              doctorProfileControllerController
+                              await doctorProfileControllerController
                                   .getDoctorProfile(context,
                                       doctorId:
                                           doctorProfileControllerController

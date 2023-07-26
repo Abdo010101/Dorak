@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
 import '../../constants/constants.dart';
 import '../../data/models/response/response.dart';
 
@@ -182,8 +183,13 @@ class AddressWidget extends StatelessWidget {
                 onTap: () =>
                     Util.openMap(latitude: latitude, longitude: longitude),
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SvgPicture.asset(AppAssets.kDirections),
+                    SvgPicture.asset(
+                      AppAssets.kDirections,
+                      height: 15.sp,
+                      width: 15.sp,
+                    ),
                     TextBuilder(
                       text: AppStrings.kDirections.tr(),
                       color: AppColors.blue,

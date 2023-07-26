@@ -79,7 +79,12 @@ class TextFormFieldBuilder extends StatelessWidget {
             vertical: verticalMargin ?? 1.h, horizontal: horizontalMargin ?? 0),
         height: height,
         width: width,
-        child: TextFormField(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
+          color: color,
+        ),
+        child: Center(
+          child: TextFormField(
             controller: controller,
             validator: validator,
             textAlign: textAlign ?? TextAlign.start,
@@ -192,9 +197,11 @@ class TextFormFieldBuilder extends StatelessWidget {
                       ),
                     )
                   : null,
-
+              labelStyle: TextStyle(fontSize: AppFontSizes.kS4),
               fillColor: color ?? AppColors.lightGrey,
-            )),
+            ),
+          ),
+        ),
       ),
     );
   }

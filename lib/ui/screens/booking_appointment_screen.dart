@@ -88,7 +88,11 @@ class ReservationScreen extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SvgPicture.asset(AppAssets.kLocationIcon),
+                                SvgPicture.asset(
+                                  AppAssets.kLocationIcon,
+                                  width: 3.0.w,
+                                  height: 3.0.w,
+                                ),
                                 TextBuilder(
                                   width: 30.w,
                                   text: doctorProfileController
@@ -105,7 +109,11 @@ class ReservationScreen extends StatelessWidget {
                                   height: 3.h,
                                   horizontalMargin: 2.5.w,
                                 ),
-                                SvgPicture.asset(AppAssets.kMoneyIcon),
+                                SvgPicture.asset(
+                                  AppAssets.kMoneyIcon,
+                                  width: 3.0.w,
+                                  height: 3.0.w,
+                                ),
                                 TextBuilder(
                                   width: 30.w,
                                   text:
@@ -266,7 +274,7 @@ class PickUpTimeBuilder extends StatelessWidget {
                 ),
                 Container(
                   padding: EdgeInsetsDirectional.symmetric(horizontal: 5.0.w),
-                  height: 16.h,
+                  height: 100.sp,
                   child: ListView.separated(
                     separatorBuilder: (_, context) => SizedBox(
                       width: 2.0.w,
