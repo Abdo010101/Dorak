@@ -3,8 +3,11 @@ import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/ui/components/components.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../data/models/response/response.dart';
 
 class AppointmentsScreen extends StatelessWidget {
   const AppointmentsScreen({Key? key}) : super(key: key);
@@ -53,7 +56,7 @@ class AppointmentsScreen extends StatelessWidget {
                         controller.changeAppointmentDate(AppStrings.kPast),
                   ),
                   Expanded(
-                    child: controller.isLoading
+                    child: /* controller.isLoading
                         ? const LoadingWidget(
                             backgroundColor: AppColors.transparent,
                           )
@@ -62,18 +65,21 @@ class AppointmentsScreen extends StatelessWidget {
                                 backgroundColor: Colors.transparent,
                                 text: AppStrings.kNoAppointments.tr(),
                               )
-                            : ListView.builder(
-                                padding: EdgeInsets.zero,
-                                itemCount: controller.appointmentsList.length,
-                                itemBuilder: (context, index) {
-                                  return AppointmentWidget(
-                                    appointment:
-                                        controller.appointmentsList[index],
-                                    declineAppointment: () =>
-                                        controller.declineAppointment(index),
-                                  );
-                                },
-                              ),
+                            :*/
+                        PagedListView<int, AppointmentResponse>(
+                      padding: EdgeInsets.zero,
+                      pagingController: controller.pagingController!,
+                      builderDelegate:
+                          PagedChildBuilderDelegate<AppointmentResponse>(
+                        itemBuilder: (context, item, index) {
+                          return AppointmentWidget(
+                            appointment: item,
+                            declineAppointment: () =>
+                                controller.declineAppointment(index),
+                          );
+                        },
+                      ),
+                    ),
                   ),
                   SizedBox(
                     height: 10.h,

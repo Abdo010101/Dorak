@@ -5,6 +5,7 @@ import 'package:dorakpattient/routes/dorak_routes.dart';
 import 'package:dorakpattient/utis/helpers/app_providers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import '../../data/models/response/response.dart';
 import '../constants/enums.dart';
 
@@ -17,6 +18,18 @@ class HomeController extends ChangeNotifier {
   List<OfferResponse> latestOfferList = [];
   List<AppointmentResponse> appointmentList = [];
   List<Doctor> allBestDoctorsList = [];
+  PagingController<int, Doctor>? pagingController;
+
+  void startPagingController(BuildContext context) {
+    pagingController = PagingController<int, Doctor>(
+      // 2
+      firstPageKey: 1,
+    );
+    pagingController?.addPageRequestListener((pageKey) {
+      getBestDoctors(context, pageKey: pageKey);
+    });
+  }
+
   Future<void> getHomeData(BuildContext context) async {
     try {
       isLoading = true;
@@ -55,12 +68,13 @@ class HomeController extends ChangeNotifier {
     }
   }
 
-  Future<void> getBestDoctors(BuildContext context) async {
+  ///TODO Edit here Tomorrow . . . . . . . .
+  Future<void> getBestDoctors(BuildContext context, {int? pageKey}) async {
     try {
       isLoading = true;
       notifyListeners();
 
-      final result = await _homeRepository.getBestDoctors();
+      final result = await _homeRepository.getBestDoctors(pageKey);
       if (result.data != null) {
         allBestDoctorsList
           ..clear()

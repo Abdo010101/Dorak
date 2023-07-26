@@ -12,12 +12,13 @@ class AppointmentsRepository extends BaseRepository {
   AppointmentsRepository({required this.appointmentClient});
 
   Future<BaseModel<List<AppointmentResponse>>> getAllAppointments(
-      String type) async {
+      String type, {int ? pageKey}) async {
     if (await checkForConnectivity()) {
       try {
         return BaseModel(
-            data:
-                await appointmentClient.getAllAppointments(type).then((value) {
+            data: await appointmentClient
+                .getAllAppointments(type, pageKey)
+                .then((value) {
           return value.data;
         }));
       } on DioError catch (e) {

@@ -12,8 +12,9 @@ abstract class HomeClient {
   @GET(NetworkConstant.kHomeRequest)
   Future<BaseResponse<HomeResponse>> getHomeData();
 
-  @GET(NetworkConstant.kBestDoctors)
-  Future<BaseResponseList<Doctor>> getBestDoctors();
+  @GET('${NetworkConstant.kBestDoctors}?page={pageKey}')
+  Future<BaseResponseList<Doctor>> getBestDoctors(
+      @Path('pageKey') int? pageKey);
 
   @POST(NetworkConstant.kCancelReservation)
   Future<BaseResponse<AppointmentResponse>> declineAppointment(

@@ -20,9 +20,12 @@ class _AppointmentClient implements AppointmentClient {
 
   @override
   Future<BaseResponse<List<AppointmentResponse>>> getAllAppointments(
-      type) async {
+    type,
+    pageKey,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -33,7 +36,7 @@ class _AppointmentClient implements AppointmentClient {
     )
             .compose(
               _dio.options,
-              '${type}',
+              '${type}?page=${pageKey}',
               queryParameters: queryParameters,
               data: _data,
             )
