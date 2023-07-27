@@ -10,7 +10,7 @@ part 'offers_clint.g.dart';
 abstract class OffersClint {
   factory OffersClint(Dio dio, {String baseUrl}) = _OffersClint;
 
-  @GET(NetworkConstant.kAllOffers)
+  @GET('${NetworkConstant.kAllOffers}?page={pageKey')
   Future<BaseResponse<AllOffersResponse>> getAllOffers(
-      @Queries() Map<String, dynamic> body);
+      @Queries() Map<String, dynamic> body, @Path('pageKey') int? pageKey);
 }

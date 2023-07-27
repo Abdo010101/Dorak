@@ -2,9 +2,11 @@ import 'package:dio/dio.dart';
 import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/data/di/locator.dart';
 import 'package:flutter/material.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../../data/repository/repository.dart';
 import '../data/models/response/response.dart';
+import '../data/networks/network_constant.dart';
 
 class OffersController extends DisposableProvider {
   bool isLoading = false;
@@ -14,15 +16,28 @@ class OffersController extends DisposableProvider {
   List<OfferResponse> offers = [];
   AllOffersResponse searchResult = AllOffersResponse();
   final _offersRepository = locator<OffersRepository>();
+  PagingController<int, OfferResponse>? pagingController;
   TextEditingController offerSearchController = TextEditingController();
   Map<String, dynamic> data = {};
-  Future getAllOffers({bool? home}) async {
+
+  startPagingControllerListener({required bool? home}) {
+    pagingController = PagingController<int, OfferResponse>(
+      // 2
+      firstPageKey: 1,
+    );
+    pagingController?.addPageRequestListener((pageKey) {
+      getAllOffers(home: home, pageKey: pageKey);
+    });
+  }
+
+  Future getAllOffers({bool? home, required int pageKey}) async {
     try {
-      home == true ? offerSearchController.clear() : null;
-      isLoading = true;
-      notifyListeners();
+      if (offerSearchController.text != '') {
+        home == true ? offerSearchController.clear() : null;
+      }
       data["title"] = offerSearchController.text;
-      final result = await _offersRepository.getAllOffers(data);
+      final result =
+          await _offersRepository.getAllOffers(data, pageKey: pageKey);
       if (result.data != null) {
         searchResult = result.data!;
         offers = searchResult.offers!.data!;
@@ -30,6 +45,13 @@ class OffersController extends DisposableProvider {
         minPrice = searchResult.minPrice;
         currentRangeValues =
             RangeValues(double.parse(minPrice!), double.parse(maxPrice!));
+        final isLastPage = offers.length < NetworkConstant.kPageSize;
+        if (isLastPage) {
+          pagingController?.appendLastPage(offers);
+        } else {
+          final nextPageKey = pageKey + 1;
+          pagingController?.appendPage(offers, nextPageKey);
+        }
       } else {
         //SnackBar(content: Text(result.error?.message), );
       }
@@ -38,8 +60,6 @@ class OffersController extends DisposableProvider {
       //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
     } finally {
       // isLoading.value = false;
-      isLoading = false;
-      notifyListeners();
     }
   }
 

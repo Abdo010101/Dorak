@@ -11,11 +11,12 @@ class OffersRepository extends BaseRepository {
 
   OffersRepository({required this.offersClient});
 
-  Future<BaseModel<AllOffersResponse>> getAllOffers(var data) async {
+  Future<BaseModel<AllOffersResponse>> getAllOffers(var data,
+      {int? pageKey}) async {
     if (await checkForConnectivity()) {
       try {
         return BaseModel(
-            data: await offersClient.getAllOffers(data).then((value) {
+            data: await offersClient.getAllOffers(data, pageKey).then((value) {
           return value.data;
         }));
       } on DioError catch (e) {
