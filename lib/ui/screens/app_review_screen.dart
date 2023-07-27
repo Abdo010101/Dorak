@@ -78,6 +78,7 @@ class AppReview extends StatelessWidget {
                               vertical: 2.5.h, horizontal: 2.5.w),
                           borderRadius: 10,
                           hint: AppStrings.kNoteHint.tr(),
+                          hintSize: 12.5.sp,
                           maxLines: 6,
                           controller: controller.rateController,
                           validator: Validators.compose([

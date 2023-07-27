@@ -15,8 +15,8 @@ class RowMenuCard extends StatelessWidget {
   final VoidCallback onTap;
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 6.h,
+    return Padding(
+      padding: EdgeInsets.only(bottom: 3.sp),
       child: ListTile(
         onTap: onTap,
         visualDensity: const VisualDensity(horizontal: 0, vertical: -4),

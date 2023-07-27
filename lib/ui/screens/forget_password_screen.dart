@@ -19,6 +19,7 @@ class ForgetPasswordScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.liteWight,
       appBar: AppBar(
+          toolbarHeight: 7.h,
           elevation: 0.0,
           title: Text(
             AppStrings.kForgetPassword.tr(),
@@ -26,7 +27,9 @@ class ForgetPasswordScreen extends StatelessWidget {
           ),
           centerTitle: true,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios),
+            icon: const Icon(
+              Icons.arrow_back_ios,
+            ),
             onPressed: () => Navigator.pop(context),
             color: AppColors.black,
           ),
@@ -47,6 +50,9 @@ class ForgetPasswordScreen extends StatelessWidget {
                     keyboardType: TextInputType.phone,
                     controller: controller.phoneController,
                     hint: AppStrings.kPhone.tr(),
+                    color: AppColors.lightGrey,
+                    hintSize: 8.sp,
+                    height: 5.h,
                     validator: Validators.compose(
                       [
                         Validators.required('required'.tr()),
@@ -56,7 +62,10 @@ class ForgetPasswordScreen extends StatelessWidget {
                   SizedBox(
                     height: 2.0.h,
                   ),
-                  Text(AppStrings.kSentTextMassage.tr()),
+                  Text(
+                    AppStrings.kSentTextMassage.tr(),
+                    style: TextStyle(fontSize: 10.sp),
+                  ),
                   SizedBox(
                     height: 2.0.h,
                   ),

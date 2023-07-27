@@ -33,38 +33,41 @@ class _HomeScreenState extends State<HomeScreen> {
         Provider.of<GeneralController>(context, listen: false);
 
     return Scaffold(
-        appBar: AppBar(
-          leadingWidth: 40.w,
-          centerTitle: true,
-          elevation: 0.0,
-          backgroundColor: AppColors.transparent,
-          actions: [
-            Padding(
-              padding: EdgeInsetsDirectional.only(end: 4.0.w),
-              child: IconButton(
-                onPressed: () {
-                  context.read<NotificationController>().getNotifications();
-                  Navigator.of(context)
-                      .pushNamed(NameRoutes.kNotificationScreen);
-                },
-                icon: Image.asset(
-                  AppAssets.kNotificationIcon,
-                  width: 6.0.w,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(7.5.h),
+          child: AppBar(
+            toolbarHeight: 7.5.h,
+            leadingWidth: 40.w,
+            centerTitle: true,
+            elevation: 0,
+            backgroundColor: AppColors.transparent,
+            actions: [
+              Padding(
+                padding: EdgeInsetsDirectional.only(end: 4.0.w),
+                child: IconButton(
+                  onPressed: () {
+                    context.read<NotificationController>().getNotifications();
+                    Navigator.of(context)
+                        .pushNamed(NameRoutes.kNotificationScreen);
+                  },
+                  icon: Image.asset(
+                    AppAssets.kNotificationIcon,
+                    width: 6.0.w,
+                  ),
                 ),
+              )
+            ],
+            flexibleSpace: Image.asset(
+              AppAssets.kMask,
+              fit: BoxFit.cover,
+            ),
+            leading: Container(
+              padding: EdgeInsetsDirectional.symmetric(
+                  vertical: 1.1.h, horizontal: 5.w),
+              child: Image.asset(
+                AppAssets.kDorakIcon,
+                fit: BoxFit.fill,
               ),
-            )
-          ],
-          flexibleSpace: Image.asset(
-            AppAssets.kMask,
-            fit: BoxFit.cover,
-          ),
-          leading: Container(
-            height: 6.h,
-            padding: EdgeInsetsDirectional.symmetric(
-                vertical: 1.1.h, horizontal: 5.w),
-            child: Image.asset(
-              AppAssets.kDorakIcon,
-              fit: BoxFit.fill,
             ),
           ),
         ),
@@ -103,7 +106,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       InkWell(
                         onTap: () async {
                           await generalController.getCurrentLocation(context);
-
                           Navigator.pushNamed(
                               context, NameRoutes.kSearchForSpecialtiesScreen);
                         },
@@ -116,9 +118,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: AppColors.white,
                           child: Row(
                             children: [
-                              const Icon(
+                              Icon(
                                 Icons.search,
                                 color: AppColors.gray,
+                                size: 15.sp,
                               ),
                               TextBuilder(
                                 text: AppStrings.kFindDoctor.tr(),
@@ -147,13 +150,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             )
                           : controller.bestDoctorsList.isEmpty
                               ? Center(
-                                  child:
-                                      Text(AppStrings.kNoAvailableDoctors.tr()),
-                                )
+                                  child: NoDataWidget(
+                                  backgroundColor: AppColors.transparent,
+                                  text: AppStrings.kNoAvailableDoctors.tr(),
+                                ))
                               : Container(
                                   margin:
                                       EdgeInsets.symmetric(vertical: 0.75.h),
-                                  height: 30.h,
+                                  height: 145.sp,
                                   child: ListView.separated(
                                     itemCount: controller
                                         .homeData!.bestDoctors!.length,
@@ -200,12 +204,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             )
                           : controller.latestOfferList.isEmpty
                               ? Center(
-                                  child:
-                                      Text(AppStrings.kNoAvailableOffers.tr()),
+                                  child: NoDataWidget(
+                                      backgroundColor: AppColors.transparent,
+                                      text: AppStrings.kNoAvailableOffers.tr()),
                                 )
                               : Container(
-                                  margin: EdgeInsets.symmetric(vertical: 1.h),
-                                  height: 32.h,
+                                  margin: EdgeInsets.symmetric(vertical: 0.h),
+                                  height: 30.h,
                                   child: ListView.separated(
                                     itemCount:
                                         controller.latestOfferList.length,
@@ -259,8 +264,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             )
                           : controller.appointmentList.isEmpty
                               ? Center(
-                                  child: Text(
-                                      AppStrings.kNoAvailableAppointment.tr()),
+                                  child: NoDataWidget(
+                                      backgroundColor: AppColors.transparent,
+                                      text: AppStrings.kNoAvailableAppointment
+                                          .tr()),
                                 )
                               : ListView.builder(
                                   shrinkWrap: true,

@@ -33,7 +33,7 @@ class DropDownBuilder extends StatelessWidget {
         width: width ?? 85.w,
         height: height ?? 6.h,
         padding: EdgeInsets.symmetric(
-          horizontal: 2.w, /* vertical: 1.h*/
+          horizontal: 4.w, /* vertical: 1.h*/
         ),
         decoration: AppStyles.kCardBoxDecoration.copyWith(boxShadow: []),
         child: Center(
@@ -57,7 +57,7 @@ class DropDownBuilder extends StatelessWidget {
             Icons.keyboard_arrow_down,
             color: AppColors.blue,
           ),
-          iconSize: 20.sp,
+          iconSize: 15.sp,
           hint: TextBuilder(
             width: 65.w,
             text: hint == null ? '' : hint!,

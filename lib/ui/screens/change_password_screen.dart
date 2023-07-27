@@ -21,6 +21,7 @@ class ChangePasswordScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.liteWight,
       appBar: AppBar(
+          toolbarHeight: 7.h,
           elevation: 0.0,
           title: Text(
             AppStrings.kChangePassword.tr(),
@@ -47,6 +48,9 @@ class ChangePasswordScreen extends StatelessWidget {
                   ),
                   TextFormFieldBuilder(
                     hint: AppStrings.kPassword.tr(),
+                    hintSize: 8.sp,
+                    height: 5.h,
+                    color: AppColors.lightGrey,
                     controller: controller.passwordController,
                     validator: Validators.compose([
                       Validators.required('required'.tr()),
@@ -54,6 +58,9 @@ class ChangePasswordScreen extends StatelessWidget {
                   ),
                   TextFormFieldBuilder(
                     hint: AppStrings.kConfirmPassword.tr(),
+                    hintSize: 8.sp,
+                    height: 5.h,
+                    color: AppColors.lightGrey,
                     controller: controller.confirmPasswordController,
                     validator: Validators.compose([
                       Validators.required('required'.tr()),

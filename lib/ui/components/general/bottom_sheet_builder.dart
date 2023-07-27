@@ -33,11 +33,18 @@ class BottomSheetBuilder extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
-                child: FloatingActionButton.small(
-                  backgroundColor: AppColors.white,
-                  onPressed: onPop ?? () => Navigator.pop(context),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 1.h),
+                margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: InkWell(
+                  // shape: RoundedRectangleBorder(
+                  //   borderRadius: BorderRadius.circular(50),
+                  // ),
+                  onTap: onPop ?? () => Navigator.pop(context),
                   child: Icon(
                     Icons.close_rounded,
                     size: 20.sp,

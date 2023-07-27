@@ -89,7 +89,9 @@ class SettingsComponents extends StatelessWidget {
                 thickness: 0.2.h,
                 width: 65.w,
               )
-            : const SizedBox(),
+            : SizedBox(
+                height: 0.75.h,
+              ),
       ],
     );
   }

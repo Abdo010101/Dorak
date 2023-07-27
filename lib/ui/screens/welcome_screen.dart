@@ -58,6 +58,7 @@ class WelcomeScreen extends StatelessWidget {
                       ),
                       ButtonBuilder(
                         buttonColor: AppColors.blue,
+                        borderColor: Colors.transparent,
                         title: AppStrings.kLogin.tr(),
                         height: 6.0.h,
                         onPressed: () {
@@ -72,6 +73,8 @@ class WelcomeScreen extends StatelessWidget {
                         buttonColor: AppColors.liteBlueWO.withOpacity(0.2),
                         borderColor: Colors.transparent,
                         title: AppStrings.kRegister.tr(),
+                        height: 6.0.h,
+                        titleColor: AppColors.blue,
                         onPressed: () {
                           if (generalController.policy?.privacy == null ||
                               generalController.terms?.terms == null) {
@@ -80,9 +83,8 @@ class WelcomeScreen extends StatelessWidget {
                           Navigator.of(context)
                               .pushNamed(NameRoutes.kRegisterScreen);
                         },
-                        titleStyle: const TextStyle(
-                            color: AppColors.blue, fontWeight: FontWeight.bold),
-                        height: 6.0.h,
+                        // titleStyle: const TextStyle(
+                        //     color: AppColors.blue, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
                         height: 2.0.h,

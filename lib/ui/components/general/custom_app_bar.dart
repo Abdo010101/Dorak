@@ -18,29 +18,39 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback? shareClick;
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: EmptyCard(
-        verticalPadding: 0,
-        verticalMargin: 0,
-        horizontalMargin: 0,
-        horizontalPadding: 0.5,
-        color: Colors.transparent,
+    return AppBar(
+      toolbarHeight: 7.5.h,
+      leadingWidth: 90.w,
+      centerTitle: true,
+      elevation: 0,
+      backgroundColor: AppColors.transparent,
+      leading: Container(
+        padding:
+            EdgeInsetsDirectional.symmetric(vertical: 1.1.h, horizontal: 5.w),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                IconButton(
-                  onPressed: onpOp ?? () => Navigator.pop(context),
-                  icon: const Icon(
-                    Icons.arrow_back_ios,
-                    color: AppColors.blue,
+                SizedBox(
+                  width: 7.5.w,
+                  child: InkWell(
+                    onTap: onpOp ?? () => Navigator.pop(context),
+                    child: Icon(
+                      Icons.arrow_back_ios,
+                      color: AppColors.blue,
+                      size: 15.sp,
+                    ),
                   ),
                 ),
                 TextBuilder(
                   text: title ?? '',
                   color: AppColors.navyBlue,
-                  verticalPadding: 2.5.h,
+                  verticalPadding: 0,
+                  horizontalPadding: 0,
+                  align: TextAlign.center,
                   bold: true,
                 ),
               ],
@@ -51,7 +61,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 children: [
                   IconButton(
                       onPressed: shareClick,
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.share,
                         color: AppColors.blue,
                       ))
@@ -62,9 +72,56 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
     );
+    // child:
+    // Row(
+    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //   crossAxisAlignment: CrossAxisAlignment.center,
+    //   children: [
+    //     Row(
+    //       crossAxisAlignment: CrossAxisAlignment.center,
+    //       children: [
+    //         SizedBox(
+    //           width: 4.w,
+    //         ),
+    //         SizedBox(
+    //           width: 7.5.w,
+    //           child: InkWell(
+    //             onTap: onpOp ?? () => Navigator.pop(context),
+    //             child: Icon(
+    //               Icons.arrow_back_ios,
+    //               color: AppColors.blue,
+    //               size: 15.sp,
+    //             ),
+    //           ),
+    //         ),
+    //         TextBuilder(
+    //           text: title ?? '',
+    //           color: AppColors.navyBlue,
+    //           verticalPadding: 0,
+    //           horizontalPadding: 0,
+    //           align: TextAlign.center,
+    //           bold: true,
+    //         ),
+    //       ],
+    //     ),
+    //     Visibility(
+    //       visible: hasShare ?? false,
+    //       child: Row(
+    //         children: [
+    //           IconButton(
+    //               onPressed: shareClick,
+    //               icon: const Icon(
+    //                 Icons.share,
+    //                 color: AppColors.blue,
+    //               ))
+    //         ],
+    //       ),
+    //     )
+    //   ],
+    // ),
   }
 
   @override
   // TODO: implement preferredSize
-  Size get preferredSize => Size.fromHeight(10.h);
+  Size get preferredSize => Size.fromHeight(7.5.h);
 }
