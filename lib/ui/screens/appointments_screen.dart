@@ -71,6 +71,12 @@ class AppointmentsScreen extends StatelessWidget {
                       pagingController: controller.pagingController!,
                       builderDelegate:
                           PagedChildBuilderDelegate<AppointmentResponse>(
+                        noItemsFoundIndicatorBuilder: (BuildContext con) {
+                          return NoDataWidget(
+                            text: AppStrings.kNoAppointments.tr(),
+                            backgroundColor: Colors.transparent,
+                          );
+                        },
                         itemBuilder: (context, item, index) {
                           return AppointmentWidget(
                             appointment: item,
