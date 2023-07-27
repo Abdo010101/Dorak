@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:dorakpattient/data/networks/network_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../constants/constants.dart';
 import '../data/di/locator.dart';
@@ -9,30 +11,45 @@ import '../data/repository/repository.dart';
 
 class AppointmentsController extends ChangeNotifier {
   String appointmentDate = AppStrings.kUpcoming;
-  bool isLoading = false;
   bool pressed = false;
   List<AppointmentResponse> appointmentsList = [];
   final _appointmentsRepository = locator<AppointmentsRepository>();
+  PagingController<int, AppointmentResponse>? pagingController;
 
   changeAppointmentDate(value) {
     appointmentDate = value;
-    getAllAppointments();
     notifyListeners();
+    pagingController?.refresh();
+    //startPagingControllerListener();
   }
 
-  Future<void> getAllAppointments() async {
+  void startPagingControllerListener() {
+    pagingController = PagingController<int, AppointmentResponse>(
+      // 2
+      firstPageKey: 1,
+    );
+    pagingController?.addPageRequestListener((pageKey) {
+      getAllAppointments(pageKey: pageKey);
+    });
+  }
+
+  Future<void> getAllAppointments({required int pageKey}) async {
     try {
-      isLoading = true;
-      appointmentsList.clear();
+      final result = await _appointmentsRepository.getAllAppointments(
+          'reservations/${appointmentDate.toLowerCase()}',
+          pageKey: pageKey);
 
-      notifyListeners();
-      final result = await _appointmentsRepository
-          .getAllAppointments('reservations/${appointmentDate.toLowerCase()}');
       if (result.data != null) {
-        appointmentsList.addAll(result.data!);
+        final isLastPage = result.data!.length < NetworkConstant.kPageSize;
+        if (isLastPage) {
+          pagingController?.appendLastPage(result.data!);
+        } else {
+          final nextPageKey = pageKey + 1;
+          pagingController?.appendPage(result.data!, nextPageKey);
+        }
+        /*  appointmentsList.addAll(result.data!);
         isLoading = false;
-
-        notifyListeners();
+        notifyListeners();*/
       }
       {
         //SnackBar(content: Text(result.error?.message), );

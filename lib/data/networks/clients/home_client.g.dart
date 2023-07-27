@@ -45,9 +45,10 @@ class _HomeClient implements HomeClient {
   }
 
   @override
-  Future<BaseResponseList<Doctor>> getBestDoctors() async {
+  Future<BaseResponseList<Doctor>> getBestDoctors(pageKey) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -58,7 +59,7 @@ class _HomeClient implements HomeClient {
     )
             .compose(
               _dio.options,
-              'best-doctors',
+              'best-doctors?page=${pageKey}',
               queryParameters: queryParameters,
               data: _data,
             )

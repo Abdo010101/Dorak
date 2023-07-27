@@ -126,7 +126,9 @@ class MyApp extends StatelessWidget {
             print('Print Open Notification');
 
             if (notificationsRoute != null) {
-              context.read<AppointmentsController>().getAllAppointments();
+              context
+                  .read<AppointmentsController>()
+                  .startPagingControllerListener();
               context
                   .read<MainScreenController>()
                   .onBottomSheetChanged(1, context);

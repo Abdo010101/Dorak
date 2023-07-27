@@ -27,11 +27,11 @@ class HomeRepository extends BaseRepository {
     }
   }
 
-  Future<BaseModel<List<Doctor>>> getBestDoctors() async {
+  Future<BaseModel<List<Doctor>>> getBestDoctors(int? pageKey) async {
     if (await checkForConnectivity()) {
       try {
         return BaseModel(
-            data: await homeClient.getBestDoctors().then((value) {
+            data: await homeClient.getBestDoctors(pageKey).then((value) {
           return value.data;
         }));
       } on DioError catch (e) {

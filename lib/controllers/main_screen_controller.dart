@@ -11,9 +11,7 @@ class MainScreenController extends ChangeNotifier {
   void onBottomSheetChanged(int index, BuildContext context) {
     if (context.mounted) {
       if (index == 1) {
-        context
-            .read<AppointmentsController>()
-            .changeAppointmentDate(AppStrings.kUpcoming);
+        context.read<AppointmentsController>().startPagingControllerListener();
       } else if (index == 2) {
         context.read<FilterController>().resetData();
         context.read<OffersController>().getAllOffers(home: true);

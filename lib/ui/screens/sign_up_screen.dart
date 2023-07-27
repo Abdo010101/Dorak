@@ -236,10 +236,7 @@ class SignUpScreen extends StatelessWidget {
                                       }
                                     }
                                   }),
-
-                        ///TODO Remove This Comment After Upload in AppStoreConnect //////
-
-                        /*   Container(
+                        Container(
                           margin: EdgeInsets.only(bottom: 1.h),
                           padding: EdgeInsets.symmetric(vertical: 1.h),
                           child: Row(
@@ -435,9 +432,7 @@ class SignUpScreen extends StatelessWidget {
                                 vertical: 1.h, horizontal: 2.5.w)),
                         SizedBox(
                           height: 3.h,
-                        ),*/
-                        /// --------------------------------------------------------------
-
+                        ),
                         const AlreadyHaveAccountWidget(),
                       ],
                     ),

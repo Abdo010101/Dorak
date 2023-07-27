@@ -1,5 +1,5 @@
 class NetworkConstant {
-  static const int kPageSize = 8;
+  static const int kPageSize = 15;
   static const String kPageSizeParam = 'paginate';
   static const String kPageNumberParam = 'page';
   static const int kPageNumberValue = 1;

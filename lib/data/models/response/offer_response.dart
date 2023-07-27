@@ -26,21 +26,20 @@ class OfferResponse {
     priceAfter = json['price_after'];
     priceBefore = json['price_before'];
     isActive = json['is_active'];
-    doctor =
-        json['doctor'] != null ? new Doctor.fromJson(json['doctor']) : null;
+    doctor = json['doctor'] != null ? Doctor.fromJson(json['doctor']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['main_pic'] = this.mainPic;
-    data['title'] = this.title;
-    data['description'] = this.description;
-    data['price_after'] = this.priceAfter;
-    data['price_before'] = this.priceBefore;
-    data['is_active'] = this.isActive;
-    if (this.doctor != null) {
-      data['doctor'] = this.doctor!.toJson();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['id'] = id;
+    data['main_pic'] = mainPic;
+    data['title'] = title;
+    data['description'] = description;
+    data['price_after'] = priceAfter;
+    data['price_before'] = priceBefore;
+    data['is_active'] = isActive;
+    if (doctor != null) {
+      data['doctor'] = doctor!.toJson();
     }
     return data;
   }
@@ -87,7 +86,7 @@ class Doctor {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['id'] = id;
     data['name'] = name;
     data['image'] = image;
