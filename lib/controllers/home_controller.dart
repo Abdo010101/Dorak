@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:dorakpattient/data/di/locator.dart';
+import 'package:dorakpattient/data/networks/network_constant.dart';
 import 'package:dorakpattient/data/repository/home_repo.dart';
 import 'package:dorakpattient/routes/dorak_routes.dart';
 import 'package:dorakpattient/utis/helpers/app_providers.dart';
@@ -69,16 +70,19 @@ class HomeController extends ChangeNotifier {
   }
 
   ///TODO Edit here Tomorrow . . . . . . . .
-  Future<void> getBestDoctors(BuildContext context, {int? pageKey}) async {
+  Future<void> getBestDoctors(BuildContext context, {required int pageKey}) async {
     try {
-      isLoading = true;
-      notifyListeners();
+
 
       final result = await _homeRepository.getBestDoctors(pageKey);
       if (result.data != null) {
-        allBestDoctorsList
-          ..clear()
-          ..addAll(result.data!);
+        final isLastPage = result.data!.length < NetworkConstant.kPageSize;
+        if (isLastPage) {
+          pagingController?.appendLastPage(result.data!);
+        } else {
+          final nextPageKey = pageKey! + 1;
+          pagingController?.appendPage(result.data!, nextPageKey);
+        }
       } else {
         if (result.error?.statusCode == 401) {
           if (context.mounted) {

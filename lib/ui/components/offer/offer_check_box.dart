@@ -49,7 +49,7 @@ class OfferCheckBox extends StatelessWidget {
           ),
         ),
         TextBuilder(
-          text: tittle.tr(),
+          text: tittle,
           verticalPadding: 0,
           color: value ? AppColors.blue : AppColors.darkGray,
         ),

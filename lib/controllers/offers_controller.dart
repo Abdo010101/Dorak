@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/data/di/locator.dart';
 import 'package:flutter/material.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../../data/repository/repository.dart';
 import '../data/models/response/response.dart';
@@ -16,7 +17,18 @@ class OffersController extends DisposableProvider {
   final _offersRepository = locator<OffersRepository>();
   TextEditingController offerSearchController = TextEditingController();
   Map<String, dynamic> data = {};
-  Future getAllOffers({bool? home}) async {
+  PagingController<int, AppointmentResponse>? pagingController;
+
+  void startPagingControllerListener() {
+    pagingController = PagingController<int, AppointmentResponse>(
+      // 2
+      firstPageKey: 1,
+    );
+    pagingController?.addPageRequestListener((pageKey) {
+      getAllOffers(pageKey: pageKey);
+    });
+  }
+  Future getAllOffers({bool? home,required int ? pageKey}) async {
     try {
       home == true ? offerSearchController.clear() : null;
       isLoading = true;
