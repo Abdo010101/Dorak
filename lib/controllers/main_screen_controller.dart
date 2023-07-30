@@ -10,12 +10,14 @@ class MainScreenController extends ChangeNotifier {
   void onBottomSheetChanged(int index, BuildContext context) {
     if (context.mounted) {
       if (index == 1) {
-        context.read<AppointmentsController>().startPagingControllerListener();
+        context
+            .read<AppointmentsController>()
+            .startPagingControllerListener(context: context);
       } else if (index == 2) {
         context.read<FilterController>().resetData();
         context
             .read<OffersController>()
-            .startPagingControllerListener(home: true);
+            .startPagingControllerListener(home: true, context: context);
       } else if (index == 3) {
         context.read<PatientProfileController>().getProfileData(context);
       }

@@ -170,7 +170,7 @@
   "result": "Result",
   "search": "Search",
   "doctor": "Doctor",
-  "speciality": "Speciality"
-
-
+  "speciality": "Speciality",
+  "reload": "Reload",
+  "unknown_error": "unknown error"
 }

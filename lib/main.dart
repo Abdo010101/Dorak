@@ -119,7 +119,7 @@ class MyApp extends StatelessWidget {
             ..backgroundColor = AppColors.white
             ..loadingStyle = EasyLoadingStyle.custom
             ..indicatorType = EasyLoadingIndicatorType.cubeGrid;
-
+          //ToDo test And Complete
           FirebaseMessaging.onMessageOpenedApp.listen((event) {
             print("${event.data['action']}");
             notificationsRoute = event.data['action'];
@@ -128,7 +128,7 @@ class MyApp extends StatelessWidget {
             if (notificationsRoute != null) {
               context
                   .read<AppointmentsController>()
-                  .startPagingControllerListener();
+                  .startPagingControllerListener(context: context);
               context
                   .read<MainScreenController>()
                   .onBottomSheetChanged(1, context);

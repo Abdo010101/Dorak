@@ -120,7 +120,7 @@ class LoginScreen extends StatelessWidget {
                                       hint: 'johndoe@mail.com',
                                       color: AppColors.lightGrey,
                                       hintSize: 8.sp,
-                                      height: 5.h,
+                                      height: 7.h,
                                       prefixIcon: Padding(
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 4.w),
@@ -149,8 +149,10 @@ class LoginScreen extends StatelessWidget {
                                             ]),
                                             hint: '',
                                             color: AppColors.lightGrey,
+                                            borderColor: AppColors.transparent,
                                             hintSize: 8.sp,
-                                            height: 5.h,
+                                            height: 7.h,
+                                            borderRadius: 50,
                                             prefixIcon: Padding(
                                               padding: EdgeInsets.symmetric(
                                                   horizontal: 4.w),

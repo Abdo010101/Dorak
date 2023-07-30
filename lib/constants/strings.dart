@@ -178,4 +178,6 @@ class AppStrings {
   static const kSearch = 'search';
   static const kSpeciality = 'speciality';
   static const kDoctor = 'doctor';
+  static const kUnknownError = 'unknown_error';
+  static const kReload = 'reload';
 }

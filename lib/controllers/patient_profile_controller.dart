@@ -68,7 +68,13 @@ class PatientProfileController extends DisposableProvider {
             context, NameRoutes.kHomeScreen, (_) => false);
         return true;
       } else {
-        Util.showSnackBar(context, message: result.error?.message);
+        if (result.error?.statusCode == 401) {
+          if (context.mounted) {
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                NameRoutes.kLoginScreen, (route) => false);
+          }
+          Util.showSnackBar(context, message: result.error?.message);
+        }
         return false;
       }
     } on DioError catch (e) {
@@ -89,6 +95,14 @@ class PatientProfileController extends DisposableProvider {
       if (result.data != null) {
         profile = result.data!;
         context.read<AuthController>().currentUser?.patient = profile;
+      } else {
+        if (result.error?.statusCode == 401) {
+          if (context.mounted) {
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                NameRoutes.kLoginScreen, (route) => false);
+          }
+          Util.showSnackBar(context, message: result.error?.message);
+        }
       }
     } on DioError catch (e) {
       Util.showSnackBar(context, message: e.message);

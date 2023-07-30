@@ -170,6 +170,7 @@
   "result": "النتائج",
   "search": "البحث",
   "doctor": "دكتور",
-  "speciality": "تخصص"
-
+  "speciality": "تخصص",
+  "reload": "إعادة تحميل",
+  "unknown_error": "خطاء غير معروف"
 }

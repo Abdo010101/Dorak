@@ -1,16 +1,23 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../constants/constants.dart';
 import '../ui/components/components.dart';
-import 'package:share_plus/share_plus.dart';
 
 class Util {
-  static showSnackBar(BuildContext context, {required String? message}) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message ?? "")));
+  static showSnackBar(BuildContext context,
+      {required String? message, void Function()? onTap}) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message ?? ""),
+        action: onTap != null
+            ? SnackBarAction(label: 'reload', onPressed: onTap)
+            : null,
+      ),
+    );
   }
 
   static void confirmDeletionDialog(BuildContext context,
