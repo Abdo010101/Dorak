@@ -137,9 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         title: AppStrings.kBestDoctors.tr(),
                         seeAllPressed: () {
                           Provider.of<HomeController>(context, listen: false)
-                              .getBestDoctors(
-                            context,
-                          );
+                              .startPagingController(context);
                           Navigator.pushNamed(
                               context, NameRoutes.kBestDoctorsScreen);
                         },

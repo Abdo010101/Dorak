@@ -3,6 +3,7 @@ import 'package:dorakpattient/data/models/response/offer_response.dart';
 import 'package:dorakpattient/routes/dorak_routes.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import '../../constants/constants.dart';
@@ -24,12 +25,30 @@ class BestDoctorsScreen extends StatelessWidget {
         verticalMargin: 0,
         child: Consumer<HomeController>(
           builder: (context, controller, child) {
-            List<Doctor> doctorsList = controller.allBestDoctorsList;
-            return controller.isLoading
-                ? const LoadingWidget(
-                    backgroundColor: AppColors.transparent,
-                  )
-                : ListView.separated(
+              return PagedListView<int, Doctor>(
+              padding: EdgeInsets.zero,
+              pagingController: controller.pagingController!,
+              builderDelegate:
+              PagedChildBuilderDelegate<Doctor>(
+                itemBuilder: (context, item, index) {
+                  return    DoctorWidget(
+                    home: true,
+                    cardOnTab: () {
+                      Provider.of<DoctorProfileController>(context,
+                          listen: false)
+                          .getDoctorProfile(context, doctorId: item.id!);
+                      Provider.of<DoctorProfileController>(context,
+                          listen: false)
+                          .getDoctorOffers(context, doctorId: item.id!);
+
+                      Navigator.of(context)
+                          .pushNamed(NameRoutes.kDoctorScreen);
+                    },
+                    model: item,
+                  );
+                },
+              ));}
+            ),/*ListView.separated(
                     itemCount: doctorsList.length,
                     itemBuilder: (context, index) {
                       Doctor model = doctorsList[index];
@@ -54,9 +73,8 @@ class BestDoctorsScreen extends StatelessWidget {
                         height: 1.h,
                       );
                     },
-                  );
-          },
-        ),
+                  );*/
+
       ),
     );
   }
