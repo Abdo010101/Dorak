@@ -25,16 +25,24 @@ class OffersController extends DisposableProvider {
       // 2
       firstPageKey: 1,
     );
+    print("ssssssssssssssssssssssssssssssssss");
+    print(offerSearchController.text);
+    print(home);
+    print("ssssssssssssssssssssssssssssssssss");
+
+    if (offerSearchController.text != '') {
+      home == true ? offerSearchController.clear() : null;
+    }
+    print("ssssssssssssssssssssssssssssssssss0000000");
+    print(home);
+    print("ssssssssssssssssssssssssssssssssss0000000");
     pagingController?.addPageRequestListener((pageKey) {
-      getAllOffers(home: home, pageKey: pageKey);
+      getAllOffers(pageKey: pageKey);
     });
   }
 
-  Future getAllOffers({bool? home, required int pageKey}) async {
+  Future getAllOffers({required int pageKey}) async {
     try {
-      if (offerSearchController.text != '') {
-        home == true ? offerSearchController.clear() : null;
-      }
       data["title"] = offerSearchController.text;
       final result =
           await _offersRepository.getAllOffers(data, pageKey: pageKey);

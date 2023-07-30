@@ -192,9 +192,7 @@ class FilterBottomSheet extends StatelessWidget {
                         areaId: generalController.areaId*/
                       );
                 if (filterType == 'Offer') {
-                  await context
-                      .read<OffersController>()
-                      .startPagingControllerListener(home: false);
+                  context.read<OffersController>()..pagingController?.refresh();
                 }
               },
             ),
