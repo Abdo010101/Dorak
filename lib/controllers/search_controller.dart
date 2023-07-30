@@ -18,7 +18,7 @@ class SearchResultController extends ChangeNotifier {
   Map<String, dynamic> prams = {};
   PagingController<int, AppointmentResponse>? pagingController;
 
-  void startPagingControllerListener() {
+/*  void startPagingControllerListener() {
     pagingController = PagingController<int, AppointmentResponse>(
       // 2
       firstPageKey: 1,
@@ -26,11 +26,10 @@ class SearchResultController extends ChangeNotifier {
     pagingController?.addPageRequestListener((pageKey) {
       getAllAppointments(pageKey: pageKey);
     });
-  }
+  }*/
 
   Future<void> getDoctors(BuildContext context,
       {Map<String, dynamic>? data,
-      required int page,
       int? cityId,
       int? areaId,
       double? lat,
