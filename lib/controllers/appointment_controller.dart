@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:dorakpattient/data/networks/network_constant.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -8,6 +9,8 @@ import '../constants/constants.dart';
 import '../data/di/locator.dart';
 import '../data/models/response/response.dart';
 import '../data/repository/repository.dart';
+import '../routes/dorak_routes.dart';
+import '../utis/util.dart';
 
 class AppointmentsController extends ChangeNotifier {
   String appointmentDate = AppStrings.kUpcoming;
@@ -23,17 +26,18 @@ class AppointmentsController extends ChangeNotifier {
     //startPagingControllerListener();
   }
 
-  void startPagingControllerListener() {
+  void startPagingControllerListener({required BuildContext context}) {
     pagingController = PagingController<int, AppointmentResponse>(
       // 2
       firstPageKey: 1,
     );
     pagingController?.addPageRequestListener((pageKey) {
-      getAllAppointments(pageKey: pageKey);
+      getAllAppointments(pageKey: pageKey, context: context);
     });
   }
 
-  Future<void> getAllAppointments({required int pageKey}) async {
+  Future<void> getAllAppointments(
+      {required int pageKey, required BuildContext context}) async {
     try {
       final result = await _appointmentsRepository.getAllAppointments(
           'reservations/${appointmentDate.toLowerCase()}',
@@ -50,8 +54,22 @@ class AppointmentsController extends ChangeNotifier {
         /*  appointmentsList.addAll(result.data!);
         isLoading = false;
         notifyListeners();*/
-      }
-      {
+      } else {
+        if (result.error?.statusCode == 401) {
+          if (context.mounted) {
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                NameRoutes.kLoginScreen, (route) => false);
+          }
+          Util.showSnackBar(context, message: result.error?.message);
+        }
+        if (result.error != null) {
+          if (context.mounted && result.error!.statusCode! >= 500) {
+            Util.showSnackBar(context, message: AppStrings.kUnknownError.tr(),
+                onTap: () async {
+              await getAllAppointments(context: context, pageKey: pageKey);
+            });
+          }
+        }
         //SnackBar(content: Text(result.error?.message), );
       }
     } on DioError catch (e) {

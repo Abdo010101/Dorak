@@ -1,12 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/data/di/locator.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../../data/repository/repository.dart';
+import '../constants/constants.dart';
 import '../data/models/response/response.dart';
 import '../data/networks/network_constant.dart';
+import '../routes/dorak_routes.dart';
+import '../utis/util.dart';
 
 class OffersController extends DisposableProvider {
   bool isLoading = false;
@@ -20,7 +24,8 @@ class OffersController extends DisposableProvider {
   TextEditingController offerSearchController = TextEditingController();
   Map<String, dynamic> data = {};
 
-  startPagingControllerListener({required bool? home}) {
+  startPagingControllerListener(
+      {required bool? home, required BuildContext context}) {
     pagingController = PagingController<int, OfferResponse>(
       // 2
       firstPageKey: 1,
@@ -30,11 +35,12 @@ class OffersController extends DisposableProvider {
       home == true ? offerSearchController.clear() : null;
     }
     pagingController?.addPageRequestListener((pageKey) {
-      getAllOffers(pageKey: pageKey);
+      getAllOffers(pageKey: pageKey, context: context);
     });
   }
 
-  Future getAllOffers({required int pageKey}) async {
+  Future getAllOffers(
+      {required int pageKey, required BuildContext context}) async {
     try {
       data["title"] = offerSearchController.text;
       final result =
@@ -53,6 +59,21 @@ class OffersController extends DisposableProvider {
           pagingController?.appendPage(offers, nextPageKey);
         }
       } else {
+        if (result.error?.statusCode == 401) {
+          if (context.mounted) {
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                NameRoutes.kLoginScreen, (route) => false);
+          }
+          Util.showSnackBar(context, message: result.error?.message);
+        }
+        if (result.error != null) {
+          if (context.mounted && result.error!.statusCode! >= 500) {
+            Util.showSnackBar(context, message: AppStrings.kUnknownError.tr(),
+                onTap: () async {
+              await getAllOffers(pageKey: pageKey, context: context);
+            });
+          }
+        }
         //SnackBar(content: Text(result.error?.message), );
       }
     } on DioError catch (e) {

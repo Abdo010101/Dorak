@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:dorakpattient/constants/constants.dart';
 import 'package:dorakpattient/controllers/controllers.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
@@ -68,7 +69,22 @@ class PatientProfileController extends DisposableProvider {
             context, NameRoutes.kHomeScreen, (_) => false);
         return true;
       } else {
-        Util.showSnackBar(context, message: result.error?.message);
+        if (result.error?.statusCode == 401) {
+          if (context.mounted) {
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                NameRoutes.kLoginScreen, (route) => false);
+            Util.showSnackBar(context, message: result.error?.message);
+          }
+        }
+
+        if (result.error != null) {
+          if (context.mounted && result.error!.statusCode! >= 500) {
+            Util.showSnackBar(context, message: AppStrings.kUnknownError.tr(),
+                onTap: () async {
+              await updateProfile(context);
+            });
+          }
+        }
         return false;
       }
     } on DioError catch (e) {
@@ -89,6 +105,22 @@ class PatientProfileController extends DisposableProvider {
       if (result.data != null) {
         profile = result.data!;
         context.read<AuthController>().currentUser?.patient = profile;
+      } else {
+        if (result.error?.statusCode == 401) {
+          if (context.mounted) {
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                NameRoutes.kLoginScreen, (route) => false);
+          }
+          Util.showSnackBar(context, message: result.error?.message);
+        }
+        if (result.error != null) {
+          if (context.mounted && result.error!.statusCode! >= 500) {
+            Util.showSnackBar(context, message: AppStrings.kUnknownError.tr(),
+                onTap: () async {
+              await getProfileData(context);
+            });
+          }
+        }
       }
     } on DioError catch (e) {
       Util.showSnackBar(context, message: e.message);
