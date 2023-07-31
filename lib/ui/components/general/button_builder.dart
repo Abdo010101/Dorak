@@ -49,6 +49,7 @@ class ButtonBuilder extends StatelessWidget {
             borderRadius: BorderRadius.circular(radius ?? 50),
           ),
           backgroundColor: buttonColor,
+          foregroundColor: AppColors.transparent,
           side: BorderSide(
             width: 0.3.w,
             color: borderColor,

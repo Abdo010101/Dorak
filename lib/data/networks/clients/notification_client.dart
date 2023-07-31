@@ -10,8 +10,9 @@ part 'notification_client.g.dart';
 abstract class NotificationClient {
   factory NotificationClient(Dio dio, {String baseUrl}) = _NotificationClient;
 
-  @GET(NetworkConstant.kNotifications)
-  Future<BaseResponseList<NotificationModel>> getNotifications();
+  @GET('${NetworkConstant.kNotifications}?page={pageKey}')
+  Future<BaseResponseList<NotificationModel>> getNotifications(
+      @Path('pageKey') int? pageKey);
 
   @POST(NetworkConstant.kUpdateNotificationsStatus)
   Future<BaseResponse<dynamic>> updateNotificationsStatus(@Body() var body);

@@ -46,7 +46,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: EdgeInsetsDirectional.only(end: 4.0.w),
                 child: IconButton(
                   onPressed: () {
-                    context.read<NotificationController>().getNotifications();
+                    context
+                        .read<NotificationController>()
+                        .startPagingControllerListener(context: context);
                     Navigator.of(context)
                         .pushNamed(NameRoutes.kNotificationScreen);
                   },

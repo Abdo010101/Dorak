@@ -19,9 +19,10 @@ class _NotificationClient implements NotificationClient {
   String? baseUrl;
 
   @override
-  Future<BaseResponseList<NotificationModel>> getNotifications() async {
+  Future<BaseResponseList<NotificationModel>> getNotifications(pageKey) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -32,7 +33,7 @@ class _NotificationClient implements NotificationClient {
     )
             .compose(
               _dio.options,
-              'notifications',
+              'notifications?page=${pageKey}',
               queryParameters: queryParameters,
               data: _data,
             )

@@ -5,9 +5,11 @@ import 'package:dorakpattient/ui/components/components.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../data/models/response/response.dart';
+import '../data/networks/network_constant.dart';
 import '../data/repository/repository.dart';
 import '../main.dart';
 
@@ -61,21 +63,34 @@ class NotificationController extends ChangeNotifier {
     });
   }
 
-  List<NotificationModel> notificationsList = [];
   bool isLoading = false;
   final _notificationsRepository = locator<NotificationsRepository>();
+  PagingController<int, NotificationModel>? pagingController;
 
-  Future<void> getNotifications() async {
+  startPagingControllerListener({required BuildContext context}) {
+    pagingController = PagingController<int, NotificationModel>(
+      // 2
+      firstPageKey: 1,
+    );
+
+    pagingController?.addPageRequestListener((pageKey) {
+      getNotifications(pageKey: pageKey, context: context);
+    });
+  }
+
+  Future<void> getNotifications(
+      {required int pageKey, required BuildContext context}) async {
     try {
-      isLoading = true;
-      notifyListeners();
-      final result = await _notificationsRepository.getNotifications();
+      final result =
+          await _notificationsRepository.getNotifications(pageKey: pageKey);
       if (result.data != null) {
-        notificationsList
-          ..clear()
-          ..addAll(result.data!);
-        isLoading = false;
-        notifyListeners();
+        final isLastPage = result.data!.length < NetworkConstant.kPageSize;
+        if (isLastPage) {
+          pagingController?.appendLastPage(result.data!);
+        } else {
+          final nextPageKey = pageKey + 1;
+          pagingController?.appendPage(result.data!, nextPageKey);
+        }
       }
       {
         //SnackBar(content: Text(result.error?.message), );
