@@ -30,6 +30,7 @@ class OffersController extends DisposableProvider {
       // 2
       firstPageKey: 1,
     );
+
     if (offerSearchController.text != '') {
       home == true ? offerSearchController.clear() : null;
     }
@@ -49,8 +50,7 @@ class OffersController extends DisposableProvider {
         offers = searchResult.offers!.data!;
         maxPrice = searchResult.maxPrice;
         minPrice = searchResult.minPrice;
-        currentRangeValues =
-            RangeValues(double.parse(minPrice!), double.parse(maxPrice!));
+        currentRangeValues =RangeValues(double.parse(minPrice!), double.parse(maxPrice!));
         final isLastPage = offers.length < NetworkConstant.kPageSize;
         if (isLastPage) {
           pagingController?.appendLastPage(offers);

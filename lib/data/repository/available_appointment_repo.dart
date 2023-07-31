@@ -36,7 +36,6 @@ class AvailableAppointmentRepository extends BaseRepository {
         return BaseModel(error: ErrorResponse(dioError: e));
       }
     } else {
-      Util.kToastNOInternet();
       return BaseModel.noNetworkConnection();
     }
   }
@@ -55,7 +54,6 @@ class AvailableAppointmentRepository extends BaseRepository {
         return BaseModel(error: ErrorResponse(dioError: e));
       }
     } else {
-      Util.kToastNOInternet();
       return BaseModel.noNetworkConnection();
     }
   }

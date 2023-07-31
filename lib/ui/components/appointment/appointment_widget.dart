@@ -28,6 +28,7 @@ class AppointmentWidget extends StatelessWidget {
                 verticalMargin: 0,
                 verticalPadding: 0.5.h,
                 horizontalPadding: 2.w,
+                //  height: 9.h,
                 color: AppColors.liteWight2,
                 child: Row(
                   children: [

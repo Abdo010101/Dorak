@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:flutter/material.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
 
 import '../data/di/locator.dart';
@@ -15,6 +16,17 @@ class SearchResultController extends ChangeNotifier {
   List<Doctor> doctorsList = [];
   final _doctorsRepository = locator<DoctorsSearchResultRepository>();
   Map<String, dynamic> prams = {};
+  PagingController<int, AppointmentResponse>? pagingController;
+
+/*  void startPagingControllerListener() {
+    pagingController = PagingController<int, AppointmentResponse>(
+      // 2
+      firstPageKey: 1,
+    );
+    pagingController?.addPageRequestListener((pageKey) {
+      getAllAppointments(pageKey: pageKey);
+    });
+  }*/
 
   Future<void> getDoctors(BuildContext context,
       {Map<String, dynamic>? data,

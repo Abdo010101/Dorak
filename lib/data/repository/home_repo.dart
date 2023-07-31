@@ -22,7 +22,6 @@ class HomeRepository extends BaseRepository {
         return BaseModel(error: ErrorResponse(dioError: e));
       }
     } else {
-      Util.kToastNOInternet();
       return BaseModel.noNetworkConnection();
     }
   }
@@ -38,7 +37,6 @@ class HomeRepository extends BaseRepository {
         return BaseModel(error: ErrorResponse(dioError: e));
       }
     } else {
-      Util.kToastNOInternet();
       return BaseModel.noNetworkConnection();
     }
   }
@@ -54,7 +52,6 @@ class HomeRepository extends BaseRepository {
         return BaseModel(error: ErrorResponse(dioError: e));
       }
     } else {
-      Util.kToastNOInternet();
       return BaseModel.noNetworkConnection();
     }
   }
