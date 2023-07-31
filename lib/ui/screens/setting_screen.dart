@@ -25,27 +25,25 @@ class SettingsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             EmptyCard(
-              height: 18.h,
+              height: 22.h,
               horizontalPadding: 6.w,
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SettingsComponents(
-                      tittle: AppStrings.kLanguage.tr(),
-                      type: SettingsComponentsType.arrow,
-                      onPressedArrow: () => Navigator.pushNamed(
-                          context, NameRoutes.kLanguageScreen),
-                    ),
-                    SettingsComponents(
-                      tittle: AppStrings.kNotifications.tr(),
-                      type: SettingsComponentsType.switching,
-                      switchingStatus: true,
-                      divider: false,
-                      changeSwitchingStatus: (value) => {},
-                    ),
-                  ],
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SettingsComponents(
+                    tittle: AppStrings.kLanguage.tr(),
+                    type: SettingsComponentsType.arrow,
+                    onPressedArrow: () => Navigator.pushNamed(
+                        context, NameRoutes.kLanguageScreen),
+                  ),
+                  SettingsComponents(
+                    tittle: AppStrings.kNotifications.tr(),
+                    type: SettingsComponentsType.switching,
+                    switchingStatus: true,
+                    divider: false,
+                    changeSwitchingStatus: (value) => {},
+                  ),
+                ],
               ),
             ),
           ],

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
-import '../constants/constants.dart';
 import '../ui/screens/screens.dart';
 import 'controllers.dart';
 
@@ -14,7 +13,9 @@ class MainScreenController extends ChangeNotifier {
         context.read<AppointmentsController>().startPagingControllerListener();
       } else if (index == 2) {
         context.read<FilterController>().resetData();
-        context.read<OffersController>().getAllOffers(home: true);
+        context
+            .read<OffersController>()
+            .startPagingControllerListener(home: true);
       } else if (index == 3) {
         context.read<PatientProfileController>().getProfileData(context);
       }

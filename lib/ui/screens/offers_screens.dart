@@ -4,8 +4,11 @@ import 'package:dorakpattient/ui/components/components.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../data/models/response/response.dart';
 
 class OffersScreen extends StatelessWidget {
   const OffersScreen({Key? key}) : super(key: key);
@@ -69,7 +72,7 @@ class OffersScreen extends StatelessWidget {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          offersController.getAllOffers(home: true);
+          offersController.pagingController!.refresh();
         },
         child: EmptyCard(
           horizontalMargin: 0,
@@ -93,14 +96,18 @@ class OffersScreen extends StatelessWidget {
                     hintSize: 7.5.sp,
                     borderRadius: 15,
                     prefixIcon: IconButton(
-                      onPressed: () => controller.getAllOffers(),
+                      onPressed: () => {
+                        controller.pagingController?.refresh(),
+                      },
                       icon: Icon(
                         Icons.search,
                         size: 12.5.sp,
                         color: AppColors.gray,
                       ),
                     ),
-                    onSubmit: (value) => controller.getAllOffers(),
+                    onSubmit: (value) => {
+                      controller.pagingController?.refresh(),
+                    },
                     color: AppColors.white,
                     borderColor: AppColors.white,
                   ),
@@ -108,47 +115,89 @@ class OffersScreen extends StatelessWidget {
                     height: 1.5.h,
                   ),
                   Expanded(
-                    child: controller.isLoading
-                        ? const LoadingWidget(
+                    child: PagedListView<int, OfferResponse>(
+                      padding: EdgeInsets.zero,
+                      pagingController: controller.pagingController!,
+                      builderDelegate: PagedChildBuilderDelegate<OfferResponse>(
+                        noItemsFoundIndicatorBuilder: (BuildContext context) {
+                          return NoDataWidget(
+                            text: AppStrings.kNoOffers.tr(),
+                            backgroundColor: Colors.transparent,
+                          );
+                        },
+                        firstPageProgressIndicatorBuilder:
+                            (BuildContext context) {
+                          return const LoadingWidget(
                             backgroundColor: AppColors.transparent,
-                          )
-                        : controller.offers.isEmpty
-                            ? NoDataWidget(
-                                text: AppStrings.kNoOffers.tr(),
-                                backgroundColor: Colors.transparent,
-                              )
-                            : ListView.builder(
-                                padding: EdgeInsets.zero,
-                                itemCount: controller.offers.length,
-                                itemBuilder: (context, index) {
-                                  return OfferWidget(
-                                    offerTittle: controller.offers[index].title,
-                                    offerSubTittle:
-                                        controller.offers[index].description,
-                                    offerPic: controller.offers[index].mainPic,
-                                    priceBefore:
-                                        controller.offers[index].priceBefore,
-                                    priceAfter:
-                                        controller.offers[index].priceAfter,
-                                    doctorName:
-                                        controller.offers[index].doctor?.name,
-                                    docPic:
-                                        controller.offers[index].doctor!.image,
-                                    rate: controller.offers[index].doctor!.rate,
-                                    onPressed: () {
-                                      showBottomSheet(
-                                          context: context,
-                                          backgroundColor: Colors.transparent,
-                                          builder: (context) {
-                                            return OfferDetailsBottomSheet(
-                                              offer: controller.offers[index],
-                                            );
-                                          });
-                                    },
-                                  );
-                                },
-                              ),
+                          );
+                        },
+                        itemBuilder: (context, item, index) {
+                          return OfferWidget(
+                            offerTittle: item.title,
+                            offerSubTittle: item.description,
+                            offerPic: item.mainPic,
+                            priceBefore: item.priceBefore,
+                            priceAfter: item.priceAfter,
+                            doctorName: item.doctor?.name,
+                            docPic: item.doctor!.image,
+                            rate: item.doctor!.rate,
+                            onPressed: () {
+                              showBottomSheet(
+                                  context: context,
+                                  backgroundColor: Colors.transparent,
+                                  builder: (context) {
+                                    return OfferDetailsBottomSheet(
+                                      offer: item,
+                                    );
+                                  });
+                            },
+                          );
+                        },
+                      ),
+                    ),
                   ),
+                  // Expanded(
+                  //   child: controller.isLoading
+                  //       ? const LoadingWidget(
+                  //           backgroundColor: AppColors.transparent,
+                  //         )
+                  //       : controller.offers.isEmpty
+                  //           ? NoDataWidget(
+                  //               text: AppStrings.kNoOffers.tr(),
+                  //               backgroundColor: Colors.transparent,
+                  //             )
+                  //           : ListView.builder(
+                  //               padding: EdgeInsets.zero,
+                  //               itemCount: controller.offers.length,
+                  //               itemBuilder: (context, index) {
+                  //                 return OfferWidget(
+                  //                   offerTittle: controller.offers[index].title,
+                  //                   offerSubTittle:
+                  //                       controller.offers[index].description,
+                  //                   offerPic: controller.offers[index].mainPic,
+                  //                   priceBefore:
+                  //                       controller.offers[index].priceBefore,
+                  //                   priceAfter:
+                  //                       controller.offers[index].priceAfter,
+                  //                   doctorName:
+                  //                       controller.offers[index].doctor?.name,
+                  //                   docPic:
+                  //                       controller.offers[index].doctor!.image,
+                  //                   rate: controller.offers[index].doctor!.rate,
+                  //                   onPressed: () {
+                  //                     showBottomSheet(
+                  //                         context: context,
+                  //                         backgroundColor: Colors.transparent,
+                  //                         builder: (context) {
+                  //                           return OfferDetailsBottomSheet(
+                  //                             offer: controller.offers[index],
+                  //                           );
+                  //                         });
+                  //                   },
+                  //                 );
+                  //               },
+                  //             ),
+                  // ),
                   SizedBox(
                     height: 10.h,
                   )

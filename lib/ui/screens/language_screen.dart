@@ -28,29 +28,27 @@ class LanguageScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             EmptyCard(
-              height: 18.h,
+              height: 21.h,
               horizontalPadding: 6.w,
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SettingsComponents(
-                      tittle: 'English',
-                      type: SettingsComponentsType.check,
-                      checkStatus: controller.checkStatus,
-                      onPressedCheck: (value) =>
-                          controller.changeCheckStatus(value, context),
-                    ),
-                    SettingsComponents(
-                      tittle: 'عربى',
-                      type: SettingsComponentsType.check,
-                      checkStatus: controller.checkStatus,
-                      onPressedCheck: (value) =>
-                          controller.changeCheckStatus(value, context),
-                      divider: false,
-                    ),
-                  ],
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SettingsComponents(
+                    tittle: 'English',
+                    type: SettingsComponentsType.check,
+                    checkStatus: controller.checkStatus,
+                    onPressedCheck: (value) =>
+                        controller.changeCheckStatus(value, context),
+                  ),
+                  SettingsComponents(
+                    tittle: 'عربى',
+                    type: SettingsComponentsType.check,
+                    checkStatus: controller.checkStatus,
+                    onPressedCheck: (value) =>
+                        controller.changeCheckStatus(value, context),
+                    divider: false,
+                  ),
+                ],
               ),
             ),
           ],

@@ -19,10 +19,14 @@ class _OffersClint implements OffersClint {
   String? baseUrl;
 
   @override
-  Future<BaseResponse<AllOffersResponse>> getAllOffers(body) async {
+  Future<BaseResponse<AllOffersResponse>> getAllOffers(
+    body,
+    pageKey,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.addAll(body);
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -33,7 +37,7 @@ class _OffersClint implements OffersClint {
     )
             .compose(
               _dio.options,
-              'offers',
+              'offers?page={pageKey',
               queryParameters: queryParameters,
               data: _data,
             )

@@ -11,8 +11,8 @@ class AppointmentsRepository extends BaseRepository {
 
   AppointmentsRepository({required this.appointmentClient});
 
-  Future<BaseModel<List<AppointmentResponse>>> getAllAppointments(
-      String type, {int ? pageKey}) async {
+  Future<BaseModel<List<AppointmentResponse>>> getAllAppointments(String type,
+      {int? pageKey}) async {
     if (await checkForConnectivity()) {
       try {
         return BaseModel(
@@ -25,7 +25,6 @@ class AppointmentsRepository extends BaseRepository {
         return BaseModel(error: ErrorResponse(dioError: e));
       }
     } else {
-      Util.kToastNOInternet();
       return BaseModel.noNetworkConnection();
     }
   }
@@ -42,7 +41,6 @@ class AppointmentsRepository extends BaseRepository {
         return BaseModel(error: ErrorResponse(dioError: e));
       }
     } else {
-      Util.kToastNOInternet();
       return BaseModel.noNetworkConnection();
     }
   }

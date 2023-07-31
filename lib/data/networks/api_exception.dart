@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:quiver/strings.dart';
 
 class ApiException implements Exception {
@@ -10,7 +11,7 @@ class ApiException implements Exception {
   static String loginInfoFailedMsg = ('login_info_not_correct_try_again');
   static String authorizationFailedMsg = ('please_login_and_try_again');
   static String timeOutConnectionMsg = ('time_out');
-  static String noInternetConnectionMsg = ('no_internet_connection');
+  static String noInternetConnectionMsg = ('on_internet'.tr());
   static String unknownErr = ('unknown_error');
 
   ApiException(
