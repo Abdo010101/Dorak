@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:dorakpattient/data/networks/network_constant.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -60,6 +61,14 @@ class AppointmentsController extends ChangeNotifier {
                 NameRoutes.kLoginScreen, (route) => false);
           }
           Util.showSnackBar(context, message: result.error?.message);
+        }
+        if (result.error != null) {
+          if (context.mounted && result.error!.statusCode! >= 500) {
+            Util.showSnackBar(context, message: AppStrings.kUnknownError.tr(),
+                onTap: () async {
+              await getAllAppointments(context: context, pageKey: pageKey);
+            });
+          }
         }
         //SnackBar(content: Text(result.error?.message), );
       }

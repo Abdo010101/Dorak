@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:dorakpattient/constants/constants.dart';
 import 'package:dorakpattient/controllers/controllers.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
@@ -72,8 +73,17 @@ class PatientProfileController extends DisposableProvider {
           if (context.mounted) {
             Navigator.of(context).pushNamedAndRemoveUntil(
                 NameRoutes.kLoginScreen, (route) => false);
+            Util.showSnackBar(context, message: result.error?.message);
           }
-          Util.showSnackBar(context, message: result.error?.message);
+        }
+
+        if (result.error != null) {
+          if (context.mounted && result.error!.statusCode! >= 500) {
+            Util.showSnackBar(context, message: AppStrings.kUnknownError.tr(),
+                onTap: () async {
+              await updateProfile(context);
+            });
+          }
         }
         return false;
       }
@@ -102,6 +112,14 @@ class PatientProfileController extends DisposableProvider {
                 NameRoutes.kLoginScreen, (route) => false);
           }
           Util.showSnackBar(context, message: result.error?.message);
+        }
+        if (result.error != null) {
+          if (context.mounted && result.error!.statusCode! >= 500) {
+            Util.showSnackBar(context, message: AppStrings.kUnknownError.tr(),
+                onTap: () async {
+              await getProfileData(context);
+            });
+          }
         }
       }
     } on DioError catch (e) {

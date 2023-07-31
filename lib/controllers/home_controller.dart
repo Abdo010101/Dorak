@@ -58,8 +58,8 @@ class HomeController extends ChangeNotifier {
             AppProviders.disposeAllDisposableProviders(context);
             Navigator.of(context).pushNamedAndRemoveUntil(
                 NameRoutes.kLoginScreen, (route) => false);
+            Util.showSnackBar(context, message: result.error?.message);
           }
-          Util.showSnackBar(context, message: result.error?.message);
         }
         if (result.error != null) {
           if (context.mounted && result.error!.statusCode! >= 500) {
@@ -98,8 +98,16 @@ class HomeController extends ChangeNotifier {
             Navigator.of(context).pushNamedAndRemoveUntil(
                 NameRoutes.kLoginScreen, (route) => false);
           }
+          Util.showSnackBar(context, message: result.error?.message);
         }
-        Util.showSnackBar(context, message: result.error?.message);
+        if (result.error != null) {
+          if (context.mounted && result.error!.statusCode! >= 500) {
+            Util.showSnackBar(context, message: AppStrings.kUnknownError.tr(),
+                onTap: () async {
+              await getBestDoctors(context, pageKey: pageKey);
+            });
+          }
+        }
         //SnackBar(content: Text(result.error?.message), );
       }
     } on DioError catch (e) {

@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/data/di/locator.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../../data/repository/repository.dart';
+import '../constants/constants.dart';
 import '../data/models/response/response.dart';
 import '../data/networks/network_constant.dart';
 import '../routes/dorak_routes.dart';
@@ -63,6 +65,14 @@ class OffersController extends DisposableProvider {
                 NameRoutes.kLoginScreen, (route) => false);
           }
           Util.showSnackBar(context, message: result.error?.message);
+        }
+        if (result.error != null) {
+          if (context.mounted && result.error!.statusCode! >= 500) {
+            Util.showSnackBar(context, message: AppStrings.kUnknownError.tr(),
+                onTap: () async {
+              await getAllOffers(pageKey: pageKey, context: context);
+            });
+          }
         }
         //SnackBar(content: Text(result.error?.message), );
       }
