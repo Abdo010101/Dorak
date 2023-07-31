@@ -172,5 +172,7 @@
   "doctor": "Doctor",
   "speciality": "Speciality",
   "reload": "Reload",
-  "unknown_error": "unknown error"
+  "unknown_error": "unknown error",
+  "unauthenticated_title": "Unauthenticated",
+  "unauthenticated_subtitle": "Unauthenticated"
 }

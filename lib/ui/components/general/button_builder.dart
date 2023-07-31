@@ -42,19 +42,26 @@ class ButtonBuilder extends StatelessWidget {
       height: height ?? 6.5.h,
       margin: margin,
       child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          elevation: elevation,
-          shadowColor: AppColors.primary,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(radius ?? 50),
-          ),
-          backgroundColor: buttonColor,
-          foregroundColor: AppColors.transparent,
-          side: BorderSide(
-            width: 0.3.w,
-            color: borderColor,
-          ),
-        ),
+        style: ButtonStyle(
+            elevation: MaterialStateProperty.all(elevation),
+            enableFeedback: false,
+            shadowColor: MaterialStateProperty.all(AppColors.primary),
+            side: MaterialStateProperty.all(
+              BorderSide(
+                width: 0.3.w,
+                color: borderColor,
+              ),
+            ),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(radius ?? 50),
+                ),
+              ),
+            ),
+            backgroundColor: MaterialStateProperty.all(
+              buttonColor,
+            )),
         onPressed: onPressed,
         child: Row(
           mainAxisAlignment: suffixIcon == null

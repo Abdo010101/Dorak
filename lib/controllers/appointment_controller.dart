@@ -9,7 +9,6 @@ import '../constants/constants.dart';
 import '../data/di/locator.dart';
 import '../data/models/response/response.dart';
 import '../data/repository/repository.dart';
-import '../routes/dorak_routes.dart';
 import '../utis/util.dart';
 
 class AppointmentsController extends ChangeNotifier {
@@ -57,8 +56,9 @@ class AppointmentsController extends ChangeNotifier {
       } else {
         if (result.error?.statusCode == 401) {
           if (context.mounted) {
-            Navigator.of(context).pushNamedAndRemoveUntil(
-                NameRoutes.kLoginScreen, (route) => false);
+            Util.unLoginedDialog(context);
+            // Navigator.of(context).pushNamedAndRemoveUntil(
+            //     NameRoutes.kLoginScreen, (route) => false);
           }
           Util.showSnackBar(context, message: result.error?.message);
         }
