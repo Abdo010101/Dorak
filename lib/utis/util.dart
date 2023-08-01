@@ -42,6 +42,16 @@ class Util {
     );
   }
 
+  static void unLoginedBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      backgroundColor: AppColors.transparent,
+      context: context,
+      builder: (context) {
+        return const LoginBottomSheet();
+      },
+    );
+  }
+
   static void openCall(phone) async {
     Uri url = Uri.parse('tel:$phone');
     if (await canLaunchUrl(url)) {

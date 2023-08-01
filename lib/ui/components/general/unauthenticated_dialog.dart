@@ -16,7 +16,7 @@ class UnauthenticatedDialog extends StatelessWidget {
     return AlertDialog(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
-          Radius.circular(20),
+          Radius.circular(15),
         ),
       ),
       title: TextBuilder(
@@ -43,6 +43,7 @@ class UnauthenticatedDialog extends StatelessWidget {
             ButtonBuilder(
               title: 'go to login or register ',
               width: 55.w,
+              height: 4.5.h,
               titleStyle: AppStyles.kButtonTextStyle.copyWith(
                   fontWeight: FontWeight.normal,
                   color: AppColors.white,
@@ -51,13 +52,14 @@ class UnauthenticatedDialog extends StatelessWidget {
                   context, NameRoutes.kWelcomeScreen),
             ),
             SizedBox(
-              height: 2.5.h,
+              height: 1.5.h,
             ),
             ButtonBuilder(
               title: AppStrings.kCancel,
               buttonColor: AppColors.red,
               borderColor: AppColors.transparent,
               width: 55.w,
+              height: 4.5.h,
               titleStyle: AppStyles.kButtonTextStyle.copyWith(
                   fontWeight: FontWeight.normal,
                   color: AppColors.white,
