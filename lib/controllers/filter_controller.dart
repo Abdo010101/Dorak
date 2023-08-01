@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -250,9 +248,7 @@ class FilterController extends DisposableProvider {
       filterData['maxPrice'] = currentRangeValues?.end.toInt();
 
       ///TODO edit hereee Hussein.
-      /* context
-          .read<SearchResultController>()
-          .getDoctors(context, data: filterData);*/
+      context.read<SearchResultController>().prams = filterData;
     } on DioError catch (e) {
     } finally {}
   }

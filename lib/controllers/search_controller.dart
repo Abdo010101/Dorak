@@ -1,9 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/data/networks/network_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:provider/provider.dart';
 
 import '../data/di/locator.dart';
 import '../data/models/response/response.dart';
@@ -23,14 +21,16 @@ class SearchResultController extends ChangeNotifier {
       // 2
       firstPageKey: 1,
     );
+    if (data != null) {
+      prams = data;
+    }
     pagingController?.addPageRequestListener((pageKey) {
-      getDoctors(pageKey: pageKey, data: data);
+      getDoctors(pageKey: pageKey);
     });
   }
 
   Future<void> getDoctors(
-      {Map<String, dynamic>? data,
-      required int? pageKey,
+      {required int? pageKey,
       int? cityId,
       int? areaId,
       double? lat,
@@ -39,11 +39,6 @@ class SearchResultController extends ChangeNotifier {
       int? specializationId,
       int? medicalCenterId}) async {
     try {
-      prams = {};
-
-      if (data != null) {
-        prams = data;
-      }
       /*   if (cityId != null) {
         prams['area_id'] = cityId;
       } else if (areaId != null) {
@@ -71,7 +66,7 @@ class SearchResultController extends ChangeNotifier {
           }
         }
       }*/
-
+      print(prams);
       final result = await _doctorsRepository.getDoctors(prams, pageKey);
 
       if (result.data != null) {

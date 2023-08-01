@@ -196,6 +196,11 @@ class FilterBottomSheet extends StatelessWidget {
                       );
                 if (filterType == 'Offer') {
                   context.read<OffersController>().pagingController?.refresh();
+                } else {
+                  context
+                      .read<SearchResultController>()
+                      .pagingController
+                      ?.refresh();
                 }
               },
             ),

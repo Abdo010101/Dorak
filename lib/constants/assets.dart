@@ -41,8 +41,8 @@ class AppAssets {
   static const kNoData = '$kAssets/no_data.svg';
   static const kFacebook = '$kAssets/icon-f.png';
   static const kGoogle = '$kAssets/icon-g.png';
-  static const String kBlackArrowIcon = '$kAssets/arrow.svg';
-  static const String kSubscription = '$kAssets/subscription.svg';
+  static const kBlackArrowIcon = '$kAssets/arrow.svg';
+  static const kSubscription = '$kAssets/subscription.svg';
   static const kIntro1 = '$kAssets/intro_1.png';
   static const kIntro2 = '$kAssets/intro_2.png';
   static const kIntro3 = '$kAssets/intro_3.png';
