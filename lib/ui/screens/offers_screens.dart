@@ -38,6 +38,28 @@ class OffersScreen extends StatelessWidget {
           GeometricalAvatar(
             backgroundColor: AppColors.transparent,
             radius: 10.w,
+            child: SvgPicture.asset(
+              AppAssets.kSortByIcon,
+              fit: BoxFit.scaleDown,
+              width: 3.0.w,
+              height: 3.0.w,
+            ),
+            onTap: () {
+              showBottomSheet(
+                  context: context,
+                  backgroundColor: Colors.transparent,
+                  builder: (context) {
+                    return Padding(
+                        padding: EdgeInsets.only(top: 10.h),
+                        child: const SortByBottomSheet(
+                          filterType: 'Offer',
+                        ));
+                  });
+            },
+          ),
+          GeometricalAvatar(
+            backgroundColor: AppColors.transparent,
+            radius: 10.w,
             margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 0.h),
             child: SvgPicture.asset(
               AppAssets.kFilterIcon,
@@ -156,48 +178,6 @@ class OffersScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // Expanded(
-                  //   child: controller.isLoading
-                  //       ? const LoadingWidget(
-                  //           backgroundColor: AppColors.transparent,
-                  //         )
-                  //       : controller.offers.isEmpty
-                  //           ? NoDataWidget(
-                  //               text: AppStrings.kNoOffers.tr(),
-                  //               backgroundColor: Colors.transparent,
-                  //             )
-                  //           : ListView.builder(
-                  //               padding: EdgeInsets.zero,
-                  //               itemCount: controller.offers.length,
-                  //               itemBuilder: (context, index) {
-                  //                 return OfferWidget(
-                  //                   offerTittle: controller.offers[index].title,
-                  //                   offerSubTittle:
-                  //                       controller.offers[index].description,
-                  //                   offerPic: controller.offers[index].mainPic,
-                  //                   priceBefore:
-                  //                       controller.offers[index].priceBefore,
-                  //                   priceAfter:
-                  //                       controller.offers[index].priceAfter,
-                  //                   doctorName:
-                  //                       controller.offers[index].doctor?.name,
-                  //                   docPic:
-                  //                       controller.offers[index].doctor!.image,
-                  //                   rate: controller.offers[index].doctor!.rate,
-                  //                   onPressed: () {
-                  //                     showBottomSheet(
-                  //                         context: context,
-                  //                         backgroundColor: Colors.transparent,
-                  //                         builder: (context) {
-                  //                           return OfferDetailsBottomSheet(
-                  //                             offer: controller.offers[index],
-                  //                           );
-                  //                         });
-                  //                   },
-                  //                 );
-                  //               },
-                  //             ),
-                  // ),
                   SizedBox(
                     height: 10.h,
                   )

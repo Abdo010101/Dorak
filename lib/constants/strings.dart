@@ -182,4 +182,11 @@ class AppStrings {
   static const kDoctor = 'doctor';
   static const kUnknownError = 'unknown_error';
   static const kReload = 'reload';
+  static const kSortBy = 'sort_by';
+  static const kSortByList = [
+    'most_recommended',
+    'lowest_price',
+    'highest_price ',
+    'short_waiting_time'
+  ];
 }
