@@ -24,7 +24,8 @@ class FilterBottomSheet extends StatelessWidget {
         return BottomSheetBuilder(
           backgroundColor: AppColors.white,
           crossAlignment: CrossAxisAlignment.start,
-          height: 110.h,
+          height: 67.5.h,
+          containerHeight: 62.5.h,
           children: [
             Row(
               children: [
@@ -165,11 +166,13 @@ class FilterBottomSheet extends StatelessWidget {
                         text:
                             '${AppStrings.kCurrency.tr()} ${controller.currentRangeValues?.start.toInt()} ',
                         horizontalPadding: 2.5.w,
+                        verticalPadding: 1.h,
                       ),
                       TextBuilder(
                         text:
                             '${AppStrings.kCurrency.tr()} ${controller.currentRangeValues?.end.toInt()} ',
                         horizontalPadding: 2.5.w,
+                        verticalPadding: 1.h,
                       ),
                     ],
                   ),

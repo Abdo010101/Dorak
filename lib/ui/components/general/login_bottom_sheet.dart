@@ -15,8 +15,9 @@ class LoginBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomSheetBuilder(
       backgroundColor: AppColors.white,
-      crossAlignment: CrossAxisAlignment.start,
-      height: 75.h,
+      crossAlignment: CrossAxisAlignment.center,
+      height: 35.h,
+      containerHeight: 30.h,
       children: [
         SizedBox(height: 1.h),
         TextBuilder(
@@ -29,10 +30,14 @@ class LoginBottomSheet extends StatelessWidget {
         TextBuilder(
           text:
               "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-          maxLin: 3,
+          maxLin: 2,
+          size: AppFontSizes.kS4,
+          verticalPadding: 1.75.h,
         ),
         ButtonBuilder(
           title: 'go to login or register ',
+          height: 5.h,
+          width: 70.w,
           titleStyle: AppStyles.kButtonTextStyle.copyWith(
               fontWeight: FontWeight.normal,
               color: AppColors.white,
@@ -40,16 +45,14 @@ class LoginBottomSheet extends StatelessWidget {
           onPressed: () => Navigator.pushReplacementNamed(
               context, NameRoutes.kWelcomeScreen),
         ),
-        SizedBox(
-          height: 1.5.h,
-        ),
         ButtonBuilder(
           title: AppStrings.kCancel,
-          buttonColor: AppColors.red,
+          buttonColor: AppColors.transparent,
           borderColor: AppColors.transparent,
           titleStyle: AppStyles.kButtonTextStyle.copyWith(
+              decoration: TextDecoration.underline,
               fontWeight: FontWeight.normal,
-              color: AppColors.white,
+              color: AppColors.red,
               fontSize: AppFontSizes.kS4),
           onPressed: () => Navigator.pop(context),
         ),

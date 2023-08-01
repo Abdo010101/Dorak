@@ -24,7 +24,6 @@ export 'general/review_card.dart';
 export 'general/switch_button.dart';
 export 'general/text_builder.dart';
 export 'general/text_form_field_builder.dart';
-export 'general/unauthenticated_dialog.dart';
 export 'general/vertical_divider_builder.dart';
 export 'home/bottom_navigation.dart';
 export 'home/bottom_navigation_image.dart';

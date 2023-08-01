@@ -61,7 +61,7 @@ class AppointmentsController extends ChangeNotifier {
             context
                 .read<MainScreenController>()
                 .onBottomSheetChanged(0, context);
-            Util.unLoginedDialog(context);
+            Util.unLoginedBottomSheet(context);
             // Navigator.of(context).pushNamedAndRemoveUntil(
             //     NameRoutes.kLoginScreen, (route) => false);
             // Util.showSnackBar(context, message: result.error?.message);
