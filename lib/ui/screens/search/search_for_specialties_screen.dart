@@ -21,7 +21,6 @@ class SearchForSpecialtiesScreen extends StatelessWidget {
       appBar: CustomAppBar(title: AppStrings.kMainSpecialties.tr()),
       body: EmptyCard(
         color: AppColors.transparent,
-        verticalPadding: 0,
         verticalMargin: 1.h,
         horizontalPadding: 0,
         horizontalMargin: 4.w,

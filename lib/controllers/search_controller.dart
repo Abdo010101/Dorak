@@ -10,7 +10,6 @@ import '../data/models/response/response.dart';
 import '../data/repository/repository.dart';
 
 class SearchResultController extends ChangeNotifier {
-  bool isLoading = false;
   String? maxPrice;
   String? minPrice;
   RangeValues? currentRangeValues;
@@ -24,7 +23,9 @@ class SearchResultController extends ChangeNotifier {
       // 2
       firstPageKey: 1,
     );
-    pagingController?.addPageRequestListener((pageKey) {});
+    pagingController?.addPageRequestListener((pageKey) {
+      getDoctors(pageKey: pageKey, data: data);
+    });
   }
 
   Future<void> getDoctors(
@@ -38,8 +39,6 @@ class SearchResultController extends ChangeNotifier {
       int? specializationId,
       int? medicalCenterId}) async {
     try {
-      isLoading = true;
-      notifyListeners();
       prams = {};
 
       if (data != null) {
@@ -95,8 +94,6 @@ class SearchResultController extends ChangeNotifier {
         minPrice = result.data?.minPrice;
         currentRangeValues = RangeValues(
             double.parse(minPrice ?? '0'), double.parse(maxPrice ?? '0'));
-        isLoading = false;
-        notifyListeners();
       }
       {
         //SnackBar(content: Text(result.error?.message), );

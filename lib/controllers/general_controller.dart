@@ -225,7 +225,8 @@ class GeneralController extends ChangeNotifier {
     cityId = id;
   }
 
-  Future<void> getCurrentLocation(BuildContext context) async {
+  Future<void> getCurrentLocation(BuildContext context,
+      {required bool isNavigate}) async {
     var result = await handleLocationPermission(context);
 
     if (result) {
@@ -246,10 +247,13 @@ class GeneralController extends ChangeNotifier {
         data['specializations[]'] = specializationId;
       }
 
-      if (context.mounted)
+      if (context.mounted) {
         Provider.of<SearchResultController>(context, listen: false)
             .startPagingControllerListener(page: 1, data: data);
-      Navigator.of(context).pushNamed(NameRoutes.kResultOfSearch);
+        if (isNavigate) {
+          Navigator.of(context).pushNamed(NameRoutes.kResultOfSearch);
+        }
+      }
     }
   }
 

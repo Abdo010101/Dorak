@@ -107,7 +107,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       InkWell(
                         onTap: () async {
-                          await generalController.getCurrentLocation(context);
+                          await generalController.getCurrentLocation(context,
+                              isNavigate: false);
                           Navigator.pushNamed(
                               context, NameRoutes.kSearchForSpecialtiesScreen);
                         },

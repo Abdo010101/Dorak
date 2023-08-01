@@ -73,7 +73,8 @@ class SearchForAreaScreen extends StatelessWidget {
               CityWidget(
                 cityName: AppStrings.kCurrentLocation.tr(),
                 specialOnTap: () async {
-                  await generalController.getCurrentLocation(context);
+                  await generalController.getCurrentLocation(context,
+                      isNavigate: true);
                 },
                 color: AppColors.blue,
                 bold: true,
