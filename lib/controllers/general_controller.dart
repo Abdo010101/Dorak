@@ -235,12 +235,20 @@ class GeneralController extends ChangeNotifier {
       areaId = null;
       lat = position.latitude;
       lng = position.longitude;
+      Map<String, dynamic> data = {
+        'lat': lat,
+        'lng': lng,
+      };
 
-      Provider.of<SearchResultController>(context, listen: false).getDoctors(
-          context,
-          lat: lat,
-          lng: lng,
-          specializationId: specializationId);
+      if (isMainSpecialization) {
+        data['main_specialization_id'] = specializationId;
+      } else {
+        data['specializations[]'] = specializationId;
+      }
+
+      if (context.mounted)
+        Provider.of<SearchResultController>(context, listen: false)
+            .startPagingControllerListener(page: 1, data: data);
       Navigator.of(context).pushNamed(NameRoutes.kResultOfSearch);
     }
   }

@@ -248,9 +248,11 @@ class FilterController extends DisposableProvider {
       }
       filterData['minPrice'] = currentRangeValues?.start.toInt();
       filterData['maxPrice'] = currentRangeValues?.end.toInt();
-      context
+
+      ///TODO edit hereee Hussein.
+      /* context
           .read<SearchResultController>()
-          .getDoctors(context, data: filterData);
+          .getDoctors(context, data: filterData);*/
     } on DioError catch (e) {
     } finally {}
   }

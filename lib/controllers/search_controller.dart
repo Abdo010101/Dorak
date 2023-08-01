@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:dorakpattient/controllers/controllers.dart';
+import 'package:dorakpattient/data/networks/network_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
@@ -13,23 +14,22 @@ class SearchResultController extends ChangeNotifier {
   String? maxPrice;
   String? minPrice;
   RangeValues? currentRangeValues;
-  List<Doctor> doctorsList = [];
   final _doctorsRepository = locator<DoctorsSearchResultRepository>();
   Map<String, dynamic> prams = {};
-  PagingController<int, AppointmentResponse>? pagingController;
+  PagingController<int, Doctor>? pagingController;
 
-/*  void startPagingControllerListener() {
-    pagingController = PagingController<int, AppointmentResponse>(
+  void startPagingControllerListener(
+      {required int page, Map<String, dynamic>? data}) {
+    pagingController = PagingController<int, Doctor>(
       // 2
       firstPageKey: 1,
     );
-    pagingController?.addPageRequestListener((pageKey) {
-      getAllAppointments(pageKey: pageKey);
-    });
-  }*/
+    pagingController?.addPageRequestListener((pageKey) {});
+  }
 
-  Future<void> getDoctors(BuildContext context,
+  Future<void> getDoctors(
       {Map<String, dynamic>? data,
+      required int? pageKey,
       int? cityId,
       int? areaId,
       double? lat,
@@ -45,7 +45,7 @@ class SearchResultController extends ChangeNotifier {
       if (data != null) {
         prams = data;
       }
-      if (cityId != null) {
+      /*   if (cityId != null) {
         prams['area_id'] = cityId;
       } else if (areaId != null) {
         prams['city_id'] = areaId;
@@ -59,8 +59,8 @@ class SearchResultController extends ChangeNotifier {
       }
       if (doctorsBySpecialization != null) {
         prams['specialization_id'] = doctorsBySpecialization;
-      }
-      if (specializationId != null) {
+      }*/
+      /* if (specializationId != null) {
         if (context.mounted) {
           bool mainSpec = Provider.of<GeneralController>(context, listen: false)
               .isMainSpecialization;
@@ -71,13 +71,26 @@ class SearchResultController extends ChangeNotifier {
             prams['specializations[]'] = specializationId;
           }
         }
-      }
-      isLoading = true;
-      final result = await _doctorsRepository.getDoctors(prams);
+      }*/
+
+      final result = await _doctorsRepository.getDoctors(prams, pageKey);
+
       if (result.data != null) {
-        doctorsList
-          ..clear()
-          ..addAll(result.data!.doctors!.data!);
+        List<Doctor>? doctorList = result.data!.doctors?.data;
+
+        if (doctorList == null && doctorList!.isEmpty) {
+          return;
+        }
+
+        final isLastPage =
+            result.data!.doctors!.data!.length < NetworkConstant.kPageSize;
+        if (isLastPage) {
+          pagingController?.appendLastPage(doctorList);
+        } else {
+          final nextPageKey = pageKey! + 1;
+          pagingController?.appendPage(doctorList, nextPageKey);
+        }
+
         maxPrice = result.data?.maxPrice;
         minPrice = result.data?.minPrice;
         currentRangeValues = RangeValues(

@@ -67,12 +67,12 @@ class SearchForCityScreen extends StatelessWidget {
             CityWidget(
               cityName: AppStrings.kAll.tr(),
               specialOnTap: () async {
+                Map<String, dynamic> data = {
+                  'area_id': generalController.cityId,
+                  'specialization_id': generalController.specializationId
+                };
                 Provider.of<SearchResultController>(context, listen: false)
-                    .prams = {};
-                Provider.of<SearchResultController>(context, listen: false)
-                    .getDoctors(context,
-                        areaId: generalController.areaId,
-                        specializationId: generalController.specializationId);
+                    .startPagingControllerListener(page: 1, data: data);
 
                 Navigator.of(context).pushNamed(NameRoutes.kResultOfSearch);
               },
@@ -101,16 +101,15 @@ class SearchForCityScreen extends StatelessWidget {
                                 cityName: '${cityModel.name}',
                                 specialOnTap: () {
                                   controller.onSelectedCity(cityModel.id!);
+                                  Map<String, dynamic> data = {
+                                    'city_id': controller.cityId,
+                                    'specialization_id':
+                                        controller.specializationId
+                                  };
                                   Provider.of<SearchResultController>(context,
                                           listen: false)
-                                      .prams = {};
-                                  Provider.of<SearchResultController>(context,
-                                          listen: false)
-                                      .getDoctors(context,
-                                          cityId: controller.cityId,
-                                          specializationId:
-                                              controller.specializationId);
-
+                                      .startPagingControllerListener(
+                                          page: 1, data: data);
                                   Navigator.of(context)
                                       .pushNamed(NameRoutes.kResultOfSearch);
                                 },

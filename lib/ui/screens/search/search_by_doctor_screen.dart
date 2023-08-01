@@ -95,14 +95,16 @@ class SearchByDoctorScreen extends StatelessWidget {
                                         icon: model.icon,
                                         trailingText: AppStrings.kSpeciality,
                                         specialOnTap: () {
+                                          Map<String, dynamic> data = {
+                                            'lat': controller.lat,
+                                            'lng': controller.lng,
+                                            'specialization_id': model.id
+                                          };
                                           Provider.of<SearchResultController>(
                                                   context,
                                                   listen: false)
-                                              .getDoctors(context,
-                                                  lat: controller.lat,
-                                                  lng: controller.lng,
-                                                  doctorsBySpecialization:
-                                                      model.id);
+                                              .startPagingControllerListener(
+                                                  page: 1, data: data);
 
                                           Navigator.of(context).pushNamed(
                                               NameRoutes.kResultOfSearch);
@@ -150,13 +152,16 @@ class SearchByDoctorScreen extends StatelessWidget {
                                           medicalCenterList[index];
                                       return SearchCardWidget(
                                         specialOnTap: () {
+                                          Map<String, dynamic> data = {
+                                            'lat': controller.lat,
+                                            'lng': controller.lng,
+                                            'medical_center_id': model.id
+                                          };
                                           Provider.of<SearchResultController>(
                                                   context,
                                                   listen: false)
-                                              .getDoctors(context,
-                                                  lat: controller.lat,
-                                                  lng: controller.lng,
-                                                  medicalCenterId: model.id);
+                                              .startPagingControllerListener(
+                                                  page: 1, data: data);
 
                                           Navigator.of(context).pushNamed(
                                               NameRoutes.kResultOfSearch);

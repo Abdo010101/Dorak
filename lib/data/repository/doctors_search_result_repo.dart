@@ -12,7 +12,7 @@ class DoctorsSearchResultRepository extends BaseRepository {
   DoctorsSearchResultRepository({required this.searchResultClient});
 
   Future<BaseModel<SearchResultResponse>> getDoctors(
-      Map<String, dynamic> prams) async {
+      Map<String, dynamic> prams, int? page) async {
     if (await checkForConnectivity()) {
       try {
         return BaseModel(

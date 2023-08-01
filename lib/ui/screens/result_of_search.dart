@@ -3,6 +3,7 @@ import 'package:dorakpattient/routes/dorak_routes.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -78,8 +79,7 @@ class ResultOfSearchScreen extends StatelessWidget {
         verticalMargin: 0,
         child: Consumer<SearchResultController>(
           builder: (context, controller, child) {
-            List<Doctor> doctorsList = controller.doctorsList;
-            return controller.isLoading
+            return /*controller.isLoading
                 ? const LoadingWidget(
                     backgroundColor: AppColors.transparent,
                   )
@@ -88,34 +88,36 @@ class ResultOfSearchScreen extends StatelessWidget {
                         backgroundColor: Colors.transparent,
                         text: AppStrings.kNoDataFound.tr(),
                       )
-                    : ListView.separated(
-                        itemCount: doctorsList.length,
-                        itemBuilder: (context, index) {
-                          Doctor model = doctorsList[index];
-                          return DoctorWidget(
-                            home: true,
-                            cardOnTab: () {
-                              Provider.of<DoctorProfileController>(context,
-                                      listen: false)
-                                  .getDoctorProfile(context,
-                                      doctorId: model.id!);
-                              Provider.of<DoctorProfileController>(context,
-                                      listen: false)
-                                  .getDoctorOffers(context,
-                                      doctorId: model.id!);
-
-                              Navigator.of(context)
-                                  .pushNamed(NameRoutes.kDoctorScreen);
-                            },
-                            model: model,
-                          );
-                        },
-                        separatorBuilder: (BuildContext context, int index) {
-                          return SizedBox(
-                            height: 1.h,
-                          );
-                        },
-                      );
+                    :*/
+                PagedListView.separated(
+              builderDelegate: PagedChildBuilderDelegate<Doctor>(
+                noItemsFoundIndicatorBuilder: (BuildContext con) {
+                  return NoDataWidget(
+                    text: AppStrings.kNoAppointments.tr(),
+                    backgroundColor: Colors.transparent,
+                  );
+                },
+                itemBuilder: (context, item, index) {
+                  return DoctorWidget(
+                    home: true,
+                    cardOnTab: () {
+                      Provider.of<DoctorProfileController>(context,
+                              listen: false)
+                          .getDoctorProfile(context, doctorId: item.id!);
+                      Provider.of<DoctorProfileController>(context,
+                              listen: false)
+                          .getDoctorOffers(context, doctorId: item.id!);
+                      Navigator.of(context).pushNamed(NameRoutes.kDoctorScreen);
+                    },
+                    model: item,
+                  );
+                },
+              ),
+              separatorBuilder: (context, i) => SizedBox(
+                height: 1.0.h,
+              ),
+              pagingController: searchResultController.pagingController!,
+            );
           },
         ),
       ),
