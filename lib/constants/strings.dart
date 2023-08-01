@@ -170,6 +170,8 @@ class AppStrings {
   static const kAll = 'all';
   static const kSponsored = 'sponsored';
   static const kFilterBy = 'filter_by';
+  static const kUnauthenticatedTitle = 'unauthenticated_title';
+  static const kUnauthenticatedSubtitle = 'unauthenticated_subtitle';
   static const kReset = 'reset';
   static const kAvailability = 'availability';
   static const kAnyDay = 'any_day';

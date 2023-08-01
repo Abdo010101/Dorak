@@ -12,7 +12,7 @@ class NetworkConstant {
   static const kAndroidPackage = '';
   static const kAppleId = '';
   static const kAuthorizationHeader = "authorization";
-  static const kBaseUrl = _kReleaseBaseUrl;
+  static const kBaseUrl = _kDevBaseUrl;
   static const kGoogleApiKey = 'AIzaSyBZFRav3jNg1pH9RAQxO1IhOGb7keLaoDM';
 
 /*  static const kTestToken =

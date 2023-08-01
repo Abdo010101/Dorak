@@ -172,5 +172,7 @@
   "doctor": "دكتور",
   "speciality": "تخصص",
   "reload": "إعادة تحميل",
-  "unknown_error": "خطاء غير معروف"
+  "unknown_error": "خطاء غير معروف",
+  "unauthenticated_title": "Unauthenticated",
+  "unauthenticated_subtitle": "Unauthenticated"
 }

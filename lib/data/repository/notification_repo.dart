@@ -11,11 +11,14 @@ class NotificationsRepository extends BaseRepository {
 
   NotificationsRepository({required this.notificationsClient});
 
-  Future<BaseModel<List<NotificationModel>>> getNotifications() async {
+  Future<BaseModel<List<NotificationModel>>> getNotifications(
+      {int? pageKey}) async {
     if (await checkForConnectivity()) {
       try {
         return BaseModel(
-            data: await notificationsClient.getNotifications().then((value) {
+            data: await notificationsClient
+                .getNotifications(pageKey)
+                .then((value) {
           return value.data;
         }));
       } on DioError catch (e) {

@@ -37,7 +37,7 @@ class _OffersClint implements OffersClint {
     )
             .compose(
               _dio.options,
-              'offers?page={pageKey',
+              'offers?page=${pageKey}',
               queryParameters: queryParameters,
               data: _data,
             )

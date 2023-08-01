@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:dorakpattient/controllers/controllers.dart';
-import 'package:dorakpattient/data/networks/base_model.dart';
 import 'package:dorakpattient/utis/util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -82,8 +81,14 @@ class ReservationAppointmentController extends ChangeNotifier {
         resetController();
         Navigator.pop(context);
       } else {
-        Util.showSnackBar(context,
-            message: (result as BaseModel<ReservationResponse>).error?.message);
+        if (result.error?.statusCode == 401) {
+          if (context.mounted) {
+            Util.unLoginedDialog(context);
+            // Navigator.of(context).pushNamedAndRemoveUntil(
+            //     NameRoutes.kLoginScreen, (route) => false);
+            // Util.showSnackBar(context, message: result.error?.message);
+          }
+        }
       }
     } on DioError catch (e) {
       Util.showSnackBar(context, message: e.message);

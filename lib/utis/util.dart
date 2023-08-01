@@ -33,6 +33,15 @@ class Util {
     );
   }
 
+  static void unLoginedDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const UnauthenticatedDialog();
+      },
+    );
+  }
+
   static void openCall(phone) async {
     Uri url = Uri.parse('tel:$phone');
     if (await canLaunchUrl(url)) {
