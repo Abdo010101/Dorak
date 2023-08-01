@@ -96,7 +96,7 @@ class NotificationController extends ChangeNotifier {
         if (result.error?.statusCode == 401) {
           if (context.mounted) {
             Navigator.pop(context);
-            Util.unLoginedDialog(context);
+            Util.unLoginedBottomSheet(context);
             // Navigator.of(context).pushNamedAndRemoveUntil(
             //     NameRoutes.kLoginScreen, (route) => false);
             // Util.showSnackBar(context, message: result.error?.message);

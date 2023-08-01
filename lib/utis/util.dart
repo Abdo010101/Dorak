@@ -33,11 +33,12 @@ class Util {
     );
   }
 
-  static void unLoginedDialog(BuildContext context) {
-    showDialog(
+  static void unLoginedBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      backgroundColor: AppColors.transparent,
       context: context,
       builder: (context) {
-        return const UnauthenticatedDialog();
+        return const LoginBottomSheet();
       },
     );
   }

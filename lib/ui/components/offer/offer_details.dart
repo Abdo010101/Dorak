@@ -16,7 +16,8 @@ class OfferDetailsBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomSheetBuilder(
-      height: 112.5.h,
+      height: 80.h,
+      containerHeight: 70.h,
       children: [
         GeometricalAvatar(
           height: 20.h,

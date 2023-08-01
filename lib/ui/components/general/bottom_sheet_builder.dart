@@ -12,13 +12,15 @@ class BottomSheetBuilder extends StatelessWidget {
       this.height,
       this.radius,
       this.onPop,
-      this.backgroundColor})
+      this.backgroundColor,
+      this.containerHeight})
       : super(key: key);
 
   final List<Widget> children;
   final CrossAxisAlignment? crossAlignment;
   final double? radius;
   final double? height;
+  final double? containerHeight;
   final Color? backgroundColor;
   final Widget? bottomWidget;
   final Function()? onPop;
@@ -60,7 +62,7 @@ class BottomSheetBuilder extends StatelessWidget {
                             topLeft: Radius.circular(25),
                             topRight: Radius.circular(25)),
                     color: backgroundColor ?? AppColors.liteWight),
-                height: height != null ? height! * 0.67 : 82.5.h,
+                height: containerHeight != null ? containerHeight! : 82.5.h,
                 padding: EdgeInsets.symmetric(vertical: 2.5.h, horizontal: 4.w),
                 child: SingleChildScrollView(
                   child: Column(

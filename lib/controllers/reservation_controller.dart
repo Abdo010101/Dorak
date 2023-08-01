@@ -83,7 +83,7 @@ class ReservationAppointmentController extends ChangeNotifier {
       } else {
         if (result.error?.statusCode == 401) {
           if (context.mounted) {
-            Util.unLoginedDialog(context);
+            Util.unLoginedBottomSheet(context);
             // Navigator.of(context).pushNamedAndRemoveUntil(
             //     NameRoutes.kLoginScreen, (route) => false);
             // Util.showSnackBar(context, message: result.error?.message);
