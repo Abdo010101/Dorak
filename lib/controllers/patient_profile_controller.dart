@@ -107,11 +107,11 @@ class PatientProfileController extends DisposableProvider {
         context.read<AuthController>().currentUser?.patient = profile;
       } else {
         if (result.error?.statusCode == 401) {
-          if (context.mounted) {
-            Navigator.of(context).pushNamedAndRemoveUntil(
-                NameRoutes.kLoginScreen, (route) => false);
-          }
-          Util.showSnackBar(context, message: result.error?.message);
+          // if (context.mounted) {
+          //   Navigator.of(context).pushNamedAndRemoveUntil(
+          //       NameRoutes.kLoginScreen, (route) => false);
+          //   Util.showSnackBar(context, message: result.error?.message);
+          // }
         }
         if (result.error != null) {
           if (context.mounted && result.error!.statusCode! >= 500) {

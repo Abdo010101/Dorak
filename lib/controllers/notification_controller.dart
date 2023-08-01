@@ -12,6 +12,7 @@ import '../data/models/response/response.dart';
 import '../data/networks/network_constant.dart';
 import '../data/repository/repository.dart';
 import '../main.dart';
+import '../utis/util.dart';
 
 class NotificationController extends ChangeNotifier {
   static Future<void> initialize(
@@ -90,6 +91,16 @@ class NotificationController extends ChangeNotifier {
         } else {
           final nextPageKey = pageKey + 1;
           pagingController?.appendPage(result.data!, nextPageKey);
+        }
+      } else {
+        if (result.error?.statusCode == 401) {
+          if (context.mounted) {
+            Navigator.pop(context);
+            Util.unLoginedDialog(context);
+            // Navigator.of(context).pushNamedAndRemoveUntil(
+            //     NameRoutes.kLoginScreen, (route) => false);
+            // Util.showSnackBar(context, message: result.error?.message);
+          }
         }
       }
       {

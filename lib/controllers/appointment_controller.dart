@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/data/networks/network_constant.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:provider/provider.dart';
 
 import '../constants/constants.dart';
 import '../data/di/locator.dart';
@@ -56,11 +58,14 @@ class AppointmentsController extends ChangeNotifier {
       } else {
         if (result.error?.statusCode == 401) {
           if (context.mounted) {
+            context
+                .read<MainScreenController>()
+                .onBottomSheetChanged(0, context);
             Util.unLoginedDialog(context);
             // Navigator.of(context).pushNamedAndRemoveUntil(
             //     NameRoutes.kLoginScreen, (route) => false);
+            // Util.showSnackBar(context, message: result.error?.message);
           }
-          Util.showSnackBar(context, message: result.error?.message);
         }
         if (result.error != null) {
           if (context.mounted && result.error!.statusCode! >= 500) {

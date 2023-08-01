@@ -50,7 +50,8 @@ class OffersController extends DisposableProvider {
         offers = searchResult.offers!.data!;
         maxPrice = searchResult.maxPrice;
         minPrice = searchResult.minPrice;
-        currentRangeValues =RangeValues(double.parse(minPrice!), double.parse(maxPrice!));
+        currentRangeValues =
+            RangeValues(double.parse(minPrice!), double.parse(maxPrice!));
         final isLastPage = offers.length < NetworkConstant.kPageSize;
         if (isLastPage) {
           pagingController?.appendLastPage(offers);
@@ -63,8 +64,8 @@ class OffersController extends DisposableProvider {
           if (context.mounted) {
             Navigator.of(context).pushNamedAndRemoveUntil(
                 NameRoutes.kLoginScreen, (route) => false);
+            Util.showSnackBar(context, message: result.error?.message);
           }
-          Util.showSnackBar(context, message: result.error?.message);
         }
         if (result.error != null) {
           if (context.mounted && result.error!.statusCode! >= 500) {

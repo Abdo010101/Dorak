@@ -37,16 +37,18 @@ class ProfileScreen extends StatelessWidget {
                     verticalPadding: 2.h,
                     bold: true,
                   ),
-                  ListTileBuilder(
-                    title: patient?.name ?? '',
-                    subTitle: patient?.phone ?? '',
-                    trailing: patient?.email ?? '',
-                    horizontalMargin: 0,
-                    horizontalPadding: 5.w,
-                    verticalMargin: 1.h,
-                    onTap: () => Navigator.pushNamed(
-                        context, NameRoutes.kProfileDetailsScreen),
-                  ),
+                  patient != null
+                      ? ListTileBuilder(
+                          title: patient.name ?? '',
+                          subTitle: patient.phone ?? '',
+                          trailing: patient.email ?? '',
+                          horizontalMargin: 0,
+                          horizontalPadding: 5.w,
+                          verticalMargin: 1.h,
+                          onTap: () => Navigator.pushNamed(
+                              context, NameRoutes.kProfileDetailsScreen),
+                        )
+                      : const SizedBox(),
                   EmptyCard(
                     verticalMargin: 1.h,
                     horizontalMargin: 0,
