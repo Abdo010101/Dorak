@@ -171,7 +171,6 @@ class AppStrings {
   static const kSponsored = 'sponsored';
   static const kFilterBy = 'filter_by';
   static const kUnauthenticatedTitle = 'unauthenticated_title';
-  static const kUnauthenticatedSubtitle = 'unauthenticated_subtitle';
   static const kReset = 'reset';
   static const kAvailability = 'availability';
   static const kAnyDay = 'any_day';
@@ -183,6 +182,7 @@ class AppStrings {
   static const kUnknownError = 'unknown_error';
   static const kReload = 'reload';
   static const kSortBy = 'sort_by';
+  static const kPleaseLogin = 'please_login';
   static const kSortByList = [
     'most_recommended',
     'lowest_price',
