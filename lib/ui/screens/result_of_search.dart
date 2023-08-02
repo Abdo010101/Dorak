@@ -42,6 +42,29 @@ class ResultOfSearchScreen extends StatelessWidget {
           GeometricalAvatar(
             backgroundColor: AppColors.transparent,
             radius: 10.w,
+            child: SvgPicture.asset(
+              AppAssets.kSortByIcon,
+              fit: BoxFit.scaleDown,
+              width: 3.0.w,
+              height: 3.0.w,
+            ),
+            onTap: () {
+              showModalBottomSheet(
+                  isScrollControlled: true,
+                  context: context,
+                  backgroundColor: Colors.transparent,
+                  builder: (context) {
+                    return Padding(
+                        padding: EdgeInsets.only(top: 10.h),
+                        child: const SortByBottomSheet(
+                          filterType: 'doctor',
+                        ));
+                  });
+            },
+          ),
+          GeometricalAvatar(
+            backgroundColor: AppColors.transparent,
+            radius: 10.w,
             margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
             child: SvgPicture.asset(
               AppAssets.kFilterIcon,

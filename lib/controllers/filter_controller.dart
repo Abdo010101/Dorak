@@ -14,6 +14,7 @@ class FilterController extends DisposableProvider {
   bool genderToggle = false;
   bool titleToggle = false;
   int? mainSpecialtyIndex;
+  String? arrangeBy;
   String? maxPrice;
   String? minPrice;
   RangeValues? currentRangeValues;
@@ -107,6 +108,11 @@ class FilterController extends DisposableProvider {
     notifyListeners();
   }
 
+  void changeArrangeBy(String? value) {
+    arrangeBy = value;
+    notifyListeners();
+  }
+
   availabilitySelect(int index) {
     if (availabilityList[index].icon == '1') {
       availabilityList[index].icon = '0';
@@ -146,7 +152,6 @@ class FilterController extends DisposableProvider {
 
   filterOffer(BuildContext context) {
     String? genderName;
-
     for (var gender in genderList) {
       if (gender.icon == '1') {
         genderName = gender.name;
@@ -181,6 +186,7 @@ class FilterController extends DisposableProvider {
       'title_ids[]': tittlesId,
       'minPrice': currentRangeValues?.start.toInt(),
       'maxPrice': currentRangeValues?.end.toInt(),
+      'arrange_by': arrangeBy,
     };
     context.read<OffersController>().data = filterData;
   }
@@ -246,8 +252,8 @@ class FilterController extends DisposableProvider {
       }
       filterData['minPrice'] = currentRangeValues?.start.toInt();
       filterData['maxPrice'] = currentRangeValues?.end.toInt();
+      filterData['arrange_by'] = arrangeBy;
 
-      ///TODO edit hereee Hussein.
       context.read<SearchResultController>().prams = filterData;
     } on DioError catch (e) {
     } finally {}
