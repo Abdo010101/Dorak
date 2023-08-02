@@ -37,7 +37,7 @@ class SortByBottomSheet extends StatelessWidget {
                 ),
                 const Spacer(),
                 InkWell(
-                  onTap: controller.resetData,
+                  onTap: () => controller.changeArrangeBy(''),
                   child: TextBuilder(
                     text: AppStrings.kReset.tr(),
                     color: AppColors.blue,

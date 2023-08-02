@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
@@ -23,13 +24,13 @@ class FilterController extends DisposableProvider {
   List<Titles> subSpecialtyList = [];
   List<Titles> titlesList = [];
   List<Titles> availabilityList = [
-    Titles(name: AppStrings.kAnyDay),
-    Titles(name: AppStrings.kToday),
-    Titles(name: AppStrings.kTomorrow)
+    Titles(name: AppStrings.kAnyDay.tr()),
+    Titles(name: AppStrings.kToday.tr()),
+    Titles(name: AppStrings.kTomorrow.tr())
   ];
   List<Titles> genderList = [
-    Titles(name: AppStrings.kGenderList[0]),
-    Titles(name: AppStrings.kGenderList[1]),
+    Titles(name: AppStrings.kGenderList[0].tr()),
+    Titles(name: AppStrings.kGenderList[1].tr()),
   ];
 
   resetData() {
@@ -38,13 +39,13 @@ class FilterController extends DisposableProvider {
     }
     subSpecialtyList = [];
     availabilityList = [
-      Titles(name: AppStrings.kAnyDay),
-      Titles(name: AppStrings.kToday),
-      Titles(name: AppStrings.kTomorrow)
+      Titles(name: AppStrings.kAnyDay.tr()),
+      Titles(name: AppStrings.kToday.tr()),
+      Titles(name: AppStrings.kTomorrow.tr())
     ];
     genderList = [
-      Titles(name: AppStrings.kGenderList[0]),
-      Titles(name: AppStrings.kGenderList[1]),
+      Titles(name: AppStrings.kGenderList[0].tr()),
+      Titles(name: AppStrings.kGenderList[1].tr()),
     ];
     specialtyMainToggle = false;
     subSpecialtyToggle = false;
