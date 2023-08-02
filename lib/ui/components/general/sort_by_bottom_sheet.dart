@@ -16,6 +16,8 @@ class SortByBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GeneralController generalController =
+        Provider.of<GeneralController>(context, listen: false);
     return Consumer<FilterController>(
       builder: (context, controller, child) {
         return BottomSheetBuilder(
@@ -48,29 +50,29 @@ class SortByBottomSheet extends StatelessWidget {
               title: Text(AppStrings.kSortByList[0].tr()),
               value: AppStrings.kSortByList[0],
               activeColor: AppColors.blue,
-              groupValue: AppStrings.kSortByList[0],
-              onChanged: (value) {},
+              groupValue: controller.arrangeBy,
+              onChanged: controller.changeArrangeBy,
             ),
             RadioListTile(
               title: Text(AppStrings.kSortByList[1].tr()),
               value: AppStrings.kSortByList[1],
               activeColor: AppColors.blue,
-              groupValue: AppStrings.kSortByList[0],
-              onChanged: (value) {},
+              groupValue: controller.arrangeBy,
+              onChanged: controller.changeArrangeBy,
             ),
             RadioListTile(
               title: Text(AppStrings.kSortByList[2].tr()),
               value: AppStrings.kSortByList[2],
               activeColor: AppColors.blue,
-              groupValue: AppStrings.kSortByList[0],
-              onChanged: (value) {},
+              groupValue: controller.arrangeBy,
+              onChanged: controller.changeArrangeBy,
             ),
             RadioListTile(
               title: Text(AppStrings.kSortByList[3].tr()),
               value: AppStrings.kSortByList[3],
               activeColor: AppColors.blue,
-              groupValue: AppStrings.kSortByList[0],
-              onChanged: (value) {},
+              groupValue: controller.arrangeBy,
+              onChanged: controller.changeArrangeBy,
             ),
             ButtonBuilder(
               radius: 25,
@@ -80,24 +82,24 @@ class SortByBottomSheet extends StatelessWidget {
               width: 90.w,
               height: 6.5.h,
               onPressed: () async {
-                // Navigator.pop(context);
-                // filterType == 'Offer'
-                //     ? controller.filterOffer(context)
-                //     : controller.filterDoctors(
-                //         context,
-                //         lng: generalController.lng,
-                //         lat: generalController.lat,
-                //         /*cityId: generalController.cityId,
-                //         areaId: generalController.areaId*/
-                //       );
-                // if (filterType == 'Offer') {
-                //   context.read<OffersController>().pagingController?.refresh();
-                // } else {
-                //   context
-                //       .read<SearchResultController>()
-                //       .pagingController
-                //       ?.refresh();
-                // }
+                Navigator.pop(context);
+                filterType == 'Offer'
+                    ? controller.filterOffer(context)
+                    : controller.filterDoctors(
+                        context,
+                        lng: generalController.lng,
+                        lat: generalController.lat,
+                        /*cityId: generalController.cityId,
+                        areaId: generalController.areaId*/
+                      );
+                if (filterType == 'Offer') {
+                  context.read<OffersController>().pagingController?.refresh();
+                } else {
+                  context
+                      .read<SearchResultController>()
+                      .pagingController
+                      ?.refresh();
+                }
               },
             ),
           ],

@@ -129,12 +129,12 @@ class MyApp extends StatelessWidget {
               context
                   .read<AppointmentsController>()
                   .startPagingControllerListener(context: context);
+              // Navigator.pushNamed(context, NameRoutes.kHomeScreen);
               context
                   .read<MainScreenController>()
                   .onBottomSheetChanged(1, context);
             }
           });
-
           return MaterialApp(
             builder: EasyLoading.init(),
             localizationsDelegates: context.localizationDelegates,

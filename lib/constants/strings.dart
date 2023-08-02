@@ -186,7 +186,7 @@ class AppStrings {
   static const kSortByList = [
     'most_recommended',
     'lowest_price',
-    'highest_price ',
+    'highest_price',
     'short_waiting_time'
   ];
 }
