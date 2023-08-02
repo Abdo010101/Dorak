@@ -28,13 +28,13 @@ class LoginBottomSheet extends StatelessWidget {
           verticalPadding: 0,
         ),
         TextBuilder(
-          text: AppStrings.kPleaseLogin,
+          text: AppStrings.kPleaseLogin.tr(),
           maxLin: 2,
           size: AppFontSizes.kS4,
           verticalPadding: 1.75.h,
         ),
         ButtonBuilder(
-          title: AppStrings.kLogin,
+          title: AppStrings.kLogin.tr(),
           height: 5.h,
           width: 70.w,
           titleStyle: AppStyles.kButtonTextStyle.copyWith(
@@ -45,7 +45,7 @@ class LoginBottomSheet extends StatelessWidget {
               context, NameRoutes.kWelcomeScreen),
         ),
         ButtonBuilder(
-          title: AppStrings.kCancel,
+          title: AppStrings.kCancel.tr(),
           buttonColor: AppColors.transparent,
           borderColor: AppColors.transparent,
           titleStyle: AppStyles.kButtonTextStyle.copyWith(

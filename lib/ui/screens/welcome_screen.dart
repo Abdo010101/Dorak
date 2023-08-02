@@ -25,7 +25,7 @@ class WelcomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             ButtonBuilder(
-              title: AppStrings.kSkip,
+              title: AppStrings.kSkip.tr(),
               titleStyle: AppStyles.kButtonTextStyle
                   .copyWith(color: AppColors.blue, fontSize: AppFontSizes.kS4),
               buttonColor: AppColors.transparent,
