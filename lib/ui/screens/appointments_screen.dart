@@ -56,17 +56,7 @@ class AppointmentsScreen extends StatelessWidget {
                         controller.changeAppointmentDate(AppStrings.kPast),
                   ),
                   Expanded(
-                    child: /* controller.isLoading
-                        ? const LoadingWidget(
-                            backgroundColor: AppColors.transparent,
-                          )
-                        : controller.appointmentsList.isEmpty
-                            ? NoDataWidget(
-                                backgroundColor: Colors.transparent,
-                                text: AppStrings.kNoAppointments.tr(),
-                              )
-                            :*/
-                        PagedListView<int, AppointmentResponse>(
+                    child: PagedListView<int, AppointmentResponse>(
                       padding: EdgeInsets.zero,
                       pagingController: controller.pagingController!,
                       builderDelegate:
