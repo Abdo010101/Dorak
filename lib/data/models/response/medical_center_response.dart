@@ -1,4 +1,3 @@
-
 class MedicalsCenter {
   int? id;
   String? logo;
@@ -15,11 +14,11 @@ class MedicalsCenter {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['logo'] = this.logo;
-    data['name'] = this.name;
-    data['description'] = this.description;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['logo'] = logo;
+    data['name'] = name;
+    data['description'] = description;
     return data;
   }
 }

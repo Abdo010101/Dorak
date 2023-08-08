@@ -67,7 +67,6 @@ class SearchForCityScreen extends StatelessWidget {
             CityWidget(
               cityName: AppStrings.kAll.tr(),
               specialOnTap: () async {
-                print("asdas= ${generalController.cityId}");
                 Map<String, dynamic> data = {
                   'area_id': generalController.cityId,
                   'specialization_id': generalController.specializationId

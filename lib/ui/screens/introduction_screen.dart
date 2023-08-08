@@ -32,20 +32,17 @@ class IntroScreen extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  // controller.reviewsIndex == controller.items.length - 1
-                  false
-                      ? const SizedBox()
-                      : GestureDetector(
-                          // onTap: () => controller.skipIndex(),
-                          child: TextBuilder(
-                            horizontalPadding: 5.w,
-                            verticalPadding: 2.5.h,
-                            text: AppStrings.kSkip.tr(),
-                            underline: true,
-                            color: AppColors.blue,
-                            bold: false,
-                          ),
-                        ),
+                  GestureDetector(
+                    // onTap: () => controller.skipIndex(),
+                    child: TextBuilder(
+                      horizontalPadding: 5.w,
+                      verticalPadding: 2.5.h,
+                      text: AppStrings.kSkip.tr(),
+                      underline: true,
+                      color: AppColors.blue,
+                      bold: false,
+                    ),
+                  ),
                 ],
               ),
               SizedBox(
@@ -58,7 +55,7 @@ class IntroScreen extends StatelessWidget {
                   pageSnapping: true,
                   // onPageChanged: controller.changePageIndex,
                   itemBuilder: (_, index) {
-                    return SizedBox();
+                    return const SizedBox();
                     // IntroItem(
                     //   item: controller.items[index],
                     // );

@@ -79,7 +79,7 @@ class AppointmentsController extends ChangeNotifier {
       if (result.data != null) {
         pagingController?.itemList?[index].status = AppStatus.cancelled.name;
       } else {}
-    } on DioError catch (e) {
+    } on DioError catch (_) {
       //return Error(errorMessage: DioExceptions.fromDioError(e).message);
       //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
     } finally {

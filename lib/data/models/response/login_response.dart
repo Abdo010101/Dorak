@@ -9,14 +9,14 @@ class UserResponse {
   UserResponse.fromJson(Map<String, dynamic> json) {
     token = json['token'];
     patient =
-        json['patient'] != null ? new Patient.fromJson(json['patient']) : null;
+        json['patient'] != null ? Patient.fromJson(json['patient']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['token'] = this.token;
-    if (this.patient != null) {
-      data['patient'] = this.patient!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['token'] = token;
+    if (patient != null) {
+      data['patient'] = patient!.toJson();
     }
     return data;
   }
@@ -69,17 +69,17 @@ class Patient {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['phone'] = this.phone;
-    data['email'] = this.email;
-    data['gender'] = this.gender;
-    data['weight'] = this.weight;
-    data['height'] = this.height;
-    data['allow_notifications'] = this.allowNotifications;
-    data['country_id'] = this.countryId;
-    data['country_id'] = this.verifiedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['phone'] = phone;
+    data['email'] = email;
+    data['gender'] = gender;
+    data['weight'] = weight;
+    data['height'] = height;
+    data['allow_notifications'] = allowNotifications;
+    data['country_id'] = countryId;
+    data['country_id'] = verifiedAt;
     return data;
   }
 }

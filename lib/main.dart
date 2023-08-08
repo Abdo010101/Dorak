@@ -9,12 +9,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show PlatformException;
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import 'package:uni_links/uni_links.dart';
 
 import 'constants/constants.dart';
 import 'data/di/locator.dart';
@@ -22,8 +20,6 @@ import 'firebase_options.dart';
 
 //IMPORT THESE PACKAGES ^^^
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print(
-      "onBackGround: ${message.notification?.title}/${message.notification?.body}");
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
 }
@@ -69,18 +65,15 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  Future<void> initUniLinks() async {
-    try {
-      Uri? initialLink = await getInitialUri();
-      print(initialLink);
-    } on PlatformException {
-      print('platfrom exception unilink');
-    }
-  }
+  // Future<void> initUniLinks() async {
+  //   try {
+  //     Uri? initialLink = await getInitialUri();
+  //   } on PlatformException {}
+  // }
 
   @override
   Widget build(BuildContext context) {
-    initUniLinks();
+    // initUniLinks();
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<LoginController>(
@@ -126,10 +119,7 @@ class MyApp extends StatelessWidget {
           //ToDo test And Complete
           FirebaseMessaging.onMessageOpenedApp.listen(
             (RemoteMessage message) {
-              print("${message.data['action']}");
               notificationsRoute = message.data['action'];
-              print('Print Open Notification');
-
               if (notificationsRoute != null) {
                 if (context.mounted) {
                   context

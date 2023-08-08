@@ -256,7 +256,7 @@ class FilterController extends DisposableProvider {
       filterData['arrange_by'] = arrangeBy;
 
       context.read<SearchResultController>().prams = filterData;
-    } on DioError catch (e) {
+    } on DioError catch (_) {
     } finally {}
   }
 

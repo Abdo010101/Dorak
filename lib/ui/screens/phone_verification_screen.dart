@@ -108,7 +108,6 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
                           isResendCode:
                               verifyController?.myDuration.inSeconds == 0,
                           onTab: () async {
-                            print("xxxx= $seconds}");
                             if (seconds == 0) {
                               controller.type == SendOtpType.changPassword
                                   ? await authController.sendOtp(

@@ -180,7 +180,7 @@ class AuthController extends DisposableProvider {
       } else {
         return false;
       }
-    } on DioError catch (e) {
+    } on DioError catch (_) {
       return false;
       // return Error(errorMessage: DioExceptions.fromDioError(e).message);
       //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
@@ -226,8 +226,7 @@ class AuthController extends DisposableProvider {
       Map<String, dynamic> data = {
         'otp': otp,
       };
-      print(data);
-      print("ddddddddd");
+
       final result = await _authenticationRepository.verifyOtp(
         body: data,
       );
@@ -266,7 +265,7 @@ class AuthController extends DisposableProvider {
       } else {
         return false;
       }
-    } on DioError catch (e) {
+    } on DioError catch (_) {
       return false;
     } finally {
       isLoading = false;
@@ -301,7 +300,7 @@ class AuthController extends DisposableProvider {
         notifyListeners();
         return false;
       }
-    } on DioError catch (e) {
+    } on DioError catch (_) {
       isLoading = true;
       notifyListeners();
       return false;

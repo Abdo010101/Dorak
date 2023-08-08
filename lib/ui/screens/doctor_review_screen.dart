@@ -84,7 +84,7 @@ class DoctorReview extends StatelessWidget {
                                 context,
                                 doctorProfileControllerController
                                     .doctorProfileResponse?.doctor?.id);
-                            if (result == true) {
+                            if (result == true && context.mounted) {
                               await doctorProfileControllerController
                                   .getDoctorProfile(context,
                                       doctorId:

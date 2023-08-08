@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
+
 import '../../constants/constants.dart';
 import '../../controllers/controllers.dart';
 import '../../routes/dorak_routes.dart';
-import '../../utis/util.dart';
 import '../components/components.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -223,11 +223,7 @@ class LoginScreen extends StatelessWidget {
                                     ButtonBuilder(
                                         title: AppStrings.kSignIn.tr(),
                                         onPressed: () async {
-                                          final isSuccess =
-                                              await controller.signIn(context);
-                                          isSuccess == true
-                                              ? print('Login isSuccess')
-                                              : null;
+                                          await controller.signIn(context);
                                         }),
                                   ],
                                 ),

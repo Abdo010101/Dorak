@@ -8,32 +8,32 @@ class GeneralResponse {
     if (json['titles'] != null) {
       titles = <Titles>[];
       json['titles'].forEach((v) {
-        titles!.add(new Titles.fromJson(v));
+        titles!.add(Titles.fromJson(v));
       });
     }
 
     if (json['cities'] != null) {
       cities = <Titles>[];
       json['cities'].forEach((v) {
-        cities!.add(new Titles.fromJson(v));
+        cities!.add(Titles.fromJson(v));
       });
     }
     if (json['main_specializations'] != null) {
       mainSpecializations = <Titles>[];
       json['main_specializations'].forEach((v) {
-        mainSpecializations!.add(new Titles.fromJson(v));
+        mainSpecializations!.add(Titles.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.titles != null) {
-      data['titles'] = this.titles!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (titles != null) {
+      data['titles'] = titles!.map((v) => v.toJson()).toList();
     }
-    if (this.mainSpecializations != null) {
+    if (mainSpecializations != null) {
       data['main_specializations'] =
-          this.mainSpecializations!.map((v) => v.toJson()).toList();
+          mainSpecializations!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -53,9 +53,9 @@ class Titles {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
 
     return data;
   }

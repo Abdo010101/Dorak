@@ -34,13 +34,6 @@ class NotificationController extends ChangeNotifier {
             alert: true, badge: true, sound: true);
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print(
-          "...........................................onMessage..........................");
-      print(
-          "onForeGround : ${message.notification?.title}/${message.notification?.body}/${message.notification?.toMap().toString()}");
-      print(message.data);
-      print(
-          "...........................................onMessage..........................");
       flutterLocalNotificationsPlugin.show(
         1,
         message.notification?.title ?? 'Title',
@@ -105,7 +98,7 @@ class NotificationController extends ChangeNotifier {
       {
         //SnackBar(content: Text(result.error?.message), );
       }
-    } on DioError catch (e) {
+    } on DioError catch (_) {
       //return Error(errorMessage: DioExceptions.fromDioError(e).message);
 
       //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
@@ -135,9 +128,7 @@ class NotificationController extends ChangeNotifier {
         ? null
         : status = await Permission.notification.status;
     if (status.isGranted || !value) {
-      print('status isGranted');
     } else if (status.isDenied) {
-      print('status isDenied');
       bool? request = await flutterLocalNotificationsPlugin
           .resolvePlatformSpecificImplementation<
               AndroidFlutterLocalNotificationsPlugin>()
@@ -148,25 +139,25 @@ class NotificationController extends ChangeNotifier {
         status = PermissionStatus.permanentlyDenied;
       }
     } else if (status.isPermanentlyDenied) {
-      print('status isPermanentlyDenied');
       status = await Permission.notification.status;
       status != PermissionStatus.granted
           ? status = PermissionStatus.permanentlyDenied
           : null;
-      status != PermissionStatus.granted
-          ? Dialogue.showNotificationDialog(
-              context: context,
-              confirmTab: () async {
-                await openAppSettings();
-                Navigator.pop(context);
-              },
-              cancelTab: () => Navigator.pop(context),
-            )
-          : null;
+      if (context.mounted) {
+        status != PermissionStatus.granted
+            ? Dialogue.showNotificationDialog(
+                context: context,
+                confirmTab: () async {
+                  await openAppSettings();
+                  if (context.mounted) Navigator.pop(context);
+                },
+                cancelTab: () => Navigator.pop(context),
+              )
+            : null;
+      }
     }
     if (status.isGranted || !value) {
       try {
-        print('status isGranted222222');
         var data = dio.FormData.fromMap({
           'allow_notifications': value ? 1 : 0,
         });
@@ -183,7 +174,7 @@ class NotificationController extends ChangeNotifier {
           //GetSnackBar(message: (result.error?.message));
           return false;
         }
-      } on DioError catch (e) {
+      } on DioError catch (_) {
         return false;
         // return Error(errorMessage: DioExceptions.fromDioError(e).message);
         //GetSnackBar(message: (DioExceptions.fromDioError(e).message));

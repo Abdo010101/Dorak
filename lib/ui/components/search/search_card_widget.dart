@@ -1,7 +1,7 @@
-import 'package:dorakpattient/data/models/response/general_response.dart';
 import 'package:dorakpattient/ui/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+
 import '../../../constants/constants.dart';
 
 class SearchCardWidget extends StatelessWidget {
@@ -39,9 +39,9 @@ class SearchCardWidget extends StatelessWidget {
               horizontalPadding: 0,
               color: AppColors.navyBlue,
             ),
-            Spacer(),
+            const Spacer(),
             Text(
-              '${trailingText}',
+              '$trailingText',
               style: TextStyle(fontSize: 10.sp, color: AppColors.grey),
             )
           ],
