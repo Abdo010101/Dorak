@@ -72,7 +72,7 @@ class HomeController extends ChangeNotifier {
         }
         //SnackBar(content: Text(result.error?.message), );
       }
-    } on DioError catch (e) {
+    } on DioError catch (_) {
       //return Error(errorMessage: DioExceptions.fromDioError(e).message);
 
       //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
@@ -82,17 +82,16 @@ class HomeController extends ChangeNotifier {
   }
 
   ///TODO Edit here Tomorrow . . . . . . . .
-  Future<void> getBestDoctors(BuildContext context, {required int pageKey}) async {
+  Future<void> getBestDoctors(BuildContext context,
+      {required int pageKey}) async {
     try {
-
-
       final result = await _homeRepository.getBestDoctors(pageKey);
       if (result.data != null) {
         final isLastPage = result.data!.length < NetworkConstant.kPageSize;
         if (isLastPage) {
           pagingController?.appendLastPage(result.data!);
         } else {
-          final nextPageKey = pageKey! + 1;
+          final nextPageKey = pageKey + 1;
           pagingController?.appendPage(result.data!, nextPageKey);
         }
       } else {
@@ -102,7 +101,9 @@ class HomeController extends ChangeNotifier {
             Navigator.of(context).pushNamedAndRemoveUntil(
                 NameRoutes.kLoginScreen, (route) => false);
           }
-          Util.showSnackBar(context, message: result.error?.message);
+          if (context.mounted) {
+            Util.showSnackBar(context, message: result.error?.message);
+          }
         }
         if (result.error != null) {
           if (context.mounted && result.error!.statusCode! >= 500) {
@@ -114,7 +115,7 @@ class HomeController extends ChangeNotifier {
         }
         //SnackBar(content: Text(result.error?.message), );
       }
-    } on DioError catch (e) {
+    } on DioError catch (_) {
       //return Error(errorMessage: DioExceptions.fromDioError(e).message);
 
       //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
@@ -137,7 +138,7 @@ class HomeController extends ChangeNotifier {
       } else {
         //SnackBar(content: Text(result.error?.message), );
       }
-    } on DioError catch (e) {
+    } on DioError catch (_) {
       //return Error(errorMessage: DioExceptions.fromDioError(e).message);
       //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
     } finally {

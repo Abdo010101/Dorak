@@ -332,7 +332,8 @@ class DoctorProfileWidget extends StatelessWidget {
             latitude: place?.lat,
             longitude: place?.lng,
           ),
-          doctorController.doctorProfileResponse?.ratings?.length == 0 &&
+          doctorController.doctorProfileResponse?.ratings != null &&
+                  doctorController.doctorProfileResponse!.ratings!.isEmpty &&
                   doctorController.doctorProfileResponse?.doctor?.canRate ==
                       false
               ? const SizedBox()

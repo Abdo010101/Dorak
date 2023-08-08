@@ -2,13 +2,14 @@ import 'package:dorakpattient/routes/dorak_routes.dart';
 import 'package:dorakpattient/ui/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../controllers/controllers.dart';
 
 class RouteManger {
   static Route<dynamic> generateRouter(RouteSettings settings) {
     switch (settings.name) {
       case NameRoutes.kSplashScreen:
-        return MaterialPageRoute(builder: (context) => SplashScreen());
+        return MaterialPageRoute(builder: (context) => const SplashScreen());
 
       case NameRoutes.kSuccessScreen:
         return MaterialPageRoute(builder: (context) => const SuccessScreen());
@@ -122,7 +123,7 @@ class RouteManger {
             builder: (context) => const SearchByDoctorScreen());
 
       default:
-        return MaterialPageRoute(builder: (context) => SplashScreen());
+        return MaterialPageRoute(builder: (context) => const SplashScreen());
     }
   }
 }

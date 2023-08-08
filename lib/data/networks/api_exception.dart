@@ -19,11 +19,11 @@ class ApiException implements Exception {
 
   @override
   String toString() {
-    String _text = "";
+    String text = "";
 //    _text += tr('error');
 //    _text += "($code) ";
-    if (!isBlank(message)) _text += message;
-    if (!isBlank(reason)) _text += " , $reason.";
-    return _text;
+    if (!isBlank(message)) text += message;
+    if (!isBlank(reason)) text += " , $reason.";
+    return text;
   }
 }

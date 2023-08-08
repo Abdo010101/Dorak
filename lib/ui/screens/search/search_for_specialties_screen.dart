@@ -14,8 +14,6 @@ class SearchForSpecialtiesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GeneralController generalController =
-        Provider.of<GeneralController>(context, listen: false);
     return Scaffold(
       backgroundColor: AppColors.liteWight,
       appBar: CustomAppBar(title: AppStrings.kMainSpecialties.tr()),

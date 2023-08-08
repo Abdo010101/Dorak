@@ -31,7 +31,7 @@ export 'home/bottom_navigation.dart';
 export 'home/bottom_navigation_image.dart';
 export 'home/section_label.dart';
 export 'intro/dotes_intro.dart';
-export 'intro/introItem.dart';
+export 'intro/intro_item.dart';
 export 'intro/logo_intro_screen.dart';
 export 'intro/subtitle_intro_screen.dart';
 export 'intro/title_intro_screen.dart';

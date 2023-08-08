@@ -77,10 +77,12 @@ class ForgetPasswordScreen extends StatelessWidget {
                         bool send = await controller.sendOtp(
                             context: context,
                             phone: controller.phoneController.text);
-                        send
-                            ? Navigator.pushNamed(
-                                context, NameRoutes.kOTPScreen)
-                            : null;
+                        if (context.mounted) {
+                          send
+                              ? Navigator.pushNamed(
+                                  context, NameRoutes.kOTPScreen)
+                              : null;
+                        }
                       }
                       controller.formPhoneKey.currentState?.save();
                     },

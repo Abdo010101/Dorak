@@ -7,15 +7,15 @@ class AvailableSchedulesResponse {
     if (json['schedules'] != null) {
       schedules = <Schedules>[];
       json['schedules'].forEach((v) {
-        schedules!.add(new Schedules.fromJson(v));
+        schedules!.add(Schedules.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.schedules != null) {
-      data['schedules'] = this.schedules!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (schedules != null) {
+      data['schedules'] = schedules!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -32,16 +32,16 @@ class Schedules {
     if (json['week'] != null) {
       week = <Week>[];
       json['week'].forEach((v) {
-        week!.add(new Week.fromJson(v));
+        week!.add(Week.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['interval'] = this.interval;
-    if (this.week != null) {
-      data['week'] = this.week!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['interval'] = interval;
+    if (week != null) {
+      data['week'] = week!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -72,20 +72,20 @@ class Week {
     if (json['time_slots'] != null) {
       timeSlots = <TimeSlots>[];
       json['time_slots'].forEach((v) {
-        timeSlots!.add(new TimeSlots.fromJson(v));
+        timeSlots!.add(TimeSlots.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['short_name'] = this.shortName;
-    data['number'] = this.number;
-    data['date'] = this.date;
-    data['status'] = this.status;
-    if (this.timeSlots != null) {
-      data['time_slots'] = this.timeSlots!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['short_name'] = shortName;
+    data['number'] = number;
+    data['date'] = date;
+    data['status'] = status;
+    if (timeSlots != null) {
+      data['time_slots'] = timeSlots!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -103,9 +103,9 @@ class TimeSlots {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['time'] = this.time;
-    data['available'] = this.available;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['time'] = time;
+    data['available'] = available;
     return data;
   }
 }

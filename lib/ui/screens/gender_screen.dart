@@ -136,8 +136,10 @@ class GenderScreen extends StatelessWidget {
                         : () async {
                             await controller.completeData(
                                 gender: controller.gender!);
-                            Navigator.pushNamed(
-                                context, NameRoutes.kSuccessScreen);
+                            if (context.mounted) {
+                              Navigator.pushNamed(
+                                  context, NameRoutes.kSuccessScreen);
+                            }
                           },
                   ),
                   // ButtonBuilder(

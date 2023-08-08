@@ -11,7 +11,8 @@ abstract class DoctorsSearchResultClient {
   factory DoctorsSearchResultClient(Dio dio, {String baseUrl}) =
       _DoctorsSearchResultClient;
 
-  @GET('${NetworkConstant.kDoctorsRequest}')
+  @GET(NetworkConstant.kDoctorsRequest)
   Future<BaseResponse<SearchResultResponse>> getDoctorsResults(
-      @Queries() Map<String, dynamic> prams,);
+    @Queries() Map<String, dynamic> prams,
+  );
 }

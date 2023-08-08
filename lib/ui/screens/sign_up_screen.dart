@@ -8,7 +8,6 @@ import 'package:wc_form_validators/wc_form_validators.dart';
 
 import '../../constants/constants.dart';
 import '../../controllers/controllers.dart';
-import '../../utis/util.dart';
 import '../components/components.dart';
 
 class SignUpScreen extends StatelessWidget {

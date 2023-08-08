@@ -8,32 +8,31 @@ class DoctorProfileResponse {
   DoctorProfileResponse({this.doctor, this.places, this.ratings});
 
   DoctorProfileResponse.fromJson(Map<String, dynamic> json) {
-    doctor =
-        json['doctor'] != null ? new Doctor.fromJson(json['doctor']) : null;
+    doctor = json['doctor'] != null ? Doctor.fromJson(json['doctor']) : null;
     if (json['places'] != null) {
       places = <Places>[];
       json['places'].forEach((v) {
-        places!.add(new Places.fromJson(v));
+        places!.add(Places.fromJson(v));
       });
     }
     if (json['ratings'] != null) {
       ratings = <Ratings>[];
       json['ratings'].forEach((v) {
-        ratings!.add(new Ratings.fromJson(v));
+        ratings!.add(Ratings.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.doctor != null) {
-      data['doctor'] = this.doctor!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (doctor != null) {
+      data['doctor'] = doctor!.toJson();
     }
-    if (this.places != null) {
-      data['places'] = this.places!.map((v) => v.toJson()).toList();
+    if (places != null) {
+      data['places'] = places!.map((v) => v.toJson()).toList();
     }
-    if (this.ratings != null) {
-      data['ratings'] = this.ratings!.map((v) => v.toJson()).toList();
+    if (ratings != null) {
+      data['ratings'] = ratings!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -83,18 +82,18 @@ class Places {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['images'] = this.images;
-    data['name'] = this.name;
-    data['phone'] = this.phone;
-    data['short_address'] = this.shortAddress;
-    data['long_address'] = this.longAddress;
-    data['lat'] = this.lat;
-    data['lng'] = this.lng;
-    data['examination_price'] = this.examinationPrice;
-    data['examination_duration'] = this.examinationDuration;
-    data['reservation_status'] = this.reservationStatus;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['images'] = images;
+    data['name'] = name;
+    data['phone'] = phone;
+    data['short_address'] = shortAddress;
+    data['long_address'] = longAddress;
+    data['lat'] = lat;
+    data['lng'] = lng;
+    data['examination_price'] = examinationPrice;
+    data['examination_duration'] = examinationDuration;
+    data['reservation_status'] = reservationStatus;
     return data;
   }
 }
@@ -117,12 +116,12 @@ class Ratings {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['comment'] = this.comment;
-    data['rating'] = this.rating;
-    data['time'] = this.time;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['comment'] = comment;
+    data['rating'] = rating;
+    data['time'] = time;
     return data;
   }
 }
