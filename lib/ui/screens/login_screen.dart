@@ -372,11 +372,10 @@ class LoginScreen extends StatelessWidget {
                               Platform.isIOS
                                   ? ButtonBuilder(
                                       title: AppStrings.kLoginApple.tr(),
-                                      titleColor: AppColors.black,
-                                      titleStyle: TextStyle(
-                                          fontSize: AppFontSizes.kS3,
-                                          color: AppColors.black,
-                                          fontWeight: FontWeight.w900),
+                                      titleColor: AppColors.navyBlue,
+                                      height: 7.h,
+                                      buttonColor: AppColors.white,
+                                      borderColor: AppColors.transparent,
                                       elevation: 2,
                                       suffixIcon: Padding(
                                         padding: EdgeInsetsDirectional.only(
@@ -386,9 +385,6 @@ class LoginScreen extends StatelessWidget {
                                           color: AppColors.black,
                                         ),
                                       ),
-                                      height: 6.5.h,
-                                      buttonColor: AppColors.white,
-                                      borderColor: AppColors.transparent,
                                       onPressed: () async {
                                         final isSuccess =
                                             await controller.signInWithSocial(

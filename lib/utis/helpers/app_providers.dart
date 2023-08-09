@@ -7,6 +7,10 @@ class AppProviders {
   static List<DisposableProvider> getDisposableProviders(BuildContext context) {
     return [
       Provider.of<AuthController>(context, listen: false),
+      Provider.of<PatientProfileController>(context, listen: false),
+      Provider.of<DoctorProfileController>(context, listen: false),
+      Provider.of<FilterController>(context, listen: false),
+      Provider.of<OffersController>(context, listen: false),
     ];
   }
 

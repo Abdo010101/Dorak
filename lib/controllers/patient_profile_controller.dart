@@ -133,6 +133,7 @@ class PatientProfileController extends DisposableProvider {
 
   @override
   void disposeValues() {
+    profile = null;
     // TODO: implement disposeValues
   }
 }

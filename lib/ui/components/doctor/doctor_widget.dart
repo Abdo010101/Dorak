@@ -53,12 +53,43 @@ class DoctorWidget extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TextBuilder(
-                          text: model?.name ?? '',
-                          size: AppFontSizes.kS4,
-                          color: AppColors.navyBlue,
-                          horizontalPadding: 0.5.w,
-                          verticalPadding: 0,
+                        SizedBox(
+                          width: 65.w,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TextBuilder(
+                                width: 40.w,
+                                text: model?.name ?? '',
+                                size: AppFontSizes.kS4,
+                                color: AppColors.navyBlue,
+                                horizontalPadding: 0.5.w,
+                                verticalPadding: 0,
+                              ),
+                              Visibility(
+                                visible: model?.isSponsored ?? false,
+                                child: Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      AppAssets.kSponsoredIcon,
+                                      width: 2.5.w,
+                                      height: 2.5.w,
+                                      fit: BoxFit.fill,
+                                    ),
+                                    SizedBox(
+                                      width: 1.0.w,
+                                    ),
+                                    Text(
+                                      AppStrings.kSponsored.tr(),
+                                      style: TextStyle(
+                                          color: AppColors.orange,
+                                          fontSize: 10.sp),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.end,
@@ -85,27 +116,6 @@ class DoctorWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-                Visibility(
-                  visible: model?.isSponsored ?? false,
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(
-                        AppAssets.kSponsoredIcon,
-                        width: 2.5.w,
-                        height: 2.5.w,
-                        fit: BoxFit.fill,
-                      ),
-                      SizedBox(
-                        width: 1.0.w,
-                      ),
-                      Text(
-                        AppStrings.kSponsored.tr(),
-                        style:
-                            TextStyle(color: AppColors.orange, fontSize: 10.sp),
-                      )
-                    ],
-                  ),
-                )
               ],
             ),
             TextBuilder(
