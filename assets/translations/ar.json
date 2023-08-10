@@ -173,11 +173,11 @@
   "speciality": "تخصص",
   "reload": "إعادة تحميل",
   "unknown_error": "خطاء غير معروف",
-  "unauthenticated_title": "Unauthenticated",
-  "unauthenticated_subtitle": "Unauthenticated",
+  "unauthenticated_title": "لم يتم تسجيل الدخول",
   "sort_by": "الترتيب بواسطة",
   "most_recommended": " الموصى به ",
   "lowest_price": "السعر من الارخص للاعلى",
   "highest_price": "السعر الاعلى الى الادنى",
-  "short_waiting_time": "أقل وقت انتظار"
+  "short_waiting_time": "أقل وقت انتظار",
+  "please_login": "الرجاء تسجيل الدخول اولا للمتابعة"
 }

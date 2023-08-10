@@ -77,7 +77,8 @@ class LoginController extends AuthController {
         : type == LoginSocialType.apple
             ? await loginInWithApple()
             : await loginWithGoogleAccount();
-    if (userData.name != null && context.mounted) {
+
+    if (userData.socialId != null && context.mounted) {
       final result = await Provider.of<AuthController>(context, listen: false)
           .loginWithSocial(loginRequest: userData);
       isLoading = false;
@@ -142,7 +143,8 @@ class LoginController extends AuthController {
         AppleIDAuthorizationScopes.fullName,
       ],
     );
-    if (credential.state != null) {
+
+    if (credential.userIdentifier != null) {
       return LoginWithSocialRequest(
         email: credential.email,
         name: credential.givenName,

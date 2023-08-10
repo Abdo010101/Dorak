@@ -25,12 +25,12 @@ class WelcomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             ButtonBuilder(
-              title: AppStrings.kSkip,
+              title: AppStrings.kSkip.tr(),
               titleStyle: AppStyles.kButtonTextStyle
                   .copyWith(color: AppColors.blue, fontSize: AppFontSizes.kS4),
               buttonColor: AppColors.transparent,
               borderColor: AppColors.transparent,
-              width: 25.w,
+              width: 30.w,
               suffixIcon: const Icon(
                 Icons.arrow_forward_ios_rounded,
                 color: AppColors.blue,

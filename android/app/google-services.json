@@ -84,6 +84,14 @@
           }
         },
         {
+          "client_id": "101557805399-qj5m2rri3cgmrpjbencl2j7ksf1fta4m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.webstdy.dorak_patient",
+            "certificate_hash": "d1c8c58c571edc1ccfc0bbcc25e606c815d02a1b"
+          }
+        },
+        {
           "client_id": "101557805399-t8fq51gk438llg06hohu8r4v1g099u73.apps.googleusercontent.com",
           "client_type": 3
         }

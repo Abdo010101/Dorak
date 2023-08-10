@@ -16,8 +16,8 @@ class SharedPref {
 
   Future<bool> storeLoginInfo(UserResponse userResponse) async {
     return await _preferences!
-        .setString(
-            'access_token', NetworkConstant.tokenBuilder(userResponse.token!))
+        .setString('access_token',
+            NetworkConstant.tokenBuilder(userResponse.token ?? ''))
         /*  .then((value) =>
             sharedPref.setInt('expires_in', loginResponse.expiresIn!))
         .then((value) =>

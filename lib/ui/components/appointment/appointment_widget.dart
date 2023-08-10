@@ -58,11 +58,11 @@ class AppointmentWidget extends StatelessWidget {
                       padding: EdgeInsets.all(5.sp),
                       child: Center(
                         child: Text(
-                          '${appointment?.day} \n ${appointment?.month}',
+                          '${appointment?.day}\n${appointment?.month}',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: AppColors.white,
-                              fontSize: AppFontSizes.kS3),
+                              fontSize: AppFontSizes.kS2),
                         ),
                       ),
                     ),

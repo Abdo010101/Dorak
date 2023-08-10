@@ -74,13 +74,13 @@ class VerifyController extends AuthController {
       if (result is Success<Patient> || result is Success<dynamic>) {
         isLoading = false;
         notifyListeners();
-        if (type == SendOtpType.non) {
+        if (type == SendOtpType.changPassword) {
           if (context.mounted) {
-            Navigator.pushNamed(context, NameRoutes.kGenderScreen);
+            Navigator.pushNamed(context, NameRoutes.kChangePasswordScreen);
           }
         } else {
           if (context.mounted) {
-            Navigator.pushNamed(context, NameRoutes.kChangePasswordScreen);
+            Navigator.pushNamed(context, NameRoutes.kGenderScreen);
           }
         }
         notifyListeners();

@@ -62,7 +62,6 @@ class ChangePhoneScreen extends StatelessWidget {
                             .currentUser
                             ?.patient
                             ?.phone = controller.phoneController.text;
-
                         bool addPhone = await controller.changePhone(
                             context: context,
                             phone: controller.phoneController.text);

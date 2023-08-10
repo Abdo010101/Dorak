@@ -174,10 +174,10 @@
   "reload": "Reload",
   "unknown_error": "unknown error",
   "unauthenticated_title": "Unauthenticated",
-  "unauthenticated_subtitle": "Unauthenticated",
   "sort_by": "Sort by",
   "most_recommended": "Most recommended",
   "lowest_price": "Price low to high",
   "highest_price": "Price high to low",
-  "short_waiting_time": "Short waiting time"
+  "short_waiting_time": "Short waiting time",
+  "please_login": "Please login first to Continue"
 }

@@ -120,7 +120,7 @@ class AuthController extends DisposableProvider {
         ///TODO enhance here .
         InjectionClass.dio.options.headers.addAll({
           NetworkConstant.kAuthorizationHeader:
-              '${NetworkConstant.tokenBuilder(result.data!.token!)} '
+              NetworkConstant.tokenBuilder(result.data!.token!)
         });
         await _sharedPref.storeLoginInfo(result.data!);
         isLoggedIn = _sharedPref.isUserLoggedIn();
