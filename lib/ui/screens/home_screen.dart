@@ -160,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               : Container(
                                   margin:
                                       EdgeInsets.symmetric(vertical: 0.75.h),
-                                  height: 145.sp,
+                                  height: 150.sp,
                                   child: ListView.separated(
                                     itemCount: controller
                                         .homeData!.bestDoctors!.length,
