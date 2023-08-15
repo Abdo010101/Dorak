@@ -67,9 +67,8 @@ class SearchForCityScreen extends StatelessWidget {
             CityWidget(
               cityName: AppStrings.kAll.tr(),
               specialOnTap: () async {
-                print("asdas= ${generalController.cityId}");
                 Map<String, dynamic> data = {
-                  'area_id': generalController.cityId,
+                  'city_id': generalController.areaId,
                   'specialization_id': generalController.specializationId
                 };
                 Provider.of<SearchResultController>(context, listen: false)
@@ -103,7 +102,7 @@ class SearchForCityScreen extends StatelessWidget {
                                 specialOnTap: () {
                                   controller.onSelectedCity(cityModel.id!);
                                   Map<String, dynamic> data = {
-                                    'city_id': controller.cityId,
+                                    'area_id': controller.cityId,
                                     'specialization_id':
                                         controller.specializationId
                                   };

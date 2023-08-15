@@ -116,7 +116,7 @@ class ResultOfSearchScreen extends StatelessWidget {
               builderDelegate: PagedChildBuilderDelegate<Doctor>(
                 noItemsFoundIndicatorBuilder: (BuildContext con) {
                   return NoDataWidget(
-                    text: AppStrings.kNoAppointments.tr(),
+                    text: AppStrings.kNoDataFound.tr(),
                     backgroundColor: Colors.transparent,
                   );
                 },

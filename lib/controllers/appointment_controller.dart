@@ -72,7 +72,7 @@ class AppointmentsController extends ChangeNotifier {
         }
         //SnackBar(content: Text(result.error?.message), );
       }
-    } on DioError catch (e) {
+    } on DioError catch (_) {
       //return Error(errorMessage: DioExceptions.fromDioError(e).message);
 
       //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
