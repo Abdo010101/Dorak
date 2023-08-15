@@ -37,7 +37,7 @@ class DoctorProfileController extends DisposableProvider {
       } else {
         //SnackBar(content: Text(result.error?.message), );
       }
-    } on DioError catch (e) {
+    } on DioError catch (_) {
       //return Error(errorMessage: DioExceptions.fromDioError(e).message);
 
       //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
@@ -60,7 +60,7 @@ class DoctorProfileController extends DisposableProvider {
       } else {
         //SnackBar(content: Text(result.error?.message), );
       }
-    } on DioError catch (e) {
+    } on DioError catch (_) {
       //return Error(errorMessage: DioExceptions.fromDioError(e).message);
 
       //GetSnackBar(message: (DioExceptions.fromDioError(e).message));

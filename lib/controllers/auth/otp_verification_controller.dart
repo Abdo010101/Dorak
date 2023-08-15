@@ -29,7 +29,7 @@ class VerifyController extends AuthController {
   }
 
   void setCountDown() {
-    final reduceSecondsBy = 1;
+    const reduceSecondsBy = 1;
     final seconds = myDuration.inSeconds - reduceSecondsBy;
     if (seconds < 0) {
       countdownTimer!.cancel();
@@ -64,9 +64,9 @@ class VerifyController extends AuthController {
     notifyListeners();
     formVerifyKey.currentState?.save();
     StringBuffer otp = StringBuffer();
-    textEditingControllerList.forEach((element) {
+    for (var element in textEditingControllerList) {
       otp.write(element.text);
-    });
+    }
     try {
       final result = type == SendOtpType.changPassword
           ? await checkOtp(context: context, phone: phone, otp: otp.toString())
@@ -74,18 +74,24 @@ class VerifyController extends AuthController {
       if (result is Success<Patient> || result is Success<dynamic>) {
         isLoading = false;
         notifyListeners();
-        if (type == SendOtpType.non)
-          Navigator.pushNamed(context, NameRoutes.kGenderScreen);
-        else {
-          Navigator.pushNamed(context, NameRoutes.kChangePasswordScreen);
+        if (type == SendOtpType.changPassword) {
+          if (context.mounted) {
+            Navigator.pushNamed(context, NameRoutes.kChangePasswordScreen);
+          }
+        } else {
+          if (context.mounted) {
+            Navigator.pushNamed(context, NameRoutes.kGenderScreen);
+          }
         }
         notifyListeners();
         return true;
       } else {
         isLoading = false;
         notifyListeners();
-        Util.showSnackBar(context,
-            message: (result as Error<dynamic>).errorMessage!);
+        if (context.mounted) {
+          Util.showSnackBar(context,
+              message: (result as Error<dynamic>).errorMessage!);
+        }
         return false;
       }
     } on DioError catch (e) {

@@ -14,11 +14,11 @@ class LoginWithSocialRequest {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['email'] = this.email;
-    data['name'] = this.name;
-    data['social_id'] = this.socialId;
-    data['fcm_token'] = this.firebaseToken;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['email'] = email;
+    data['name'] = name;
+    data['social_id'] = socialId;
+    data['fcm_token'] = firebaseToken;
     return data;
   }
 }

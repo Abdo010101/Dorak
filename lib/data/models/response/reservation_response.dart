@@ -36,17 +36,17 @@ class ReservationResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['main_specialization'] = this.mainSpecialization;
-    data['full_image_path'] = this.fullImagePath;
-    data['name'] = this.name;
-    data['rate'] = this.rate;
-    data['phone'] = this.phone;
-    data['status'] = this.status;
-    data['date'] = this.date;
-    data['day'] = this.day;
-    data['month'] = this.month;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['main_specialization'] = mainSpecialization;
+    data['full_image_path'] = fullImagePath;
+    data['name'] = name;
+    data['rate'] = rate;
+    data['phone'] = phone;
+    data['status'] = status;
+    data['date'] = date;
+    data['day'] = day;
+    data['month'] = month;
     return data;
   }
 }

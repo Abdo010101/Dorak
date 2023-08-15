@@ -66,7 +66,6 @@ class SearchResultController extends ChangeNotifier {
           }
         }
       }*/
-      print(prams);
       final result = await _doctorsRepository.getDoctors(prams, pageKey);
 
       if (result.data != null) {
@@ -93,7 +92,7 @@ class SearchResultController extends ChangeNotifier {
       {
         //SnackBar(content: Text(result.error?.message), );
       }
-    } on DioError catch (e) {
+    } on DioError catch (_) {
       //return Error(errorMessage: DioExceptions.fromDioError(e).message);
 
       //GetSnackBar(message: (DioExceptions.fromDioError(e).message));

@@ -26,7 +26,7 @@ class HomeResponse {
     if (json['latest_offers'] != null) {
       latestOffers = <OfferResponse>[];
       json['latest_offers'].forEach((v) {
-        latestOffers!.add(new OfferResponse.fromJson(v));
+        latestOffers!.add(OfferResponse.fromJson(v));
       });
     }
 /*    if (json['patient_reservations'] != null) {
@@ -38,13 +38,12 @@ class HomeResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.bestDoctors != null) {
-      data['best_doctors'] = this.bestDoctors!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (bestDoctors != null) {
+      data['best_doctors'] = bestDoctors!.map((v) => v.toJson()).toList();
     }
-    if (this.latestOffers != null) {
-      data['latest_offers'] =
-          this.latestOffers!.map((v) => v.toJson()).toList();
+    if (latestOffers != null) {
+      data['latest_offers'] = latestOffers!.map((v) => v.toJson()).toList();
     }
     /* if (this.patientReservations != null) {
       data['patient_reservations'] =
@@ -89,16 +88,16 @@ class BestDoctors {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['image'] = this.image;
-    data['bio'] = this.bio;
-    data['examination_price'] = this.examinationPrice;
-    data['examination_duration'] = this.examinationDuration;
-    data['address'] = this.address;
-    data['rate'] = this.rate;
-    data['ratings_count'] = this.ratingsCount;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['image'] = image;
+    data['bio'] = bio;
+    data['examination_price'] = examinationPrice;
+    data['examination_duration'] = examinationDuration;
+    data['address'] = address;
+    data['rate'] = rate;
+    data['ratings_count'] = ratingsCount;
     return data;
   }
 }

@@ -11,15 +11,15 @@ class SearchResultResponse {
     maxPrice = json['max_price'];
     minPrice = json['min_price'];
     doctors =
-        json['doctors'] != null ? new Doctors.fromJson(json['doctors']) : null;
+        json['doctors'] != null ? Doctors.fromJson(json['doctors']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['max_price'] = this.maxPrice;
-    data['min_price'] = this.minPrice;
-    if (this.doctors != null) {
-      data['doctors'] = this.doctors!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['max_price'] = maxPrice;
+    data['min_price'] = minPrice;
+    if (doctors != null) {
+      data['doctors'] = doctors!.toJson();
     }
     return data;
   }
@@ -36,13 +36,13 @@ class Doctors {
     if (json['data'] != null) {
       data = <Doctor>[];
       json['data'].forEach((v) {
-        data!.add(new Doctor.fromJson(v));
+        data!.add(Doctor.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }

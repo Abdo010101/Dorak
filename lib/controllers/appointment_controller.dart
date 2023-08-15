@@ -50,16 +50,10 @@ class AppointmentsController extends ChangeNotifier {
           final nextPageKey = pageKey + 1;
           pagingController?.appendPage(result.data!, nextPageKey);
         }
-        /*  appointmentsList.addAll(result.data!);
-        isLoading = false;
-        notifyListeners();*/
       } else {
         if (result.error?.statusCode == 401) {
           if (context.mounted) {
             Util.unLoginedBottomSheet(context);
-            // Navigator.of(context).pushNamedAndRemoveUntil(
-            //     NameRoutes.kLoginScreen, (route) => false);
-            // Util.showSnackBar(context, message: result.error?.message);
           }
         }
         if (result.error != null) {
@@ -70,15 +64,8 @@ class AppointmentsController extends ChangeNotifier {
             });
           }
         }
-        //SnackBar(content: Text(result.error?.message), );
       }
-    } on DioError catch (_) {
-      //return Error(errorMessage: DioExceptions.fromDioError(e).message);
-
-      //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
-    } finally {
-      // isLoading.value = false;
-    }
+    } finally {}
   }
 
   Future<void> declineAppointment(int index) async {
@@ -86,15 +73,13 @@ class AppointmentsController extends ChangeNotifier {
       EasyLoading.show();
       notifyListeners();
       var data = {
-        'id': appointmentsList[index].id,
+        'id': pagingController?.itemList?[index].id,
       };
       final result = await _appointmentsRepository.declineAppointment(data);
       if (result.data != null) {
-        appointmentsList[index].status = AppStatus.cancelled.name;
-      } else {
-        //SnackBar(content: Text(result.error?.message), );
-      }
-    } on DioError catch (e) {
+        pagingController?.itemList?[index].status = AppStatus.cancelled.name;
+      } else {}
+    } on DioError catch (_) {
       //return Error(errorMessage: DioExceptions.fromDioError(e).message);
       //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
     } finally {

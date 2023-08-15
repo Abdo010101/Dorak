@@ -1,10 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../constants/constants.dart';
-import '../../../controllers/controllers.dart';
 import '../../../routes/dorak_routes.dart';
 import '../components.dart';
 
@@ -13,8 +11,6 @@ class AlreadyHaveAccountWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GeneralController generalController =
-        Provider.of<GeneralController>(context, listen: false);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

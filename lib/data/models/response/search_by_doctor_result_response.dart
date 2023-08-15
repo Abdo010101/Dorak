@@ -11,35 +11,34 @@ class SearchResultData {
     if (json['specialization'] != null) {
       specialization = <Titles>[];
       json['specialization'].forEach((v) {
-        specialization!.add(new Titles.fromJson(v));
+        specialization!.add(Titles.fromJson(v));
       });
     }
     if (json['doctors'] != null) {
       doctors = <Doctor>[];
       json['doctors'].forEach((v) {
-        doctors!.add(new Doctor.fromJson(v));
+        doctors!.add(Doctor.fromJson(v));
       });
     }
     if (json['medicals_centers'] != null) {
       medicalsCenters = <MedicalsCenter>[];
       json['medicals_centers'].forEach((v) {
-        medicalsCenters!.add(new MedicalsCenter.fromJson(v));
+        medicalsCenters!.add(MedicalsCenter.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.specialization != null) {
-      data['specialization'] =
-          this.specialization!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (specialization != null) {
+      data['specialization'] = specialization!.map((v) => v.toJson()).toList();
     }
-    if (this.doctors != null) {
-      data['doctors'] = this.doctors!.map((v) => v.toJson()).toList();
+    if (doctors != null) {
+      data['doctors'] = doctors!.map((v) => v.toJson()).toList();
     }
-    if (this.medicalsCenters != null) {
+    if (medicalsCenters != null) {
       data['medicals_centers'] =
-          this.medicalsCenters!.map((v) => v.toJson()).toList();
+          medicalsCenters!.map((v) => v.toJson()).toList();
     }
     return data;
   }

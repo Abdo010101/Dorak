@@ -4,7 +4,7 @@ class NetworkConstant {
   static const String kPageNumberParam = 'page';
   static const int kPageNumberValue = 1;
 
-  static const _kDevBaseUrl = 'https://dev.dorak-app.com/api/patient/';
+  // static const _kDevBaseUrl = 'https://dev.dorak-app.com/api/patient/';
 
   static const _kReleaseBaseUrl = 'https://dorak-app.com/api/patient/';
   static const kAppleStoreUrl = '';

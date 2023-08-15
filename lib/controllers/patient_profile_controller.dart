@@ -56,7 +56,7 @@ class PatientProfileController extends DisposableProvider {
       final result = await _profileRepository.updateProfile(patient);
       isLoading = false;
       notifyListeners();
-      if (result.data != null) {
+      if (result.data != null && context.mounted) {
         AuthController auth =
             Provider.of<AuthController>(context, listen: false);
         profile = result.data;
@@ -65,8 +65,10 @@ class PatientProfileController extends DisposableProvider {
           UserResponse(token: auth.currentUser?.token, patient: result.data),
         );
         notifyListeners();
-        Navigator.pushNamedAndRemoveUntil(
-            context, NameRoutes.kHomeScreen, (_) => false);
+        if (context.mounted) {
+          Navigator.pushNamedAndRemoveUntil(
+              context, NameRoutes.kHomeScreen, (_) => false);
+        }
         return true;
       } else {
         if (result.error?.statusCode == 401) {
@@ -87,8 +89,7 @@ class PatientProfileController extends DisposableProvider {
         }
         return false;
       }
-    } on DioError catch (e) {
-      print(e.toString());
+    } on DioError catch (_) {
       return false;
       // return Error(errorMessage: DioExceptions.fromDioError(e).message);
       //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
@@ -102,7 +103,7 @@ class PatientProfileController extends DisposableProvider {
       isLoading = true;
       notifyListeners();
       final result = await _profileRepository.getProfileData();
-      if (result.data != null) {
+      if (result.data != null && context.mounted) {
         profile = result.data!;
         context.read<AuthController>().currentUser?.patient = profile;
       } else {
@@ -132,6 +133,7 @@ class PatientProfileController extends DisposableProvider {
 
   @override
   void disposeValues() {
+    profile = null;
     // TODO: implement disposeValues
   }
 }

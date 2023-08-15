@@ -51,7 +51,7 @@ class LoginController extends AuthController {
         token: firebaseToken);
     isLoading = false;
     notifyListeners();
-    if (result is Success<UserResponse?>) {
+    if (result is Success<UserResponse?> && context.mounted) {
       context.read<AuthController>().currentUser = result.data;
       if (result.data?.patient?.verifiedAt == null) {
         Navigator.pushReplacementNamed(context, NameRoutes.kOTPScreen);
@@ -77,18 +77,22 @@ class LoginController extends AuthController {
         : type == LoginSocialType.apple
             ? await loginInWithApple()
             : await loginWithGoogleAccount();
-    if (userData.name != null) {
+
+    if (userData.socialId != null && context.mounted) {
       final result = await Provider.of<AuthController>(context, listen: false)
           .loginWithSocial(loginRequest: userData);
       isLoading = false;
       notifyListeners();
       if (result is Success<UserResponse?>) {
-        context.read<AuthController>().currentUser = result.data;
-        print(result.data);
+        if (context.mounted) {
+          context.read<AuthController>().currentUser = result.data;
+        }
         return true;
       } else {
-        Util.showSnackBar(context,
-            message: (result as Error<UserResponse?>).errorMessage);
+        if (context.mounted) {
+          Util.showSnackBar(context,
+              message: (result as Error<UserResponse?>).errorMessage);
+        }
         isLoading = false;
         notifyListeners();
         return false;
@@ -126,8 +130,6 @@ class LoginController extends AuthController {
           firebaseToken: firebaseToken,
         );
       } else {
-        print(result.status);
-        print(result.message);
         return LoginWithSocialRequest();
       }
     }
@@ -141,8 +143,8 @@ class LoginController extends AuthController {
         AppleIDAuthorizationScopes.fullName,
       ],
     );
-    print(credential);
-    if (credential.state != null) {
+
+    if (credential.userIdentifier != null) {
       return LoginWithSocialRequest(
         email: credential.email,
         name: credential.givenName,
@@ -186,7 +188,6 @@ class LoginController extends AuthController {
 
   void logoutFromGoogleAccount() async {
     user = await googleSignIn.disconnect();
-    print(user);
   }
 
   void resetController() {

@@ -9,7 +9,7 @@ import '../../data/shared/shared_pref.dart';
 import '../../routes/dorak_routes.dart';
 
 class SplashScreen extends StatefulWidget {
-  SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -40,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen>
     }
   }
 
-  var animationController;
+  late AnimationController animationController;
 
   @override
   Widget build(BuildContext context) {
@@ -91,8 +91,10 @@ class _SplashScreenState extends State<SplashScreen>
                   ? NameRoutes.kWelcomeScreen
                   : NameRoutes.kIntroScreen);
           await _sharedPref.storeFirstTime();
-          Navigator.pushNamedAndRemoveUntil(
-              context, NameRoutes.kWelcomeScreen, (_) => false);
+          if (context.mounted) {
+            Navigator.pushNamedAndRemoveUntil(
+                context, NameRoutes.kWelcomeScreen, (_) => false);
+          }
         }
       } else {}
     });

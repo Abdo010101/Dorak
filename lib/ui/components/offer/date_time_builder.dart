@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-
 import 'package:sizer/sizer.dart';
 
 import '../../../constants/constants.dart';
@@ -84,12 +83,10 @@ class DateTimeBuilder extends StatelessWidget {
                         lastDate: DateTime(DateTime.now().year + 1,
                             DateTime.now().month, DateTime.now().day),
                       );
-                      print("sdasds= ${dateTime}");
                       if (dateTime != null) {
                         dateController?.text =
                             '${dateTime.year}/${dateTime.month}/${dateTime.day}';
                       }
-                      print("sdasds2222= ${dateController?.text}");
                     }
                   : null,
             ),

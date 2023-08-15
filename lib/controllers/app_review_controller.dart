@@ -25,13 +25,15 @@ class AppReviewController extends ChangeNotifier {
       isLoading = false;
       if (result.data != null) {
         notifyListeners();
-        Navigator.pop(context);
+        if (context.mounted) Navigator.pop(context);
         ratting = 0;
         rateController.text = '';
         return true;
       } else {
         notifyListeners();
-        Util.showSnackBar(context, message: result.error?.message);
+        if (context.mounted) {
+          Util.showSnackBar(context, message: result.error?.message);
+        }
         return false;
       }
     } on DioError catch (e) {
@@ -57,13 +59,15 @@ class AppReviewController extends ChangeNotifier {
       isLoading = false;
       if (result.data != null) {
         notifyListeners();
-        Navigator.pop(context);
+        if (context.mounted) Navigator.pop(context);
         ratting = 0;
         rateController.text = '';
         return true;
       } else {
         notifyListeners();
-        Util.showSnackBar(context, message: result.error?.message);
+        if (context.mounted) {
+          Util.showSnackBar(context, message: result.error?.message);
+        }
         return false;
       }
     } on DioError catch (e) {

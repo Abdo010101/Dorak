@@ -109,8 +109,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         onTap: () async {
                           await generalController.getCurrentLocation(context,
                               isNavigate: false);
-                          Navigator.pushNamed(
-                              context, NameRoutes.kSearchForSpecialtiesScreen);
+                          if (context.mounted) {
+                            Navigator.pushNamed(context,
+                                NameRoutes.kSearchForSpecialtiesScreen);
+                          }
                         },
                         child: EmptyCard(
                           verticalPadding: 0.25.h,
@@ -158,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               : Container(
                                   margin:
                                       EdgeInsets.symmetric(vertical: 0.75.h),
-                                  height: 145.sp,
+                                  height: 150.sp,
                                   child: ListView.separated(
                                     itemCount: controller
                                         .homeData!.bestDoctors!.length,

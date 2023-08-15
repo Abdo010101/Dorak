@@ -58,7 +58,7 @@ class RegisterController extends AuthController {
         accepted: 1);
     formRegisterKey.currentState?.save();
     final result = await register(registerRequest: request.toJson());
-    if (result is Success<UserResponse?>) {
+    if (result is Success<UserResponse?> && context.mounted) {
       context.read<AuthController>().currentUser = result.data;
       context.read<VerifyController>().type = SendOtpType.non;
       await sendOtp(phone: phoneController.text, context: context);

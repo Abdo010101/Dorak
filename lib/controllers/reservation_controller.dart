@@ -44,7 +44,7 @@ class ReservationAppointmentController extends ChangeNotifier {
       {
         //SnackBar(content: Text(result.error?.message), );
       }
-    } on DioError catch (e) {
+    } on DioError catch (_) {
       //return Error(errorMessage: DioExceptions.fromDioError(e).message);
 
       //GetSnackBar(message: (DioExceptions.fromDioError(e).message));
@@ -72,7 +72,7 @@ class ReservationAppointmentController extends ChangeNotifier {
       };
       final result = await _availableAppointmentRepository.makeReservations(
           data: reservationsData);
-      if (result.data != null) {
+      if (result.data != null && context.mounted) {
         Util.kToastAddAppointment(UpdatedResult.success);
         context
             .read<AppointmentsController>()

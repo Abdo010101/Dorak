@@ -62,15 +62,15 @@ class ChangePhoneScreen extends StatelessWidget {
                             .currentUser
                             ?.patient
                             ?.phone = controller.phoneController.text;
-
                         bool addPhone = await controller.changePhone(
                             context: context,
                             phone: controller.phoneController.text);
-
-                        addPhone
-                            ? Navigator.pushReplacementNamed(
-                                context, NameRoutes.kOTPScreen)
-                            : null;
+                        if (context.mounted) {
+                          addPhone
+                              ? Navigator.pushReplacementNamed(
+                                  context, NameRoutes.kOTPScreen)
+                              : null;
+                        }
                       }
                       controller.formPhoneKey.currentState?.save();
                     },

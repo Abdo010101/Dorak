@@ -8,7 +8,6 @@ import 'package:wc_form_validators/wc_form_validators.dart';
 
 import '../../constants/constants.dart';
 import '../../controllers/controllers.dart';
-import '../../utis/util.dart';
 import '../components/components.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -376,11 +375,10 @@ class SignUpScreen extends StatelessWidget {
                                 vertical: 1.h, horizontal: 2.5.w)),
                         ButtonBuilder(
                             title: AppStrings.kLoginApple.tr(),
-                            titleColor: AppColors.black,
-                            titleStyle: TextStyle(
-                                fontSize: AppFontSizes.kS3,
-                                color: AppColors.black,
-                                fontWeight: FontWeight.w900),
+                            titleColor: AppColors.navyBlue,
+                            height: 7.h,
+                            buttonColor: AppColors.white,
+                            borderColor: AppColors.transparent,
                             elevation: 2,
                             suffixIcon: Padding(
                               padding: EdgeInsetsDirectional.only(
@@ -390,9 +388,6 @@ class SignUpScreen extends StatelessWidget {
                                 color: AppColors.black,
                               ),
                             ),
-                            height: 6.5.h,
-                            buttonColor: AppColors.white,
-                            borderColor: AppColors.transparent,
                             onPressed: () async {
                               final isSuccess =
                                   await loginController.signInWithSocial(

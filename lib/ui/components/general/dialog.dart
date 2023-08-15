@@ -18,7 +18,7 @@ class Dialogue {
             onPressed: () {},
             text: 'Cancel',
             iconData: Icons.cancel_outlined,
-            textStyle: TextStyle(color: Colors.grey),
+            textStyle: const TextStyle(color: Colors.grey),
             iconColor: Colors.grey,
           ),
           IconsButton(
@@ -26,7 +26,7 @@ class Dialogue {
             text: 'Delete',
             iconData: Icons.delete,
             color: Colors.red,
-            textStyle: TextStyle(color: Colors.white),
+            textStyle: const TextStyle(color: Colors.white),
             iconColor: Colors.white,
           ),
         ]);
