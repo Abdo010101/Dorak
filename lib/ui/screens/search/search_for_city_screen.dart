@@ -73,7 +73,6 @@ class SearchForCityScreen extends StatelessWidget {
                 };
                 Provider.of<SearchResultController>(context, listen: false)
                     .startPagingControllerListener(page: 1, data: data);
-
                 Navigator.of(context).pushNamed(NameRoutes.kResultOfSearch);
               },
               color: AppColors.blue,

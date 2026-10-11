@@ -132,7 +132,7 @@ class NotificationController extends ChangeNotifier {
       bool? request = await flutterLocalNotificationsPlugin
           .resolvePlatformSpecificImplementation<
               AndroidFlutterLocalNotificationsPlugin>()
-          ?.requestPermission();
+          ?.requestNotificationsPermission();
       if (request == true) {
         status = PermissionStatus.granted;
       } else {

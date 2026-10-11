@@ -91,7 +91,7 @@ class Util {
   }
 
   static void shareLink(String? link) {
-    Share.share('$link');
+    SharePlus.instance.share(ShareParams(text: '$link'));
   }
 
   static Future<bool?> kToastUpdatedResult(UpdatedResult result) {
