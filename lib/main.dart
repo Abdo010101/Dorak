@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import 'constants/constants.dart';
+import 'core/theme/app_theme.dart';
 import 'data/di/locator.dart';
 import 'firebase_options.dart';
 
@@ -144,9 +145,7 @@ class MyApp extends StatelessWidget {
             title: AppStrings.kAppName,
             initialRoute: NameRoutes.kSplashScreen,
             navigatorKey: navigatorKey,
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-            ),
+            theme: AppTheme.light(locale: context.locale),
             //   home: const MainTestScreen(),
           );
         },

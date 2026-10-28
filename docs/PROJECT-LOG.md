@@ -120,3 +120,9 @@
 - **Changes:** Dio 4→5, retrofit 3→4 (package only), retrofit_generator 4→10, build_runner 2.1→2.6, args override to ^2.6.0. Fixed `DioExceptionType` enum in `lib/data/networks/dio_errors.dart`. Timeouts changed to Duration in `lib/data/di/locator.dart`. Added `docs/figma-inventory.md` (55 screens across 5 sections + 21 overlay variants).
 - **Gates:** `flutter analyze` 1091 info (0 err). `flutter test` green. `flutter build apk --debug` success. iOS skipped (Windows host). `build_runner` could not regen `.g.dart` (Flutter cache ships `frontend_server_aot.dart.snapshot` only; existing retrofit 3 `.g.dart` still compiles against retrofit 4 package).
 - **Result:** ✅ Dio stack modernized. Figma inventory ready for Phase 8 reads.
+
+### [2026-10-28] 🚀 START Phase 1: Design tokens + ThemeData
+- **Branch:** `redesign/phase-1-tokens-theme`
+- **Changes:** New `lib/core/theme/` — `app_colors_theme.dart`, `app_typography.dart`, `app_spacing.dart`, `app_radii.dart`, `app_shadows.dart`, `app_theme.dart`, `text_direction_x.dart`. All as `ThemeExtension`s. `MaterialApp.theme` now `AppTheme.light(locale: context.locale)` in `lib/main.dart`. Legacy `AppColors`/`AppStyles`/`AppFontSizes` untouched (migration happens per feature in Phase 8).
+- **Gates:** `flutter analyze` on `lib/core` + `test/core` clean. `flutter test` 7 green. `flutter build apk --debug` success.
+- **Result:** ✅ Theme chassis live; new widgets built against `ThemeExtension<T>` from day one.
