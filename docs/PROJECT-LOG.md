@@ -361,3 +361,12 @@
 - **Wiring:** `main.dart` adds `BlocProvider<SearchCubit>`.
 - **Tests:** 2 bloc_tests. Total 54/54 green.
 - **Gates:** analyze clean on scope, `flutter test` 54/54, apk builds.
+
+### [2026-10-28] — ✅ Phase 5i — Auth cluster → AuthCubit (phone + OTP)
+- **Branch:** `redesign/phase-5i-auth-bloc`.
+- **New:** `lib/features/auth/logic/auth_{cubit,state}.dart`. `AuthState` with effect flags (`otpSent`, `verified`, `loggedOut`) + `isAuthenticated` convenience getter.
+- **Methods:** `setPhone`, `setOtp`, `loadCurrentUser`, `sendOtp`, `verifyOtp`, `logout`.
+- **Scope:** replaces the phone+OTP surface of `AuthController` + `LoginController` + `RegisterController` + `VerifyController` (Figma uses phone+OTP, not email/password). Social providers + email/password paths stay in legacy controllers until Phase 9d.
+- **Wiring:** `main.dart` adds `BlocProvider<AuthCubit>` wired to `AuthenticationRepository` + `SharedPref` from the locator.
+- **Tests:** 4 bloc_tests (setPhone, sendOtp success, verifyOtp success, logout). Total 58/58 green.
+- **Gates:** analyze clean on scope, `flutter test` 58/58, apk builds.

@@ -4,8 +4,10 @@ import 'dart:io';
 import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/core/router/app_router.dart';
 import 'package:dorakpattient/data/repository/repository.dart';
+import 'package:dorakpattient/data/shared/shared_pref.dart';
 import 'package:dorakpattient/features/home/logic/general_cubit.dart';
 import 'package:dorakpattient/features/appointment/logic/appointments_cubit.dart';
+import 'package:dorakpattient/features/auth/logic/auth_cubit.dart';
 import 'package:dorakpattient/features/doctor/logic/doctor_profile_cubit.dart';
 import 'package:dorakpattient/features/notification/logic/notification_cubit.dart';
 import 'package:dorakpattient/features/offers/logic/offers_cubit.dart';
@@ -126,6 +128,12 @@ class MyApp extends StatelessWidget {
           create: (_) => SearchCubit(
             searchResultRepository:
                 locator<DoctorsSearchResultRepository>(),
+          ),
+        ),
+        BlocProvider<AuthCubit>(
+          create: (_) => AuthCubit(
+            authenticationRepository: locator<AuthenticationRepository>(),
+            sharedPref: locator<SharedPref>(),
           ),
         ),
       ],
