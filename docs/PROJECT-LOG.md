@@ -330,3 +330,11 @@
 - **Wiring:** `main.dart` adds `BlocProvider<NotificationCubit>`.
 - **Tests:** 2 bloc_tests. Total 44/44 green.
 - **Gates:** analyze clean on scope, `flutter test` 44/44, apk builds.
+
+### [2026-10-28] — ✅ Phase 5e — PatientProfileController → PatientProfileCubit
+- **Branch:** `redesign/phase-5e-patient-profile-cubit`.
+- **New:** `lib/features/profile/logic/patient_profile_{cubit,state}.dart`. `PatientProfileCubit` with `seedFrom`, `setName/Phone/Email/Gender`, `load`, `update`.
+- **Scope:** data + form. Navigation + legacy `AuthController.currentUser.patient` write happen in the UI listener on `state.updated`.
+- **Wiring:** `main.dart` adds `BlocProvider<PatientProfileCubit>`.
+- **Tests:** 3 bloc_tests. Total 47/47 green.
+- **Gates:** analyze clean on scope, `flutter test` 47/47, apk builds.
