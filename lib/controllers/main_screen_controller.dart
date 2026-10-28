@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
-import '../ui/screens/screens.dart';
 import 'controllers.dart';
 
+/// Legacy bottom-nav state holder. `MainShellPage` owns its own tab index,
+/// so this controller only side-effects data loads on tab change and will
+/// be removed when its callers migrate to BLoC in Phase 5c-l.
 class MainScreenController extends ChangeNotifier {
   int currentIndex = 0;
 
@@ -35,11 +37,4 @@ class MainScreenController extends ChangeNotifier {
       return false;
     }
   }
-
-  List<Widget> homeScreensList = [
-    const HomeScreen(),
-    const AppointmentsScreen(),
-    const OffersScreen(),
-    const ProfileScreen(),
-  ];
 }

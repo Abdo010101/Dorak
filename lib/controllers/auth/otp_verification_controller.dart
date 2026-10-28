@@ -7,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 import '../../constants/constants.dart';
 import '../../data/models/response/response.dart';
 import '../../data/networks/model_response.dart';
-import '../../ui/screens/screens.dart';
 import '../../utis/util.dart';
 import '../controllers.dart';
 
@@ -40,18 +39,14 @@ class VerifyController extends AuthController {
   }
 
   void initForms() {
-    int i = 0;
     textFormList.clear();
     textEditingControllerList.clear();
-    for (i; i < 4; i++) {
-      TextEditingController controller = TextEditingController();
-      FocusNode focusNode = FocusNode();
-      textEditingControllerList.add(controller);
-      textFormList.add(OTPVerificationTextFormField(
-        textEditingController: controller,
-        focusNode: focusNode,
-      ));
+    for (var i = 0; i < 4; i++) {
+      textEditingControllerList.add(TextEditingController());
     }
+    // OTP field widgets now come from Phase 8 `OtpPage`; this controller
+    // only owns the 4 raw TextEditingControllers for callers that still
+    // reach for them until Phase 5 wires the AuthBloc.
     notifyListeners();
   }
 

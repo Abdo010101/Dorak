@@ -300,3 +300,17 @@
   - `errorBuilder` → `SplashPage`
 - **Blocker found:** `lib/controllers/notification_controller.dart` references `Dialogue` from `lib/ui/components/components.dart` — full `lib/ui/components` + `lib/ui/screens` deletion blocked on that one usage.
 - **Gates:** `flutter analyze lib/core/router` clean. `flutter test` 40/40. `flutter build apk --debug` OK.
+
+### [2026-10-28] — ✅ Phase 9c — delete legacy UI tree
+- **Branch:** `redesign/phase-9c-delete-legacy` (base: `ui-redesign`).
+- **Deleted:**
+  - `lib/ui/screens/*` (31 legacy screens).
+  - `lib/ui/components/*` (~60 legacy widget builders).
+  - `lib/routes/route_manger.dart` (unreferenced after Phase 9b redirect).
+- **Minimal rewrites to unblock deletion:**
+  - `lib/controllers/notification_controller.dart` — replace `Dialogue.showNotificationDialog` with raw `showDialog` + `AlertDialog`; drop `ui/components` import.
+  - `lib/controllers/main_screen_controller.dart` — drop broken `homeScreensList` referencing legacy screens; drop `ui/screens` import. Keep side-effect data loads for legacy MultiProvider callers.
+  - `lib/controllers/auth/otp_verification_controller.dart` — drop `OTPVerificationTextFormField` list build; keep 4 raw `TextEditingController`s for callers that still reach for them. Drop `ui/screens` import.
+  - `lib/utis/util.dart` — replace `ConfirmDeletion` + `LoginBottomSheet` with raw `AlertDialog` / `showModalBottomSheet`. Drop `ui/components` import.
+- **Kept intentionally:** `lib/routes/dorak_routes.dart` (NameRoutes still consumed by 3 legacy controllers), `lib/constants/colors.dart` + `styles.dart` + `font_sizes.dart` (consumed by remaining controllers + util), legacy `lib/controllers/*` (MultiProvider dependencies — removal lands with Phase 5 Cubit migrations).
+- **Gates:** `flutter analyze lib test` → 0 errors (403 info-level style lints unchanged from baseline). `flutter test` 40/40. `flutter build apk --debug` OK.

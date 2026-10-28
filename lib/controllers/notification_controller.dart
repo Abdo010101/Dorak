@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:dorakpattient/data/di/locator.dart';
-import 'package:dorakpattient/ui/components/components.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -145,13 +144,26 @@ class NotificationController extends ChangeNotifier {
           : null;
       if (context.mounted) {
         status != PermissionStatus.granted
-            ? Dialogue.showNotificationDialog(
+            ? showDialog<void>(
                 context: context,
-                confirmTab: () async {
-                  await openAppSettings();
-                  if (context.mounted) Navigator.pop(context);
-                },
-                cancelTab: () => Navigator.pop(context),
+                builder: (ctx) => AlertDialog(
+                  title: const Text('Notifications disabled'),
+                  content:
+                      const Text('Open app settings to enable notifications.'),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(ctx),
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        await openAppSettings();
+                        if (ctx.mounted) Navigator.pop(ctx);
+                      },
+                      child: const Text('Open settings'),
+                    ),
+                  ],
+                ),
               )
             : null;
       }

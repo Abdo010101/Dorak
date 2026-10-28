@@ -5,7 +5,6 @@ import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../constants/constants.dart';
-import '../ui/components/components.dart';
 
 class Util {
   static showSnackBar(BuildContext context,
@@ -20,26 +19,57 @@ class Util {
     );
   }
 
-  static void confirmDeletionDialog(BuildContext context,
-      {required VoidCallback confirmTab, required VoidCallback cancelTab}) {
-    showDialog(
+  static void confirmDeletionDialog(
+    BuildContext context, {
+    required VoidCallback confirmTab,
+    required VoidCallback cancelTab,
+  }) {
+    showDialog<void>(
       context: context,
-      builder: (context) {
-        return ConfirmDeletion(
-          confirmTab: confirmTab,
-          cancelTab: cancelTab,
-        );
-      },
+      builder: (ctx) => AlertDialog(
+        title: const Text('Confirm deletion'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(ctx);
+              cancelTab();
+            },
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(ctx);
+              confirmTab();
+            },
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
     );
   }
 
   static void unLoginedBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      backgroundColor: AppColors.transparent,
+    showModalBottomSheet<void>(
+      backgroundColor: Colors.transparent,
       context: context,
-      builder: (context) {
-        return const LoginBottomSheet();
-      },
+      builder: (ctx) => Container(
+        padding: const EdgeInsets.all(16),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('Please sign in to continue'),
+            const SizedBox(height: 12),
+            ElevatedButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
