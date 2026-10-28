@@ -225,3 +225,13 @@
 - **Router:** `RouteNames.resultOfSearch` + `RouteNames.searchDoctor` → `SearchResultsPage`. Reads `?q=` query param for initial query.
 - **Deferred:** map view (`203:1881`), empty state (`352:3400`), location picker (`203:1600`), and `SearchBloc` wiring (comes with Phase 5 SearchController migration).
 - **Gates:** `flutter analyze lib/features/search lib/core/router` clean. `flutter test` 40/40. `flutter build apk --debug` OK.
+
+### [2026-10-28] — ✅ Phase 8 (feature 4/9) — doctor profile from Figma
+- **Branch:** `redesign/phase-8-doctor` (base: `ui-redesign`).
+- **Figma source:** file `jA3JQXye9DbBrxzNkEj9nf`, node `204:2053` (Center 03 — Doctor profile).
+- **New:** `lib/features/doctor/presentation/pages/doctor_profile_page.dart` — top bar (heart + title + back), avatar/name/subtitle header, 3-stat row (reviews/experience/rating), About section, 2 city/branches cards, Services price row, bottom pinned "احجز موعدًا" CTA.
+- **Assets:** 5 new under `assets/images/doctor/` (avatar.png, group.svg, shield_tick.svg, heart.svg, right.svg). Reused star/location/calendar from `assets/images/home/`.
+- **i18n:** 5 keys: `doctor_profile`, `doctor_about`, `doctor_locations`, `doctor_price`, `doctor_book_cta`.
+- **Router:** `RouteNames.doctor` → `DoctorProfilePage`. `RouteNames.doctorReview` still points at legacy `DoctorReview` (deferred).
+- **Deferred:** doctor variants `363:3494`, `363:3625`; rate booking overlays; `DoctorProfileCubit` wiring (Phase 5 cluster).
+- **Gates:** `flutter analyze lib/features/doctor lib/core/router` clean (1 info auto-fixed). `flutter test` 40/40. `flutter build apk --debug` OK.

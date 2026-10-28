@@ -1,4 +1,5 @@
 import 'package:dorakpattient/controllers/controllers.dart';
+import 'package:dorakpattient/features/doctor/presentation/pages/doctor_profile_page.dart';
 import 'package:dorakpattient/features/home/presentation/pages/main_shell_page.dart';
 import 'package:dorakpattient/features/intro/presentation/pages/splash_page.dart';
 import 'package:dorakpattient/features/intro/presentation/pages/welcome_page.dart';
@@ -123,7 +124,7 @@ class AppRouter {
       GoRoute(
         path: RouteNames.doctor,
         name: RouteNames.doctor,
-        builder: (_, __) => const DoctorScreen(),
+        builder: (_, __) => const DoctorProfilePage(),
       ),
       GoRoute(
         path: RouteNames.profile,
