@@ -275,3 +275,14 @@
 - **Router:** `RouteNames.notification` → `NotificationsPage`.
 - **Deferred:** empty state (`352:3712`), `NotificationCubit` wiring.
 - **Gates:** `flutter analyze` clean on scope. `flutter test` 40/40. `flutter build apk --debug` OK.
+
+### [2026-10-28] — ✅ Phase 8 (feature 9/9) — auth phone + OTP from Figma
+- **Branch:** `redesign/phase-8-auth` (base: `ui-redesign`).
+- **Figma source:** file `jA3JQXye9DbBrxzNkEj9nf`, nodes `201:1422` (phone), `201:1471` (OTP).
+- **New:**
+  - `lib/features/auth/presentation/pages/phone_page.dart` — RTL label + input with `+966` prefix pill + helper + green-ring field + pinned CTA.
+  - `lib/features/auth/presentation/pages/otp_page.dart` — title + subtitle + change-number link + masked number, 4 OTP cells with autofocus + backspace flow, 45-second resend countdown, enable/disable CTA.
+- **i18n:** 11 keys per locale (`phone_*`, `otp_*`).
+- **Router:** `RouteNames.register` → `PhonePage`, `RouteNames.otp` → `OtpPage` (legacy `SignUpScreen` + `PhoneVerificationScreen` still exported).
+- **Deferred:** complete-profile (`352:3260`), sign-in-required sheet (`202:1598`), signed-in success (`352:3321`), social provider wiring to real Apple/Google/Facebook flows, `AuthBloc` wiring (Phase 5 cluster).
+- **Gates:** `flutter analyze lib/features/auth lib/core/router` clean. `flutter test` 40/40. `flutter build apk --debug` OK.
