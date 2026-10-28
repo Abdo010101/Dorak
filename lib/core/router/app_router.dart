@@ -1,4 +1,5 @@
 import 'package:dorakpattient/controllers/controllers.dart';
+import 'package:dorakpattient/features/home/presentation/pages/main_shell_page.dart';
 import 'package:dorakpattient/features/intro/presentation/pages/splash_page.dart';
 import 'package:dorakpattient/features/intro/presentation/pages/welcome_page.dart';
 import 'package:dorakpattient/features/settings/presentation/pages/app_review_page.dart';
@@ -65,7 +66,7 @@ class AppRouter {
       GoRoute(
         path: RouteNames.home,
         name: RouteNames.home,
-        builder: (_, __) => const MainScreen(),
+        builder: (_, __) => const MainShellPage(),
       ),
       GoRoute(
         path: RouteNames.notification,

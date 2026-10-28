@@ -202,3 +202,16 @@
 - **Tests:** `test/features/intro/welcome_page_test.dart` — 1 widget test (3 FilledButton + 1 TextButton + 2 Dividers). Total 40/40 green.
 - **Gates:** `flutter analyze lib/features/intro lib/core/router` clean. `flutter test` 40/40. `flutter build apk --debug` OK.
 - **Deferred:** Apple + Google button handlers stubbed (Phase 8 auth feature wires them to legacy `AuthController` sign-in flows).
+
+### [2026-10-28] — ✅ Phase 8 (feature 2/9) — home + bottom-nav shell from Figma
+- **Branch:** `redesign/phase-8-home` (base: `ui-redesign`).
+- **Figma source:** file `jA3JQXye9DbBrxzNkEj9nf`, node `171:509` (Home AR), bottom nav `171:682`.
+- **Assets:** 20 Figma assets under `assets/images/home/` (icons, provider logos, offer + center images).
+- **New files:**
+  - `lib/features/home/presentation/pages/main_shell_page.dart` — 4-tab bottom nav host (Home/Discover/Bookings/Account) with Figma Primary green indicator bar.
+  - `lib/features/home/presentation/pages/home_page.dart` — scroll body with location card, specialty chips, offers 2-col, nearest centers 2-col.
+  - `lib/features/home/presentation/widgets/` × 7: `home_header.dart`, `location_card.dart`, `section_header.dart`, `specialty_chip_row.dart`, `offer_card.dart`, `center_card.dart`.
+- **Router:** `RouteNames.home` → `MainShellPage` (legacy `MainScreen` kept exported).
+- **i18n:** 9 new keys in both `ar.json` and `en.json` (`home_specialties`, `home_latest_offers`, `home_nearest_centers`, `home_nearest_clinics`, `home_view_all`, `nav_home`, `nav_discover`, `nav_bookings`, `nav_account`).
+- **Scope:** static mock data; wiring to `HomeCubit`/`BottomNavCubit` lands with `HomeController` migration in Phase 5 sub-phase. Discovery + Bookings tabs stubbed. Nearest-clinics section deferred (same `CenterCard` shape, needs backend list).
+- **Gates:** `flutter analyze lib/features/home lib/core/router` clean. `flutter test` 40/40. `flutter build apk --debug` OK.
