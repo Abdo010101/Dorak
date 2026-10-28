@@ -1,0 +1,78 @@
+Analyzing dorak-patient...                                      
+
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\constants\styles.dart:37:28 - deprecated_member_use
+   info - Don't use 'BuildContext's across async gaps - lib\controllers\app_review_controller.dart:40:25 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\controllers\app_review_controller.dart:74:25 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\controllers\auth\login_controller.dart:64:25 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\controllers\auth\otp_verification_controller.dart:72:28 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\controllers\auth\otp_verification_controller.dart:73:29 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\controllers\auth\otp_verification_controller.dart:100:25 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\controllers\auth\register_controller.dart:71:25 - use_build_context_synchronously
+   info - 'desiredAccuracy' is deprecated and shouldn't be used. use settings parameter with AndroidSettings, AppleSettings, WebSettings, or LocationSettings - lib\controllers\general_controller.dart:231:11 - deprecated_member_use
+   info - Statements in an if should be enclosed in a block - lib\controllers\patient_profile_controller.dart:45:36 - curly_braces_in_flow_control_structures
+   info - Don't use 'BuildContext's across async gaps - lib\controllers\patient_profile_controller.dart:127:25 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\controllers\reservation_controller.dart:94:25 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\main.dart:129:23 - use_build_context_synchronously
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ui\components\appointment\appointment_widget.dart:42:54 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ui\components\appointment\appointment_widget.dart:45:58 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ui\components\appointment\appointment_widget.dart:46:60 - deprecated_member_use
+   info - 'color' is deprecated and shouldn't be used. Use colorFilter instead - lib\ui\components\doctor\medical_center_widget.dart:67:27 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ui\components\doctor\review.dart:35:44 - deprecated_member_use
+   info - 'MaterialStateProperty' is deprecated and shouldn't be used. Use WidgetStateProperty instead. Moved to the Widgets layer to make code available outside of Material. This feature was deprecated after v3.19.0-0.3.pre - lib\ui\components\general\button_builder.dart:46:24 - deprecated_member_use
+   info - 'MaterialStateProperty' is deprecated and shouldn't be used. Use WidgetStateProperty instead. Moved to the Widgets layer to make code available outside of Material. This feature was deprecated after v3.19.0-0.3.pre - lib\ui\components\general\button_builder.dart:48:26 - deprecated_member_use
+   info - 'MaterialStateProperty' is deprecated and shouldn't be used. Use WidgetStateProperty instead. Moved to the Widgets layer to make code available outside of Material. This feature was deprecated after v3.19.0-0.3.pre - lib\ui\components\general\button_builder.dart:49:19 - deprecated_member_use
+   info - 'MaterialStateProperty' is deprecated and shouldn't be used. Use WidgetStateProperty instead. Moved to the Widgets layer to make code available outside of Material. This feature was deprecated after v3.19.0-0.3.pre - lib\ui\components\general\button_builder.dart:55:20 - deprecated_member_use
+   info - 'MaterialStateProperty' is deprecated and shouldn't be used. Use WidgetStateProperty instead. Moved to the Widgets layer to make code available outside of Material. This feature was deprecated after v3.19.0-0.3.pre - lib\ui\components\general\button_builder.dart:62:30 - deprecated_member_use
+   info - 'actions' is deprecated and shouldn't be used. The actions is Deprecated, please use actionsBuilder - lib\ui\components\general\dialog.dart:16:9 - deprecated_member_use
+   info - 'actions' is deprecated and shouldn't be used. The actions is Deprecated, please use actionsBuilder - lib\ui\components\general\dialog.dart:48:9 - deprecated_member_use
+   info - 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre - lib\ui\components\general\drop_down_builder.dart:41:11 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ui\components\general\empty_card.dart:62:38 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ui\components\general\filter_bottom_sheet.dart:147:58 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ui\components\general\geometrical_avatar.dart:45:52 - deprecated_member_use
+   info - 'groupValue' is deprecated and shouldn't be used. Use a RadioGroup ancestor to manage group value instead. This feature was deprecated after v3.32.0-0.0.pre - lib\ui\components\general\sort_by_bottom_sheet.dart:53:15 - deprecated_member_use
+   info - 'onChanged' is deprecated and shouldn't be used. Use RadioGroup to handle value change instead. This feature was deprecated after v3.32.0-0.0.pre - lib\ui\components\general\sort_by_bottom_sheet.dart:54:15 - deprecated_member_use
+   info - 'groupValue' is deprecated and shouldn't be used. Use a RadioGroup ancestor to manage group value instead. This feature was deprecated after v3.32.0-0.0.pre - lib\ui\components\general\sort_by_bottom_sheet.dart:60:15 - deprecated_member_use
+   info - 'onChanged' is deprecated and shouldn't be used. Use RadioGroup to handle value change instead. This feature was deprecated after v3.32.0-0.0.pre - lib\ui\components\general\sort_by_bottom_sheet.dart:61:15 - deprecated_member_use
+   info - 'groupValue' is deprecated and shouldn't be used. Use a RadioGroup ancestor to manage group value instead. This feature was deprecated after v3.32.0-0.0.pre - lib\ui\components\general\sort_by_bottom_sheet.dart:67:15 - deprecated_member_use
+   info - 'onChanged' is deprecated and shouldn't be used. Use RadioGroup to handle value change instead. This feature was deprecated after v3.32.0-0.0.pre - lib\ui\components\general\sort_by_bottom_sheet.dart:68:15 - deprecated_member_use
+   info - 'groupValue' is deprecated and shouldn't be used. Use a RadioGroup ancestor to manage group value instead. This feature was deprecated after v3.32.0-0.0.pre - lib\ui\components\general\sort_by_bottom_sheet.dart:74:15 - deprecated_member_use
+   info - 'onChanged' is deprecated and shouldn't be used. Use RadioGroup to handle value change instead. This feature was deprecated after v3.32.0-0.0.pre - lib\ui\components\general\sort_by_bottom_sheet.dart:75:15 - deprecated_member_use
+   info - 'color' is deprecated and shouldn't be used. Use colorFilter instead - lib\ui\components\home\bottom_navigation_image.dart:20:7 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ui\components\home\bottom_navigation_image.dart:20:63 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ui\components\intro\dotes_intro.dart:38:50 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ui\components\login\already_have_account.dart:23:37 - deprecated_member_use
+   info - 'color' is deprecated and shouldn't be used. Use colorFilter instead - lib\ui\components\login\content_of_signup_button.dart:46:17 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ui\components\login\not_have_account.dart:27:37 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ui\components\menu\row_menu_card.dart:39:39 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ui\components\offer\offer_drop_down.dart:38:43 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ui\components\offer\offer_drop_down.dart:47:44 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ui\components\offer\offer_item.dart:40:43 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ui\components\offer\offer_item.dart:70:44 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ui\components\offer\offer_widget.dart:114:39 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ui\components\profile\information_text.dart:49:52 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ui\components\settings\settings_components.dart:53:49 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ui\components\settings\settings_components.dart:61:57 - deprecated_member_use
+   info - 'activeColor' is deprecated and shouldn't be used. Use activeThumbColor instead. This feature was deprecated after v3.31.0-2.0.pre - lib\ui\components\settings\settings_components.dart:67:31 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ui\components\settings\settings_components.dart:88:50 - deprecated_member_use
+   info - 'WillPopScope' is deprecated and shouldn't be used. Use PopScope instead. The Android predictive back feature will not work with WillPopScope. This feature was deprecated after v3.12.0-1.0.pre - lib\ui\screens\booking_appointment_screen.dart:44:18 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ui\screens\booking_appointment_screen.dart:231:39 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ui\screens\booking_appointment_screen.dart:242:39 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ui\screens\booking_appointment_screen.dart:396:63 - deprecated_member_use
+   info - Don't use 'BuildContext's across async gaps - lib\ui\screens\home_screen.dart:23:35 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\ui\screens\home_screen.dart:23:71 - use_build_context_synchronously
+   info - 'WillPopScope' is deprecated and shouldn't be used. Use PopScope instead. The Android predictive back feature will not work with WillPopScope. This feature was deprecated after v3.12.0-1.0.pre - lib\ui\screens\login_screen.dart:24:12 - deprecated_member_use
+   info - 'WillPopScope' is deprecated and shouldn't be used. Use PopScope instead. The Android predictive back feature will not work with WillPopScope. This feature was deprecated after v3.12.0-1.0.pre - lib\ui\screens\main_screen.dart:15:14 - deprecated_member_use
+   info - Don't use 'BuildContext's across async gaps - lib\ui\screens\phone_verification_screen.dart:27:56 - use_build_context_synchronously
+   info - 'MaterialStateProperty' is deprecated and shouldn't be used. Use WidgetStateProperty instead. Moved to the Widgets layer to make code available outside of Material. This feature was deprecated after v3.19.0-0.3.pre - lib\ui\screens\profile_screen.dart:99:40 - deprecated_member_use
+   info - 'MaterialStateProperty' is deprecated and shouldn't be used. Use WidgetStateProperty instead. Moved to the Widgets layer to make code available outside of Material. This feature was deprecated after v3.19.0-0.3.pre - lib\ui\screens\profile_screen.dart:100:46 - deprecated_member_use
+   info - 'WillPopScope' is deprecated and shouldn't be used. Use PopScope instead. The Android predictive back feature will not work with WillPopScope. This feature was deprecated after v3.12.0-1.0.pre - lib\ui\screens\search\search_for_area_screen.dart:19:12 - deprecated_member_use
+   info - 'WillPopScope' is deprecated and shouldn't be used. Use PopScope instead. The Android predictive back feature will not work with WillPopScope. This feature was deprecated after v3.12.0-1.0.pre - lib\ui\screens\sign_up_screen.dart:21:12 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ui\screens\sign_up_screen.dart:151:64 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ui\screens\sign_up_screen.dart:188:64 - deprecated_member_use
+   info - Don't use 'BuildContext's across async gaps, guarded by an unrelated 'mounted' check - lib\ui\screens\splash_screen.dart:38:40 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps, guarded by an unrelated 'mounted' check - lib\ui\screens\splash_screen.dart:39:38 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\ui\screens\splash_screen.dart:89:15 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps, guarded by an unrelated 'mounted' check - lib\ui\screens\splash_screen.dart:96:17 - use_build_context_synchronously
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\ui\screens\welcome_screen.dart:86:57 - deprecated_member_use
+
+74 issues found. (ran in 23.3s)
