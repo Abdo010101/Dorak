@@ -346,3 +346,10 @@
 - **Wiring:** `main.dart` adds `BlocProvider<AppointmentsCubit>`.
 - **Tests:** 2 bloc_tests. Total 49/49 green.
 - **Gates:** analyze clean on scope, `flutter test` 49/49, apk builds.
+
+### [2026-10-28] — ✅ Phase 5g — DoctorProfileController → DoctorProfileCubit
+- **Branch:** `redesign/phase-5g-doctor-profile-cubit`.
+- **New:** `lib/features/doctor/logic/doctor_profile_{cubit,state}.dart`. `DoctorProfileTab` enum (clinic/offers), `selectedPlace` convenience getter, Cubit with `load`, `loadOffers`, `selectPlace`, `setTab`, `reset`.
+- **Wiring:** `main.dart` adds `BlocProvider<DoctorProfileCubit>`.
+- **Tests:** 3 bloc_tests. Total 52/52 green.
+- **Gates:** analyze clean on scope, `flutter test` 52/52, apk builds.
