@@ -1,5 +1,12 @@
 {
   "app_name": "دورك",
+  "welcome_title": "أهلًا بك في دورك",
+  "welcome_subtitle": "سجّل الدخول أو أنشئ حسابًا لحجز مواعيدك ومتابعتها بسهولة.",
+  "welcome_cta_phone": "المتابعة برقم الجوال",
+  "welcome_cta_apple": "المتابعة باستخدام Apple",
+  "welcome_cta_google": "المتابعة باستخدام Google",
+  "welcome_guest": "المتابعة كزائر",
+  "or": "أو",
   "register": "إنشاء حساب ",
   "login": "تسجيل دخول",
   "offers": "العروض",

@@ -1,4 +1,11 @@
 {
+  "welcome_title": "Welcome to Dorak",
+  "welcome_subtitle": "Sign in or create an account to book and track your appointments easily.",
+  "welcome_cta_phone": "Continue with phone",
+  "welcome_cta_apple": "Continue with Apple",
+  "welcome_cta_google": "Continue with Google",
+  "welcome_guest": "Continue as guest",
+  "or": "or",
   "app_name": "Dorak Patient",
   "register": "Register",
   "login": "Login",

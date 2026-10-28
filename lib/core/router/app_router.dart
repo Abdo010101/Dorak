@@ -1,4 +1,6 @@
 import 'package:dorakpattient/controllers/controllers.dart';
+import 'package:dorakpattient/features/intro/presentation/pages/splash_page.dart';
+import 'package:dorakpattient/features/intro/presentation/pages/welcome_page.dart';
 import 'package:dorakpattient/features/settings/presentation/pages/app_review_page.dart';
 import 'package:dorakpattient/features/settings/presentation/pages/language_page.dart';
 import 'package:dorakpattient/features/settings/presentation/pages/settings_page.dart';
@@ -27,12 +29,12 @@ class AppRouter {
       GoRoute(
         path: RouteNames.splash,
         name: RouteNames.splash,
-        builder: (_, __) => const SplashScreen(),
+        builder: (_, __) => const SplashPage(),
       ),
       GoRoute(
         path: RouteNames.welcome,
         name: RouteNames.welcome,
-        builder: (_, __) => const WelcomeScreen(),
+        builder: (_, __) => const WelcomePage(),
       ),
       GoRoute(
         path: RouteNames.intro,

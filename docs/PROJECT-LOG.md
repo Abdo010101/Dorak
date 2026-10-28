@@ -188,3 +188,17 @@
 - **Pattern doc:** `docs/feature_pattern_dorak.md` — folder layout, imports allowed, state/cubit/page/test shape. Phase 8 copies this.
 - **Tests:** `test/features/settings/presentation/settings_page_test.dart` — 3 widget tests (settings list render, language page radios, app review render). Total 39/39 green.
 - **Gates:** `flutter analyze lib/features test/features` clean on scope. `flutter test` 39/39. `flutter build apk --debug` OK.
+
+### [2026-10-28] — ✅ Phase 8 (feature 1/9) — intro from Figma
+- **Branch:** `redesign/phase-8-intro` (base: `ui-redesign`).
+- **Figma source:** file `jA3JQXye9DbBrxzNkEj9nf`; nodes `201:1334` (Splash), `201:1345` (Welcome).
+- **Assets:** 6 SVGs downloaded under `assets/images/intro/` (dorak_vertical, loader, dorak_mark, apple_logo, google_logo, call_icon).
+- **New pages:**
+  - `lib/features/intro/presentation/pages/splash_page.dart` — Figma-faithful mark + loader. Preserves legacy bootstrap: `AuthController.checkUserLoggedIn()`, Dio header refresh, `GeneralController.getData()`, then `go_router.goNamed(home | welcome | intro)` based on auth + `SharedPref.getFirstTime()`.
+  - `lib/features/intro/presentation/pages/welcome_page.dart` — Status-bar-less header with language pill + back; centered logo + title + subtitle + phone CTA (brand green `#1F8046` + green glow shadow); "أو" divider; Apple + Google social buttons; bottom guest link.
+- **i18n:** 7 new keys added to both `ar.json` and `en.json`: `welcome_title`, `welcome_subtitle`, `welcome_cta_phone`, `welcome_cta_apple`, `welcome_cta_google`, `welcome_guest`, `or`.
+- **Router:** `RouteNames.splash` → `SplashPage`, `RouteNames.welcome` → `WelcomePage`. Legacy `SplashScreen`/`WelcomeScreen` still exported but unreferenced from router.
+- **Pending token work (BRD):** Figma brand primary is green `#1F8046` while current DS token `borderPrimary` is blue `#014AE0`. Welcome CTA uses direct color constants pending a token swap when BRD lands; applies to Phase 9 cleanup.
+- **Tests:** `test/features/intro/welcome_page_test.dart` — 1 widget test (3 FilledButton + 1 TextButton + 2 Dividers). Total 40/40 green.
+- **Gates:** `flutter analyze lib/features/intro lib/core/router` clean. `flutter test` 40/40. `flutter build apk --debug` OK.
+- **Deferred:** Apple + Google button handlers stubbed (Phase 8 auth feature wires them to legacy `AuthController` sign-in flows).
