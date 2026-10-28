@@ -247,3 +247,11 @@
 - **Router:** `RouteNames.appointments` → `AppointmentsPage`. `MainShellPage` bookings tab now hosts `AppointmentsPage` (was stub).
 - **Deferred:** booking flow (`177:888` specialty, `205:2084` city, `178:978` date-time, `206:2176` review, `206:2315` confirmed), booking details (`208:2535`), cancel booking overlay, `AppointmentsCubit` + `BookingBloc` wiring.
 - **Gates:** `flutter analyze` clean on scope. `flutter test` 40/40. `flutter build apk --debug` OK.
+
+### [2026-10-28] — ✅ Phase 8 (feature 6/9) — offers (pattern-matched, no Figma frame)
+- **Branch:** `redesign/phase-8-offers` (base: `ui-redesign`).
+- **Figma:** no dedicated offers list in inventory; pattern-matched from legacy `OffersScreen` using Phase 8 `OfferCard` + DS tokens.
+- **New:** `lib/features/offers/presentation/pages/offers_page.dart` — title + 2-column grid of `OfferCard`.
+- **Router:** `RouteNames.offers` → `OffersPage` (legacy `OffersScreen` still exported).
+- **Deferred:** sort/filter sheet, `OffersCubit` wiring (Phase 5 cluster).
+- **Gates:** `flutter analyze lib/features/offers lib/core/router` clean. `flutter test` 40/40. `flutter build apk --debug` OK.
