@@ -1,3 +1,4 @@
+@Deprecated('Use RouteNames from lib/core/router/route_names.dart')
 abstract class NameRoutes {
   static const kSplashScreen = "/";
   static const kWelcomeScreen = "$kSplashScreen/welcome";

@@ -2,9 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dorakpattient/controllers/controllers.dart';
-import 'package:dorakpattient/routes/dorak_routes.dart';
-import 'package:dorakpattient/routes/route_manger.dart';
-import 'package:dorakpattient/ui/screens/main_screen.dart';
+import 'package:dorakpattient/core/router/app_router.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -24,8 +22,6 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
 }
-
-GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 String? notificationsRoute;
 
@@ -126,27 +122,20 @@ class MyApp extends StatelessWidget {
                   context
                       .read<MainScreenController>()
                       .onBottomSheetChanged(1, context);
-                  Navigator.push(
-                      navigatorKey.currentState!.context,
-                      MaterialPageRoute(
-                          builder: (context) => const MainScreen()));
+                  AppRouter.router.go('/home');
                 }
               }
             },
           );
-          return MaterialApp(
+          return MaterialApp.router(
             builder: EasyLoading.init(),
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,
-            locale:
-                context.locale /* EasyLocalization.of(context)?.currentLocale*/,
-            onGenerateRoute: RouteManger.generateRouter,
+            locale: context.locale,
+            routerConfig: AppRouter.router,
             debugShowCheckedModeBanner: false,
             title: AppStrings.kAppName,
-            initialRoute: NameRoutes.kSplashScreen,
-            navigatorKey: navigatorKey,
             theme: AppTheme.light(locale: context.locale),
-            //   home: const MainTestScreen(),
           );
         },
       ),

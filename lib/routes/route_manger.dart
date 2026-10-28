@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../controllers/controllers.dart';
 
+@Deprecated('Use AppRouter from lib/core/router/app_router.dart (go_router)')
 class RouteManger {
   static Route<dynamic> generateRouter(RouteSettings settings) {
     switch (settings.name) {

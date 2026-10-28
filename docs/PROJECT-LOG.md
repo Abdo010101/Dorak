@@ -133,3 +133,13 @@
 - **Gates:** `flutter analyze lib/core test/core` 12 info (trailing commas, non-blocking). `flutter test` 21 green (14 ui_kit + 6 theme + sanity). `flutter build apk --debug` success.
 - **Deferred to feature need:** inputs (text/password/select/phone/email/otp), provider buttons (Google/Apple), chips, rating, images, tabs.
 - **Result:** ✅ Pilot `settings` can be built on this surface.
+
+### [2026-10-28] — ✅ Phase 3 — Routing migration (Navigator 1.0 → go_router)
+- **Branch:** `redesign/phase-3-router` (base: `redesign/phase-2-ui-kit`).
+- **Deps:** `go_router: ^14.6.2`.
+- **New:** `lib/core/router/route_names.dart` (mirror of NameRoutes with same string values), `lib/core/router/app_router.dart` (single `GoRouter`, 31 routes, root `GlobalKey<NavigatorState>`).
+- **Changed:** `lib/main.dart` → `MaterialApp.router(routerConfig: AppRouter.router)`; FCM `onMessageOpenedApp` deep-link ports to `AppRouter.router.go('/home')`.
+- **Deprecated:** `lib/routes/dorak_routes.dart::NameRoutes`, `lib/routes/route_manger.dart::RouteManger` (kept until Phase 8 call-site sweep).
+- **Tests:** `test/core/router/app_router_test.dart` — 3 tests (name coverage, legacy string parity, config non-empty). All 24 tests green.
+- **Gates:** `flutter analyze lib/core lib/main.dart test/core/router` → 6 info (pre-existing MultiProvider trailing-comma style). `flutter test` → 24 pass. `flutter build apk --debug` → OK.
+- **Deferred:** per-screen `Navigator.pushNamed` → `context.goNamed` sweep lands in Phase 8 per feature.
