@@ -3,10 +3,14 @@ import 'dart:io';
 
 import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/core/router/app_router.dart';
+import 'package:dorakpattient/data/repository/repository.dart';
+import 'package:dorakpattient/features/settings/logic/app_review_cubit.dart';
+import 'package:dorakpattient/features/settings/logic/language_cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
@@ -71,8 +75,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // initUniLinks();
-    return MultiProvider(
+    return MultiBlocProvider(
       providers: [
+        BlocProvider<LanguageCubit>(
+          create: (_) => LanguageCubit(dio: InjectionClass.dio),
+        ),
+        BlocProvider<AppReviewCubit>(
+          create: (_) => AppReviewCubit(
+            rateRepository: locator<RateRepository>(),
+          ),
+        ),
+      ],
+      child: MultiProvider(
+        providers: [
         ChangeNotifierProvider<LoginController>(
             create: (_) => LoginController()),
         ChangeNotifierProvider<HomeController>(create: (_) => HomeController()),
@@ -94,10 +109,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => VerifyController()),
         ChangeNotifierProvider(create: (context) => NotificationController()),
         ChangeNotifierProvider(create: (context) => FilterController()),
-        ChangeNotifierProvider(
-            create: (context) => ReservationAppointmentController()),
-      ],
-      child: Sizer(
+          ChangeNotifierProvider(
+              create: (context) => ReservationAppointmentController()),
+        ],
+        child: Sizer(
         builder: (BuildContext context, Orientation orientation,
             DeviceType deviceType) {
           context.read<LanguageController>().checkStatus =
@@ -138,6 +153,7 @@ class MyApp extends StatelessWidget {
             theme: AppTheme.light(locale: context.locale),
           );
         },
+      ),
       ),
     );
   }

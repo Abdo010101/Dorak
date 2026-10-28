@@ -152,3 +152,12 @@
 - **Scaffold only:** `injection.config.dart` not generated on this Windows host (build_runner blocked by missing `frontend_server.dart.snapshot`). Manual `setupLocator()` in `lib/data/di/locator.dart` still the only wiring; new injectable path is a no-op until regen.
 - **Gates:** `flutter analyze lib/core/di` → 0 issues. `flutter test` → 24/24. `flutter build apk --debug` → OK.
 - **Phase 8 handoff:** when a mac/linux host is available, run `dart run build_runner build --delete-conflicting-outputs`, flip on the import + `$initGetIt(gi)` call in `lib/core/di/injection.dart`, call `configureInjectableDependencies(getIt)` from `main.dart`, then migrate each repo to `@LazySingleton(as: ...)` and delete the matching manual block.
+
+### [2026-10-28] — ✅ Phase 5a — First BLoC migration (Language + AppReview)
+- **Branch:** `redesign/phase-5a-cubits-language-review-general` (base: `ui-redesign`).
+- **Deps:** `flutter_bloc ^8.1.6`, `bloc ^8.1.4`, `equatable ^2.0.5`, `bloc_test ^9.1.7` (dev), `mocktail ^1.0.4` (dev).
+- **New:** `lib/core/state/status.dart` (shared `Status` enum). `lib/features/settings/logic/language_{cubit,state}.dart`. `lib/features/settings/logic/app_review_{cubit,state}.dart`.
+- **Wiring:** `main.dart` wraps `MultiProvider` in `MultiBlocProvider` with `LanguageCubit` + `AppReviewCubit`. Legacy `ChangeNotifierProvider`s untouched (removed per screen in Phase 8).
+- **Tests:** `test/features/settings/logic/language_cubit_test.dart` (3), `app_review_cubit_test.dart` (4). Total 31/31 green.
+- **Gates:** `flutter analyze` clean on scope. `flutter test` 31/31. `flutter build apk --debug` OK.
+- **Deferred to Phase 5b–5l:** GeneralCubit (next), OffersCubit, NotificationCubit, PatientProfileCubit, AppointmentsCubit, DoctorProfileCubit, SearchBloc, AuthBloc, HomeCubit + BottomNavCubit, BookingBloc.
