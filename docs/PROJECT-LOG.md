@@ -161,3 +161,12 @@
 - **Tests:** `test/features/settings/logic/language_cubit_test.dart` (3), `app_review_cubit_test.dart` (4). Total 31/31 green.
 - **Gates:** `flutter analyze` clean on scope. `flutter test` 31/31. `flutter build apk --debug` OK.
 - **Deferred to Phase 5b–5l:** GeneralCubit (next), OffersCubit, NotificationCubit, PatientProfileCubit, AppointmentsCubit, DoctorProfileCubit, SearchBloc, AuthBloc, HomeCubit + BottomNavCubit, BookingBloc.
+
+### [2026-10-28] — ✅ Phase 5b — GeneralController → GeneralCubit
+- **Branch:** `redesign/phase-5b-general-cubit` (base: `ui-redesign`).
+- **New:** `lib/features/home/logic/general_{cubit,state}.dart`. Immutable `GeneralState` (22 fields, Equatable), 400-line controller ported to pure data methods.
+- **Scope ported:** `getGeneralData`, `getCities`, `getSubSpeciality`, `searchSpecialization`, `searchSubSpecialization`, `searchArea`, `searchCity`, `searchByName`, `onSpecializationChange`, `onMainSpecializationChange`, `onSelectedCity`, `setMainSpecialization`, `setLatLng`, `loadTermsAndPolicy`.
+- **Deferred:** `getCurrentLocation` + `handleLocationPermission` stay in UI (BuildContext + Geolocator) until Phase 8 extracts a `LocationService`.
+- **Wiring:** `main.dart` adds `BlocProvider<GeneralCubit>` alongside legacy `ChangeNotifierProvider<GeneralController>` (both coexist until Phase 8).
+- **Tests:** `test/features/home/logic/general_cubit_test.dart` — 5 tests (getGeneralData success, onSelectedCity, search filter, getSubSpeciality, setLatLng). Total 36/36 green.
+- **Gates:** `flutter analyze` clean on scope. `flutter test` 36/36. `flutter build apk --debug` OK.
