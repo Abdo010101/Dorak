@@ -370,3 +370,13 @@
 - **Wiring:** `main.dart` adds `BlocProvider<AuthCubit>` wired to `AuthenticationRepository` + `SharedPref` from the locator.
 - **Tests:** 4 bloc_tests (setPhone, sendOtp success, verifyOtp success, logout). Total 58/58 green.
 - **Gates:** analyze clean on scope, `flutter test` 58/58, apk builds.
+
+### [2026-10-28] — ✅ Phase 5j — HomeController + MainScreenController → HomeCubit + BottomNavCubit
+- **Branch:** `redesign/phase-5j-home-nav-cubit`.
+- **New:** `lib/features/home/logic/home_{cubit,state}.dart`, `lib/features/home/logic/bottom_nav_cubit.dart`.
+- **HomeCubit:** `load()` pulls `HomeResponse` + populates best doctors / latest offers / patient reservations lists.
+- **BottomNavCubit:** `Cubit<int>` with `setIndex(i)`; dedups on same value.
+- **Repo barrel fix:** `lib/data/repository/repository.dart` now exports `home_repo.dart` (was missing).
+- **Wiring:** `main.dart` adds `BlocProvider<HomeCubit>` + `BlocProvider<BottomNavCubit>`.
+- **Tests:** 3 bloc_tests (home load, nav set, nav dedup). Total 61/61 green.
+- **Gates:** analyze clean on scope, `flutter test` 61/61, apk builds.

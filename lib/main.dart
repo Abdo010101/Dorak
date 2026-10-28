@@ -5,10 +5,12 @@ import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/core/router/app_router.dart';
 import 'package:dorakpattient/data/repository/repository.dart';
 import 'package:dorakpattient/data/shared/shared_pref.dart';
-import 'package:dorakpattient/features/home/logic/general_cubit.dart';
 import 'package:dorakpattient/features/appointment/logic/appointments_cubit.dart';
 import 'package:dorakpattient/features/auth/logic/auth_cubit.dart';
 import 'package:dorakpattient/features/doctor/logic/doctor_profile_cubit.dart';
+import 'package:dorakpattient/features/home/logic/bottom_nav_cubit.dart';
+import 'package:dorakpattient/features/home/logic/general_cubit.dart';
+import 'package:dorakpattient/features/home/logic/home_cubit.dart';
 import 'package:dorakpattient/features/notification/logic/notification_cubit.dart';
 import 'package:dorakpattient/features/offers/logic/offers_cubit.dart';
 import 'package:dorakpattient/features/profile/logic/patient_profile_cubit.dart';
@@ -136,6 +138,12 @@ class MyApp extends StatelessWidget {
             sharedPref: locator<SharedPref>(),
           ),
         ),
+        BlocProvider<HomeCubit>(
+          create: (_) => HomeCubit(
+            homeRepository: locator<HomeRepository>(),
+          ),
+        ),
+        BlocProvider<BottomNavCubit>(create: (_) => BottomNavCubit()),
       ],
       child: MultiProvider(
         providers: [
