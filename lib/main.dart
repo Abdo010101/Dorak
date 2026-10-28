@@ -6,6 +6,7 @@ import 'package:dorakpattient/core/router/app_router.dart';
 import 'package:dorakpattient/data/repository/repository.dart';
 import 'package:dorakpattient/data/shared/shared_pref.dart';
 import 'package:dorakpattient/features/appointment/logic/appointments_cubit.dart';
+import 'package:dorakpattient/features/appointment/logic/booking_cubit.dart';
 import 'package:dorakpattient/features/auth/logic/auth_cubit.dart';
 import 'package:dorakpattient/features/doctor/logic/doctor_profile_cubit.dart';
 import 'package:dorakpattient/features/home/logic/bottom_nav_cubit.dart';
@@ -144,6 +145,12 @@ class MyApp extends StatelessWidget {
           ),
         ),
         BlocProvider<BottomNavCubit>(create: (_) => BottomNavCubit()),
+        BlocProvider<BookingCubit>(
+          create: (_) => BookingCubit(
+            availableAppointmentRepository:
+                locator<AvailableAppointmentRepository>(),
+          ),
+        ),
       ],
       child: MultiProvider(
         providers: [

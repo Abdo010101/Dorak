@@ -380,3 +380,11 @@
 - **Wiring:** `main.dart` adds `BlocProvider<HomeCubit>` + `BlocProvider<BottomNavCubit>`.
 - **Tests:** 3 bloc_tests (home load, nav set, nav dedup). Total 61/61 green.
 - **Gates:** analyze clean on scope, `flutter test` 61/61, apk builds.
+
+### [2026-10-28] — ✅ Phase 5k — Booking cluster → BookingCubit
+- **Branch:** `redesign/phase-5k-booking-bloc`.
+- **New:** `lib/features/appointment/logic/booking_{cubit,state}.dart`. Owns doctorId / placeId / selectedDay / selectedTime + `schedules` list. `canConfirm` convenience getter. Methods: `setDoctor`, `setPlace`, `selectDay`, `selectTime`, `loadSchedules`, `confirm`, `reset`. Emits `booked` effect flag.
+- **Scope:** replaces `ReservationAppointmentController` + `ManualAppointmentController`. `EasyLoading` + post-confirm cross-controller refresh calls stay in UI listener on `state.booked`.
+- **Wiring:** `main.dart` adds `BlocProvider<BookingCubit>`.
+- **Tests:** 3 bloc_tests (canConfirm, failure on empty, success flips booked). Total 64/64 green.
+- **Gates:** analyze clean on scope, `flutter test` 64/64, apk builds.
