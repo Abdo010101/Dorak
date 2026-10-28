@@ -176,3 +176,15 @@
 - **New:** 10 feature trees under `lib/features/` (`intro`, `auth`, `home`, `search`, `doctor`, `appointment`, `offers`, `profile`, `notification`, `settings`) with full Clean-Architecture subfolders + `.gitkeep` + per-feature `README.md`. Root `lib/features/README.md` documents the pattern.
 - **Already populated:** `lib/features/home/logic/` (Phase 5b `GeneralCubit`), `lib/features/settings/logic/` (Phase 5a `LanguageCubit` + `AppReviewCubit`).
 - **Gates:** `flutter analyze` unchanged (empty folders have no code). `flutter test` 36/36.
+
+### [2026-10-28] — ✅ Phase 7 — Settings pilot
+- **Branch:** `redesign/phase-7-pilot-settings` (base: `ui-redesign`).
+- **New pages (ui_kit only, zero raw Color/TextStyle):**
+  - `lib/features/settings/presentation/pages/settings_page.dart`
+  - `lib/features/settings/presentation/pages/language_page.dart` — `BlocBuilder<LanguageCubit>` + `BlocListener` to `context.setLocale` then `goNamed(RouteNames.splash)`
+  - `lib/features/settings/presentation/pages/app_review_page.dart` — rating + comment + submit, listens to `AppReviewState.submitted` to pop
+  - `lib/features/settings/presentation/widgets/settings_tile.dart`
+- **Router:** `app_router.dart` points `RouteNames.{setting,language,appReview}` at the new pages (legacy screens remain exported but unreferenced from the router).
+- **Pattern doc:** `docs/feature_pattern_dorak.md` — folder layout, imports allowed, state/cubit/page/test shape. Phase 8 copies this.
+- **Tests:** `test/features/settings/presentation/settings_page_test.dart` — 3 widget tests (settings list render, language page radios, app review render). Total 39/39 green.
+- **Gates:** `flutter analyze lib/features test/features` clean on scope. `flutter test` 39/39. `flutter build apk --debug` OK.

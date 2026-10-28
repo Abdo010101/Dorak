@@ -1,4 +1,7 @@
 import 'package:dorakpattient/controllers/controllers.dart';
+import 'package:dorakpattient/features/settings/presentation/pages/app_review_page.dart';
+import 'package:dorakpattient/features/settings/presentation/pages/language_page.dart';
+import 'package:dorakpattient/features/settings/presentation/pages/settings_page.dart';
 import 'package:dorakpattient/ui/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -70,7 +73,7 @@ class AppRouter {
       GoRoute(
         path: RouteNames.setting,
         name: RouteNames.setting,
-        builder: (_, __) => const SettingsScreen(),
+        builder: (_, __) => const SettingsPage(),
       ),
       GoRoute(
         path: RouteNames.forgetPassword,
@@ -138,10 +141,7 @@ class AppRouter {
       GoRoute(
         path: RouteNames.appReview,
         name: RouteNames.appReview,
-        builder: (context, __) {
-          context.read<AppReviewController>().resetController();
-          return const AppReview();
-        },
+        builder: (_, __) => const AppReviewPage(),
       ),
       GoRoute(
         path: RouteNames.changePassword,
@@ -156,7 +156,7 @@ class AppRouter {
       GoRoute(
         path: RouteNames.language,
         name: RouteNames.language,
-        builder: (_, __) => const LanguageScreen(),
+        builder: (_, __) => const LanguagePage(),
       ),
       GoRoute(
         path: RouteNames.addAppointment,
