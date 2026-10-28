@@ -255,3 +255,13 @@
 - **Router:** `RouteNames.offers` → `OffersPage` (legacy `OffersScreen` still exported).
 - **Deferred:** sort/filter sheet, `OffersCubit` wiring (Phase 5 cluster).
 - **Gates:** `flutter analyze lib/features/offers lib/core/router` clean. `flutter test` 40/40. `flutter build apk --debug` OK.
+
+### [2026-10-28] — ✅ Phase 8 (feature 7/9) — profile signed-in from Figma
+- **Branch:** `redesign/phase-8-profile` (base: `ui-redesign`).
+- **Figma source:** file `jA3JQXye9DbBrxzNkEj9nf`, node `209:2649` (Account 06 — Profile signed in).
+- **New:** `lib/features/profile/presentation/pages/profile_page.dart` — title, UserCard (edit + name/phone + initial-circle avatar), 3 list groups (Account / Preferences / Actions) with chevron rows, Primary-25 green icon pills, error-red logout.
+- **Icons:** material icons stand in for Figma Hicon icons (same shape, same green pill). No asset downloads.
+- **i18n:** 13 keys per locale.
+- **Router:** `RouteNames.profile` → `ProfilePage`. `MainShellPage` account tab now hosts `ProfilePage` (was `SettingsPage`).
+- **Deferred:** guest profile (`209:2842`), personal info page (`209:3066`), favorite centers (`363:3887`), help & support (`363:3756`), `PatientProfileCubit` wiring (Phase 5 cluster).
+- **Gates:** `flutter analyze` clean on scope. `flutter test` 40/40. `flutter build apk --debug` OK.

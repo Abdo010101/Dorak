@@ -5,6 +5,7 @@ import 'package:dorakpattient/features/home/presentation/pages/main_shell_page.d
 import 'package:dorakpattient/features/intro/presentation/pages/splash_page.dart';
 import 'package:dorakpattient/features/intro/presentation/pages/welcome_page.dart';
 import 'package:dorakpattient/features/offers/presentation/pages/offers_page.dart';
+import 'package:dorakpattient/features/profile/presentation/pages/profile_page.dart';
 import 'package:dorakpattient/features/search/presentation/pages/search_results_page.dart';
 import 'package:dorakpattient/features/settings/presentation/pages/app_review_page.dart';
 import 'package:dorakpattient/features/settings/presentation/pages/language_page.dart';
@@ -131,7 +132,7 @@ class AppRouter {
       GoRoute(
         path: RouteNames.profile,
         name: RouteNames.profile,
-        builder: (_, __) => const ProfileScreen(),
+        builder: (_, __) => const ProfilePage(),
       ),
       GoRoute(
         path: RouteNames.profileDetails,

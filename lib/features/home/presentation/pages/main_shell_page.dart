@@ -1,6 +1,6 @@
 import 'package:dorakpattient/features/appointment/presentation/pages/appointments_page.dart';
 import 'package:dorakpattient/features/home/presentation/pages/home_page.dart';
-import 'package:dorakpattient/features/settings/presentation/pages/settings_page.dart';
+import 'package:dorakpattient/features/profile/presentation/pages/profile_page.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -27,7 +27,7 @@ class _MainShellPageState extends State<MainShellPage> {
     HomePage(),
     _StubTab(title: 'استكشف'),
     AppointmentsPage(),
-    SettingsPage(),
+    ProfilePage(),
   ];
 
   final _tabs = const <_TabSpec>[
