@@ -1,5 +1,7 @@
-/// Mirror of `NameRoutes` with identical string values. Prefer this.
-/// Legacy `lib/routes/dorak_routes.dart` re-exports from here.
+/// Named routes consumed by `AppRouter`. Strings preserved verbatim
+/// from the pre-Phase-3 `NameRoutes` constants so FCM deep links
+/// (`action` payload) and any client code that hand-wrote `/home/...`
+/// paths keep resolving unchanged.
 abstract class RouteNames {
   static const splash = '/';
   static const welcome = '$splash/welcome';

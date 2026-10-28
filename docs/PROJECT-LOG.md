@@ -388,3 +388,16 @@
 - **Wiring:** `main.dart` adds `BlocProvider<BookingCubit>`.
 - **Tests:** 3 bloc_tests (canConfirm, failure on empty, success flips booked). Total 64/64 green.
 - **Gates:** analyze clean on scope, `flutter test` 64/64, apk builds.
+
+### [2026-10-28] — ✅ Phase 9d — delete legacy controllers + routes
+- **Branch:** `redesign/phase-9d-delete-controllers`.
+- **New:** `lib/core/services/notification_service.dart` — FCM + local-notification bootstrap, lifted verbatim from `NotificationController.initialize`.
+- **Deleted:**
+  - `lib/controllers/` (16 legacy controllers)
+  - `lib/routes/dorak_routes.dart` (deprecated `NameRoutes` constants — strings preserved verbatim in `core/router/route_names.dart`)
+  - `lib/utis/helpers/app_providers.dart` (legacy `DisposableProvider` sweep helper)
+- **Rewrites:**
+  - `lib/main.dart` — drop entire `MultiProvider` legacy block, drop `LanguageController.allLocales` → `LanguageCubit.supportedLocales`, drop `NotificationController.initialize` → `NotificationService.initialize`, drop `MainScreenController.onBottomSheetChanged` from FCM deep-link handler (go_router + new `BottomNavCubit` already own index), drop `provider` + `AppStrings` + `AppColors.*` imports in `main.dart`, replace `EasyLoading.indicatorColor` with Figma green `#1F8046`.
+  - `lib/features/intro/presentation/pages/splash_page.dart` — swap `AuthController.checkUserLoggedIn()` → `AuthCubit.loadCurrentUser()` + `AuthState.isAuthenticated`, swap `GeneralController.getData()` → `GeneralCubit.getGeneralData()`.
+  - `test/core/router/app_router_test.dart` — drop `dorak_routes` dependency; assert `RouteNames` string stability directly.
+- **Gates:** `flutter analyze lib test` → 0 errors. `flutter test` 64/64. `flutter build apk --debug` OK.

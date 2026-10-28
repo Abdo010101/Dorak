@@ -1,21 +1,24 @@
 import 'dart:async';
 
-import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/core/router/route_names.dart';
 import 'package:dorakpattient/core/theme/app_colors_theme.dart';
 import 'package:dorakpattient/data/di/locator.dart';
 import 'package:dorakpattient/data/shared/shared_pref.dart';
+import 'package:dorakpattient/features/auth/logic/auth_cubit.dart';
+import 'package:dorakpattient/features/home/logic/general_cubit.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 
 /// Phase 8 — Auth 01 Splash (Figma node `201:1334`).
 ///
-/// Centered Dorak vertical mark + loader. Preserves legacy bootstrap:
-/// check auth, prime Dio header, prefetch general data, then route to
-/// Home / Welcome / Intro based on auth + first-time-flag.
+/// Centered Dorak vertical mark + loader. Boot order:
+/// 1. `AuthCubit.loadCurrentUser()` (hydrates persisted session from prefs)
+/// 2. prime Dio `Content-language` header
+/// 3. kick off `GeneralCubit.getGeneralData()` (not awaited)
+/// 4. route to Home / Welcome / Intro based on `isAuthenticated` + first-time
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
 
@@ -25,7 +28,6 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
   final _sharedPref = locator<SharedPref>();
-  AuthController? _authController;
 
   @override
   void initState() {
@@ -34,15 +36,13 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future<void> _bootstrap() async {
-    _authController = Provider.of<AuthController>(context, listen: false);
-    await _authController!.checkUserLoggedIn();
+    final auth = context.read<AuthCubit>();
+    await auth.loadCurrentUser();
     if (!mounted) return;
 
     InjectionClass.dio.options.headers['Content-language'] =
         context.locale.languageCode;
-    unawaited(
-      Provider.of<GeneralController>(context, listen: false).getData(),
-    );
+    unawaited(context.read<GeneralCubit>().getGeneralData());
 
     await Future<void>.delayed(const Duration(milliseconds: 1200));
     if (!mounted) return;
@@ -50,9 +50,9 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future<void> _route() async {
-    final auth = _authController!;
-    if (auth.isLoggedIn) {
-      final phone = auth.currentUser?.patient?.phone;
+    final state = context.read<AuthCubit>().state;
+    if (state.isAuthenticated) {
+      final phone = state.user?.patient?.phone;
       if (phone == null || phone.isEmpty) {
         context.goNamed(RouteNames.welcome);
       } else {
@@ -101,4 +101,3 @@ class _SplashPageState extends State<SplashPage> {
     );
   }
 }
-

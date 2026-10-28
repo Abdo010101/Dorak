@@ -1,6 +1,5 @@
 import 'package:dorakpattient/core/router/app_router.dart';
 import 'package:dorakpattient/core/router/route_names.dart';
-import 'package:dorakpattient/routes/dorak_routes.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
@@ -45,17 +44,12 @@ void main() {
       expect(missing, isEmpty, reason: 'Missing routes: $missing');
     });
 
-    test('legacy NameRoutes string values match RouteNames mirror', () {
-      // ignore: deprecated_member_use_from_same_package
-      expect(NameRoutes.kSplashScreen, RouteNames.splash);
-      // ignore: deprecated_member_use_from_same_package
-      expect(NameRoutes.kHomeScreen, RouteNames.home);
-      // ignore: deprecated_member_use_from_same_package
-      expect(NameRoutes.kLoginScreen, RouteNames.login);
-      // ignore: deprecated_member_use_from_same_package
-      expect(NameRoutes.kDoctorScreen, RouteNames.doctor);
-      // ignore: deprecated_member_use_from_same_package
-      expect(NameRoutes.kDoctorReviewScreen, RouteNames.doctorReview);
+    test('RouteNames expose stable string values', () {
+      expect(RouteNames.splash, '/');
+      expect(RouteNames.home, '//home');
+      expect(RouteNames.login, '//login');
+      expect(RouteNames.doctor, '//home/doctor_Screen');
+      expect(RouteNames.doctorReview, '//home/doctor_Screen/doctor_review_screen');
     });
 
     test('initialLocation is splash', () {

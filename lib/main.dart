@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/core/router/app_router.dart';
+import 'package:dorakpattient/core/services/notification_service.dart';
+import 'package:dorakpattient/core/theme/app_theme.dart';
+import 'package:dorakpattient/data/di/locator.dart';
 import 'package:dorakpattient/data/repository/repository.dart';
 import 'package:dorakpattient/data/shared/shared_pref.dart';
 import 'package:dorakpattient/features/appointment/logic/appointments_cubit.dart';
@@ -25,26 +27,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-import 'constants/constants.dart';
-import 'core/theme/app_theme.dart';
-import 'data/di/locator.dart';
 import 'firebase_options.dart';
 
-//IMPORT THESE PACKAGES ^^^
-Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  // If you're going to use other Firebase services in the background, such as Firestore,
-  // make sure you call `initializeApp` before using other Firebase services.
-}
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {}
 
 String? notificationsRoute;
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await setupLocator();
@@ -54,22 +48,19 @@ void main() async {
   );
 
   try {
-    final RemoteMessage? remoteMessage =
+    final remoteMessage =
         await FirebaseMessaging.instance.getInitialMessage();
     if (remoteMessage != null) {}
-    await NotificationController.initialize(
-      flutterLocalNotificationsPlugin,
-    );
+    await NotificationService.initialize(flutterLocalNotificationsPlugin);
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   } catch (e) {
-    throw 'Notification Err or $e';
+    throw 'Notification err: $e';
   }
 
   runApp(
     EasyLocalization(
-      supportedLocales: LanguageController.allLocales,
+      supportedLocales: LanguageCubit.supportedLocales,
       path: 'assets/translations',
-      // startLocale: const Locale("ar"),
       child: const MyApp(),
     ),
   );
@@ -78,15 +69,8 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // Future<void> initUniLinks() async {
-  //   try {
-  //     Uri? initialLink = await getInitialUri();
-  //   } on PlatformException {}
-  // }
-
   @override
   Widget build(BuildContext context) {
-    // initUniLinks();
     return MultiBlocProvider(
       providers: [
         BlocProvider<LanguageCubit>(
@@ -129,8 +113,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<SearchCubit>(
           create: (_) => SearchCubit(
-            searchResultRepository:
-                locator<DoctorsSearchResultRepository>(),
+            searchResultRepository: locator<DoctorsSearchResultRepository>(),
           ),
         ),
         BlocProvider<AuthCubit>(
@@ -152,74 +135,37 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ],
-      child: MultiProvider(
-        providers: [
-        ChangeNotifierProvider<LoginController>(
-            create: (_) => LoginController()),
-        ChangeNotifierProvider<HomeController>(create: (_) => HomeController()),
-        ChangeNotifierProvider<AuthController>(create: (_) => AuthController()),
-        ChangeNotifierProvider<RegisterController>(
-            create: (_) => RegisterController()),
-        ChangeNotifierProvider<DoctorProfileController>(
-            create: (_) => DoctorProfileController()),
-        ChangeNotifierProvider<MainScreenController>(
-            create: (_) => MainScreenController()),
-        ChangeNotifierProvider(create: (context) => GeneralController()),
-        ChangeNotifierProvider(create: (context) => OffersController()),
-        ChangeNotifierProvider(create: (context) => PatientProfileController()),
-        ChangeNotifierProvider(create: (context) => AppointmentsController()),
-        ChangeNotifierProvider(create: (context) => SearchController()),
-        ChangeNotifierProvider(create: (context) => SearchResultController()),
-        ChangeNotifierProvider(create: (context) => AppReviewController()),
-        ChangeNotifierProvider(create: (context) => LanguageController()),
-        ChangeNotifierProvider(create: (context) => VerifyController()),
-        ChangeNotifierProvider(create: (context) => NotificationController()),
-        ChangeNotifierProvider(create: (context) => FilterController()),
-          ChangeNotifierProvider(
-              create: (context) => ReservationAppointmentController()),
-        ],
-        child: Sizer(
-        builder: (BuildContext context, Orientation orientation,
-            DeviceType deviceType) {
-          context.read<LanguageController>().checkStatus =
-              EasyLocalization.of(context)?.currentLocale == const Locale('en')
-                  ? 'English'
-                  : 'عربى';
-
+      child: Sizer(
+        builder: (ctx, _, __) {
           EasyLoading.instance
-            ..indicatorColor = AppColors.liteBlueWO
-            ..textColor = AppColors.white
-            ..maskColor = AppColors.transparent
+            ..indicatorColor = const Color(0xFF1F8046)
+            ..textColor = Colors.white
+            ..maskColor = Colors.transparent
             ..maskType = EasyLoadingMaskType.custom
-            ..backgroundColor = AppColors.white
+            ..backgroundColor = Colors.white
             ..loadingStyle = EasyLoadingStyle.custom
             ..indicatorType = EasyLoadingIndicatorType.cubeGrid;
-          //ToDo test And Complete
+
           FirebaseMessaging.onMessageOpenedApp.listen(
-            (RemoteMessage message) {
+            (message) {
               notificationsRoute = message.data['action'];
               if (notificationsRoute != null) {
-                if (context.mounted) {
-                  context
-                      .read<MainScreenController>()
-                      .onBottomSheetChanged(1, context);
-                  AppRouter.router.go('/home');
-                }
+                AppRouter.router.go('/home');
               }
             },
           );
+
           return MaterialApp.router(
             builder: EasyLoading.init(),
-            localizationsDelegates: context.localizationDelegates,
-            supportedLocales: context.supportedLocales,
-            locale: context.locale,
+            localizationsDelegates: ctx.localizationDelegates,
+            supportedLocales: ctx.supportedLocales,
+            locale: ctx.locale,
             routerConfig: AppRouter.router,
             debugShowCheckedModeBanner: false,
-            title: AppStrings.kAppName,
-            theme: AppTheme.light(locale: context.locale),
+            title: 'Dorak',
+            theme: AppTheme.light(locale: ctx.locale),
           );
         },
-      ),
       ),
     );
   }
