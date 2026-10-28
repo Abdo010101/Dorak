@@ -408,3 +408,25 @@
 - **Version:** `1.0.2+4` → `1.0.3+5`.
 - **Pubspec cleanup:** stripped all legacy comments/blank banners.
 - **Gates:** `flutter analyze lib test` → 0 errors. `flutter test` 64/64. `flutter build apk --debug` OK.
+
+### [2026-10-28] — ✅ Phase 10 — release prep v1.0.3+5
+- **Branch:** `redesign/phase-10-release` (base: `ui-redesign`).
+- **Version:** `1.0.3+5` (bumped in Phase 9e pubspec).
+- **Release gates:**
+  - `flutter analyze lib test` → 0 errors.
+  - `flutter test` → 64/64 green.
+  - `flutter build apk --debug` → OK.
+  - `flutter build apk --release` → OK (`build\app\outputs\flutter-apk\app-release.apk`, 53.1 MB).
+- **Not run (Windows host limits):**
+  - `flutter build appbundle --release` — not run; same release pipeline, needs a signed upload keystore to be useful.
+  - `flutter build ipa --release` — mac host required.
+  - Maestro E2E — no `.maestro/` flows written in this redesign; add in Phase 11 before Play Store.
+  - `build_runner build --delete-conflicting-outputs` — Windows host blocked (missing `frontend_server.dart.snapshot`); regenerate `injection.config.dart` + retrofit `.g.dart` on a mac/linux host before shipping.
+- **Final `ui-redesign` state:** 32 commits past `master`. ~12300 lines of legacy UI + 2800 lines of legacy controllers deleted; 15 feature pages from Figma `jA3JQXye9DbBrxzNkEj9nf` + 12 Cubit/Bloc clusters + go_router + injectable scaffold + DS token theme + ui_kit library + 64 bloc_tests on top.
+
+**Manual push required (sandbox blocks remote writes):**
+```
+! git push github ui-redesign
+! git tag -a v1.0.3+5 -m "Dorak Patient redesign v1.0.3+5" ui-redesign
+! git push github v1.0.3+5
+```
