@@ -24,6 +24,8 @@
   "doctor_locations": "Available at",
   "doctor_price": "Price",
   "doctor_book_cta": "Book appointment",
+  "appointments_title": "My bookings",
+  "appointments_empty": "No bookings",
   "app_name": "Dorak Patient",
   "register": "Register",
   "login": "Login",

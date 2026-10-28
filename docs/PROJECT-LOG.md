@@ -235,3 +235,15 @@
 - **Router:** `RouteNames.doctor` → `DoctorProfilePage`. `RouteNames.doctorReview` still points at legacy `DoctorReview` (deferred).
 - **Deferred:** doctor variants `363:3494`, `363:3625`; rate booking overlays; `DoctorProfileCubit` wiring (Phase 5 cluster).
 - **Gates:** `flutter analyze lib/features/doctor lib/core/router` clean (1 info auto-fixed). `flutter test` 40/40. `flutter build apk --debug` OK.
+
+### [2026-10-28] — ✅ Phase 8 (feature 5/9) — appointments (My bookings) from Figma
+- **Branch:** `redesign/phase-8-appointment` (base: `ui-redesign`).
+- **Figma source:** file `jA3JQXye9DbBrxzNkEj9nf`, node `207:2279` (Account 01 — My bookings · Upcoming).
+- **New:**
+  - `lib/features/appointment/presentation/pages/appointments_page.dart` — title, 3 segmented tabs (Upcoming/Past/Cancelled), list of booking cards, empty state.
+  - `lib/features/appointment/presentation/widgets/booking_card.dart` — status badge (4 kinds), date-time, center/doctor/branch meta, thumbnail, call+Details actions.
+- **Assets:** none new — reused `home/calendar.svg`, `home/location.svg`, `home/call.svg`, `home/center1.png`, `home/center2.png`.
+- **i18n:** 2 keys: `appointments_title`, `appointments_empty`.
+- **Router:** `RouteNames.appointments` → `AppointmentsPage`. `MainShellPage` bookings tab now hosts `AppointmentsPage` (was stub).
+- **Deferred:** booking flow (`177:888` specialty, `205:2084` city, `178:978` date-time, `206:2176` review, `206:2315` confirmed), booking details (`208:2535`), cancel booking overlay, `AppointmentsCubit` + `BookingBloc` wiring.
+- **Gates:** `flutter analyze` clean on scope. `flutter test` 40/40. `flutter build apk --debug` OK.

@@ -1,4 +1,5 @@
 import 'package:dorakpattient/controllers/controllers.dart';
+import 'package:dorakpattient/features/appointment/presentation/pages/appointments_page.dart';
 import 'package:dorakpattient/features/doctor/presentation/pages/doctor_profile_page.dart';
 import 'package:dorakpattient/features/home/presentation/pages/main_shell_page.dart';
 import 'package:dorakpattient/features/intro/presentation/pages/splash_page.dart';
@@ -91,7 +92,7 @@ class AppRouter {
       GoRoute(
         path: RouteNames.appointments,
         name: RouteNames.appointments,
-        builder: (_, __) => const AppointmentsScreen(),
+        builder: (_, __) => const AppointmentsPage(),
       ),
       GoRoute(
         path: RouteNames.searchForCity,
