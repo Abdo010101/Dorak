@@ -1,4 +1,3 @@
-import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/features/appointment/presentation/pages/appointments_page.dart';
 import 'package:dorakpattient/features/auth/presentation/pages/otp_page.dart';
 import 'package:dorakpattient/features/auth/presentation/pages/phone_page.dart';
@@ -13,10 +12,8 @@ import 'package:dorakpattient/features/search/presentation/pages/search_results_
 import 'package:dorakpattient/features/settings/presentation/pages/app_review_page.dart';
 import 'package:dorakpattient/features/settings/presentation/pages/language_page.dart';
 import 'package:dorakpattient/features/settings/presentation/pages/settings_page.dart';
-import 'package:dorakpattient/ui/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 
 import 'route_names.dart';
 
@@ -24,9 +21,11 @@ import 'route_names.dart';
 final GlobalKey<NavigatorState> rootNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'root');
 
-/// Single `GoRouter` for the app. Each `GoRoute.name` matches `RouteNames.*`
-/// (and the legacy `NameRoutes.k*` string). Phase 8 moves screen imports to
-/// the feature-first `lib/features/<name>/presentation` tree.
+/// Single `GoRouter` for the app. All routes resolve to Phase 8 feature pages.
+/// Legacy auth / profile sub-routes (login, forget-password, change-password,
+/// gender, success, change-phone, edit-profile, profile-details, best-doctors,
+/// doctor-review, 4 search sub-pickers, add-appointment) redirect to their
+/// nearest Phase 8 equivalent until BRD-driven replacements land.
 class AppRouter {
   AppRouter._();
 
@@ -48,15 +47,12 @@ class AppRouter {
       GoRoute(
         path: RouteNames.intro,
         name: RouteNames.intro,
-        builder: (_, __) => const IntroScreen(),
+        builder: (_, __) => const WelcomePage(),
       ),
       GoRoute(
         path: RouteNames.login,
         name: RouteNames.login,
-        builder: (context, __) {
-          context.read<LoginController>().resetController();
-          return const LoginScreen();
-        },
+        builder: (_, __) => const PhonePage(),
       ),
       GoRoute(
         path: RouteNames.register,
@@ -86,10 +82,7 @@ class AppRouter {
       GoRoute(
         path: RouteNames.forgetPassword,
         name: RouteNames.forgetPassword,
-        builder: (context, __) {
-          context.read<VerifyController>().resetController();
-          return const ForgetPasswordScreen();
-        },
+        builder: (_, __) => const PhonePage(),
       ),
       GoRoute(
         path: RouteNames.appointments,
@@ -99,30 +92,29 @@ class AppRouter {
       GoRoute(
         path: RouteNames.searchForCity,
         name: RouteNames.searchForCity,
-        builder: (_, __) => const SearchForCityScreen(),
+        builder: (_, __) => const SearchResultsPage(),
       ),
       GoRoute(
         path: RouteNames.searchForArea,
         name: RouteNames.searchForArea,
-        builder: (_, __) => const SearchForAreaScreen(),
+        builder: (_, __) => const SearchResultsPage(),
       ),
       GoRoute(
         path: RouteNames.resultOfSearch,
         name: RouteNames.resultOfSearch,
         builder: (_, state) => SearchResultsPage(
-          initialQuery:
-              state.uri.queryParameters['q'] ?? 'أسنان',
+          initialQuery: state.uri.queryParameters['q'] ?? 'أسنان',
         ),
       ),
       GoRoute(
         path: RouteNames.searchForSpecialties,
         name: RouteNames.searchForSpecialties,
-        builder: (_, __) => const SearchForSpecialtiesScreen(),
+        builder: (_, __) => const SearchResultsPage(),
       ),
       GoRoute(
         path: RouteNames.searchForSubSpecialties,
         name: RouteNames.searchForSubSpecialties,
-        builder: (_, __) => const SearchForSubSpecialtiesScreen(),
+        builder: (_, __) => const SearchResultsPage(),
       ),
       GoRoute(
         path: RouteNames.doctor,
@@ -137,17 +129,17 @@ class AppRouter {
       GoRoute(
         path: RouteNames.profileDetails,
         name: RouteNames.profileDetails,
-        builder: (_, __) => const ProfileDetailsScreen(),
+        builder: (_, __) => const ProfilePage(),
       ),
       GoRoute(
         path: RouteNames.editProfile,
         name: RouteNames.editProfile,
-        builder: (_, __) => const EditProfileScreen(),
+        builder: (_, __) => const ProfilePage(),
       ),
       GoRoute(
         path: RouteNames.success,
         name: RouteNames.success,
-        builder: (_, __) => const SuccessScreen(),
+        builder: (_, __) => const MainShellPage(),
       ),
       GoRoute(
         path: RouteNames.appReview,
@@ -157,12 +149,12 @@ class AppRouter {
       GoRoute(
         path: RouteNames.changePassword,
         name: RouteNames.changePassword,
-        builder: (_, __) => const ChangePasswordScreen(),
+        builder: (_, __) => const PhonePage(),
       ),
       GoRoute(
         path: RouteNames.gender,
         name: RouteNames.gender,
-        builder: (_, __) => const GenderScreen(),
+        builder: (_, __) => const PhonePage(),
       ),
       GoRoute(
         path: RouteNames.language,
@@ -172,22 +164,22 @@ class AppRouter {
       GoRoute(
         path: RouteNames.addAppointment,
         name: RouteNames.addAppointment,
-        builder: (_, __) => ReservationScreen(),
+        builder: (_, __) => const DoctorProfilePage(),
       ),
       GoRoute(
         path: RouteNames.bestDoctors,
         name: RouteNames.bestDoctors,
-        builder: (_, __) => const BestDoctorsScreen(),
+        builder: (_, __) => const SearchResultsPage(),
       ),
       GoRoute(
         path: RouteNames.doctorReview,
         name: RouteNames.doctorReview,
-        builder: (_, __) => const DoctorReview(),
+        builder: (_, __) => const DoctorProfilePage(),
       ),
       GoRoute(
         path: RouteNames.changePhone,
         name: RouteNames.changePhone,
-        builder: (_, __) => const ChangePhoneScreen(),
+        builder: (_, __) => const PhonePage(),
       ),
       GoRoute(
         path: RouteNames.searchDoctor,
@@ -200,6 +192,6 @@ class AppRouter {
         builder: (_, __) => const OffersPage(),
       ),
     ],
-    errorBuilder: (_, __) => const SplashScreen(),
+    errorBuilder: (_, __) => const SplashPage(),
   );
 }

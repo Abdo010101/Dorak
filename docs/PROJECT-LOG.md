@@ -286,3 +286,17 @@
 - **Router:** `RouteNames.register` → `PhonePage`, `RouteNames.otp` → `OtpPage` (legacy `SignUpScreen` + `PhoneVerificationScreen` still exported).
 - **Deferred:** complete-profile (`352:3260`), sign-in-required sheet (`202:1598`), signed-in success (`352:3321`), social provider wiring to real Apple/Google/Facebook flows, `AuthBloc` wiring (Phase 5 cluster).
 - **Gates:** `flutter analyze lib/features/auth lib/core/router` clean. `flutter test` 40/40. `flutter build apk --debug` OK.
+
+### [2026-10-28] — ✅ Phase 9b (partial) — router redirect of legacy routes
+- **Branch:** `redesign/phase-9b-auth-legacy-redirect` (base: `ui-redesign`).
+- **Changed:** `lib/core/router/app_router.dart` — all 15 legacy screen references replaced with redirects to the nearest Phase 8 feature page. Zero legacy `ui/screens` imports remain in router.
+- **Redirects:**
+  - `intro` → `WelcomePage`
+  - `login`, `forgetPassword`, `changePassword`, `gender`, `changePhone` → `PhonePage`
+  - `success` → `MainShellPage`
+  - `profileDetails`, `editProfile` → `ProfilePage`
+  - `addAppointment`, `doctorReview` → `DoctorProfilePage`
+  - `searchForCity`, `searchForArea`, `searchForSpecialties`, `searchForSubSpecialties`, `bestDoctors` → `SearchResultsPage`
+  - `errorBuilder` → `SplashPage`
+- **Blocker found:** `lib/controllers/notification_controller.dart` references `Dialogue` from `lib/ui/components/components.dart` — full `lib/ui/components` + `lib/ui/screens` deletion blocked on that one usage.
+- **Gates:** `flutter analyze lib/core/router` clean. `flutter test` 40/40. `flutter build apk --debug` OK.
