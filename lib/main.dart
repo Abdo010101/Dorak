@@ -5,6 +5,7 @@ import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/core/router/app_router.dart';
 import 'package:dorakpattient/data/repository/repository.dart';
 import 'package:dorakpattient/features/home/logic/general_cubit.dart';
+import 'package:dorakpattient/features/appointment/logic/appointments_cubit.dart';
 import 'package:dorakpattient/features/notification/logic/notification_cubit.dart';
 import 'package:dorakpattient/features/offers/logic/offers_cubit.dart';
 import 'package:dorakpattient/features/profile/logic/patient_profile_cubit.dart';
@@ -107,6 +108,11 @@ class MyApp extends StatelessWidget {
         BlocProvider<PatientProfileCubit>(
           create: (_) => PatientProfileCubit(
             profileRepository: locator<ProfileRepository>(),
+          ),
+        ),
+        BlocProvider<AppointmentsCubit>(
+          create: (_) => AppointmentsCubit(
+            appointmentsRepository: locator<AppointmentsRepository>(),
           ),
         ),
       ],

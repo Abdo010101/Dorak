@@ -338,3 +338,11 @@
 - **Wiring:** `main.dart` adds `BlocProvider<PatientProfileCubit>`.
 - **Tests:** 3 bloc_tests. Total 47/47 green.
 - **Gates:** analyze clean on scope, `flutter test` 47/47, apk builds.
+
+### [2026-10-28] — ✅ Phase 5f — AppointmentsController → AppointmentsCubit
+- **Branch:** `redesign/phase-5f-appointments-cubit`.
+- **New:** `lib/features/appointment/logic/appointments_{cubit,state}.dart`. `AppointmentsTab` enum (upcoming/past/cancelled), `AppointmentsCubit` with `setTab`, `load`, `cancel`.
+- **Scope:** data + tab. `pagingController` + `EasyLoading` stay in UI; this Cubit owns the list only.
+- **Wiring:** `main.dart` adds `BlocProvider<AppointmentsCubit>`.
+- **Tests:** 2 bloc_tests. Total 49/49 green.
+- **Gates:** analyze clean on scope, `flutter test` 49/49, apk builds.
