@@ -5,6 +5,7 @@ import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/core/router/app_router.dart';
 import 'package:dorakpattient/data/repository/repository.dart';
 import 'package:dorakpattient/features/home/logic/general_cubit.dart';
+import 'package:dorakpattient/features/notification/logic/notification_cubit.dart';
 import 'package:dorakpattient/features/offers/logic/offers_cubit.dart';
 import 'package:dorakpattient/features/settings/logic/app_review_cubit.dart';
 import 'package:dorakpattient/features/settings/logic/language_cubit.dart';
@@ -95,6 +96,11 @@ class MyApp extends StatelessWidget {
         BlocProvider<OffersCubit>(
           create: (_) => OffersCubit(
             offersRepository: locator<OffersRepository>(),
+          ),
+        ),
+        BlocProvider<NotificationCubit>(
+          create: (_) => NotificationCubit(
+            notificationsRepository: locator<NotificationsRepository>(),
           ),
         ),
       ],

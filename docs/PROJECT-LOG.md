@@ -322,3 +322,11 @@
 - **Wiring:** `main.dart` adds `BlocProvider<OffersCubit>`.
 - **Tests:** `test/features/offers/logic/offers_cubit_test.dart` — 2 tests. Total 42/42 green.
 - **Gates:** `flutter analyze` clean on scope. `flutter test` 42/42. `flutter build apk --debug` OK.
+
+### [2026-10-28] — ✅ Phase 5d — NotificationController → NotificationCubit (data surface)
+- **Branch:** `redesign/phase-5d-notification-cubit`.
+- **New:** `lib/features/notification/logic/notification_{cubit,state}.dart`. `NotificationFeedState` (Equatable), `NotificationCubit` with `loadFirstPage` + `setEnabled`.
+- **Scope:** data fetch only. FCM init + permission-handler stay in legacy `NotificationController` until Phase 9d extracts a `NotificationService`.
+- **Wiring:** `main.dart` adds `BlocProvider<NotificationCubit>`.
+- **Tests:** 2 bloc_tests. Total 44/44 green.
+- **Gates:** analyze clean on scope, `flutter test` 44/44, apk builds.
