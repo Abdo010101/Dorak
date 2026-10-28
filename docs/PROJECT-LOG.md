@@ -170,3 +170,9 @@
 - **Wiring:** `main.dart` adds `BlocProvider<GeneralCubit>` alongside legacy `ChangeNotifierProvider<GeneralController>` (both coexist until Phase 8).
 - **Tests:** `test/features/home/logic/general_cubit_test.dart` — 5 tests (getGeneralData success, onSelectedCity, search filter, getSubSpeciality, setLatLng). Total 36/36 green.
 - **Gates:** `flutter analyze` clean on scope. `flutter test` 36/36. `flutter build apk --debug` OK.
+
+### [2026-10-28] — ✅ Phase 6 — Feature-first folder scaffold
+- **Branch:** `redesign/phase-6-feature-folders` (base: `ui-redesign`).
+- **New:** 10 feature trees under `lib/features/` (`intro`, `auth`, `home`, `search`, `doctor`, `appointment`, `offers`, `profile`, `notification`, `settings`) with full Clean-Architecture subfolders + `.gitkeep` + per-feature `README.md`. Root `lib/features/README.md` documents the pattern.
+- **Already populated:** `lib/features/home/logic/` (Phase 5b `GeneralCubit`), `lib/features/settings/logic/` (Phase 5a `LanguageCubit` + `AppReviewCubit`).
+- **Gates:** `flutter analyze` unchanged (empty folders have no code). `flutter test` 36/36.
