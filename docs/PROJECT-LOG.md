@@ -314,3 +314,11 @@
   - `lib/utis/util.dart` — replace `ConfirmDeletion` + `LoginBottomSheet` with raw `AlertDialog` / `showModalBottomSheet`. Drop `ui/components` import.
 - **Kept intentionally:** `lib/routes/dorak_routes.dart` (NameRoutes still consumed by 3 legacy controllers), `lib/constants/colors.dart` + `styles.dart` + `font_sizes.dart` (consumed by remaining controllers + util), legacy `lib/controllers/*` (MultiProvider dependencies — removal lands with Phase 5 Cubit migrations).
 - **Gates:** `flutter analyze lib test` → 0 errors (403 info-level style lints unchanged from baseline). `flutter test` 40/40. `flutter build apk --debug` OK.
+
+### [2026-10-28] — ✅ Phase 5c — OffersController → OffersCubit
+- **Branch:** `redesign/phase-5c-offers-cubit` (base: `ui-redesign`).
+- **New:** `lib/features/offers/logic/offers_{cubit,state}.dart`. Immutable `OffersState` (Equatable), `OffersCubit` with `loadFirstPage`, `setQuery`, `search`.
+- **Deferred:** pagination (first page only); legacy `OffersController` kept until all screens migrate off the MultiProvider.
+- **Wiring:** `main.dart` adds `BlocProvider<OffersCubit>`.
+- **Tests:** `test/features/offers/logic/offers_cubit_test.dart` — 2 tests. Total 42/42 green.
+- **Gates:** `flutter analyze` clean on scope. `flutter test` 42/42. `flutter build apk --debug` OK.
