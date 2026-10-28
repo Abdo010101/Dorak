@@ -10,6 +10,7 @@ import 'package:dorakpattient/features/doctor/logic/doctor_profile_cubit.dart';
 import 'package:dorakpattient/features/notification/logic/notification_cubit.dart';
 import 'package:dorakpattient/features/offers/logic/offers_cubit.dart';
 import 'package:dorakpattient/features/profile/logic/patient_profile_cubit.dart';
+import 'package:dorakpattient/features/search/logic/search_cubit.dart';
 import 'package:dorakpattient/features/settings/logic/app_review_cubit.dart';
 import 'package:dorakpattient/features/settings/logic/language_cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -119,6 +120,12 @@ class MyApp extends StatelessWidget {
         BlocProvider<DoctorProfileCubit>(
           create: (_) => DoctorProfileCubit(
             doctorProfileRepository: locator<DoctorProfileRepository>(),
+          ),
+        ),
+        BlocProvider<SearchCubit>(
+          create: (_) => SearchCubit(
+            searchResultRepository:
+                locator<DoctorsSearchResultRepository>(),
           ),
         ),
       ],

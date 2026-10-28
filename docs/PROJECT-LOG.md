@@ -353,3 +353,11 @@
 - **Wiring:** `main.dart` adds `BlocProvider<DoctorProfileCubit>`.
 - **Tests:** 3 bloc_tests. Total 52/52 green.
 - **Gates:** analyze clean on scope, `flutter test` 52/52, apk builds.
+
+### [2026-10-28] — ✅ Phase 5h — Search cluster → SearchCubit
+- **Branch:** `redesign/phase-5h-search-bloc`.
+- **New:** `lib/features/search/logic/search_{cubit,state}.dart`. `SearchCubit` with debounced (350 ms) `setQuery`, `setFilter(key, value)` / `clearFilters`, `search`.
+- **Scope:** replaces `SearchResultController` + the filter composition in `FilterController`. Filter UI chrome stays in UI; this Cubit owns query + filter map + one page of results.
+- **Wiring:** `main.dart` adds `BlocProvider<SearchCubit>`.
+- **Tests:** 2 bloc_tests. Total 54/54 green.
+- **Gates:** analyze clean on scope, `flutter test` 54/54, apk builds.
