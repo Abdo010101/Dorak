@@ -4,6 +4,7 @@ import 'package:dorakpattient/features/doctor/presentation/pages/doctor_profile_
 import 'package:dorakpattient/features/home/presentation/pages/main_shell_page.dart';
 import 'package:dorakpattient/features/intro/presentation/pages/splash_page.dart';
 import 'package:dorakpattient/features/intro/presentation/pages/welcome_page.dart';
+import 'package:dorakpattient/features/notification/presentation/pages/notifications_page.dart';
 import 'package:dorakpattient/features/offers/presentation/pages/offers_page.dart';
 import 'package:dorakpattient/features/profile/presentation/pages/profile_page.dart';
 import 'package:dorakpattient/features/search/presentation/pages/search_results_page.dart';
@@ -76,7 +77,7 @@ class AppRouter {
       GoRoute(
         path: RouteNames.notification,
         name: RouteNames.notification,
-        builder: (_, __) => const NotificationScreen(),
+        builder: (_, __) => const NotificationsPage(),
       ),
       GoRoute(
         path: RouteNames.setting,

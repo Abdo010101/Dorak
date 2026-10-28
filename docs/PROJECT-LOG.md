@@ -265,3 +265,13 @@
 - **Router:** `RouteNames.profile` → `ProfilePage`. `MainShellPage` account tab now hosts `ProfilePage` (was `SettingsPage`).
 - **Deferred:** guest profile (`209:2842`), personal info page (`209:3066`), favorite centers (`363:3887`), help & support (`363:3756`), `PatientProfileCubit` wiring (Phase 5 cluster).
 - **Gates:** `flutter analyze` clean on scope. `flutter test` 40/40. `flutter build apk --debug` OK.
+
+### [2026-10-28] — ✅ Phase 8 (feature 8/9) — notifications from Figma
+- **Branch:** `redesign/phase-8-notification` (base: `ui-redesign`).
+- **Figma source:** file `jA3JQXye9DbBrxzNkEj9nf`, node `209:2971` (Account 08 — Notifications).
+- **New:** `lib/features/notification/presentation/pages/notifications_page.dart` — top bar, section headers (Today + mark-all / This week), notification items with unread tint + dot, icon pill (calendar/check/offer/heart) in colored circle.
+- **Icons:** material icons stand in for Figma Hicon. No asset downloads.
+- **i18n:** 4 keys per locale.
+- **Router:** `RouteNames.notification` → `NotificationsPage`.
+- **Deferred:** empty state (`352:3712`), `NotificationCubit` wiring.
+- **Gates:** `flutter analyze` clean on scope. `flutter test` 40/40. `flutter build apk --debug` OK.
