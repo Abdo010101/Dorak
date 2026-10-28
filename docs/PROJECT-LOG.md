@@ -105,3 +105,12 @@
 
 ===
 -->
+
+---
+
+### [2026-10-28] 🚀 START Phase 0a: SDK bump + lint
+- **Branch:** `redesign/phase-0a-sdk-lint`
+- **Changes:** SDK `>=3.4.0 <4.0.0`, `flutter_lints ^4.0.0` moved to dev_deps, modern lint rules in `analysis_options.yaml`.
+- **Gates:** `flutter analyze` → 1031 info (style only, no errors) vs baseline 74. `flutter test` green. `flutter build apk --debug` success. iOS build skipped (Windows host).
+- **Files:** `pubspec.yaml`, `analysis_options.yaml`, `test/widget_test.dart` (deleted stale template counter test, replaced with sanity test).
+- **Result:** ✅ Chassis unblocked for modern deps.
