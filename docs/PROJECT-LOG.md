@@ -126,3 +126,10 @@
 - **Changes:** New `lib/core/theme/` — `app_colors_theme.dart`, `app_typography.dart`, `app_spacing.dart`, `app_radii.dart`, `app_shadows.dart`, `app_theme.dart`, `text_direction_x.dart`. All as `ThemeExtension`s. `MaterialApp.theme` now `AppTheme.light(locale: context.locale)` in `lib/main.dart`. Legacy `AppColors`/`AppStyles`/`AppFontSizes` untouched (migration happens per feature in Phase 8).
 - **Gates:** `flutter analyze` on `lib/core` + `test/core` clean. `flutter test` 7 green. `flutter build apk --debug` success.
 - **Result:** ✅ Theme chassis live; new widgets built against `ThemeExtension<T>` from day one.
+
+### [2026-10-28] 🚀 START Phase 2: ui_kit essentials
+- **Branch:** `redesign/phase-2-ui-kit`
+- **Changes:** 17 widgets under `lib/core/ui_kit/` + barrel `ui_kit.dart`. Clusters: buttons (primary, secondary, text, icon), navigation (app_bar, back_button, bottom_nav_bar), surfaces (card, section_header, divider), feedback (dialog, bottom_sheet, snackbar), states (empty, error, loading, skeleton). All resolve tokens via `ThemeExtension`. RTL-aware back button.
+- **Gates:** `flutter analyze lib/core test/core` 12 info (trailing commas, non-blocking). `flutter test` 21 green (14 ui_kit + 6 theme + sanity). `flutter build apk --debug` success.
+- **Deferred to feature need:** inputs (text/password/select/phone/email/otp), provider buttons (Google/Apple), chips, rating, images, tabs.
+- **Result:** ✅ Pilot `settings` can be built on this surface.
