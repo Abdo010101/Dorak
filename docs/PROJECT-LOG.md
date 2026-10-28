@@ -114,3 +114,9 @@
 - **Gates:** `flutter analyze` → 1031 info (style only, no errors) vs baseline 74. `flutter test` green. `flutter build apk --debug` success. iOS build skipped (Windows host).
 - **Files:** `pubspec.yaml`, `analysis_options.yaml`, `test/widget_test.dart` (deleted stale template counter test, replaced with sanity test).
 - **Result:** ✅ Chassis unblocked for modern deps.
+
+### [2026-10-28] 🚀 START Phase 0b: Dio 5 + Figma inventory
+- **Branch:** `redesign/phase-0b-dio5-figma-inventory`
+- **Changes:** Dio 4→5, retrofit 3→4 (package only), retrofit_generator 4→10, build_runner 2.1→2.6, args override to ^2.6.0. Fixed `DioExceptionType` enum in `lib/data/networks/dio_errors.dart`. Timeouts changed to Duration in `lib/data/di/locator.dart`. Added `docs/figma-inventory.md` (55 screens across 5 sections + 21 overlay variants).
+- **Gates:** `flutter analyze` 1091 info (0 err). `flutter test` green. `flutter build apk --debug` success. iOS skipped (Windows host). `build_runner` could not regen `.g.dart` (Flutter cache ships `frontend_server_aot.dart.snapshot` only; existing retrofit 3 `.g.dart` still compiles against retrofit 4 package).
+- **Result:** ✅ Dio stack modernized. Figma inventory ready for Phase 8 reads.

@@ -3,35 +3,45 @@ import 'package:dorakpattient/data/networks/base_model.dart';
 import 'package:flutter/material.dart';
 
 class DioExceptions implements Exception {
-  DioExceptions.fromDioError(DioError dioError) {
+  DioExceptions.fromDioError(DioException dioError) {
     switch (dioError.type) {
-      case DioErrorType.cancel:
-        message = "Request to API server was cancelled";
+      case DioExceptionType.cancel:
+        message = 'Request to API server was cancelled';
         errorResponse = ErrorResponse(dioError: dioError);
         break;
-      case DioErrorType.connectTimeout:
-        message = "Connection timeout with API server";
+      case DioExceptionType.connectionTimeout:
+        message = 'Connection timeout with API server';
         errorResponse = ErrorResponse(dioError: dioError);
         break;
-      case DioErrorType.other:
-        message = "Connection to API server failed due to internet connection";
+      case DioExceptionType.connectionError:
+        message = 'Connection to API server failed due to internet connection';
         errorResponse = ErrorResponse(dioError: dioError);
         break;
-      case DioErrorType.receiveTimeout:
-        message = "Receive timeout in connection with API server";
+      case DioExceptionType.receiveTimeout:
+        message = 'Receive timeout in connection with API server';
         errorResponse = ErrorResponse(dioError: dioError);
         break;
-      case DioErrorType.response:
+      case DioExceptionType.badResponse:
         message = _handleError(
-            dioError.response?.statusCode, dioError.response?.data);
+          dioError.response?.statusCode,
+          dioError.response?.data,
+        );
         errorResponse = ErrorResponse(dioError: dioError);
         break;
-      case DioErrorType.sendTimeout:
-        message = "Send timeout in connection with API server";
+      case DioExceptionType.sendTimeout:
+        message = 'Send timeout in connection with API server';
+        errorResponse = ErrorResponse(dioError: dioError);
+        break;
+      case DioExceptionType.badCertificate:
+        message = 'Bad certificate';
+        errorResponse = ErrorResponse(dioError: dioError);
+        break;
+      case DioExceptionType.unknown:
+        message = 'Something went wrong';
         errorResponse = ErrorResponse(dioError: dioError);
         break;
       default:
-        message = "Something went wrong";
+        message = 'Something went wrong';
         errorResponse = ErrorResponse(dioError: dioError);
         break;
     }
@@ -42,7 +52,8 @@ class DioExceptions implements Exception {
 
   String _handleError(int? statusCode, dynamic error) {
     debugPrint(
-        'Handle error for response code: $statusCode, and response : $error');
+      'Handle error for response code: $statusCode, and response : $error',
+    );
     switch (statusCode) {
       case 401:
         return 'Not authorized';
@@ -51,7 +62,7 @@ class DioExceptions implements Exception {
       case 400:
         return 'Bad request';
       case 404:
-        return error["message"];
+        return error['message'];
       case 500:
         return 'Internal server error';
       default:

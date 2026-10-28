@@ -97,8 +97,8 @@ Future setupLocator() async {
 abstract class InjectionClass {
   static final Dio dio = Dio()
     ..interceptors.add(LoggingInterceptor())
-    ..options.connectTimeout = 50000
-    ..options.receiveTimeout = 50000
+    ..options.connectTimeout = const Duration(milliseconds: 50000)
+    ..options.receiveTimeout = const Duration(milliseconds: 50000)
     ..options.receiveDataWhenStatusError = true
     ..options.baseUrl = NetworkConstant.kBaseUrl
     ..options.headers = {
