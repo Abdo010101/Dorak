@@ -2,6 +2,7 @@ import 'package:dorakpattient/controllers/controllers.dart';
 import 'package:dorakpattient/features/home/presentation/pages/main_shell_page.dart';
 import 'package:dorakpattient/features/intro/presentation/pages/splash_page.dart';
 import 'package:dorakpattient/features/intro/presentation/pages/welcome_page.dart';
+import 'package:dorakpattient/features/search/presentation/pages/search_results_page.dart';
 import 'package:dorakpattient/features/settings/presentation/pages/app_review_page.dart';
 import 'package:dorakpattient/features/settings/presentation/pages/language_page.dart';
 import 'package:dorakpattient/features/settings/presentation/pages/settings_page.dart';
@@ -104,7 +105,10 @@ class AppRouter {
       GoRoute(
         path: RouteNames.resultOfSearch,
         name: RouteNames.resultOfSearch,
-        builder: (_, __) => const ResultOfSearchScreen(),
+        builder: (_, state) => SearchResultsPage(
+          initialQuery:
+              state.uri.queryParameters['q'] ?? 'أسنان',
+        ),
       ),
       GoRoute(
         path: RouteNames.searchForSpecialties,
@@ -184,7 +188,7 @@ class AppRouter {
       GoRoute(
         path: RouteNames.searchDoctor,
         name: RouteNames.searchDoctor,
-        builder: (_, __) => const SearchByDoctorScreen(),
+        builder: (_, __) => const SearchResultsPage(),
       ),
       GoRoute(
         path: RouteNames.offers,

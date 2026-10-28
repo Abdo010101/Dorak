@@ -215,3 +215,13 @@
 - **i18n:** 9 new keys in both `ar.json` and `en.json` (`home_specialties`, `home_latest_offers`, `home_nearest_centers`, `home_nearest_clinics`, `home_view_all`, `nav_home`, `nav_discover`, `nav_bookings`, `nav_account`).
 - **Scope:** static mock data; wiring to `HomeCubit`/`BottomNavCubit` lands with `HomeController` migration in Phase 5 sub-phase. Discovery + Bookings tabs stubbed. Nearest-clinics section deferred (same `CenterCard` shape, needs backend list).
 - **Gates:** `flutter analyze lib/features/home lib/core/router` clean. `flutter test` 40/40. `flutter build apk --debug` OK.
+
+### [2026-10-28] — ✅ Phase 8 (feature 3/9) — search results from Figma
+- **Branch:** `redesign/phase-8-search` (base: `ui-redesign`).
+- **Figma source:** file `jA3JQXye9DbBrxzNkEj9nf`, node `203:1690` (Discovery 03 — Search results).
+- **New:** `lib/features/search/presentation/pages/search_results_page.dart` — top search bar (editable TextField) + cancel link, specialty chip row (reused Phase 8 widget), list header, 2×2 grid of `CenterCard` (reused from home).
+- **Assets:** no new downloads — reused `search.svg` + `center1.png` + `center2.png` from `assets/images/home/`.
+- **i18n:** 4 keys: `search_cancel`, `search_specialties`, `search_results_label`, `search_medical_centers`.
+- **Router:** `RouteNames.resultOfSearch` + `RouteNames.searchDoctor` → `SearchResultsPage`. Reads `?q=` query param for initial query.
+- **Deferred:** map view (`203:1881`), empty state (`352:3400`), location picker (`203:1600`), and `SearchBloc` wiring (comes with Phase 5 SearchController migration).
+- **Gates:** `flutter analyze lib/features/search lib/core/router` clean. `flutter test` 40/40. `flutter build apk --debug` OK.
