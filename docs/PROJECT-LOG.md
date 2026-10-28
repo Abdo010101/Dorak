@@ -401,3 +401,10 @@
   - `lib/features/intro/presentation/pages/splash_page.dart` — swap `AuthController.checkUserLoggedIn()` → `AuthCubit.loadCurrentUser()` + `AuthState.isAuthenticated`, swap `GeneralController.getData()` → `GeneralCubit.getGeneralData()`.
   - `test/core/router/app_router_test.dart` — drop `dorak_routes` dependency; assert `RouteNames` string stability directly.
 - **Gates:** `flutter analyze lib test` → 0 errors. `flutter test` 64/64. `flutter build apk --debug` OK.
+
+### [2026-10-28] — ✅ Phase 9e — trim unused dependencies + version bump
+- **Branch:** `redesign/phase-9e-trim-deps`.
+- **Dropped from pubspec:** `provider`, `convex_bottom_bar`, `another_flutter_splash_screen`, `flutter_datetime_picker`, `material_dialogs`, `full_screen_image`, `smooth_star_rating_null_safety`, `dotted_border`, `loading_animation_widget`, `multi_select_flutter`, `wc_form_validators`, `flutter_facebook_auth`, `google_sign_in`, `sign_in_with_apple`, `carousel_slider`, `flutter_svg_provider`, `infinite_scroll_pagination`, `flutter_slidable`. 18 packages removed (38 transitive deps freed).
+- **Version:** `1.0.2+4` → `1.0.3+5`.
+- **Pubspec cleanup:** stripped all legacy comments/blank banners.
+- **Gates:** `flutter analyze lib test` → 0 errors. `flutter test` 64/64. `flutter build apk --debug` OK.
