@@ -711,3 +711,34 @@ company-vaults/
 ---
 
 > **تذكّر:** الهدف مش إنك تمنع الناس من الشغل — الهدف إنك تضمن إن الشغل يقدر يكمل لو أي حاجة حصلت. النظام ده بيحمي الشركة والمبرمج والعميل.
+
+---
+
+## Phase 4 — DI codegen (injectable + build_runner)
+
+Dorak uses `get_it` + `injectable`. The manual block in `lib/data/di/locator.dart` and the injectable-generated `lib/core/di/injection.config.dart` coexist until Phase 9.
+
+### Regenerate `injection.config.dart` (and retrofit `.g.dart`)
+
+Run on **macOS or Linux** — Windows Flutter cache ships only `frontend_server_aot.dart.snapshot`, so `build_runner` fails on this platform:
+
+```
+dart run build_runner build --delete-conflicting-outputs
+```
+
+Then flip on the import + call in `lib/core/di/injection.dart`:
+
+```dart
+import 'injection.config.dart';
+...
+await $initGetIt(gi);
+```
+
+Call `configureInjectableDependencies(getIt)` from `main.dart` after `setupLocator()`:
+
+```dart
+await setupLocator();
+await configureInjectableDependencies(getIt);
+```
+
+Phase 8 moves each repository under `@LazySingleton(as: XxxRepository)` and deletes the matching manual block in `locator.dart` in the same PR.

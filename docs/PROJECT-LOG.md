@@ -143,3 +143,12 @@
 - **Tests:** `test/core/router/app_router_test.dart` — 3 tests (name coverage, legacy string parity, config non-empty). All 24 tests green.
 - **Gates:** `flutter analyze lib/core lib/main.dart test/core/router` → 6 info (pre-existing MultiProvider trailing-comma style). `flutter test` → 24 pass. `flutter build apk --debug` → OK.
 - **Deferred:** per-screen `Navigator.pushNamed` → `context.goNamed` sweep lands in Phase 8 per feature.
+
+### [2026-10-28] — ✅ Phase 4 (scaffold) — DI with injectable (codegen deferred)
+- **Branch:** `redesign/phase-4-di` (base: `ui-redesign`).
+- **Deps:** `injectable: ^2.5.0`, `injectable_generator: ^2.6.2` (dev).
+- **New:** `lib/core/di/injection.dart` (`@InjectableInit`, `getIt`, stub `configureInjectableDependencies`), `lib/core/di/register_module.dart` (`@module` exposing `Dio` + `SharedPref` + `SharedPreferences`).
+- **Docs:** `docs/DEVELOPER-OPS-GUIDE.md` — Phase 4 codegen section + mac/linux regen command.
+- **Scaffold only:** `injection.config.dart` not generated on this Windows host (build_runner blocked by missing `frontend_server.dart.snapshot`). Manual `setupLocator()` in `lib/data/di/locator.dart` still the only wiring; new injectable path is a no-op until regen.
+- **Gates:** `flutter analyze lib/core/di` → 0 issues. `flutter test` → 24/24. `flutter build apk --debug` → OK.
+- **Phase 8 handoff:** when a mac/linux host is available, run `dart run build_runner build --delete-conflicting-outputs`, flip on the import + `$initGetIt(gi)` call in `lib/core/di/injection.dart`, call `configureInjectableDependencies(getIt)` from `main.dart`, then migrate each repo to `@LazySingleton(as: ...)` and delete the matching manual block.
