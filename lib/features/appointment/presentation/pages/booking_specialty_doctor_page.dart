@@ -32,7 +32,8 @@ class BookingSpecialtyDoctorPage extends StatefulWidget {
 class _BookingSpecialtyDoctorPageState
     extends State<BookingSpecialtyDoctorPage> {
   static const _specialties = <_SpecialtyItem>[
-    _SpecialtyItem(id: 1, icon: Icons.medical_services_outlined, label: 'طب الأسنان'),
+    _SpecialtyItem(
+        id: 1, icon: Icons.medical_services_outlined, label: 'طب الأسنان'),
     _SpecialtyItem(id: 2, icon: Icons.child_care_outlined, label: 'طب الأطفال'),
   ];
 
@@ -64,6 +65,7 @@ class _BookingSpecialtyDoctorPageState
     super.initState();
     popIfGuest(context);
   }
+
   late int? _selectedDoctorId = widget.preselectedDoctorId;
 
   bool get _canContinue =>
@@ -82,8 +84,7 @@ class _BookingSpecialtyDoctorPageState
             ),
             Expanded(
               child: ListView(
-                padding:
-                    const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
+                padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
                 children: [
                   const BookingSummaryHeader(
                     name: 'مجمع النور الطبي',
@@ -226,7 +227,7 @@ class _TopBar extends StatelessWidget {
             ),
           ),
           PositionedDirectional(
-            end: 4,
+            start: 4,
             top: 4,
             child: AppBackButton(onPressed: onBack),
           ),
@@ -281,8 +282,8 @@ class _BottomBar extends StatelessWidget {
           onPressed: onNext,
           trailingIcon: Icon(
             Directionality.of(context) == TextDirection.rtl
-                ? Icons.arrow_back
-                : Icons.arrow_forward,
+                ? Icons.arrow_forward
+                : Icons.arrow_back,
             size: 20,
             color: Colors.white,
           ),

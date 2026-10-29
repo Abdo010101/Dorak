@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -26,19 +26,22 @@ class DoctorProfilePage extends StatelessWidget {
     final data = _doctorMock(doctorId);
     return Scaffold(
       backgroundColor: colors.white,
-      body: SafeArea(
-        child: Column(
-          children: [
-            _TopBar(onBack: () => context.canPop() ? context.pop() : null),
-            Expanded(child: _Content(data: data)),
-            _BookingBar(
-              onBook: () async {
-                if (!await ensureSignedIn(context)) return;
-                if (!context.mounted) return;
-                context.pushNamed(RouteNames.bookingSpecialtyDoctor);
-              },
-            ),
-          ],
+      body: Directionality(
+        textDirection: TextDirection.rtl,
+        child: SafeArea(
+          child: Column(
+            children: [
+              _TopBar(onBack: () => context.canPop() ? context.pop() : null),
+              Expanded(child: _Content(data: data)),
+              _BookingBar(
+                onBook: () async {
+                  if (!await ensureSignedIn(context)) return;
+                  if (!context.mounted) return;
+                  context.pushNamed(RouteNames.bookingSpecialtyDoctor);
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -85,7 +88,8 @@ _DoctorMock _doctorMock(int id) {
       return const _DoctorMock(
         name: 'د. سارة الحسن',
         subtitle: 'أخصائية طب الأسنان · مجمع النور الطبي',
-        about: 'أخصائية طب أسنان عام وتجميلي، تهتم براحة المراجع ووضوح خطة العلاج.',
+        about:
+            'أخصائية طب أسنان عام وتجميلي، تهتم براحة المراجع ووضوح خطة العلاج.',
         reviewersCount: '+٣٠٠',
         experienceYears: '٨',
         ratingValue: '٤٫٧',
@@ -141,6 +145,15 @@ class _TopBar extends StatelessWidget {
       height: 52,
       child: Row(
         children: [
+          AppBackButton(onPressed: onBack),
+          Expanded(
+            child: Center(
+              child: Text(
+                'doctor_profile'.tr(),
+                style: typo.titleSm.copyWith(color: colors.textPrimary),
+              ),
+            ),
+          ),
           IconButton(
             icon: SvgPicture.asset(
               'assets/images/doctor/heart.svg',
@@ -151,15 +164,6 @@ class _TopBar extends StatelessWidget {
             ),
             onPressed: () {},
           ),
-          Expanded(
-            child: Center(
-              child: Text(
-                'doctor_profile'.tr(),
-                style: typo.titleSm.copyWith(color: colors.textPrimary),
-              ),
-            ),
-          ),
-          AppBackButton(onPressed: onBack),
         ],
       ),
     );
@@ -175,7 +179,10 @@ class _Content extends StatelessWidget {
     final spacing = AppSpacing.of(context);
     return ListView(
       padding: EdgeInsetsDirectional.fromSTEB(
-        spacing.lg, 0, spacing.lg, spacing.lg,
+        spacing.lg,
+        0,
+        spacing.lg,
+        spacing.lg,
       ),
       children: [
         _DoctorHeader(data: data),
@@ -261,8 +268,8 @@ class _StatsRow extends StatelessWidget {
         Expanded(
           child: _StatTile(
             icon: Icons.verified_outlined,
-            value: 'doctor_stat_experience_years'
-                .tr(args: [data.experienceYears]),
+            value:
+                'doctor_stat_experience_years'.tr(args: [data.experienceYears]),
             label: 'doctor_stat_experience'.tr(),
           ),
         ),
@@ -280,7 +287,8 @@ class _StatsRow extends StatelessWidget {
 }
 
 class _StatTile extends StatelessWidget {
-  const _StatTile({required this.icon, required this.value, required this.label});
+  const _StatTile(
+      {required this.icon, required this.value, required this.label});
   final IconData icon;
   final String value;
   final String label;
@@ -302,12 +310,10 @@ class _StatTile extends StatelessWidget {
         children: [
           Icon(icon, size: 24, color: colors.borderPrimary),
           SizedBox(height: spacing.xs),
-          Text(value,
-              style: typo.titleSm.copyWith(color: colors.textPrimary)),
+          Text(value, style: typo.titleSm.copyWith(color: colors.textPrimary)),
           SizedBox(height: spacing.xs),
           Text(label,
-              style: typo.textMdRegular
-                  .copyWith(color: colors.textSecondary)),
+              style: typo.textMdRegular.copyWith(color: colors.textSecondary)),
         ],
       ),
     );
@@ -323,7 +329,7 @@ class _SectionTitle extends StatelessWidget {
     final colors = AppColorsTheme.of(context);
     final typo = AppTypography.of(context);
     return Align(
-      alignment: AlignmentDirectional.centerEnd,
+      alignment: AlignmentDirectional.centerStart,
       child: Text(
         key_.tr(),
         style: typo.titleSm.copyWith(color: colors.textPrimary),
@@ -342,7 +348,7 @@ class _BodyText extends StatelessWidget {
     final typo = AppTypography.of(context);
     return Text(
       text,
-      textAlign: TextAlign.end,
+      textAlign: TextAlign.start,
       style: typo.textLgRegular.copyWith(color: colors.textSecondary),
     );
   }
@@ -368,11 +374,9 @@ class _CityCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(Icons.location_on_outlined, size: 20, color: colors.borderPrimary),
-          SizedBox(width: spacing.md - 2),
           Expanded(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(info.city,
                     style: typo.titleSm.copyWith(color: colors.textPrimary)),
@@ -383,6 +387,9 @@ class _CityCard extends StatelessWidget {
               ],
             ),
           ),
+          SizedBox(width: spacing.md - 2),
+          Icon(Icons.location_on_outlined,
+              size: 20, color: colors.borderPrimary),
         ],
       ),
     );
@@ -411,6 +418,8 @@ class _ServiceRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          Text(name,
+              style: typo.textLgSemibold.copyWith(color: colors.textPrimary)),
           Text(
             'price_sar'.tr(args: [price]),
             style: typo.textLgSemibold.copyWith(
@@ -418,8 +427,6 @@ class _ServiceRow extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
           ),
-          Text(name,
-              style: typo.textLgSemibold.copyWith(color: colors.textPrimary)),
         ],
       ),
     );
@@ -444,7 +451,10 @@ class _BookingBar extends StatelessWidget {
           ),
         ),
         padding: EdgeInsetsDirectional.fromSTEB(
-          spacing.lg, spacing.md, spacing.lg, spacing.sm,
+          spacing.lg,
+          spacing.md,
+          spacing.lg,
+          spacing.sm,
         ),
         child: AppPrimaryButton(
           label: 'doctor_book_cta'.tr(),

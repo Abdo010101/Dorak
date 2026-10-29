@@ -6,7 +6,6 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/router/route_names.dart';
 import '../../../../core/theme/app_colors_theme.dart';
 import '../../../../core/theme/app_radii.dart';
-import '../../../../core/theme/app_shadows.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/ui_kit/ui_kit.dart';
@@ -40,30 +39,28 @@ class CenterCard extends StatelessWidget {
     final colors = AppColorsTheme.of(context);
     final typo = AppTypography.of(context);
     final radii = AppRadii.of(context);
-    final shadows = AppShadows.of(context);
     final spacing = AppSpacing.of(context);
     final radius = BorderRadius.circular(radii.large);
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        borderRadius: radius,
-        boxShadow: shadows.card,
-      ),
-      child: Material(
-        color: colors.white,
-        borderRadius: radius,
-        clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          onTap: () => context.push(
-            isClinic
-                ? '${RouteNames.clinicDetails}?id=$centerId'
-                : '${RouteNames.centerDetails}?id=$centerId',
+    return Material(
+      color: colors.white,
+      elevation: 2,
+      shadowColor: const Color(0x1F000000),
+      borderRadius: radius,
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: () {
+          debugPrint('[CenterCard tap] id=$centerId isClinic=$isClinic');
+          context.pushNamed(
+            isClinic ? RouteNames.clinicDetails : RouteNames.centerDetails,
+            queryParameters: {'id': '$centerId'},
+          );
+        },
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: radius,
+            border: Border.all(color: colors.fieldBorder),
           ),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: radius,
-              border: Border.all(color: colors.fieldBorder),
-            ),
-            child: Column(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Stack(
@@ -170,7 +167,6 @@ class CenterCard extends StatelessWidget {
                 ),
               ),
             ],
-          ),
           ),
         ),
       ),

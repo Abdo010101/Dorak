@@ -41,19 +41,30 @@ class _ClinicDetailsPageState extends State<ClinicDetailsPage> {
       body: SafeArea(
         child: BlocBuilder<ClinicDetailsCubit, ClinicDetailsState>(
           builder: (context, state) {
-            if (state.status == Status.loading || state.clinic == null) {
-              return const AppLoadingState();
-            }
-            final clinic = state.clinic!;
-            return Column(
-              children: [
-                _TopBar(title: clinic.name),
-                Expanded(child: _Content(clinic: clinic)),
-                CenterBookingBar(
-                  primaryLabel: 'clinic_book_cta'.tr(),
-                  onPrimary: () {},
-                ),
-              ],
+            final phase = (state.status == Status.loading ||
+                    state.clinic == null)
+                ? AppViewPhase.loading
+                : state.status == Status.failure
+                    ? AppViewPhase.error
+                    : AppViewPhase.success;
+            return AppStatusView(
+              phase: phase,
+              errorMessage: state.errorMessage,
+              onRetry: () =>
+                  context.read<ClinicDetailsCubit>().load(widget.clinicId),
+              builder: (_) {
+                final clinic = state.clinic!;
+                return Column(
+                  children: [
+                    _TopBar(title: clinic.name),
+                    Expanded(child: _Content(clinic: clinic)),
+                    CenterBookingBar(
+                      primaryLabel: 'clinic_book_cta'.tr(),
+                      onPrimary: () {},
+                    ),
+                  ],
+                );
+              },
             );
           },
         ),
@@ -74,10 +85,7 @@ class _TopBar extends StatelessWidget {
       height: 52,
       child: Row(
         children: [
-          IconButton(
-            icon: Icon(Icons.favorite_border, color: colors.textPrimary),
-            onPressed: () {},
-          ),
+          const AppBackButton(),
           Expanded(
             child: Center(
               child: Text(
@@ -86,7 +94,10 @@ class _TopBar extends StatelessWidget {
               ),
             ),
           ),
-          const AppBackButton(),
+          IconButton(
+            icon: Icon(Icons.favorite_border, color: colors.textPrimary),
+            onPressed: () {},
+          ),
         ],
       ),
     );
@@ -105,7 +116,10 @@ class _Content extends StatelessWidget {
     final typo = AppTypography.of(context);
     return ListView(
       padding: EdgeInsetsDirectional.fromSTEB(
-        spacing.lg, 0, spacing.lg, spacing.lg,
+        spacing.lg,
+        0,
+        spacing.lg,
+        spacing.lg,
       ),
       children: [
         ClipRRect(

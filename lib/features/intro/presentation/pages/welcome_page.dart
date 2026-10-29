@@ -55,7 +55,6 @@ class _TopBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _LanguagePill(),
           IconButton(
             icon: Icon(
               Directionality.of(context) == TextDirection.rtl
@@ -63,9 +62,9 @@ class _TopBar extends StatelessWidget {
                   : Icons.chevron_right,
               color: _textDisplay,
             ),
-            onPressed: () =>
-                context.canPop() ? context.pop() : null,
+            onPressed: () => context.canPop() ? context.pop() : null,
           ),
+          _LanguagePill(),
         ],
       ),
     );
@@ -276,4 +275,3 @@ class _GuestLink extends StatelessWidget {
     );
   }
 }
-

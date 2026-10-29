@@ -1,4 +1,3 @@
-import 'package:dorakpattient/core/router/route_names.dart';
 import 'package:dorakpattient/core/services/location_service.dart';
 import 'package:dorakpattient/core/ui_kit/feedback/location_opt_in_sheet.dart';
 import 'package:dorakpattient/data/di/locator.dart';
@@ -13,7 +12,6 @@ import 'package:dorakpattient/features/home/presentation/widgets/specialty_chip_
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 /// Phase 8 — Home — الرئيسية (Figma node `171:509`).
 ///
@@ -36,12 +34,21 @@ class _HomePageState extends State<HomePage> {
     WidgetsBinding.instance.addPostFrameCallback((_) => _kickLocation());
   }
 
-  Future<void> _kickLocation() async {
+  /// Resolve device location. By default this is a no-op when the cubit
+  /// already has a terminal status, so navigating away from Home and coming
+  /// back does not re-run the resolve. Pass `force: true` for the explicit
+  /// tap-on-card retry.
+  Future<void> _kickLocation({bool force = false}) async {
     if (!mounted) return;
-    await context.read<GeneralCubit>().resolveDeviceLocation(
-          svc: locator<LocationService>(),
-          localeCode: context.locale.languageCode,
-        );
+    final cubit = context.read<GeneralCubit>();
+    if (!force) {
+      final s = cubit.state.locationStatus;
+      if (s != LocationResolveStatus.idle) return;
+    }
+    await cubit.resolveDeviceLocation(
+      svc: locator<LocationService>(),
+      localeCode: context.locale.languageCode,
+    );
   }
 
   Future<void> _maybeShowOptIn(LocationResolveStatus s) async {
@@ -58,7 +65,7 @@ class _HomePageState extends State<HomePage> {
       return;
     }
     _sheetShown = false;
-    await _kickLocation();
+    await _kickLocation(force: true);
   }
 
   @override
@@ -273,7 +280,7 @@ class _HomePageState extends State<HomePage> {
         return LocationCard(
           label: label,
           value: value,
-          onTap: () => ctx.pushNamed(RouteNames.discoveryLocationPicker),
+          onTap: () => _kickLocation(force: true),
         );
       case LocationResolveStatus.serviceDisabled:
         return LocationCard(
@@ -287,7 +294,7 @@ class _HomePageState extends State<HomePage> {
         return LocationCard(
           label: label,
           value: 'home_location_choose'.tr(),
-          onTap: _kickLocation,
+          onTap: () => _kickLocation(force: true),
         );
     }
   }

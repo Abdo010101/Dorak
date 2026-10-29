@@ -22,7 +22,7 @@ class CenterSpecialtiesSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Align(
-          alignment: AlignmentDirectional.centerEnd,
+          alignment: AlignmentDirectional.centerStart,
           child: Text(
             'center_specialties_title'
                 .tr(args: [specialties.length.toString()]),
@@ -31,7 +31,7 @@ class CenterSpecialtiesSection extends StatelessWidget {
         ),
         SizedBox(height: spacing.lg),
         Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             for (int i = 0; i < specialties.length; i++) ...[
               if (i > 0) SizedBox(width: spacing.lg),

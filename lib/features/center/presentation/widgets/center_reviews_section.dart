@@ -22,12 +22,11 @@ class CenterReviewsSection extends StatelessWidget {
     final colors = AppColorsTheme.of(context);
     final typo = AppTypography.of(context);
     final spacing = AppSpacing.of(context);
-    final isRtl = Directionality.of(context) == TextDirection.rtl;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Align(
-          alignment: AlignmentDirectional.centerEnd,
+          alignment: AlignmentDirectional.centerStart,
           child: Text(
             titleKey.tr(args: [reviews.length.toString()]),
             style: typo.titleSm.copyWith(color: colors.textPrimary),
@@ -38,7 +37,6 @@ class CenterReviewsSection extends StatelessWidget {
           height: 134,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
-            reverse: isRtl,
             itemCount: reviews.length,
             separatorBuilder: (_, __) => SizedBox(width: spacing.lg),
             itemBuilder: (_, i) {

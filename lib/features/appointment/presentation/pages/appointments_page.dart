@@ -14,8 +14,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 /// Phase 11 — Account 01/02/03 My bookings (Figma `207:2279`, `207:2407`,
-/// `307:2547`, `207:2525`). 3 tabs: upcoming / past / cancelled. Wires
-/// [AppointmentsCubit]. RTL via directional alignment + `TextAlign.start`.
+/// `307:2547`). 3 tabs: upcoming / past / cancelled. Shell-tab destination:
+/// no back button. Per-tab card actions: upcoming → Call + Details,
+/// past → Add rating, cancelled → none.
 class AppointmentsPage extends StatefulWidget {
   const AppointmentsPage({super.key});
 
@@ -27,11 +28,8 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
   @override
   void initState() {
     super.initState();
-    popIfGuest(context);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
-      final auth = context.read<AuthCubit>().state;
-      if (!auth.isAuthenticated) return;
       context.read<AppointmentsCubit>().load();
     });
   }
@@ -39,51 +37,21 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
   @override
   Widget build(BuildContext context) {
     final colors = AppColorsTheme.of(context);
-    final typo = AppTypography.of(context);
     return Scaffold(
       backgroundColor: colors.white,
+      appBar: AppTopBar(title: 'appointments_title'.tr()),
       body: SafeArea(
+        top: false,
         child: BlocBuilder<AppointmentsCubit, AppointmentsState>(
           builder: (context, state) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(4, 6, 16, 14),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Row(
-                        children: [
-                          if (Navigator.of(context).canPop())
-                            const AppBackButton()
-                          else
-                            const SizedBox(width: 12),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.only(
-                                  start: 4, end: 12),
-                              child: Text(
-                                'appointments_title'.tr(),
-                                textAlign: TextAlign.start,
-                                style: typo.display
-                                    .copyWith(color: colors.textPrimary),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 14),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.only(start: 12),
-                        child: _Tabs(
-                          current: state.tab,
-                          onTap: (t) =>
-                              context.read<AppointmentsCubit>().setTab(t),
-                        ),
-                      ),
-                    ],
+                  padding: const EdgeInsetsDirectional.fromSTEB(16, 6, 16, 14),
+                  child: _Tabs(
+                    current: state.tab,
+                    onTap: (t) => context.read<AppointmentsCubit>().setTab(t),
                   ),
                 ),
                 Expanded(child: _Body(state: state)),
@@ -96,6 +64,8 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
   }
 }
 
+Widget _emptyBuilder(BuildContext _) => const SizedBox.shrink();
+
 class _Body extends StatelessWidget {
   const _Body({required this.state});
   final AppointmentsState state;
@@ -103,24 +73,26 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (state.status == Status.loading) {
-      return const AppLoadingState();
-    }
-    if (state.status == Status.failure) {
-      return AppErrorState(
-        title: 'something_went_wrong'.tr(),
-        message: state.errorMessage,
-        onRetry: () => context.read<AppointmentsCubit>().load(),
-        retryLabel: 'retry'.tr(),
+      return const AppStatusView(
+        phase: AppViewPhase.loading,
+        builder: _emptyBuilder,
       );
     }
-    final items = state.items;
+    final auth = context.read<AuthCubit>().state;
+    // Dev preview: show mock cards for the current tab when the API returns
+    // nothing (unauthenticated guest, failure, or empty page).
+    final items = state.items.isNotEmpty
+        ? state.items
+        : (!auth.isAuthenticated || state.status != Status.success
+            ? _mockFor(state.tab)
+            : const <AppointmentResponse>[]);
     if (items.isEmpty) {
       return _EmptyState(tab: state.tab);
     }
     return ListView.separated(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 24),
       itemCount: items.length,
-      separatorBuilder: (_, __) => const SizedBox(height: 12),
+      separatorBuilder: (_, __) => const SizedBox(height: 14),
       itemBuilder: (_, i) {
         final r = items[i];
         return BookingCard(
@@ -129,6 +101,12 @@ class _Body extends StatelessWidget {
             RouteNames.bookingDetails,
             extra: r,
           ),
+          onCall: () {},
+          onDetails: () => context.pushNamed(
+            RouteNames.bookingDetails,
+            extra: r,
+          ),
+          onRate: () {},
         );
       },
     );
@@ -138,8 +116,13 @@ class _Body extends StatelessWidget {
     final status = switch (tab) {
       AppointmentsTab.cancelled => BookingStatus.cancelled,
       AppointmentsTab.past => BookingStatus.completed,
-      AppointmentsTab.upcoming => _statusFromString(r.status) ??
-          BookingStatus.confirmed,
+      AppointmentsTab.upcoming =>
+        _statusFromString(r.status) ?? BookingStatus.confirmed,
+    };
+    final actions = switch (tab) {
+      AppointmentsTab.upcoming => BookingActions.upcomingCallDetails,
+      AppointmentsTab.past => BookingActions.pastAddRating,
+      AppointmentsTab.cancelled => BookingActions.none,
     };
     final dateTime = [r.day, r.date, r.month]
         .where((s) => s != null && s.isNotEmpty)
@@ -151,6 +134,7 @@ class _Body extends StatelessWidget {
       doctorService: r.mainSpecialization ?? '',
       branchCity: r.phone ?? '',
       imageAsset: 'assets/images/home/center1.png',
+      actions: actions,
     );
   }
 
@@ -162,6 +146,65 @@ class _Body extends StatelessWidget {
         _ => null,
       };
 }
+
+List<AppointmentResponse> _mockFor(AppointmentsTab tab) => switch (tab) {
+      AppointmentsTab.upcoming => [
+          AppointmentResponse(
+            id: 1,
+            status: 'confirmed',
+            day: 'الخميس',
+            date: '٢٢ أكتوبر',
+            month: '٤:٣٠ م',
+            name: 'مجمع النور الطبي',
+            mainSpecialization: 'د. أحمد العلي · كشف واستشارة أسنان',
+            phone: 'فرع الفيصلية · الدمام',
+          ),
+          AppointmentResponse(
+            id: 2,
+            status: 'pending',
+            day: 'الأحد',
+            date: '٢ نوفمبر',
+            month: '١٠:٠٠ ص',
+            name: 'مركز العناية الطبي',
+            mainSpecialization: 'د. ريم السبيعي · فحص البشرة',
+            phone: 'فرع الشاطئ · الدمام',
+          ),
+        ],
+      AppointmentsTab.past => [
+          AppointmentResponse(
+            id: 3,
+            status: 'completed',
+            day: 'الإثنين',
+            date: '٦ أكتوبر',
+            month: '٥:٠٠ م',
+            name: 'مجمع النور الطبي',
+            mainSpecialization: 'د. أحمد العلي · كشف واستشارة أسنان',
+            phone: 'فرع الفيصلية · الدمام',
+          ),
+          AppointmentResponse(
+            id: 4,
+            status: 'completed',
+            day: 'الإثنين',
+            date: '٦ أكتوبر',
+            month: '٥:٠٠ م',
+            name: 'مجمع النور الطبي',
+            mainSpecialization: 'د. أحمد العلي · كشف واستشارة أسنان',
+            phone: 'فرع الفيصلية · الدمام',
+          ),
+        ],
+      AppointmentsTab.cancelled => [
+          AppointmentResponse(
+            id: 5,
+            status: 'cancelled',
+            day: 'السبت',
+            date: '٢٠ سبتمبر',
+            month: '١١:٣٠ ص',
+            name: 'مركز الحياة الطبي',
+            mainSpecialization: 'د. فهد القحطاني · فحص النظر',
+            phone: 'فرع المزروعية · الدمام',
+          ),
+        ],
+    };
 
 class _EmptyState extends StatelessWidget {
   const _EmptyState({required this.tab});
@@ -183,9 +226,8 @@ class _EmptyState extends StatelessWidget {
       ),
       title: 'appointments_empty_title'.tr(),
       message: key.tr(),
-      actionLabel: tab == AppointmentsTab.upcoming
-          ? 'book_appointment'.tr()
-          : null,
+      actionLabel:
+          tab == AppointmentsTab.upcoming ? 'book_appointment'.tr() : null,
       onAction: tab == AppointmentsTab.upcoming
           ? () => context.goNamed(RouteNames.home)
           : null,
@@ -206,7 +248,7 @@ class _Tabs extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(3),
       decoration: BoxDecoration(
-        color: colors.neutral50,
+        color: const Color(0xFFF4F4F4),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(

@@ -78,8 +78,8 @@ class _SignedInPageState extends State<SignedInPage> {
                 child: Text(
                   'signed_in_subtitle'.tr(),
                   textAlign: TextAlign.center,
-                  style: type.textLgRegular
-                      .copyWith(color: colors.textSecondary),
+                  style:
+                      type.textLgRegular.copyWith(color: colors.textSecondary),
                 ),
               ),
             ],

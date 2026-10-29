@@ -28,13 +28,15 @@ class CenterInfoRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AppDistanceTag(label: 'center_distance_km'.tr(args: [distanceKm])),
         Row(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Icon(Icons.location_on_outlined,
+                size: 18, color: colors.borderPrimary),
+            SizedBox(width: spacing.sm),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(titleKey.tr(),
                     style: typo.titleSm.copyWith(color: colors.textPrimary)),
@@ -45,10 +47,9 @@ class CenterInfoRow extends StatelessWidget {
               ],
             ),
             SizedBox(width: spacing.md - 2),
-            Icon(Icons.location_on_outlined,
-                size: 18, color: colors.borderPrimary),
           ],
         ),
+        AppDistanceTag(label: 'center_distance_km'.tr(args: [distanceKm])),
       ],
     );
   }

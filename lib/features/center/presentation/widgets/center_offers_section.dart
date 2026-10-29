@@ -29,7 +29,7 @@ class CenterOffersSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Align(
-          alignment: AlignmentDirectional.centerEnd,
+          alignment: AlignmentDirectional.centerStart,
           child: Text(titleKey.tr(),
               style: typo.titleSm.copyWith(color: colors.textPrimary)),
         ),
@@ -38,7 +38,6 @@ class CenterOffersSection extends StatelessWidget {
           height: 132,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
-            reverse: isRtl,
             itemCount: offers.length,
             separatorBuilder: (_, __) => SizedBox(width: spacing.lg),
             itemBuilder: (_, i) => _OfferCard(offer: offers[i]),
@@ -77,10 +76,11 @@ class _OfferCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(offer.title,
-                        style: typo.titleSm.copyWith(color: colors.textPrimary)),
+                        style:
+                            typo.titleSm.copyWith(color: colors.textPrimary)),
                     SizedBox(height: spacing.sm),
                     Text(offer.centerName,
                         style: typo.textMdRegular

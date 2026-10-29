@@ -61,8 +61,7 @@ class _BookingDateTimePageState extends State<BookingDateTimePage> {
             ),
             Expanded(
               child: ListView(
-                padding:
-                    const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
+                padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
                 children: [
                   const BookingSummaryHeader(
                     name: 'عيادة دكتور احمد',
@@ -112,9 +111,8 @@ class _BookingDateTimePageState extends State<BookingDateTimePage> {
                   const SizedBox(height: 16),
                   _SelectedSummary(
                     date: 'الخميس، ٢٢ أكتوبر ٢٠٢٦',
-                    time: _selectedTime == null
-                        ? ''
-                        : '${_selectedTime!} مساءً',
+                    time:
+                        _selectedTime == null ? '' : '${_selectedTime!} مساءً',
                     doctorCenter: 'د. أحمد العلي · مجمع النور الطبي',
                   ),
                 ],
@@ -171,7 +169,7 @@ class _TopBar extends StatelessWidget {
             ),
           ),
           PositionedDirectional(
-            end: 4,
+            start: 4,
             top: 4,
             child: AppBackButton(onPressed: onBack),
           ),
@@ -256,9 +254,7 @@ class _DaysStrip extends StatelessWidget {
             child: DayCell(
               day: days[i].day,
               date: days[i].date,
-              state: i == selectedIndex
-                  ? DayCellState.selected
-                  : days[i].state,
+              state: i == selectedIndex ? DayCellState.selected : days[i].state,
               onTap: () => onTap(i),
             ),
           ),
@@ -511,8 +507,8 @@ class _BottomBar extends StatelessWidget {
               onPressed: onNext,
               trailingIcon: Icon(
                 Directionality.of(context) == TextDirection.rtl
-                    ? Icons.arrow_back
-                    : Icons.arrow_forward,
+                    ? Icons.arrow_forward
+                    : Icons.arrow_back,
                 size: 20,
                 color: Colors.white,
               ),

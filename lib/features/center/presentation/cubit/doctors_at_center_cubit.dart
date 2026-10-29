@@ -13,6 +13,5 @@ class DoctorsAtCenterCubit extends Cubit<DoctorsAtCenterState> {
     emit(state.copyWith(status: Status.success, center: CenterMock.sample()));
   }
 
-  void setSpecialty(String key) =>
-      emit(state.copyWith(selectedSpecialty: key));
+  void setSpecialty(String key) => emit(state.copyWith(selectedSpecialty: key));
 }

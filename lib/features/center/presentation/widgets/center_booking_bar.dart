@@ -27,7 +27,10 @@ class CenterBookingBar extends StatelessWidget {
       top: false,
       child: Container(
         padding: EdgeInsetsDirectional.fromSTEB(
-          spacing.lg, spacing.lg, spacing.lg, spacing.sm,
+          spacing.lg,
+          spacing.lg,
+          spacing.lg,
+          spacing.sm,
         ),
         decoration: BoxDecoration(
           color: colors.white,

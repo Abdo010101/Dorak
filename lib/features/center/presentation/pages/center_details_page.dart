@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -45,22 +45,35 @@ class _CenterDetailsPageState extends State<CenterDetailsPage> {
       body: SafeArea(
         child: BlocBuilder<CenterDetailsCubit, CenterDetailsState>(
           builder: (context, state) {
-            if (state.status == Status.loading || state.center == null) {
-              return const AppLoadingState();
-            }
-            final center = state.center!;
-            return Column(
-              children: [
-                _TopBar(title: center.name),
-                Expanded(child: _Content(center: center)),
-                CenterBookingBar(
-                  primaryLabel: 'center_book_cta'.tr(),
-                  onPrimary: () {},
-                  secondaryLabel: 'center_doctors_cta'.tr(),
-                  onSecondary: () =>
-                      context.push(RouteNames.doctorsAtCenter),
-                ),
-              ],
+            final phase = (state.status == Status.loading ||
+                    state.center == null)
+                ? AppViewPhase.loading
+                : state.status == Status.failure
+                    ? AppViewPhase.error
+                    : AppViewPhase.success;
+            return AppStatusView(
+              phase: phase,
+              errorMessage: state.errorMessage,
+              onRetry: () =>
+                  context.read<CenterDetailsCubit>().load(widget.centerId),
+              builder: (_) {
+                final center = state.center!;
+                return Column(
+                  children: [
+                    _TopBar(title: center.name),
+                    Expanded(child: _Content(center: center)),
+                    CenterBookingBar(
+                      primaryLabel: 'center_book_cta'.tr(),
+                      onPrimary: () {},
+                      secondaryLabel: 'center_doctors_cta'.tr(),
+                      onSecondary: () {
+                        debugPrint('[center_details] push doctorsAtCenter');
+                        context.pushNamed(RouteNames.doctorsAtCenter);
+                      },
+                    ),
+                  ],
+                );
+              },
             );
           },
         ),
@@ -81,10 +94,7 @@ class _TopBar extends StatelessWidget {
       height: 52,
       child: Row(
         children: [
-          IconButton(
-            icon: Icon(Icons.favorite_border, color: colors.textPrimary),
-            onPressed: () {},
-          ),
+          const AppBackButton(),
           Expanded(
             child: Center(
               child: Text(
@@ -93,7 +103,10 @@ class _TopBar extends StatelessWidget {
               ),
             ),
           ),
-          const AppBackButton(),
+          IconButton(
+            icon: Icon(Icons.favorite_border, color: colors.textPrimary),
+            onPressed: () {},
+          ),
         ],
       ),
     );
@@ -111,7 +124,10 @@ class _Content extends StatelessWidget {
     final colors = AppColorsTheme.of(context);
     return ListView(
       padding: EdgeInsetsDirectional.fromSTEB(
-        spacing.lg, 0, spacing.lg, spacing.lg,
+        spacing.lg,
+        0,
+        spacing.lg,
+        spacing.lg,
       ),
       children: [
         ClipRRect(
@@ -152,11 +168,13 @@ class _Content extends StatelessWidget {
         ),
         SizedBox(height: spacing.xl),
         Align(
-          alignment: AlignmentDirectional.centerEnd,
-          child: Text('center_location_title'.tr(),
-              style: AppTypography.of(context)
-                  .titleSm
-                  .copyWith(color: colors.textPrimary)),
+          alignment: AlignmentDirectional.centerStart,
+          child: Text(
+            'center_location_title'.tr(),
+            style: AppTypography.of(
+              context,
+            ).titleSm.copyWith(color: colors.textPrimary),
+          ),
         ),
         SizedBox(height: spacing.lg),
         AppMapPreview(

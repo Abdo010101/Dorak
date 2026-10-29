@@ -39,52 +39,81 @@ class _DoctorsAtCenterPageState extends State<DoctorsAtCenterPage> {
       appBar: AppTopBar(
         title: 'center_doctors_cta'.tr(),
       ),
-      body: SafeArea(
-        top: false,
-        child: BlocBuilder<DoctorsAtCenterCubit, DoctorsAtCenterState>(
-          builder: (context, state) {
-            if (state.status == Status.loading || state.center == null) {
-              return const AppLoadingState();
-            }
-            final center = state.center!;
-            final cubit = context.read<DoctorsAtCenterCubit>();
-            final filtered = state.filteredDoctors;
-            return ListView(
-              padding: EdgeInsetsDirectional.fromSTEB(
-                spacing.lg, spacing.lg, spacing.lg, spacing.xl,
-              ),
-              children: [
-                AppBookingSummaryHeader(
-                  title: center.name,
-                  subtitle: 'center_doctors_summary'.tr(args: [
-                    center.doctors.length.toString(),
-                    center.specialties.length.toString(),
-                  ]),
-                  imageAsset: center.heroImageAsset,
-                ),
-                SizedBox(height: spacing.xl),
-                _SpecialtyFilter(
-                  selected: state.selectedSpecialty,
-                  onSelect: cubit.setSpecialty,
-                ),
-                SizedBox(height: spacing.xl),
-                _ListHeader(count: filtered.length),
-                SizedBox(height: spacing.lg),
-                for (int i = 0; i < filtered.length; i++) ...[
-                  if (i > 0) SizedBox(height: spacing.lg),
-                  DoctorAtCenterCard(
-                    doctor: filtered[i],
-                    onBook: () => context.push(
-                      '${RouteNames.doctor}?id=${filtered[i].id}',
+      body: Directionality(
+        textDirection: TextDirection.rtl,
+        child: SafeArea(
+          top: false,
+          child: BlocBuilder<DoctorsAtCenterCubit, DoctorsAtCenterState>(
+            builder: (context, state) {
+              final phase =
+                  (state.status == Status.loading || state.center == null)
+                      ? AppViewPhase.loading
+                      : state.status == Status.failure
+                          ? AppViewPhase.error
+                          : AppViewPhase.success;
+              return AppStatusView(
+                phase: phase,
+                errorMessage: state.errorMessage,
+                onRetry: () =>
+                    context.read<DoctorsAtCenterCubit>().load(widget.centerId),
+                builder: (_) {
+                  final center = state.center!;
+                  final cubit = context.read<DoctorsAtCenterCubit>();
+                  final filtered = state.filteredDoctors;
+                  return ListView(
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                      spacing.lg,
+                      spacing.lg,
+                      spacing.lg,
+                      spacing.xl,
                     ),
-                    onTap: () => context.push(
-                      '${RouteNames.doctor}?id=${filtered[i].id}',
-                    ),
-                  ),
-                ],
-              ],
-            );
-          },
+                    children: [
+                      AppBookingSummaryHeader(
+                        title: center.name,
+                        subtitle: 'center_doctors_summary'.tr(args: [
+                          center.doctors.length.toString(),
+                          center.specialties.length.toString(),
+                        ]),
+                        imageAsset: center.heroImageAsset,
+                      ),
+                      SizedBox(height: spacing.xl),
+                      _SpecialtyFilter(
+                        selected: state.selectedSpecialty,
+                        onSelect: cubit.setSpecialty,
+                      ),
+                      SizedBox(height: spacing.xl),
+                      _ListHeader(count: filtered.length),
+                      SizedBox(height: spacing.lg),
+                      for (int i = 0; i < filtered.length; i++) ...[
+                        if (i > 0) SizedBox(height: spacing.lg),
+                        DoctorAtCenterCard(
+                          doctor: filtered[i],
+                          onBook: () {
+                            debugPrint(
+                              '[doctors_at_center] onBook id=${filtered[i].id}',
+                            );
+                            context.pushNamed(
+                              RouteNames.doctor,
+                              queryParameters: {'id': '${filtered[i].id}'},
+                            );
+                          },
+                          onTap: () {
+                            debugPrint(
+                              '[doctors_at_center] onTap id=${filtered[i].id}',
+                            );
+                            context.pushNamed(
+                              RouteNames.doctor,
+                              queryParameters: {'id': '${filtered[i].id}'},
+                            );
+                          },
+                        ),
+                      ],
+                    ],
+                  );
+                },
+              );
+            },
+          ),
         ),
       ),
     );
@@ -99,13 +128,11 @@ class _SpecialtyFilter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final spacing = AppSpacing.of(context);
-    final isRtl = Directionality.of(context) == TextDirection.rtl;
     final keys = CenterMock.specialtyFilterKeys;
     return SizedBox(
       height: 40,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        reverse: isRtl,
         itemCount: keys.length,
         separatorBuilder: (_, __) => SizedBox(width: spacing.sm),
         itemBuilder: (_, i) {
@@ -133,12 +160,12 @@ class _ListHeader extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          'center_doctors_count'.tr(args: [count.toString()]),
-          style: typo.textLgRegular.copyWith(color: colors.textSecondary),
-        ),
-        Text(
           'center_doctors_title'.tr(),
           style: typo.titleMd.copyWith(color: colors.textPrimary),
+        ),
+        Text(
+          'center_doctors_count'.tr(args: [count.toString()]),
+          style: typo.textLgRegular.copyWith(color: colors.textSecondary),
         ),
       ],
     );

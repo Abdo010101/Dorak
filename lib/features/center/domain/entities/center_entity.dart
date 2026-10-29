@@ -48,7 +48,8 @@ class CenterEntity extends Equatable {
 }
 
 class SpecialtyEntity extends Equatable {
-  const SpecialtyEntity({required this.key, required this.label, required this.iconData});
+  const SpecialtyEntity(
+      {required this.key, required this.label, required this.iconData});
   final String key;
   final String label;
   final int iconData;
@@ -106,8 +107,15 @@ class DoctorAtCenter extends Equatable {
   final String reviewsCount;
   final String? avatarAsset;
   @override
-  List<Object?> get props =>
-      [id, name, specialty, specialtyKey, ratingValue, reviewsCount, avatarAsset];
+  List<Object?> get props => [
+        id,
+        name,
+        specialty,
+        specialtyKey,
+        ratingValue,
+        reviewsCount,
+        avatarAsset
+      ];
 }
 
 /// Clinic variant — one doctor, no "doctors" cta.
@@ -138,7 +146,16 @@ class ClinicEntity extends Equatable {
   final String pinLabel;
   @override
   List<Object?> get props => [
-        id, name, heroImageAsset, address, city, distanceKm,
-        about, phone, offers, reviews, pinLabel,
+        id,
+        name,
+        heroImageAsset,
+        address,
+        city,
+        distanceKm,
+        about,
+        phone,
+        offers,
+        reviews,
+        pinLabel,
       ];
 }

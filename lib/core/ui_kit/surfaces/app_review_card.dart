@@ -46,17 +46,17 @@ class AppReviewCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _StarRow(filled: filled),
               Text(
                 reviewerName,
                 style: typo.titleSm.copyWith(color: colors.textPrimary),
               ),
+              _StarRow(filled: filled),
             ],
           ),
           SizedBox(height: spacing.lg),
           Text(
             body,
-            textAlign: TextAlign.end,
+            textAlign: TextAlign.start,
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
             style: typo.textMdRegular.copyWith(

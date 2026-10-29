@@ -105,6 +105,7 @@ abstract class InjectionClass {
     ..options.connectTimeout = const Duration(milliseconds: 50000)
     ..options.receiveTimeout = const Duration(milliseconds: 50000)
     ..options.receiveDataWhenStatusError = true
+    ..options.validateStatus = ((status) => status != null && status < 500)
     ..options.baseUrl = NetworkConstant.kBaseUrl
     ..options.headers = {
       'Content-Type': 'application/json',

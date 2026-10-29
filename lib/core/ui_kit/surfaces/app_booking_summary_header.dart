@@ -30,7 +30,10 @@ class AppBookingSummaryHeader extends StatelessWidget {
     return Container(
       height: 78,
       padding: EdgeInsetsDirectional.fromSTEB(
-        spacing.sm, spacing.sm, spacing.lg - 2, spacing.sm,
+        spacing.sm,
+        spacing.sm,
+        spacing.lg - 2,
+        spacing.sm,
       ),
       decoration: BoxDecoration(
         color: colors.neutral25,
@@ -46,24 +49,21 @@ class AppBookingSummaryHeader extends StatelessWidget {
             radius: radii.medium,
           ),
           SizedBox(width: spacing.md),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  title,
-                  style: typo.titleSm.copyWith(color: colors.textPrimary),
-                  overflow: TextOverflow.ellipsis,
-                ),
-                SizedBox(height: spacing.xs),
-                Text(
-                  subtitle,
-                  style: typo.textMdRegular.copyWith(color: colors.textSecondary),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                title,
+                style: typo.titleSm.copyWith(color: colors.textPrimary),
+                overflow: TextOverflow.ellipsis,
+              ),
+              SizedBox(height: spacing.xs),
+              Text(
+                subtitle,
+                style: typo.textMdRegular.copyWith(color: colors.textSecondary),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
           ),
         ],
       ),

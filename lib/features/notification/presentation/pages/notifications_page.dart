@@ -1,4 +1,3 @@
-import 'package:dorakpattient/core/state/status.dart';
 import 'package:dorakpattient/core/theme/app_colors_theme.dart';
 import 'package:dorakpattient/core/theme/app_typography.dart';
 import 'package:dorakpattient/core/ui_kit/ui_kit.dart';
@@ -38,20 +37,16 @@ class _NotificationsPageState extends State<NotificationsPage> {
         top: false,
         child: BlocBuilder<NotificationCubit, NotificationFeedState>(
           builder: (context, state) {
-            if (state.status == Status.loading && state.items.isEmpty) {
-              return const AppLoadingState();
-            }
-            if (state.status == Status.failure && state.items.isEmpty) {
-              return AppErrorState(
-                title: 'something_went_wrong'.tr(),
-                message: state.errorMessage,
-                retryLabel: 'retry'.tr(),
+            if (state.items.isEmpty) {
+              return AppStatusViewX.fromStatus(
+                status: state.status,
+                isEmpty: true,
+                errorMessage: state.errorMessage,
                 onRetry: () =>
                     context.read<NotificationCubit>().loadFirstPage(),
+                empty: _EmptyState(),
+                builder: (_) => const SizedBox.shrink(),
               );
-            }
-            if (state.items.isEmpty) {
-              return _EmptyState();
             }
             final (today, week) = _group(state.items);
             return ListView(

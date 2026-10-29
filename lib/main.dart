@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dorakpattient/core/router/app_router.dart';
 import 'package:dorakpattient/core/services/notification_service.dart';
 import 'package:dorakpattient/core/theme/app_theme.dart';
+import 'package:dorakpattient/core/ui_kit/ui_kit.dart';
 import 'package:dorakpattient/data/di/locator.dart';
 import 'package:dorakpattient/data/repository/repository.dart';
 import 'package:dorakpattient/data/shared/shared_pref.dart';
@@ -58,6 +59,11 @@ Future<void> main() async {
   );
   
   await EasyLocalization.ensureInitialized();
+  AppStatusView.labelsBuilder = (ctx) => AppStatusViewLabels(
+        errorTitle: 'something_went_wrong'.tr(),
+        retryLabel: 'retry'.tr(),
+        emptyTitle: 'no_data_found'.tr(),
+      );
   // TODO(auth): remove when mock auth phase ends — wipes stored session so
   // every launch starts from the phone screen. Guarded by kDebugMode to
   // keep release builds safe.

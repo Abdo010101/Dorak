@@ -34,20 +34,24 @@ class CenterAboutRow extends StatelessWidget {
         ],
         Expanded(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(titleKey.tr(),
-                  style: typo.titleSm.copyWith(color: colors.textPrimary)),
+              Row(
+                children: [
+                  Icon(icon, size: 18, color: colors.borderPrimary),
+                  SizedBox(width: spacing.sm),
+                  Text(titleKey.tr(),
+                      style: typo.titleSm.copyWith(color: colors.textPrimary)),
+                ],
+              ),
               SizedBox(height: spacing.sm),
               Text(body,
-                  textAlign: TextAlign.end,
-                  style: typo.textLgRegular
-                      .copyWith(color: colors.textSecondary)),
+                  textAlign: TextAlign.start,
+                  style:
+                      typo.textLgRegular.copyWith(color: colors.textSecondary)),
             ],
           ),
         ),
-        SizedBox(width: spacing.md - 2),
-        Icon(icon, size: 18, color: colors.borderPrimary),
       ],
     );
   }

@@ -37,6 +37,5 @@ class DoctorsAtCenterState extends Equatable {
       );
 
   @override
-  List<Object?> get props =>
-      [status, center, selectedSpecialty, errorMessage];
+  List<Object?> get props => [status, center, selectedSpecialty, errorMessage];
 }

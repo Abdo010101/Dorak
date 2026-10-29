@@ -39,7 +39,10 @@ class DoctorAtCenterCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(radii.large),
         child: Container(
           padding: EdgeInsetsDirectional.fromSTEB(
-            spacing.md - 2, spacing.sm + 2, spacing.md, spacing.sm + 2,
+            spacing.md - 2,
+            spacing.sm + 2,
+            spacing.md,
+            spacing.sm + 2,
           ),
           decoration: BoxDecoration(
             color: colors.white,
@@ -49,15 +52,20 @@ class DoctorAtCenterCard extends StatelessWidget {
           ),
           child: Row(
             children: [
-              _SmallBookButton(onTap: onBook),
+              AppAvatar(
+                imageAsset: doctor.avatarAsset,
+                size: 64,
+                radius: radii.medium,
+              ),
               SizedBox(width: spacing.md),
               Expanded(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(doctor.name,
-                        style: typo.titleSm.copyWith(color: colors.textPrimary)),
+                        style:
+                            typo.titleSm.copyWith(color: colors.textPrimary)),
                     SizedBox(height: spacing.xs),
                     Text(doctor.specialty,
                         style: typo.textMdRegular
@@ -71,11 +79,7 @@ class DoctorAtCenterCard extends StatelessWidget {
                 ),
               ),
               SizedBox(width: spacing.md),
-              AppAvatar(
-                imageAsset: doctor.avatarAsset,
-                size: 64,
-                radius: radii.medium,
-              ),
+              _SmallBookButton(onTap: onBook),
             ],
           ),
         ),

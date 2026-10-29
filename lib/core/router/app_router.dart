@@ -37,32 +37,53 @@ import 'route_names.dart';
 final GlobalKey<NavigatorState> rootNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'root');
 
-/// Patient-app page transition: 240 ms fade + 8 px slide-up with
-/// `Curves.easeOutCubic`. Direction-neutral so it reads the same in RTL
-/// (Arabic) and LTR (English). Calm feel suited to a healthcare app.
+/// Patient-app page transition: Material Motion **shared-axis X**.
+/// 300 ms horizontal slide + fade; direction-aware so a forward push slides
+/// from the trailing edge in both RTL (Arabic) and LTR (English), and the
+/// outgoing page slides toward the leading edge. Calm, professional feel
+/// suited to a healthcare app.
 CustomTransitionPage<T> _calmPage<T>({
   required LocalKey key,
   required Widget child,
 }) {
   return CustomTransitionPage<T>(
     key: key,
-    transitionDuration: const Duration(milliseconds: 240),
-    reverseTransitionDuration: const Duration(milliseconds: 200),
+    transitionDuration: const Duration(milliseconds: 300),
+    reverseTransitionDuration: const Duration(milliseconds: 260),
     child: child,
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      final curved = CurvedAnimation(
+      final isRtl = Directionality.of(context) == TextDirection.rtl;
+      final dir = isRtl ? -1.0 : 1.0;
+
+      final inCurve = CurvedAnimation(
         parent: animation,
         curve: Curves.easeOutCubic,
         reverseCurve: Curves.easeInCubic,
       );
-      return FadeTransition(
-        opacity: curved,
-        child: SlideTransition(
-          position: Tween<Offset>(
-            begin: const Offset(0, 0.02),
-            end: Offset.zero,
-          ).animate(curved),
-          child: child,
+      final outCurve = CurvedAnimation(
+        parent: secondaryAnimation,
+        curve: Curves.easeInCubic,
+        reverseCurve: Curves.easeOutCubic,
+      );
+
+      final incomingSlide = Tween<Offset>(
+        begin: Offset(0.08 * dir, 0),
+        end: Offset.zero,
+      ).animate(inCurve);
+      final outgoingSlide = Tween<Offset>(
+        begin: Offset.zero,
+        end: Offset(-0.08 * dir, 0),
+      ).animate(outCurve);
+      final outgoingFade = Tween<double>(begin: 1, end: 0).animate(outCurve);
+
+      return SlideTransition(
+        position: outgoingSlide,
+        child: FadeTransition(
+          opacity: outgoingFade,
+          child: SlideTransition(
+            position: incomingSlide,
+            child: FadeTransition(opacity: inCurve, child: child),
+          ),
         ),
       );
     },
