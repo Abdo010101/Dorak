@@ -46,6 +46,9 @@ class AuthCubit extends Cubit<AuthState> {
     emit(state.copyWith(user: stored));
   }
 
+  // TODO(auth): remove mock short-circuit when backend is ready.
+  static const bool _mockAuth = true;
+
   Future<void> sendOtp() async {
     if (!_isValidPhone(state.phone)) {
       emit(state.copyWith(
@@ -60,6 +63,11 @@ class AuthCubit extends Cubit<AuthState> {
       otpSent: false,
       clearError: true,
     ));
+    if (_mockAuth) {
+      await Future<void>.delayed(const Duration(milliseconds: 400));
+      emit(state.copyWith(status: Status.success, otpSent: true));
+      return;
+    }
     try {
       final result = await _repo.sendOtp(body: {'phone': state.phone});
       if (result.error == null) {
@@ -89,6 +97,15 @@ class AuthCubit extends Cubit<AuthState> {
       verified: false,
       clearError: true,
     ));
+    if (_mockAuth) {
+      await Future<void>.delayed(const Duration(milliseconds: 400));
+      emit(state.copyWith(
+        status: Status.success,
+        verified: true,
+        needsProfile: true,
+      ));
+      return;
+    }
     try {
       final result = await _repo.verifyOtp(body: {
         'phone': state.phone,
@@ -128,6 +145,15 @@ class AuthCubit extends Cubit<AuthState> {
       profileCompleted: false,
       clearError: true,
     ));
+    if (_mockAuth) {
+      await Future<void>.delayed(const Duration(milliseconds: 400));
+      emit(state.copyWith(
+        status: Status.success,
+        profileCompleted: true,
+        needsProfile: false,
+      ));
+      return;
+    }
     try {
       final result = await _repo.completeData(body: {
         'name': state.name,

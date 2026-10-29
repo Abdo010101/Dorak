@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/router/route_names.dart';
+import '../../../../core/ui_kit/ui_kit.dart';
 import '../widgets/booking_tokens.dart';
 import '../widgets/detail_row.dart';
 
@@ -203,60 +204,14 @@ class _BottomActions extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            SizedBox(
-              height: 48,
-              width: double.infinity,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: BookingTokens.accentGlow,
-                      blurRadius: 5,
-                      offset: Offset(0, 1),
-                    ),
-                  ],
-                ),
-                child: FilledButton(
-                  style: FilledButton.styleFrom(
-                    backgroundColor: BookingTokens.accent,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  onPressed: onViewBookings,
-                  child: Text(
-                    'booking_see_my_bookings'.tr(),
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-              ),
+            AppPrimaryButton(
+              label: 'booking_see_my_bookings'.tr(),
+              onPressed: onViewBookings,
             ),
             const SizedBox(height: 14),
-            SizedBox(
-              height: 48,
-              width: double.infinity,
-              child: OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: BookingTokens.textPrimary,
-                  side: const BorderSide(color: BookingTokens.borderNeutral),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                onPressed: onBackHome,
-                child: Text(
-                  'booking_back_to_home'.tr(),
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
+            AppSecondaryButton(
+              label: 'booking_back_to_home'.tr(),
+              onPressed: onBackHome,
             ),
           ],
         ),

@@ -1,6 +1,7 @@
 import 'package:dorakpattient/core/router/route_names.dart';
 import 'package:dorakpattient/core/theme/app_colors_theme.dart';
 import 'package:dorakpattient/core/theme/app_typography.dart';
+import 'package:dorakpattient/core/ui_kit/ui_kit.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,7 +15,6 @@ import 'package:go_router/go_router.dart';
 class SignInSheet extends StatelessWidget {
   const SignInSheet({super.key});
 
-  static const _brandGreen = Color(0xFF1F8046);
   static const _socialBlack = Color(0xFF010101);
   static const _borderSecondary = Color(0xFFD2D2D2);
   static const _primaryTint = Color(0xFFEBF1FE);
@@ -81,26 +81,12 @@ class SignInSheet extends StatelessWidget {
                   type.textLgRegular.copyWith(color: colors.textSecondary),
             ),
             const SizedBox(height: 24),
-            SizedBox(
-              height: 48,
-              child: FilledButton(
-                style: FilledButton.styleFrom(
-                  backgroundColor: _brandGreen,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  context.goNamed(RouteNames.login);
-                },
-                child: Text(
-                  'signin_sheet_cta'.tr(),
-                  style: const TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.w700),
-                ),
-              ),
+            AppPrimaryButton(
+              label: 'signin_sheet_cta'.tr(),
+              onPressed: () {
+                Navigator.of(context).pop();
+                context.goNamed(RouteNames.login);
+              },
             ),
             const SizedBox(height: 10),
             _SocialButton(

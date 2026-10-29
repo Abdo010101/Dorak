@@ -4,6 +4,7 @@ import 'package:dorakpattient/core/router/route_names.dart';
 import 'package:dorakpattient/core/state/status.dart';
 import 'package:dorakpattient/core/theme/app_colors_theme.dart';
 import 'package:dorakpattient/core/theme/app_typography.dart';
+import 'package:dorakpattient/core/ui_kit/ui_kit.dart';
 import 'package:dorakpattient/features/auth/logic/auth_cubit.dart';
 import 'package:dorakpattient/features/auth/logic/auth_state.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
@@ -386,37 +387,12 @@ class _CtaBar extends StatelessWidget {
     return SafeArea(
       top: false,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 18, 16, 14),
-        child: SizedBox(
-          height: 48,
-          width: double.infinity,
-          child: FilledButton(
-            style: FilledButton.styleFrom(
-              backgroundColor: enabled
-                  ? _OtpPageState._brandGreen
-                  : disabledColor,
-              foregroundColor:
-                  enabled ? Colors.white : const Color(0xFFD2D2D2),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-            onPressed: enabled ? onPressed : null,
-            child: loading
-                ? const SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: Colors.white,
-                    ),
-                  )
-                : Text(
-                    'otp_cta'.tr(),
-                    style: const TextStyle(
-                        fontSize: 14, fontWeight: FontWeight.w700),
-                  ),
-          ),
+        padding: const EdgeInsetsDirectional.fromSTEB(16, 18, 16, 14),
+        child: AppPrimaryButton(
+          label: 'otp_cta'.tr(),
+          isLoading: loading,
+          isDisabled: !enabled,
+          onPressed: enabled ? onPressed : null,
         ),
       ),
     );

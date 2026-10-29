@@ -2,6 +2,7 @@ import 'package:dorakpattient/core/router/route_names.dart';
 import 'package:dorakpattient/core/theme/app_colors_theme.dart';
 import 'package:dorakpattient/core/theme/app_spacing.dart';
 import 'package:dorakpattient/core/theme/app_typography.dart';
+import 'package:dorakpattient/core/ui_kit/ui_kit.dart';
 import 'package:dorakpattient/data/di/locator.dart';
 import 'package:dorakpattient/features/settings/logic/language_cubit.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
@@ -16,7 +17,6 @@ import 'package:go_router/go_router.dart';
 /// Brand green `#1F8046` is the Figma CTA color; DS token refresh will fold
 /// it into `AppColorsTheme` after the BRD lands.
 const _brandGreen = Color(0xFF1F8046);
-const _brandGreenGlow = Color(0xFF98F3B2);
 const _socialBlack = Color(0xFF010101);
 const _borderSecondary = Color(0xFFD2D2D2);
 const _borderTertiary = Color(0xFFE5E5E5);
@@ -169,51 +169,14 @@ class _PrimaryCTA extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 48,
-      width: double.infinity,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: const [
-            BoxShadow(
-              color: _brandGreenGlow,
-              blurRadius: 5,
-              offset: Offset(0, 1),
-            ),
-          ],
-        ),
-        child: FilledButton(
-          onPressed: onPressed,
-          style: FilledButton.styleFrom(
-            backgroundColor: _brandGreen,
-            foregroundColor: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset(
-                'assets/images/intro/call_icon.svg',
-                width: 20,
-                height: 20,
-                colorFilter:
-                    const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-              ),
-              const SizedBox(width: 10),
-              Text(
-                label,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                  height: 20 / 14,
-                ),
-              ),
-            ],
-          ),
-        ),
+    return AppPrimaryButton(
+      label: label,
+      onPressed: onPressed,
+      leadingIcon: SvgPicture.asset(
+        'assets/images/intro/call_icon.svg',
+        width: 20,
+        height: 20,
+        colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
       ),
     );
   }

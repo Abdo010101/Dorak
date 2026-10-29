@@ -2,6 +2,7 @@ import 'package:dorakpattient/core/router/route_names.dart';
 import 'package:dorakpattient/core/state/status.dart';
 import 'package:dorakpattient/core/theme/app_colors_theme.dart';
 import 'package:dorakpattient/core/theme/app_typography.dart';
+import 'package:dorakpattient/core/ui_kit/ui_kit.dart';
 import 'package:dorakpattient/features/auth/logic/auth_cubit.dart';
 import 'package:dorakpattient/features/auth/logic/auth_state.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
@@ -11,6 +12,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 /// Phase 8 — Auth 03 / 03b Phone number (Figma `201:1422` + `352:3204`).
+/// Uses the shared [AppInputField] with a leading `+966` dial-code chip.
+/// Field is LTR-forced (dial code + digits are universally LTR).
 class PhonePage extends StatefulWidget {
   const PhonePage({super.key});
 
@@ -19,11 +22,6 @@ class PhonePage extends StatefulWidget {
 }
 
 class _PhonePageState extends State<PhonePage> {
-  static const _brandGreen = Color(0xFF1F8046);
-  static const _brandGreenGlow = Color(0xFF98F3B2);
-  static const _accentFocusRing = Color(0xFFDBFEE3);
-  static const _borderPrimary = Color(0xFF19A055);
-
   final _controller = TextEditingController();
 
   @override
@@ -64,58 +62,49 @@ class _PhonePageState extends State<PhonePage> {
                 ),
                 Expanded(
                   child: ListView(
-                    padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(16, 20, 16, 24),
                     children: [
                       Text(
                         'phone_title'.tr(),
-                        textAlign: TextAlign.right,
-                        style: type.display.copyWith(color: colors.textPrimary),
+                        textAlign: TextAlign.start,
+                        style:
+                            type.display.copyWith(color: colors.textPrimary),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         'phone_subtitle'.tr(),
-                        textAlign: TextAlign.right,
+                        textAlign: TextAlign.start,
                         style: type.textLgRegular
                             .copyWith(color: colors.textSecondary),
                       ),
                       const SizedBox(height: 28),
-                      Align(
-                        alignment: AlignmentDirectional.centerStart,
-                        child: Text(
-                          'phone_label'.tr(),
-                          style: type.textMdSemibold
-                              .copyWith(color: colors.textPrimary),
-                        ),
-                      ),
-                      const SizedBox(height: 6),
-                      _PhoneField(
+                      AppInputField(
                         controller: _controller,
-                        colors: colors,
-                        hasError: hasError,
+                        label: 'phone_label'.tr(),
+                        hintText: '55 123 4567',
+                        helperText: hasError ? null : 'phone_helper'.tr(),
+                        errorText:
+                            hasError ? state.errorMessage!.tr() : null,
+                        keyboardType: TextInputType.phone,
+                        textInputAction: TextInputAction.done,
+                        forceLtr: true,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(10),
+                        ],
+                        leading: _DialCode(colors: colors, type: type),
+                        onSubmitted: (_) =>
+                            context.read<AuthCubit>().sendOtp(),
                       ),
-                      const SizedBox(height: 6),
-                      if (hasError)
-                        _ErrorRow(
-                          message: state.errorMessage!,
-                          colors: colors,
-                        )
-                      else
-                        Align(
-                          alignment: AlignmentDirectional.centerStart,
-                          child: Text(
-                            'phone_helper'.tr(),
-                            style: type.textMdRegular
-                                .copyWith(color: colors.textSecondary),
-                          ),
-                        ),
                     ],
                   ),
                 ),
                 _CtaBar(
                   loading: state.status == Status.loading,
                   onPressed: () => context.read<AuthCubit>().sendOtp(),
-                  brand: _brandGreen,
-                  glow: _brandGreenGlow,
+                  brand: colors.borderPrimary,
+                  glow: colors.primary200,
                 ),
               ],
             );
@@ -124,9 +113,28 @@ class _PhonePageState extends State<PhonePage> {
       ),
     );
   }
+}
 
-  static Color get borderPrimary => _borderPrimary;
-  static Color get focusRing => _accentFocusRing;
+class _DialCode extends StatelessWidget {
+  const _DialCode({required this.colors, required this.type});
+  final AppColorsTheme colors;
+  final AppTypography type;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 44,
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        border: Border(right: BorderSide(color: colors.fieldBorder)),
+      ),
+      child: Text(
+        '+966',
+        style: type.textLgRegular.copyWith(color: colors.textSecondary),
+      ),
+    );
+  }
 }
 
 class _TopBar extends StatelessWidget {
@@ -157,106 +165,6 @@ class _TopBar extends StatelessWidget {
   }
 }
 
-class _PhoneField extends StatelessWidget {
-  const _PhoneField({
-    required this.controller,
-    required this.colors,
-    required this.hasError,
-  });
-  final TextEditingController controller;
-  final AppColorsTheme colors;
-  final bool hasError;
-
-  @override
-  Widget build(BuildContext context) {
-    final borderColor =
-        hasError ? colors.borderWarning : _PhonePageState.borderPrimary;
-    final ringColor =
-        hasError ? colors.errorRing : _PhonePageState.focusRing;
-    return Container(
-      height: 44,
-      decoration: BoxDecoration(
-        color: colors.surfaceField,
-        border: Border.all(color: borderColor),
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(color: ringColor, spreadRadius: 3),
-        ],
-      ),
-      child: Row(
-        textDirection: TextDirection.ltr,
-        children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsetsDirectional.only(start: 16),
-              child: TextField(
-                controller: controller,
-                keyboardType: TextInputType.phone,
-                textDirection: TextDirection.ltr,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                  LengthLimitingTextInputFormatter(10),
-                ],
-                decoration: InputDecoration(
-                  hintText: '55 123 4567',
-                  hintStyle: TextStyle(
-                    color: colors.textSecondary,
-                    fontSize: 14,
-                  ),
-                  border: InputBorder.none,
-                  isCollapsed: true,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 12),
-                ),
-                textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 14, color: colors.textPrimary),
-              ),
-            ),
-          ),
-          Container(
-            height: 44,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: colors.surfaceField,
-              border: Border(
-                right: BorderSide(color: colors.fieldBorder),
-              ),
-            ),
-            child: Text(
-              '+966',
-              style: TextStyle(fontSize: 14, color: colors.textSecondary),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _ErrorRow extends StatelessWidget {
-  const _ErrorRow({required this.message, required this.colors});
-  final String message;
-  final AppColorsTheme colors;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Flexible(
-          child: Text(
-            message.tr(),
-            textAlign: TextAlign.right,
-            style: TextStyle(fontSize: 12, color: colors.textWarning),
-          ),
-        ),
-        const SizedBox(width: 6),
-        Icon(Icons.error_outline, size: 16, color: colors.textWarning),
-      ],
-    );
-  }
-}
-
 class _CtaBar extends StatelessWidget {
   const _CtaBar({
     required this.loading,
@@ -274,42 +182,11 @@ class _CtaBar extends StatelessWidget {
     return SafeArea(
       top: false,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
-        child: SizedBox(
-          height: 48,
-          width: double.infinity,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(color: glow, blurRadius: 5, offset: const Offset(0, 1)),
-              ],
-            ),
-            child: FilledButton(
-              style: FilledButton.styleFrom(
-                backgroundColor: brand,
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              onPressed: loading ? null : onPressed,
-              child: loading
-                  ? const SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: Colors.white,
-                      ),
-                    )
-                  : Text(
-                      'phone_cta'.tr(),
-                      style: const TextStyle(
-                          fontSize: 14, fontWeight: FontWeight.w700),
-                    ),
-            ),
-          ),
+        padding: const EdgeInsetsDirectional.fromSTEB(16, 14, 16, 14),
+        child: AppPrimaryButton(
+          label: 'phone_cta'.tr(),
+          isLoading: loading,
+          onPressed: onPressed,
         ),
       ),
     );

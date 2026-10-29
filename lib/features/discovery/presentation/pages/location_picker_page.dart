@@ -1,3 +1,4 @@
+import 'package:dorakpattient/core/ui_kit/ui_kit.dart';
 import 'package:dorakpattient/features/discovery/presentation/widgets/confirm_location_sheet.dart';
 import 'package:dorakpattient/features/discovery/presentation/widgets/map_background.dart';
 import 'package:dorakpattient/features/discovery/presentation/widgets/pill_search_bar.dart';
@@ -89,26 +90,9 @@ class LocationPickerPage extends StatelessWidget {
               child: ConfirmLocationSheet(
                 label: 'discovery_location_selected'.tr(),
                 value: 'discovery_location_value'.tr(),
-                cta: SizedBox(
-                  width: double.infinity,
-                  height: 48,
-                  child: FilledButton(
-                    style: FilledButton.styleFrom(
-                      backgroundColor: _accent,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    onPressed: () => context.pop(),
-                    child: Text(
-                      'discovery_location_confirm'.tr(),
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
+                cta: AppPrimaryButton(
+                  label: 'discovery_location_confirm'.tr(),
+                  onPressed: () => context.pop(),
                 ),
               ),
             ),

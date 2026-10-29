@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/router/route_names.dart';
+import '../../../../core/ui_kit/ui_kit.dart';
 import '../widgets/booking_stepper.dart';
 import '../widgets/booking_summary_header.dart';
 import '../widgets/booking_tokens.dart';
@@ -251,44 +252,13 @@ class _BottomBar extends StatelessWidget {
           ],
         ),
         padding: const EdgeInsetsDirectional.fromSTEB(16, 23, 16, 16),
-        child: SizedBox(
-          height: 48,
-          width: double.infinity,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: const [
-                BoxShadow(
-                  color: BookingTokens.accentGlow,
-                  blurRadius: 5,
-                  offset: Offset(0, 1),
-                ),
-              ],
-            ),
-            child: FilledButton(
-              style: FilledButton.styleFrom(
-                backgroundColor: BookingTokens.accent,
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              onPressed: onConfirm,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.check_circle_outline, size: 20),
-                  const SizedBox(width: 10),
-                  Text(
-                    'booking_confirm_cta'.tr(),
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+        child: AppPrimaryButton(
+          label: 'booking_confirm_cta'.tr(),
+          onPressed: onConfirm,
+          leadingIcon: const Icon(
+            Icons.check_circle_outline,
+            size: 20,
+            color: Colors.white,
           ),
         ),
       ),

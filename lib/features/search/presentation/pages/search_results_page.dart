@@ -1,3 +1,4 @@
+import 'package:dorakpattient/core/ui_kit/ui_kit.dart';
 import 'package:dorakpattient/features/home/presentation/widgets/center_card.dart';
 import 'package:dorakpattient/features/home/presentation/widgets/specialty_chip_row.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
@@ -235,23 +236,10 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
           const SizedBox(height: 24),
           SizedBox(
             width: 240,
-            height: 48,
-            child: FilledButton(
-              style: FilledButton.styleFrom(
-                backgroundColor: const Color(0xFF1F8046),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
+            child: AppPrimaryButton(
+              label: 'search_empty_cta'.tr(),
               onPressed: () => _query.clear(),
-              child: Text(
-                'search_empty_cta'.tr(),
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white,
-                ),
-              ),
+              expand: false,
             ),
           ),
         ],
