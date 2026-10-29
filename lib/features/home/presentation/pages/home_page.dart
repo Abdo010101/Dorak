@@ -109,6 +109,68 @@ class HomePage extends StatelessWidget {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 12),
+                  const Row(
+                    children: [
+                      Expanded(
+                        child: CenterCard(
+                          name: 'مركز الحياة الطبي',
+                          specialties: 'العيون ، الجلدية',
+                          location: 'الدمام · حي المزروعية',
+                          rating: '٤٫٥',
+                          reviewCount: '(١١٠)',
+                          distance: '٣٫١ كم',
+                          imageAsset: 'assets/images/home/center1.png',
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      Expanded(
+                        child: CenterCard(
+                          name: 'مجمع السلام الطبي',
+                          specialties: 'الأطفال ، الباطنية',
+                          location: 'الدمام · حي الشاطئ',
+                          rating: '٤٫٦',
+                          reviewCount: '(٩٨)',
+                          distance: '٤٫٢ كم',
+                          imageAsset: 'assets/images/home/center2.png',
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+                  SectionHeader(
+                    title: 'home_nearest_clinics'.tr(),
+                    actionLabel: 'home_view_all'.tr(),
+                    onAction: () {},
+                  ),
+                  const SizedBox(height: 16),
+                  const Row(
+                    children: [
+                      Expanded(
+                        child: CenterCard(
+                          name: 'عيادة الدكتور أحمد',
+                          specialties: 'الأسنان',
+                          location: 'الدمام · حي الفيصلية',
+                          rating: '٤٫٨',
+                          reviewCount: '(٥٠)',
+                          distance: '١٫٨ كم',
+                          imageAsset: 'assets/images/home/center1.png',
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      Expanded(
+                        child: CenterCard(
+                          name: 'عيادة الدكتورة سارة',
+                          specialties: 'الجلدية',
+                          location: 'الدمام · حي المزروعية',
+                          rating: '٤٫٧',
+                          reviewCount: '(٦٥)',
+                          distance: '٢٫٥ كم',
+                          imageAsset: 'assets/images/home/center2.png',
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),

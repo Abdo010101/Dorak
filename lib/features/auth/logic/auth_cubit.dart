@@ -10,8 +10,8 @@ import 'auth_state.dart';
 /// `VerifyController` for the phone+OTP flow Figma uses.
 ///
 /// Shape mirrors `docs/feature_pattern_dorak.md`: emit effect flags
-/// (`otpSent`, `verified`, `loggedOut`) that the UI listens on and acts
-/// on (navigate, snackbar, etc.).
+/// (`otpSent`, `verified`, `needsProfile`, `profileCompleted`, `loggedOut`)
+/// that the UI listens on and acts on (navigate, snackbar, etc.).
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit({
     required AuthenticationRepository authenticationRepository,
@@ -27,6 +27,19 @@ class AuthCubit extends Cubit<AuthState> {
 
   void setOtp(String v) => emit(state.copyWith(otp: v, clearError: true));
 
+  void setName(String v) => emit(state.copyWith(name: v, clearError: true));
+
+  void setEmail(String v) => emit(state.copyWith(email: v, clearError: true));
+
+  void resetFlags() => emit(state.copyWith(
+        otpSent: false,
+        verified: false,
+        needsProfile: false,
+        profileCompleted: false,
+        loggedOut: false,
+        clearError: true,
+      ));
+
   Future<void> loadCurrentUser() async {
     if (!_prefs.isUserLoggedIn()) return;
     final stored = await _prefs.retrieveUserInfo();
@@ -34,6 +47,14 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> sendOtp() async {
+    if (!_isValidPhone(state.phone)) {
+      emit(state.copyWith(
+        status: Status.failure,
+        otpSent: false,
+        errorMessage: 'phone_invalid_error',
+      ));
+      return;
+    }
     emit(state.copyWith(
       status: Status.loading,
       otpSent: false,
@@ -55,6 +76,14 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> verifyOtp() async {
+    if (state.otp.length < 4) {
+      emit(state.copyWith(
+        status: Status.failure,
+        verified: false,
+        errorMessage: 'otp_invalid_error',
+      ));
+      return;
+    }
     emit(state.copyWith(
       status: Status.loading,
       verified: false,
@@ -66,7 +95,51 @@ class AuthCubit extends Cubit<AuthState> {
         'otp': state.otp,
       });
       if (result.error == null) {
-        emit(state.copyWith(status: Status.success, verified: true));
+        final patient = state.user?.patient;
+        final needsProfile =
+            patient?.name == null || patient!.name!.trim().isEmpty;
+        emit(state.copyWith(
+          status: Status.success,
+          verified: true,
+          needsProfile: needsProfile,
+        ));
+      } else {
+        emit(state.copyWith(
+          status: Status.failure,
+          errorMessage: 'otp_invalid_error',
+        ));
+      }
+    } on DioException catch (e) {
+      emit(state.copyWith(status: Status.failure, errorMessage: e.message));
+    }
+  }
+
+  Future<void> completeProfile() async {
+    if (state.name.trim().isEmpty || !_isValidEmail(state.email)) {
+      emit(state.copyWith(
+        status: Status.failure,
+        profileCompleted: false,
+        errorMessage: 'required',
+      ));
+      return;
+    }
+    emit(state.copyWith(
+      status: Status.loading,
+      profileCompleted: false,
+      clearError: true,
+    ));
+    try {
+      final result = await _repo.completeData(body: {
+        'name': state.name,
+        'email': state.email,
+        'phone': state.phone,
+      });
+      if (result.error == null) {
+        emit(state.copyWith(
+          status: Status.success,
+          profileCompleted: true,
+          needsProfile: false,
+        ));
       } else {
         emit(state.copyWith(
           status: Status.failure,
@@ -88,4 +161,12 @@ class AuthCubit extends Cubit<AuthState> {
       emit(state.copyWith(status: Status.failure, errorMessage: e.message));
     }
   }
+
+  bool _isValidPhone(String v) {
+    final digits = v.replaceAll(RegExp(r'\D'), '');
+    return digits.length >= 9 && digits.length <= 10;
+  }
+
+  bool _isValidEmail(String v) =>
+      RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(v.trim());
 }

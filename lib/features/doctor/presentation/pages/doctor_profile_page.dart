@@ -1,3 +1,4 @@
+import 'package:dorakpattient/core/router/route_names.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -345,7 +346,8 @@ class _BookingBar extends StatelessWidget {
                 ),
               ],
             ),
-            child: FilledButton(
+            child: Builder(
+              builder: (ctx) => FilledButton(
               style: FilledButton.styleFrom(
                 backgroundColor: DoctorProfilePage._accent,
                 foregroundColor: Colors.white,
@@ -353,7 +355,7 @@ class _BookingBar extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () => ctx.pushNamed(RouteNames.addAppointment),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -374,6 +376,7 @@ class _BookingBar extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
             ),
           ),
         ),

@@ -1,6 +1,13 @@
 import 'package:dorakpattient/features/appointment/presentation/pages/appointments_page.dart';
+import 'package:dorakpattient/features/appointment/presentation/pages/booking_confirmed_page.dart';
+import 'package:dorakpattient/features/appointment/presentation/pages/booking_date_time_page.dart';
+import 'package:dorakpattient/features/appointment/presentation/pages/booking_review_page.dart';
+import 'package:dorakpattient/features/auth/presentation/pages/complete_profile_page.dart';
 import 'package:dorakpattient/features/auth/presentation/pages/otp_page.dart';
 import 'package:dorakpattient/features/auth/presentation/pages/phone_page.dart';
+import 'package:dorakpattient/features/auth/presentation/pages/signed_in_page.dart';
+import 'package:dorakpattient/features/discovery/presentation/pages/explore_map_page.dart';
+import 'package:dorakpattient/features/discovery/presentation/pages/location_picker_page.dart';
 import 'package:dorakpattient/features/doctor/presentation/pages/doctor_profile_page.dart';
 import 'package:dorakpattient/features/home/presentation/pages/main_shell_page.dart';
 import 'package:dorakpattient/features/intro/presentation/pages/splash_page.dart';
@@ -63,6 +70,16 @@ class AppRouter {
         path: RouteNames.otp,
         name: RouteNames.otp,
         builder: (_, __) => const OtpPage(),
+      ),
+      GoRoute(
+        path: RouteNames.completeInfo,
+        name: RouteNames.completeInfo,
+        builder: (_, __) => const CompleteProfilePage(),
+      ),
+      GoRoute(
+        path: RouteNames.signedIn,
+        name: RouteNames.signedIn,
+        builder: (_, __) => const SignedInPage(),
       ),
       GoRoute(
         path: RouteNames.home,
@@ -164,7 +181,17 @@ class AppRouter {
       GoRoute(
         path: RouteNames.addAppointment,
         name: RouteNames.addAppointment,
-        builder: (_, __) => const DoctorProfilePage(),
+        builder: (_, __) => const BookingDateTimePage(),
+      ),
+      GoRoute(
+        path: RouteNames.bookingReview,
+        name: RouteNames.bookingReview,
+        builder: (_, __) => const BookingReviewPage(),
+      ),
+      GoRoute(
+        path: RouteNames.bookingConfirmed,
+        name: RouteNames.bookingConfirmed,
+        builder: (_, __) => const BookingConfirmedPage(),
       ),
       GoRoute(
         path: RouteNames.bestDoctors,
@@ -190,6 +217,16 @@ class AppRouter {
         path: RouteNames.offers,
         name: RouteNames.offers,
         builder: (_, __) => const OffersPage(),
+      ),
+      GoRoute(
+        path: RouteNames.discoveryExploreMap,
+        name: RouteNames.discoveryExploreMap,
+        builder: (_, __) => const ExploreMapPage(),
+      ),
+      GoRoute(
+        path: RouteNames.discoveryLocationPicker,
+        name: RouteNames.discoveryLocationPicker,
+        builder: (_, __) => const LocationPickerPage(),
       ),
     ],
     errorBuilder: (_, __) => const SplashPage(),

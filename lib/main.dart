@@ -61,6 +61,8 @@ Future<void> main() async {
     EasyLocalization(
       supportedLocales: LanguageCubit.supportedLocales,
       path: 'assets/translations',
+      startLocale: const Locale('ar'),
+      fallbackLocale: const Locale('ar'),
       child: const MyApp(),
     ),
   );

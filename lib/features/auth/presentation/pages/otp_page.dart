@@ -1,15 +1,20 @@
 import 'dart:async';
 
 import 'package:dorakpattient/core/router/route_names.dart';
+import 'package:dorakpattient/core/state/status.dart';
+import 'package:dorakpattient/core/theme/app_colors_theme.dart';
+import 'package:dorakpattient/core/theme/app_typography.dart';
+import 'package:dorakpattient/features/auth/logic/auth_cubit.dart';
+import 'package:dorakpattient/features/auth/logic/auth_state.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-/// Phase 8 — Auth 04 OTP (Figma `201:1471`).
+/// Phase 8 — Auth 04 / 05 OTP (Figma `201:1471` + `202:1445`).
 class OtpPage extends StatefulWidget {
-  const OtpPage({super.key, this.maskedNumber = '+966 55 ••• ••67'});
-  final String maskedNumber;
+  const OtpPage({super.key});
 
   @override
   State<OtpPage> createState() => _OtpPageState();
@@ -17,15 +22,10 @@ class OtpPage extends StatefulWidget {
 
 class _OtpPageState extends State<OtpPage> {
   static const _cellCount = 4;
-  static const _accent = Color(0xFF1F8046);
-  static const _accentFocusRing = Color(0x14014AE0);
+  static const _brandGreen = Color(0xFF1F8046);
   static const _accentCaret = Color(0xFF19A055);
   static const _controlFocused = Color(0xFF014AE0);
-  static const _bgField = Color(0xFFFAFAFA);
-  static const _borderTertiary = Color(0xFFE5E5E5);
-  static const _textPrimary = Color(0xFF1D1D1D);
-  static const _textSecondary = Color(0xFF4C4C4C);
-  static const _textDisplay = Color(0xFF0C0C0C);
+  static const _accentFocusRing = Color(0x14014AE0);
   static const _ctaDisabled = Color(0xFF4C4C4C);
 
   final _controllers = List<TextEditingController>.generate(
@@ -41,10 +41,14 @@ class _OtpPageState extends State<OtpPage> {
   void initState() {
     super.initState();
     _startTimer();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<AuthCubit>().resetFlags();
+    });
   }
 
   void _startTimer() {
     _timer?.cancel();
+    setState(() => _secondsLeft = 45);
     _timer = Timer.periodic(const Duration(seconds: 1), (t) {
       if (!mounted) return;
       if (_secondsLeft <= 0) {
@@ -56,6 +60,14 @@ class _OtpPageState extends State<OtpPage> {
   }
 
   bool get _complete => _controllers.every((c) => c.text.isNotEmpty);
+
+  String get _joined => _controllers.map((c) => c.text).join();
+
+  String _maskedNumber(String phone) {
+    if (phone.length < 4) return '+966 $phone';
+    final tail = phone.substring(phone.length - 2);
+    return '+966 55 ••• ••$tail';
+  }
 
   @override
   void dispose() {
@@ -71,107 +83,152 @@ class _OtpPageState extends State<OtpPage> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorsTheme.of(context);
+    final type = AppTypography.of(context);
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: colors.white,
       body: SafeArea(
-        child: Column(
-          children: [
-            _TopBar(onBack: () => context.canPop() ? context.pop() : null),
-            Expanded(
-              child: ListView(
-                padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
-                children: [
-                  const Text(
-                    'otp_title',
-                    textAlign: TextAlign.right,
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700,
-                      color: _textPrimary,
-                    ),
-                  ).tr(),
-                  const SizedBox(height: 8),
-                  const Text(
-                    'otp_subtitle',
-                    textAlign: TextAlign.right,
-                    style: TextStyle(fontSize: 14, color: _textSecondary),
-                  ).tr(),
-                  const SizedBox(height: 6),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+        child: BlocConsumer<AuthCubit, AuthState>(
+          listenWhen: (p, c) => p.verified != c.verified && c.verified,
+          listener: (context, state) {
+            if (state.needsProfile) {
+              context.goNamed(RouteNames.completeInfo);
+            } else {
+              context.goNamed(RouteNames.signedIn);
+            }
+          },
+          builder: (context, state) {
+            final hasError = state.status == Status.failure &&
+                state.errorMessage != null;
+            final loading = state.status == Status.loading;
+            return Column(
+              children: [
+                _TopBar(
+                  color: colors.textPrimary,
+                  onBack: () => context.canPop() ? context.pop() : null,
+                ),
+                Expanded(
+                  child: ListView(
+                    padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
                     children: [
-                      GestureDetector(
-                        onTap: () =>
-                            context.canPop() ? context.pop() : null,
-                        child: const Text(
-                          'otp_change_number',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            color: _accent,
-                          ),
-                        ).tr(),
-                      ),
-                      const SizedBox(width: 12),
                       Text(
-                        widget.maskedNumber,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: _textPrimary,
-                        ),
+                        'otp_title'.tr(),
+                        textAlign: TextAlign.right,
+                        style: type.display.copyWith(color: colors.textPrimary),
                       ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'otp_subtitle'.tr(),
+                        textAlign: TextAlign.right,
+                        style: type.textLgRegular
+                            .copyWith(color: colors.textSecondary),
+                      ),
+                      const SizedBox(height: 6),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          GestureDetector(
+                            onTap: () =>
+                                context.canPop() ? context.pop() : null,
+                            child: Text(
+                              'otp_change_number'.tr(),
+                              style: type.textLgSemibold
+                                  .copyWith(color: _brandGreen),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Text(
+                            _maskedNumber(state.phone),
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: colors.textPrimary,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 32),
+                      _OtpRow(
+                        controllers: _controllers,
+                        focusNodes: _focusNodes,
+                        hasError: hasError,
+                        colors: colors,
+                        onChanged: () {
+                          context.read<AuthCubit>().setOtp(_joined);
+                          setState(() {});
+                        },
+                      ),
+                      const SizedBox(height: 24),
+                      if (hasError) ...[
+                        _ErrorRow(
+                          message: state.errorMessage!,
+                          colors: colors,
+                        ),
+                        const SizedBox(height: 12),
+                        Center(
+                          child: GestureDetector(
+                            onTap: () {
+                              for (final c in _controllers) {
+                                c.clear();
+                              }
+                              context.read<AuthCubit>().setOtp('');
+                              context.read<AuthCubit>().sendOtp();
+                              _startTimer();
+                            },
+                            child: Text(
+                              'otp_resend_cta'.tr(),
+                              style: type.textLgSemibold
+                                  .copyWith(color: _brandGreen),
+                            ),
+                          ),
+                        ),
+                      ] else
+                        Center(
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                '00:${_secondsLeft.toString().padLeft(2, '0')}',
+                                style: type.textLgSemibold
+                                    .copyWith(color: _brandGreen),
+                              ),
+                              const SizedBox(width: 6),
+                              Text(
+                                'otp_resend'.tr(),
+                                style: type.textLgRegular
+                                    .copyWith(color: colors.textSecondary),
+                              ),
+                            ],
+                          ),
+                        ),
                     ],
                   ),
-                  const SizedBox(height: 32),
-                  _OtpRow(
-                    controllers: _controllers,
-                    focusNodes: _focusNodes,
-                    onChanged: () => setState(() {}),
-                  ),
-                  const SizedBox(height: 24),
-                  Center(
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          '00:${_secondsLeft.toString().padLeft(2, '0')}',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: _accent,
-                          ),
-                        ),
-                        const SizedBox(width: 6),
-                        const Text(
-                          'otp_resend',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: _textSecondary,
-                          ),
-                        ).tr(),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            _CtaBar(
-              enabled: _complete,
-              onPressed: _complete
-                  ? () => context.goNamed(RouteNames.home)
-                  : null,
-            ),
-          ],
+                ),
+                _CtaBar(
+                  enabled: _complete && !loading,
+                  loading: loading,
+                  onPressed: _complete
+                      ? () => context.read<AuthCubit>().verifyOtp()
+                      : null,
+                  disabledColor: _ctaDisabled,
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
   }
+
+  static Color get controlFocused => _controlFocused;
+  static Color get focusRing => _accentFocusRing;
+  static Color get caret => _accentCaret;
 }
 
 class _TopBar extends StatelessWidget {
-  const _TopBar({required this.onBack});
+  const _TopBar({required this.onBack, required this.color});
   final VoidCallback? onBack;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -179,17 +236,17 @@ class _TopBar extends StatelessWidget {
       height: 48,
       child: Row(
         children: [
-          const Spacer(),
           IconButton(
             icon: Icon(
               Directionality.of(context) == TextDirection.rtl
-                  ? Icons.chevron_left
-                  : Icons.chevron_right,
+                  ? Icons.chevron_right
+                  : Icons.chevron_left,
               size: 24,
-              color: _OtpPageState._textPrimary,
+              color: color,
             ),
             onPressed: onBack,
           ),
+          const Spacer(),
         ],
       ),
     );
@@ -200,16 +257,21 @@ class _OtpRow extends StatelessWidget {
   const _OtpRow({
     required this.controllers,
     required this.focusNodes,
+    required this.hasError,
+    required this.colors,
     required this.onChanged,
   });
 
   final List<TextEditingController> controllers;
   final List<FocusNode> focusNodes;
+  final bool hasError;
+  final AppColorsTheme colors;
   final VoidCallback onChanged;
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      textDirection: TextDirection.ltr,
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(controllers.length, (i) {
         return Padding(
@@ -222,19 +284,22 @@ class _OtpRow extends StatelessWidget {
               child: Builder(
                 builder: (ctx) {
                   final focused = focusNodes[i].hasFocus;
+                  final borderColor = hasError
+                      ? colors.borderWarning
+                      : focused
+                          ? _OtpPageState.controlFocused
+                          : colors.fieldBorder;
                   return Container(
                     decoration: BoxDecoration(
-                      color: _OtpPageState._bgField,
-                      border: Border.all(
-                        color: focused
-                            ? _OtpPageState._controlFocused
-                            : _OtpPageState._borderTertiary,
-                      ),
+                      color: colors.surfaceField,
+                      border: Border.all(color: borderColor),
                       borderRadius: BorderRadius.circular(12),
                       boxShadow: focused
-                          ? const [
+                          ? [
                               BoxShadow(
-                                color: _OtpPageState._accentFocusRing,
+                                color: hasError
+                                    ? colors.errorRing
+                                    : _OtpPageState.focusRing,
                                 blurRadius: 0,
                                 spreadRadius: 4,
                               ),
@@ -249,16 +314,16 @@ class _OtpRow extends StatelessWidget {
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.center,
                         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
-                          color: _OtpPageState._textDisplay,
+                          color: colors.textPrimary,
                         ),
                         decoration: const InputDecoration(
                           counterText: '',
                           border: InputBorder.none,
                         ),
-                        cursorColor: _OtpPageState._accentCaret,
+                        cursorColor: _OtpPageState.caret,
                         onChanged: (v) {
                           if (v.isNotEmpty && i < controllers.length - 1) {
                             focusNodes[i + 1].requestFocus();
@@ -280,10 +345,41 @@ class _OtpRow extends StatelessWidget {
   }
 }
 
+class _ErrorRow extends StatelessWidget {
+  const _ErrorRow({required this.message, required this.colors});
+  final String message;
+  final AppColorsTheme colors;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Flexible(
+          child: Text(
+            message.tr(),
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 12, color: colors.textWarning),
+          ),
+        ),
+        const SizedBox(width: 6),
+        Icon(Icons.error_outline, size: 16, color: colors.textWarning),
+      ],
+    );
+  }
+}
+
 class _CtaBar extends StatelessWidget {
-  const _CtaBar({required this.enabled, required this.onPressed});
+  const _CtaBar({
+    required this.enabled,
+    required this.loading,
+    required this.onPressed,
+    required this.disabledColor,
+  });
   final bool enabled;
+  final bool loading;
   final VoidCallback? onPressed;
+  final Color disabledColor;
 
   @override
   Widget build(BuildContext context) {
@@ -297,18 +393,29 @@ class _CtaBar extends StatelessWidget {
           child: FilledButton(
             style: FilledButton.styleFrom(
               backgroundColor: enabled
-                  ? const Color(0xFF1F8046)
-                  : _OtpPageState._ctaDisabled,
-              foregroundColor: enabled ? Colors.white : const Color(0xFFD2D2D2),
+                  ? _OtpPageState._brandGreen
+                  : disabledColor,
+              foregroundColor:
+                  enabled ? Colors.white : const Color(0xFFD2D2D2),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            onPressed: onPressed,
-            child: const Text(
-              'otp_cta',
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-            ).tr(),
+            onPressed: enabled ? onPressed : null,
+            child: loading
+                ? const SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: Colors.white,
+                    ),
+                  )
+                : Text(
+                    'otp_cta'.tr(),
+                    style: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.w700),
+                  ),
           ),
         ),
       ),

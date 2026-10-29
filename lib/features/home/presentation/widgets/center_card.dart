@@ -49,14 +49,14 @@ class CenterCard extends StatelessWidget {
                   child: Image.asset(imageAsset, fit: BoxFit.cover),
                 ),
               ),
-              Positioned(
+              PositionedDirectional(
                 top: 8,
-                left: 8,
+                start: 8,
                 child: _RatingChip(rating: rating, count: reviewCount),
               ),
-              Positioned(
+              PositionedDirectional(
                 top: 8,
-                right: 8,
+                end: 8,
                 child: _DistanceTag(value: distance),
               ),
             ],

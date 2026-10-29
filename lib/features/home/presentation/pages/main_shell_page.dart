@@ -1,4 +1,5 @@
 import 'package:dorakpattient/features/appointment/presentation/pages/appointments_page.dart';
+import 'package:dorakpattient/features/discovery/presentation/pages/explore_page.dart';
 import 'package:dorakpattient/features/home/presentation/pages/home_page.dart';
 import 'package:dorakpattient/features/profile/presentation/pages/profile_page.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
@@ -25,7 +26,7 @@ class _MainShellPageState extends State<MainShellPage> {
 
   final _pages = const <Widget>[
     HomePage(),
-    _StubTab(title: 'استكشف'),
+    ExplorePage(),
     AppointmentsPage(),
     ProfilePage(),
   ];

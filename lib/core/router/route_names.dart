@@ -9,6 +9,7 @@ abstract class RouteNames {
   static const login = '$splash/login';
   static const register = '$welcome/register';
   static const completeInfo = '$splash/complete-info';
+  static const signedIn = '$splash/signed-in';
   static const otp = '$register/otp';
   static const home = '$splash/home';
   static const notification = '$home/notification';
@@ -37,8 +38,12 @@ abstract class RouteNames {
   static const gender = '$otp/gender_screen';
   static const language = '$profile/language_screen';
   static const addAppointment = '$home/add_appointment_screen';
+  static const bookingReview = '$home/booking_review_screen';
+  static const bookingConfirmed = '$home/booking_confirmed_screen';
   static const bestDoctors = '$home/best_doctors_screen';
   static const doctorReview = '$doctor/doctor_review_screen';
   static const changePhone = '$welcome/change_phone_screen';
   static const searchDoctor = '$home/search_doctor_screen';
+  static const discoveryExploreMap = '$home/discovery/explore_map';
+  static const discoveryLocationPicker = '$home/discovery/location_picker';
 }

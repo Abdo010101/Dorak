@@ -22,6 +22,11 @@ class AppColorsTheme extends ThemeExtension<AppColorsTheme> {
     required this.successRing,
     required this.white,
     required this.primaryTint,
+    required this.primary200,
+    required this.secondaryTint,
+    required this.textInfo,
+    required this.neutral25,
+    required this.neutral50,
     required this.skeleton,
     required this.onPrimary,
   });
@@ -40,14 +45,19 @@ class AppColorsTheme extends ThemeExtension<AppColorsTheme> {
   final Color successRing;
   final Color white;
   final Color primaryTint;
+  final Color primary200;
+  final Color secondaryTint;
+  final Color textInfo;
+  final Color neutral25;
+  final Color neutral50;
   final Color skeleton;
   final Color onPrimary;
 
   factory AppColorsTheme.light() => const AppColorsTheme(
-        borderPrimary: Color(0xFF014AE0),
-        focusRing: Color.fromRGBO(1, 74, 224, 0.08),
+        borderPrimary: Color(0xFF1F8046),
+        focusRing: Color.fromRGBO(31, 128, 70, 0.08),
         textPrimary: Color(0xFF1D1D1D),
-        textSecondary: Color(0xFF6D6D6D),
+        textSecondary: Color(0xFF4C4C4C),
         surfaceField: Color(0xFFFAFAFA),
         fieldBorder: Color(0xFFE5E5E5),
         borderWarning: Color(0xFFB54708),
@@ -57,7 +67,12 @@ class AppColorsTheme extends ThemeExtension<AppColorsTheme> {
         textSuccess: Color(0xFF067647),
         successRing: Color.fromRGBO(6, 118, 71, 0.08),
         white: Color(0xFFFFFFFF),
-        primaryTint: Color(0xFFEBF1FE),
+        primaryTint: Color(0xFFDBFEE3),
+        primary200: Color(0xFF98F3B2),
+        secondaryTint: Color(0xFFE5EFFF),
+        textInfo: Color(0xFF175CD3),
+        neutral25: Color(0xFFFAFAFA),
+        neutral50: Color(0xFFF4F4F4),
         skeleton: Color(0xFFEFEFEF),
         onPrimary: Color(0xFFFFFFFF),
       );
@@ -81,6 +96,11 @@ class AppColorsTheme extends ThemeExtension<AppColorsTheme> {
     Color? successRing,
     Color? white,
     Color? primaryTint,
+    Color? primary200,
+    Color? secondaryTint,
+    Color? textInfo,
+    Color? neutral25,
+    Color? neutral50,
     Color? skeleton,
     Color? onPrimary,
   }) {
@@ -99,6 +119,11 @@ class AppColorsTheme extends ThemeExtension<AppColorsTheme> {
       successRing: successRing ?? this.successRing,
       white: white ?? this.white,
       primaryTint: primaryTint ?? this.primaryTint,
+      primary200: primary200 ?? this.primary200,
+      secondaryTint: secondaryTint ?? this.secondaryTint,
+      textInfo: textInfo ?? this.textInfo,
+      neutral25: neutral25 ?? this.neutral25,
+      neutral50: neutral50 ?? this.neutral50,
       skeleton: skeleton ?? this.skeleton,
       onPrimary: onPrimary ?? this.onPrimary,
     );
@@ -122,6 +147,11 @@ class AppColorsTheme extends ThemeExtension<AppColorsTheme> {
       successRing: Color.lerp(successRing, other.successRing, t)!,
       white: Color.lerp(white, other.white, t)!,
       primaryTint: Color.lerp(primaryTint, other.primaryTint, t)!,
+      primary200: Color.lerp(primary200, other.primary200, t)!,
+      secondaryTint: Color.lerp(secondaryTint, other.secondaryTint, t)!,
+      textInfo: Color.lerp(textInfo, other.textInfo, t)!,
+      neutral25: Color.lerp(neutral25, other.neutral25, t)!,
+      neutral50: Color.lerp(neutral50, other.neutral50, t)!,
       skeleton: Color.lerp(skeleton, other.skeleton, t)!,
       onPrimary: Color.lerp(onPrimary, other.onPrimary, t)!,
     );
