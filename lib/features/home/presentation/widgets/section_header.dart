@@ -17,32 +17,6 @@ class SectionHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        if (actionLabel != null)
-          InkWell(
-            onTap: onAction,
-            child: Row(
-              children: [
-                Icon(
-                  Directionality.of(context) == TextDirection.rtl
-                      ? Icons.chevron_left
-                      : Icons.chevron_right,
-                  size: 16,
-                  color: const Color(0xFF1F8046),
-                ),
-                const SizedBox(width: 4),
-                Text(
-                  actionLabel!,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFF1F8046),
-                  ),
-                ),
-              ],
-            ),
-          )
-        else
-          const SizedBox.shrink(),
         Text(
           title,
           style: const TextStyle(
@@ -51,6 +25,32 @@ class SectionHeader extends StatelessWidget {
             color: Color(0xFF1D1D1D),
           ),
         ),
+        if (actionLabel != null)
+          InkWell(
+            onTap: onAction,
+            child: Row(
+              children: [
+                Text(
+                  actionLabel!,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF1F8046),
+                  ),
+                ),
+                const SizedBox(width: 4),
+                Icon(
+                  Directionality.of(context) == TextDirection.rtl
+                      ? Icons.chevron_right
+                      : Icons.chevron_left,
+                  size: 16,
+                  color: const Color(0xFF1F8046),
+                ),
+              ],
+            ),
+          )
+        else
+          const SizedBox.shrink(),
       ],
     );
   }

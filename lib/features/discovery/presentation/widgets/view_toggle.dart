@@ -35,18 +35,18 @@ class ViewToggle extends StatelessWidget {
         children: [
           Expanded(
             child: _Option(
-              label: mapLabel,
-              icon: Icons.map_outlined,
-              active: value == DiscoveryView.map,
-              onTap: () => onChanged(DiscoveryView.map),
-            ),
-          ),
-          Expanded(
-            child: _Option(
               label: listLabel,
               icon: Icons.menu,
               active: value == DiscoveryView.list,
               onTap: () => onChanged(DiscoveryView.list),
+            ),
+          ),
+          Expanded(
+            child: _Option(
+              label: mapLabel,
+              icon: Icons.map_outlined,
+              active: value == DiscoveryView.map,
+              onTap: () => onChanged(DiscoveryView.map),
             ),
           ),
         ],

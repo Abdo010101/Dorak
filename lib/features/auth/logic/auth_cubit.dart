@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/state/status.dart';
+import '../../../data/models/response/response.dart';
 import '../../../data/repository/repository.dart';
 import '../../../data/shared/shared_pref.dart';
 import 'auth_state.dart';
@@ -99,10 +100,22 @@ class AuthCubit extends Cubit<AuthState> {
     ));
     if (_mockAuth) {
       await Future<void>.delayed(const Duration(milliseconds: 400));
+      final mockUser = UserResponse(
+        token: 'mock-token',
+        patient: Patient(
+          id: 1,
+          name: 'سارة أحمد',
+          phone: state.phone,
+          email: 'sara@example.com',
+          gender: 'female',
+        ),
+      );
+      await _prefs.storeLoginInfo(mockUser);
       emit(state.copyWith(
         status: Status.success,
         verified: true,
-        needsProfile: true,
+        needsProfile: false,
+        user: mockUser,
       ));
       return;
     }
@@ -147,10 +160,22 @@ class AuthCubit extends Cubit<AuthState> {
     ));
     if (_mockAuth) {
       await Future<void>.delayed(const Duration(milliseconds: 400));
+      final updated = UserResponse(
+        token: state.user?.token ?? 'mock-token',
+        patient: Patient(
+          id: state.user?.patient?.id ?? 1,
+          name: state.name,
+          phone: state.phone,
+          email: state.email,
+          gender: state.user?.patient?.gender,
+        ),
+      );
+      await _prefs.storeLoginInfo(updated);
       emit(state.copyWith(
         status: Status.success,
         profileCompleted: true,
         needsProfile: false,
+        user: updated,
       ));
       return;
     }

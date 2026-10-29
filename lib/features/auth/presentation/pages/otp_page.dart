@@ -9,7 +9,6 @@ import 'package:dorakpattient/features/auth/logic/auth_cubit.dart';
 import 'package:dorakpattient/features/auth/logic/auth_state.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -24,16 +23,10 @@ class OtpPage extends StatefulWidget {
 class _OtpPageState extends State<OtpPage> {
   static const _cellCount = 4;
   static const _brandGreen = Color(0xFF1F8046);
-  static const _accentCaret = Color(0xFF19A055);
-  static const _controlFocused = Color(0xFF014AE0);
-  static const _accentFocusRing = Color(0x14014AE0);
   static const _ctaDisabled = Color(0xFF4C4C4C);
 
-  final _controllers = List<TextEditingController>.generate(
-    _cellCount,
-    (_) => TextEditingController(),
-  );
-  final _focusNodes = List<FocusNode>.generate(_cellCount, (_) => FocusNode());
+  final _otpKey = GlobalKey<AppOtpFieldState>();
+  String _code = '';
 
   int _secondsLeft = 45;
   Timer? _timer;
@@ -60,9 +53,7 @@ class _OtpPageState extends State<OtpPage> {
     });
   }
 
-  bool get _complete => _controllers.every((c) => c.text.isNotEmpty);
-
-  String get _joined => _controllers.map((c) => c.text).join();
+  bool get _complete => _code.length == _cellCount;
 
   String _maskedNumber(String phone) {
     if (phone.length < 4) return '+966 $phone';
@@ -73,12 +64,6 @@ class _OtpPageState extends State<OtpPage> {
   @override
   void dispose() {
     _timer?.cancel();
-    for (final c in _controllers) {
-      c.dispose();
-    }
-    for (final f in _focusNodes) {
-      f.dispose();
-    }
     super.dispose();
   }
 
@@ -99,8 +84,8 @@ class _OtpPageState extends State<OtpPage> {
             }
           },
           builder: (context, state) {
-            final hasError = state.status == Status.failure &&
-                state.errorMessage != null;
+            final hasError =
+                state.status == Status.failure && state.errorMessage != null;
             final loading = state.status == Status.loading;
             return Column(
               children: [
@@ -126,18 +111,8 @@ class _OtpPageState extends State<OtpPage> {
                       ),
                       const SizedBox(height: 6),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          GestureDetector(
-                            onTap: () =>
-                                context.canPop() ? context.pop() : null,
-                            child: Text(
-                              'otp_change_number'.tr(),
-                              style: type.textLgSemibold
-                                  .copyWith(color: _brandGreen),
-                            ),
-                          ),
-                          const SizedBox(width: 12),
                           Text(
                             _maskedNumber(state.phone),
                             style: TextStyle(
@@ -146,18 +121,34 @@ class _OtpPageState extends State<OtpPage> {
                               color: colors.textPrimary,
                             ),
                           ),
+                          const SizedBox(width: 12),
+                          GestureDetector(
+                            onTap: () {
+                              if (context.canPop()) {
+                                context.pop();
+                              } else {
+                                context.goNamed(RouteNames.login);
+                              }
+                            },
+                            child: Text(
+                              'otp_change_number'.tr(),
+                              style: type.textLgSemibold
+                                  .copyWith(color: _brandGreen),
+                            ),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 32),
-                      _OtpRow(
-                        controllers: _controllers,
-                        focusNodes: _focusNodes,
+                      AppOtpField(
+                        key: _otpKey,
+                        length: _cellCount,
                         hasError: hasError,
-                        colors: colors,
-                        onChanged: () {
-                          context.read<AuthCubit>().setOtp(_joined);
-                          setState(() {});
+                        onChanged: (v) {
+                          setState(() => _code = v);
+                          context.read<AuthCubit>().setOtp(v);
                         },
+                        onCompleted: (_) =>
+                            context.read<AuthCubit>().verifyOtp(),
                       ),
                       const SizedBox(height: 24),
                       if (hasError) ...[
@@ -169,9 +160,8 @@ class _OtpPageState extends State<OtpPage> {
                         Center(
                           child: GestureDetector(
                             onTap: () {
-                              for (final c in _controllers) {
-                                c.clear();
-                              }
+                              _otpKey.currentState?.clear();
+                              setState(() => _code = '');
                               context.read<AuthCubit>().setOtp('');
                               context.read<AuthCubit>().sendOtp();
                               _startTimer();
@@ -220,10 +210,6 @@ class _OtpPageState extends State<OtpPage> {
       ),
     );
   }
-
-  static Color get controlFocused => _controlFocused;
-  static Color get focusRing => _accentFocusRing;
-  static Color get caret => _accentCaret;
 }
 
 class _TopBar extends StatelessWidget {
@@ -237,111 +223,10 @@ class _TopBar extends StatelessWidget {
       height: 48,
       child: Row(
         children: [
-          IconButton(
-            icon: Icon(
-              Directionality.of(context) == TextDirection.rtl
-                  ? Icons.chevron_right
-                  : Icons.chevron_left,
-              size: 24,
-              color: color,
-            ),
-            onPressed: onBack,
-          ),
+          AppBackButton(onPressed: onBack),
           const Spacer(),
         ],
       ),
-    );
-  }
-}
-
-class _OtpRow extends StatelessWidget {
-  const _OtpRow({
-    required this.controllers,
-    required this.focusNodes,
-    required this.hasError,
-    required this.colors,
-    required this.onChanged,
-  });
-
-  final List<TextEditingController> controllers;
-  final List<FocusNode> focusNodes;
-  final bool hasError;
-  final AppColorsTheme colors;
-  final VoidCallback onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      textDirection: TextDirection.ltr,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(controllers.length, (i) {
-        return Padding(
-          padding: EdgeInsets.only(right: i == controllers.length - 1 ? 0 : 14),
-          child: SizedBox(
-            width: 62,
-            height: 64,
-            child: Focus(
-              onFocusChange: (_) => onChanged(),
-              child: Builder(
-                builder: (ctx) {
-                  final focused = focusNodes[i].hasFocus;
-                  final borderColor = hasError
-                      ? colors.borderWarning
-                      : focused
-                          ? _OtpPageState.controlFocused
-                          : colors.fieldBorder;
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: colors.surfaceField,
-                      border: Border.all(color: borderColor),
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: focused
-                          ? [
-                              BoxShadow(
-                                color: hasError
-                                    ? colors.errorRing
-                                    : _OtpPageState.focusRing,
-                                blurRadius: 0,
-                                spreadRadius: 4,
-                              ),
-                            ]
-                          : null,
-                    ),
-                    child: Center(
-                      child: TextField(
-                        controller: controllers[i],
-                        focusNode: focusNodes[i],
-                        maxLength: 1,
-                        keyboardType: TextInputType.number,
-                        textAlign: TextAlign.center,
-                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                          color: colors.textPrimary,
-                        ),
-                        decoration: const InputDecoration(
-                          counterText: '',
-                          border: InputBorder.none,
-                        ),
-                        cursorColor: _OtpPageState.caret,
-                        onChanged: (v) {
-                          if (v.isNotEmpty && i < controllers.length - 1) {
-                            focusNodes[i + 1].requestFocus();
-                          } else if (v.isEmpty && i > 0) {
-                            focusNodes[i - 1].requestFocus();
-                          }
-                          onChanged();
-                        },
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ),
-        );
-      }),
     );
   }
 }

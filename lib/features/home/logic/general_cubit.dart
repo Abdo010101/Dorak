@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/services/location_service.dart';
 import '../../../core/state/status.dart';
 import '../../../data/models/response/response.dart';
 import '../../../data/repository/repository.dart';
@@ -30,8 +31,7 @@ class GeneralCubit extends Cubit<GeneralState> {
             specializations: List<Titles>.from(
               data.mainSpecializations ?? const <Titles>[],
             ),
-            originalAreas:
-                List<Titles>.from(data.cities ?? const <Titles>[]),
+            originalAreas: List<Titles>.from(data.cities ?? const <Titles>[]),
             areas: List<Titles>.from(data.cities ?? const <Titles>[]),
           ),
         );
@@ -198,29 +198,61 @@ class GeneralCubit extends Cubit<GeneralState> {
   void setMainSpecialization(bool value) =>
       emit(state.copyWith(isMainSpecialization: value));
 
-  void setLatLng({required double lat, required double lng}) => emit(
-        GeneralState(
-          status: state.status,
-          generalResponse: state.generalResponse,
-          titles: state.titles,
-          specializations: state.specializations,
-          subSpecializations: state.subSpecializations,
-          originalSubSpecializations: state.originalSubSpecializations,
-          cities: state.cities,
-          originalCities: state.originalCities,
-          areas: state.areas,
-          originalAreas: state.originalAreas,
-          terms: state.terms,
-          policy: state.policy,
-          searchResult: state.searchResult,
-          specId: state.specId,
-          specializationId: state.specializationId,
-          specializationName: state.specializationName,
-          lat: lat,
-          lng: lng,
-          isMainSpecialization: state.isMainSpecialization,
+  /// Trigger from the UI (home `initState`). Walks the service-enablement
+  /// and permission tree, fetches the position, reverse-geocodes it, and
+  /// emits a terminal [LocationResolveStatus] plus optional city/area.
+  ///
+  /// Caller owns the opt-in bottom sheet UX — this method only emits status.
+  Future<void> resolveDeviceLocation({
+    required LocationService svc,
+    required String localeCode,
+  }) async {
+    emit(state.copyWith(locationStatus: LocationResolveStatus.loading));
+    final gate = await svc.ensurePermission();
+    switch (gate) {
+      case LocationStatus.serviceDisabled:
+        emit(
+          state.copyWith(
+            locationStatus: LocationResolveStatus.serviceDisabled,
+          ),
+        );
+        return;
+      case LocationStatus.denied:
+        emit(state.copyWith(locationStatus: LocationResolveStatus.denied));
+        return;
+      case LocationStatus.deniedForever:
+        emit(
+          state.copyWith(
+            locationStatus: LocationResolveStatus.deniedForever,
+          ),
+        );
+        return;
+      case LocationStatus.granted:
+        break;
+    }
+    try {
+      final pos = await svc.currentPosition();
+      setLatLng(lat: pos.lat, lng: pos.lng);
+      final place =
+          await svc.reverseGeocode(pos.lat, pos.lng, localeCode: localeCode);
+      if (place == null) {
+        emit(state.copyWith(locationStatus: LocationResolveStatus.error));
+        return;
+      }
+      emit(
+        state.copyWith(
+          locationStatus: LocationResolveStatus.resolved,
+          resolvedCityName: place.city,
+          resolvedAreaName: place.area,
         ),
       );
+    } catch (_) {
+      emit(state.copyWith(locationStatus: LocationResolveStatus.error));
+    }
+  }
+
+  void setLatLng({required double lat, required double lng}) =>
+      emit(state.copyWith(lat: lat, lng: lng));
 
   Future<void> loadTermsAndPolicy() async {
     await _loadTerms();

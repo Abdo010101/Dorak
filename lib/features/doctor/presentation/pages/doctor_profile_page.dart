@@ -32,8 +32,11 @@ class DoctorProfilePage extends StatelessWidget {
             _TopBar(onBack: () => context.canPop() ? context.pop() : null),
             Expanded(child: _Content(data: data)),
             _BookingBar(
-              onBook: () =>
-                  context.pushNamed(RouteNames.bookingSpecialtyDoctor),
+              onBook: () async {
+                if (!await ensureSignedIn(context)) return;
+                if (!context.mounted) return;
+                context.pushNamed(RouteNames.bookingSpecialtyDoctor);
+              },
             ),
           ],
         ),

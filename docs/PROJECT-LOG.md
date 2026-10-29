@@ -548,3 +548,20 @@ Parallel session's untracked files were committed to keep the build green:
   - **i18n**: added `booking_stepper_step1..4`, `booking_step_specialty`, `booking_step_doctor`, `booking_step_doctor_subtitle`, `booking_any_doctor`, `booking_label_doctor`, `booking_label_service`, `booking_cta_continue`, `booking_header_title` in `ar.json` + `en.json`.
 - **الملفات المتأثرة:** `lib/features/appointment/presentation/pages/{booking_specialty_doctor,booking_date_time,booking_review,booking_confirmed,appointments}_page.dart`, `lib/features/appointment/presentation/widgets/{booking_stepper,specialty_chip_tile,doctor_pick_tile,booking_card}.dart`, `lib/features/doctor/presentation/pages/doctor_profile_page.dart`, `lib/core/router/{app_router,route_names}.dart`, `assets/translations/{ar,en}.json`.
 - **النتيجة:** `flutter analyze` → 0 new errors/warnings (4 pre-existing info-level lints untouched). `flutter test` → 64/64 pass. BookingCubit wiring still deferred (pages consume static mocks); flagged as follow-up.
+
+### [2026-10-29] — ✅ Phase 11b — reusable sign-in-required sheet (Figma 350:3072)
+- **Branch:** `ui-redesign`.
+- **Figma:** file `jA3JQXye9DbBrxzNkEj9nf`, section `350:3069` "Prototype overlays (sheets)" → frame `350:3072` "Overlay / Sign-in required".
+- **New files:**
+  - `lib/core/ui_kit/feedback/sign_in_required_sheet.dart` — `SignInRequiredSheet` (Figma-exact bottom sheet) + two helpers: `ensureSignedIn(ctx)` (gate action handlers) and `popIfGuest(ctx)` (gate page `initState`).
+- **Modified:**
+  - `lib/core/ui_kit/ui_kit.dart` — export the new sheet file.
+  - `assets/translations/{ar,en}.json` — +6 `signin_sheet_*` keys.
+  - `lib/features/home/presentation/pages/main_shell_page.dart` — bottom-nav tap intercept on index 2 (Bookings).
+  - `lib/features/doctor/presentation/pages/doctor_profile_page.dart` — book CTA wrapped in `ensureSignedIn`.
+  - `lib/features/appointment/presentation/pages/booking_specialty_doctor_page.dart`, `appointments_page.dart` — `popIfGuest` on `initState` (deep-link safety net).
+  - `lib/features/profile/presentation/pages/personal_info_page.dart` — `popIfGuest` on `initState`.
+- **Scope:** phone CTA → `RouteNames.login`; Apple + Google → `RouteNames.welcome`. "Not now" dismisses. No new OAuth packages (Phase 9e removal preserved).
+- **RTL:** sheet is center-aligned so no logical-direction concern beyond writing social-button children in logical order. Icons flip via ambient `Directionality`.
+- **Guest check:** `AuthCubit.state.isAuthenticated` (sole live source of truth per `features/auth/logic/auth_state.dart:35`).
+- **Gates:** `flutter analyze` — 0 new errors / warnings on top of pre-existing lint infos. `flutter test` — 63/1 (1 pre-existing failure, `ui_kit_test` AppDialog, unrelated to this phase).

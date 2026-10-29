@@ -1,3 +1,4 @@
+import 'package:dorakpattient/core/router/route_names.dart';
 import 'package:dorakpattient/core/ui_kit/ui_kit.dart';
 import 'package:dorakpattient/features/home/presentation/widgets/center_card.dart';
 import 'package:dorakpattient/features/home/presentation/widgets/specialty_chip_row.dart';
@@ -50,7 +51,16 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
       body: SafeArea(
         child: Column(
           children: [
-            _TopBar(controller: _query, onCancel: () => context.pop()),
+            _TopBar(
+              controller: _query,
+              onCancel: () {
+                if (context.canPop()) {
+                  context.pop();
+                } else {
+                  context.goNamed(RouteNames.home);
+                }
+              },
+            ),
             Expanded(
               child: _showEmpty ? _buildEmpty() : _buildResults(),
             ),
@@ -89,6 +99,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
           children: [
             Expanded(
               child: CenterCard(
+                centerId: 1,
                 name: 'مركز العناية الطبي',
                 specialties: 'الأسنان ، الجلدية',
                 location: 'الدمام · حي الشاطئ',
@@ -101,6 +112,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
             SizedBox(width: 8),
             Expanded(
               child: CenterCard(
+                centerId: 2,
                 name: 'مجمع النور الطبي',
                 specialties: 'الأسنان ، الأطفال',
                 location: 'الدمام · حي الفيصلية',
@@ -117,6 +129,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
           children: [
             Expanded(
               child: CenterCard(
+                centerId: 3,
                 name: 'مركز الحياة الطبي',
                 specialties: 'العيون ، الجلدية',
                 location: 'الدمام · حي المزروعية',
@@ -129,6 +142,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
             SizedBox(width: 8),
             Expanded(
               child: CenterCard(
+                centerId: 5,
                 name: 'مركز الحياة الطبي',
                 specialties: 'العيون ، الجلدية',
                 location: 'الدمام · حي المزروعية',
@@ -147,6 +161,8 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
           children: [
             Expanded(
               child: CenterCard(
+                centerId: 101,
+                isClinic: true,
                 name: 'عيادة الدكتور أحمد',
                 specialties: 'الأسنان',
                 location: 'الدمام · حي الفيصلية',
@@ -159,6 +175,8 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
             SizedBox(width: 8),
             Expanded(
               child: CenterCard(
+                centerId: 102,
+                isClinic: true,
                 name: 'عيادة الدكتورة سارة',
                 specialties: 'الجلدية',
                 location: 'الدمام · حي المزروعية',
@@ -254,6 +272,7 @@ class _TopBar extends StatelessWidget {
   final VoidCallback onCancel;
 
   static const _accent = Color(0xFF1F8046);
+  static const _hintMuted = Color(0xFF4C4C4C);
 
   @override
   Widget build(BuildContext context) {
@@ -262,47 +281,41 @@ class _TopBar extends StatelessWidget {
       child: Row(
         children: [
           GestureDetector(
+            behavior: HitTestBehavior.opaque,
             onTap: onCancel,
-            child: Text(
-              'search_cancel'.tr(),
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-                color: _accent,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
+              child: Text(
+                'search_cancel'.tr(),
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: _accent,
+                ),
               ),
             ),
           ),
           const SizedBox(width: 12),
           Expanded(
-            child: Container(
-              height: 48,
-              padding: const EdgeInsetsDirectional.only(start: 14, end: 16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: _accent, width: 1.5),
-                borderRadius: BorderRadius.circular(12),
+            child: AppInputField(
+              controller: controller,
+              hintText: 'search_hint'.tr(),
+              autofocus: true,
+              leading: SvgPicture.asset(
+                'assets/images/home/search.svg',
+                width: 20,
+                height: 20,
               ),
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    'assets/images/home/search.svg',
-                    width: 20,
-                    height: 20,
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: TextField(
-                      controller: controller,
-                      textAlign: TextAlign.end,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        isCollapsed: true,
-                        contentPadding: EdgeInsets.symmetric(vertical: 14),
+              trailing: controller.text.isEmpty
+                  ? null
+                  : GestureDetector(
+                      onTap: controller.clear,
+                      child: const Icon(
+                        Icons.close_rounded,
+                        size: 18,
+                        color: _hintMuted,
                       ),
                     ),
-                  ),
-                ],
-              ),
             ),
           ),
         ],

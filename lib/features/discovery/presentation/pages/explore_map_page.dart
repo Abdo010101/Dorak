@@ -1,21 +1,52 @@
 import 'package:dorakpattient/core/router/route_names.dart';
+import 'package:dorakpattient/features/discovery/data/mock/discovery_centers_mock.dart';
+import 'package:dorakpattient/features/discovery/presentation/widgets/all_specialties_sheet.dart';
 import 'package:dorakpattient/features/discovery/presentation/widgets/explore_header.dart';
 import 'package:dorakpattient/features/discovery/presentation/widgets/filter_pill.dart';
+import 'package:dorakpattient/features/discovery/presentation/widgets/horizontal_center_card.dart';
 import 'package:dorakpattient/features/discovery/presentation/widgets/map_background.dart';
-import 'package:dorakpattient/features/discovery/presentation/widgets/map_marker.dart';
+import 'package:dorakpattient/features/discovery/presentation/widgets/map_marker_pin.dart';
 import 'package:dorakpattient/features/discovery/presentation/widgets/pill_search_bar.dart';
 import 'package:dorakpattient/features/discovery/presentation/widgets/view_toggle.dart';
-import 'package:dorakpattient/features/home/presentation/widgets/center_card.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-/// Figma `203:1881` — Explore map view.
-class ExploreMapPage extends StatelessWidget {
+/// Figma `203:1881` — Explore map view. Centers carry lat/lng; pins project
+/// through [DiscoveryCentersMock.bounds] into the viewport.
+class ExploreMapPage extends StatefulWidget {
   const ExploreMapPage({super.key});
 
   @override
+  State<ExploreMapPage> createState() => _ExploreMapPageState();
+}
+
+class _ExploreMapPageState extends State<ExploreMapPage> {
+  int _selectedIndex = 0;
+  String? _selectedSpecialtyKey;
+  String? _selectedSpecialtyLabel;
+
+  Future<void> _openSpecialtySheet() async {
+    final picked = await AllSpecialtiesSheet.show(
+      context,
+      selectedKey: _selectedSpecialtyKey,
+    );
+    if (picked != null && mounted) {
+      setState(() {
+        _selectedSpecialtyKey = picked.key;
+        _selectedSpecialtyLabel = picked.labelKey.tr();
+      });
+    }
+  }
+
+  void _openDetails(DiscoveryCenterPin pin) {
+    context.push('${RouteNames.centerDetails}?id=${pin.id}');
+  }
+
+  @override
   Widget build(BuildContext context) {
+    const pins = DiscoveryCentersMock.pins;
+    final selected = pins[_selectedIndex];
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -32,6 +63,7 @@ class ExploreMapPage extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
               child: PillSearchBar(
                 readOnly: true,
+                hint: 'explore_search_hint'.tr(),
                 onTap: () => context.goNamed(RouteNames.searchDoctor),
               ),
             ),
@@ -39,8 +71,9 @@ class ExploreMapPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: FilterPill(
-                label: 'explore_specialty_filter'.tr(),
-                onTap: () {},
+                label: _selectedSpecialtyLabel ??
+                    'explore_specialty_filter'.tr(),
+                onTap: _openSpecialtySheet,
               ),
             ),
             const SizedBox(height: 16),
@@ -56,42 +89,49 @@ class ExploreMapPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            const Expanded(
+            Expanded(
               child: Stack(
                 children: [
-                  Positioned.fill(child: MapBackground()),
-                  PositionedDirectional(
-                    top: 60,
-                    start: 60,
-                    child: MapMarker(label: 'النور', rating: '٤٫٦'),
-                  ),
-                  PositionedDirectional(
-                    top: 110,
-                    end: 60,
-                    child: MapMarker(label: 'العناية', rating: '٤٫٨'),
-                  ),
-                  PositionedDirectional(
-                    top: 210,
-                    start: 100,
-                    child: MapMarker(label: 'الحياة', rating: '٤٫٥'),
-                  ),
-                  PositionedDirectional(
-                    top: 280,
-                    start: 24,
-                    child: MapMarker(label: 'عيادة أحمد', rating: '٤٫٨'),
+                  const Positioned.fill(child: MapBackground()),
+                  Positioned.fill(
+                    child: LayoutBuilder(
+                      builder: (ctx, c) {
+                        final size = Size(c.maxWidth, c.maxHeight);
+                        return Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            for (int i = 0; i < pins.length; i++)
+                              _positioned(
+                                pins[i].latLng,
+                                size,
+                                MapMarkerPin(
+                                  label: pins[i].shortLabel,
+                                  rating: pins[i].rating,
+                                  selected: i == _selectedIndex,
+                                  onTap: () =>
+                                      setState(() => _selectedIndex = i),
+                                ),
+                              ),
+                            _positioned(
+                              DiscoveryCentersMock.userLocation,
+                              size,
+                              const UserLocationDot(),
+                              dotSize: 18,
+                            ),
+                          ],
+                        );
+                      },
+                    ),
                   ),
                   Positioned(
                     left: 16,
                     right: 16,
                     bottom: 16,
-                    child: CenterCard(
-                      name: 'مركز العناية الطبي',
-                      specialties: 'الأسنان ، الجلدية',
-                      location: 'الدمام · حي الفيصلية',
-                      rating: '٤٫٨',
-                      reviewCount: '(١٢٠)',
-                      distance: '٢٫٤ كم',
-                      imageAsset: 'assets/images/home/center1.png',
+                    child: HorizontalCenterCard(
+                      pin: selected,
+                      onTap: () => _openDetails(selected),
+                      onDetails: () => _openDetails(selected),
+                      onCall: () {},
                     ),
                   ),
                 ],
@@ -99,6 +139,24 @@ class ExploreMapPage extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _positioned(
+    LatLng p,
+    Size size,
+    Widget child, {
+    double dotSize = 0,
+  }) {
+    final o = DiscoveryCentersMock.bounds.project(p, size);
+    final half = dotSize / 2;
+    return Positioned(
+      left: o.dx - (dotSize == 0 ? 0 : half),
+      top: o.dy - (dotSize == 0 ? 14 : half),
+      child: FractionalTranslation(
+        translation: dotSize == 0 ? const Offset(-0.5, 0) : Offset.zero,
+        child: child,
       ),
     );
   }

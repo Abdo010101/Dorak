@@ -23,21 +23,14 @@ class HomeHeader extends StatelessWidget {
         children: [
           Row(
             children: [
-              _IconButton(
-                asset: 'assets/images/home/notification.svg',
-                onTap: () => context.goNamed(RouteNames.notification),
+              SvgPicture.asset(
+                'assets/images/home/dorak_mark.svg',
+                width: 36,
+                height: 42,
               ),
-              const SizedBox(width: 26),
-              _IconButton(
-                asset: 'assets/images/home/search.svg',
-                onTap: () => context.goNamed(RouteNames.searchDoctor),
-              ),
-            ],
-          ),
-          Row(
-            children: [
+              const SizedBox(width: 14),
               Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     greeting,
@@ -57,11 +50,18 @@ class HomeHeader extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(width: 14),
-              SvgPicture.asset(
-                'assets/images/home/dorak_mark.svg',
-                width: 36,
-                height: 42,
+            ],
+          ),
+          Row(
+            children: [
+              _IconButton(
+                asset: 'assets/images/home/search.svg',
+                onTap: () => context.goNamed(RouteNames.searchDoctor),
+              ),
+              const SizedBox(width: 26),
+              _IconButton(
+                asset: 'assets/images/home/notification.svg',
+                onTap: () => context.goNamed(RouteNames.notification),
               ),
             ],
           ),

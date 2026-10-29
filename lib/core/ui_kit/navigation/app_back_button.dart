@@ -14,7 +14,7 @@ class AppBackButton extends StatelessWidget {
     final isRtl = Directionality.of(context) == TextDirection.rtl;
     return IconButton(
       icon: Icon(
-        isRtl ? Icons.arrow_forward : Icons.arrow_back,
+        isRtl ? Icons.arrow_back : Icons.arrow_forward,
         color: colors.textPrimary,
       ),
       onPressed: onPressed ?? () => Navigator.of(context).maybePop(),

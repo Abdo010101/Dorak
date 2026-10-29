@@ -23,50 +23,60 @@ class ExploreHeader extends StatelessWidget {
       height: 48,
       padding: const EdgeInsetsDirectional.only(start: 16, end: 16),
       color: Colors.white,
-      child: Row(
+      child: Stack(
+        alignment: Alignment.center,
         children: [
-          SvgPicture.asset(
-            'assets/images/home/dorak_mark.svg',
-            width: 29,
-            height: 34,
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Center(
-              child: Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  color: _textPrimary,
-                ),
+          Center(
+            child: Text(
+              title,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+                color: _textPrimary,
               ),
             ),
           ),
-          InkWell(
-            onTap: onCityTap,
-            child: Row(
-              children: [
-                SvgPicture.asset(
-                  'assets/images/home/down.svg',
-                  width: 20,
-                  height: 20,
-                ),
-                const SizedBox(width: 6),
-                Text(
-                  city,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: _textSecondary,
+          PositionedDirectional(
+            start: 0,
+            top: 0,
+            bottom: 0,
+            child: InkWell(
+              onTap: onCityTap,
+              child: Row(
+                children: [
+                  SvgPicture.asset(
+                    'assets/images/home/location_icon.svg',
+                    width: 16,
+                    height: 16,
                   ),
-                ),
-                const SizedBox(width: 6),
-                SvgPicture.asset(
-                  'assets/images/home/location_icon.svg',
-                  width: 16,
-                  height: 16,
-                ),
-              ],
+                  const SizedBox(width: 6),
+                  Text(
+                    city,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: _textSecondary,
+                    ),
+                  ),
+                  SvgPicture.asset(
+                    'assets/images/home/down.svg',
+                    width: 20,
+                    height: 20,
+                    fit: BoxFit.scaleDown,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          PositionedDirectional(
+            end: 0,
+            top: 0,
+            bottom: 0,
+            child: Center(
+              child: SvgPicture.asset(
+                'assets/images/home/dorak_mark.svg',
+                width: 29,
+                height: 34,
+              ),
             ),
           ),
         ],

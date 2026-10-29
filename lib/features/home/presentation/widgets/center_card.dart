@@ -22,6 +22,7 @@ class CenterCard extends StatelessWidget {
     required this.distance,
     required this.imageAsset,
     this.centerId = 1,
+    this.isClinic = false,
   });
 
   final String name;
@@ -32,6 +33,7 @@ class CenterCard extends StatelessWidget {
   final String distance;
   final String imageAsset;
   final int centerId;
+  final bool isClinic;
 
   @override
   Widget build(BuildContext context) {
@@ -40,22 +42,28 @@ class CenterCard extends StatelessWidget {
     final radii = AppRadii.of(context);
     final shadows = AppShadows.of(context);
     final spacing = AppSpacing.of(context);
-    return Material(
-      color: colors.white,
-      borderRadius: BorderRadius.circular(radii.large),
-      child: InkWell(
-        onTap: () => context.push(
-          '${RouteNames.centerDetails}?id=$centerId',
-        ),
-        borderRadius: BorderRadius.circular(radii.large),
-        child: Container(
-          decoration: BoxDecoration(
-            color: colors.white,
-            borderRadius: BorderRadius.circular(radii.large),
-            border: Border.all(color: colors.fieldBorder),
-            boxShadow: shadows.card,
+    final radius = BorderRadius.circular(radii.large);
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        borderRadius: radius,
+        boxShadow: shadows.card,
+      ),
+      child: Material(
+        color: colors.white,
+        borderRadius: radius,
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: () => context.push(
+            isClinic
+                ? '${RouteNames.clinicDetails}?id=$centerId'
+                : '${RouteNames.centerDetails}?id=$centerId',
           ),
-          child: Column(
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: radius,
+              border: Border.all(color: colors.fieldBorder),
+            ),
+            child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Stack(
@@ -64,7 +72,8 @@ class CenterCard extends StatelessWidget {
                     aspectRatio: 175 / 96,
                     child: ClipRRect(
                       borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(radii.large)),
+                        top: Radius.circular(radii.large),
+                      ),
                       child: Image.asset(imageAsset, fit: BoxFit.cover),
                     ),
                   ),
@@ -87,7 +96,7 @@ class CenterCard extends StatelessWidget {
               Padding(
                 padding: EdgeInsetsDirectional.all(spacing.md - 2),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       name,
@@ -99,7 +108,9 @@ class CenterCard extends StatelessWidget {
                     SizedBox(height: spacing.xs + 1),
                     Container(
                       padding: EdgeInsetsDirectional.symmetric(
-                          horizontal: spacing.sm, vertical: spacing.xs),
+                        horizontal: spacing.sm,
+                        vertical: spacing.xs,
+                      ),
                       decoration: BoxDecoration(
                         color: colors.secondaryTint,
                         borderRadius: BorderRadius.circular(radii.small),
@@ -159,6 +170,7 @@ class CenterCard extends StatelessWidget {
                 ),
               ),
             ],
+          ),
           ),
         ),
       ),

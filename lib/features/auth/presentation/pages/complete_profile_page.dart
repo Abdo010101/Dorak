@@ -77,20 +77,15 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
                             .copyWith(color: colors.textSecondary),
                       ),
                       const SizedBox(height: 28),
-                      _LabeledField(
+                      AppInputField(
                         label: 'complete_profile_name_label'.tr(),
                         controller: _nameController,
-                        colors: colors,
-                        type: type,
                         keyboardType: TextInputType.name,
                       ),
                       const SizedBox(height: 16),
-                      _LabeledField(
+                      AppEmailField(
                         label: 'complete_profile_email_label'.tr(),
                         controller: _emailController,
-                        colors: colors,
-                        type: type,
-                        keyboardType: TextInputType.emailAddress,
                       ),
                     ],
                   ),
@@ -121,70 +116,10 @@ class _TopBar extends StatelessWidget {
       height: 48,
       child: Row(
         children: [
-          IconButton(
-            icon: Icon(
-              Directionality.of(context) == TextDirection.rtl
-                  ? Icons.chevron_right
-                  : Icons.chevron_left,
-              size: 24,
-              color: color,
-            ),
-            onPressed: onBack,
-          ),
+          AppBackButton(onPressed: onBack),
           const Spacer(),
         ],
       ),
-    );
-  }
-}
-
-class _LabeledField extends StatelessWidget {
-  const _LabeledField({
-    required this.label,
-    required this.controller,
-    required this.colors,
-    required this.type,
-    required this.keyboardType,
-  });
-  final String label;
-  final TextEditingController controller;
-  final AppColorsTheme colors;
-  final AppTypography type;
-  final TextInputType keyboardType;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Align(
-          alignment: AlignmentDirectional.centerStart,
-          child: Text(
-            label,
-            style: type.textMdSemibold.copyWith(color: colors.textPrimary),
-          ),
-        ),
-        const SizedBox(height: 6),
-        Container(
-          height: 44,
-          decoration: BoxDecoration(
-            color: colors.surfaceField,
-            border: Border.all(color: colors.fieldBorder),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
-          child: TextField(
-            controller: controller,
-            keyboardType: keyboardType,
-            decoration: const InputDecoration(
-              border: InputBorder.none,
-              isCollapsed: true,
-              contentPadding: EdgeInsets.symmetric(vertical: 12),
-            ),
-            style: TextStyle(fontSize: 14, color: colors.textPrimary),
-          ),
-        ),
-      ],
     );
   }
 }

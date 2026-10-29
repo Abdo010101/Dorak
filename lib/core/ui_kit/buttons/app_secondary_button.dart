@@ -80,6 +80,7 @@ class AppSecondaryButton extends StatelessWidget {
         ),
       ),
       textStyle: WidgetStatePropertyAll(typo.textLgSemibold),
+      animationDuration: const Duration(milliseconds: 520),
     );
 
     final child = isLoading

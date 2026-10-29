@@ -1,3 +1,9 @@
+import 'package:dorakpattient/core/router/route_names.dart';
+import 'package:dorakpattient/core/services/location_service.dart';
+import 'package:dorakpattient/core/ui_kit/feedback/location_opt_in_sheet.dart';
+import 'package:dorakpattient/data/di/locator.dart';
+import 'package:dorakpattient/features/home/logic/general_cubit.dart';
+import 'package:dorakpattient/features/home/logic/general_state.dart';
 import 'package:dorakpattient/features/home/presentation/widgets/center_card.dart';
 import 'package:dorakpattient/features/home/presentation/widgets/home_header.dart';
 import 'package:dorakpattient/features/home/presentation/widgets/location_card.dart';
@@ -6,13 +12,54 @@ import 'package:dorakpattient/features/home/presentation/widgets/section_header.
 import 'package:dorakpattient/features/home/presentation/widgets/specialty_chip_row.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 /// Phase 8 — Home — الرئيسية (Figma node `171:509`).
 ///
-/// Static mock data for now; wiring to `HomeCubit` lands with the
-/// `HomeController` migration in a Phase 5 sub-phase.
-class HomePage extends StatelessWidget {
+/// Static mock lists for now; location card is wired to [GeneralCubit] and
+/// `LocationService` so the device location + reverse-geocoded city/area
+/// drive what the card shows.
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  bool _sheetShown = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _kickLocation());
+  }
+
+  Future<void> _kickLocation() async {
+    if (!mounted) return;
+    await context.read<GeneralCubit>().resolveDeviceLocation(
+          svc: locator<LocationService>(),
+          localeCode: context.locale.languageCode,
+        );
+  }
+
+  Future<void> _maybeShowOptIn(LocationResolveStatus s) async {
+    if (_sheetShown || !mounted) return;
+    final variant = s == LocationResolveStatus.deniedForever
+        ? LocationOptInVariant.settings
+        : LocationOptInVariant.allow;
+    _sheetShown = true;
+    final confirmed = await LocationOptInSheet.show(context, variant: variant);
+    if (!mounted) return;
+    if (!confirmed) return;
+    if (variant == LocationOptInVariant.settings) {
+      await locator<LocationService>().openSystemSettings();
+      return;
+    }
+    _sheetShown = false;
+    await _kickLocation();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +69,29 @@ class HomePage extends StatelessWidget {
         bottom: false,
         child: Column(
           children: [
-            const HomeHeader(greeting: 'أهلا فيك', subtitle: 'موعدك المناسب بانتظارك'),
+            const HomeHeader(
+              greeting: 'أهلا فيك',
+              subtitle: 'موعدك المناسب بانتظارك',
+            ),
             Expanded(
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
                 children: [
-                  const LocationCard(
-                    label: 'موقعك الحالي',
-                    value: 'الدمام، حي الفيصلية',
+                  BlocConsumer<GeneralCubit, GeneralState>(
+                    listenWhen: (prev, cur) =>
+                        prev.locationStatus != cur.locationStatus,
+                    listener: (ctx, s) {
+                      if (s.locationStatus == LocationResolveStatus.denied ||
+                          s.locationStatus ==
+                              LocationResolveStatus.deniedForever) {
+                        _maybeShowOptIn(s.locationStatus);
+                      }
+                    },
+                    buildWhen: (prev, cur) =>
+                        prev.locationStatus != cur.locationStatus ||
+                        prev.resolvedCityName != cur.resolvedCityName ||
+                        prev.resolvedAreaName != cur.resolvedAreaName,
+                    builder: (ctx, s) => _buildLocationCard(ctx, s),
                   ),
                   const SizedBox(height: 24),
                   SectionHeader(
@@ -58,6 +120,7 @@ class HomePage extends StatelessWidget {
                     children: [
                       Expanded(
                         child: OfferCard(
+                          centerId: 2,
                           title: 'فحص البشرة',
                           centerName: 'مجمع النور الطبي',
                           price: '١٤٩',
@@ -67,6 +130,7 @@ class HomePage extends StatelessWidget {
                       SizedBox(width: 8),
                       Expanded(
                         child: OfferCard(
+                          centerId: 1,
                           title: 'تنظيف الأسنان',
                           centerName: 'مركز العناية الطبي',
                           price: '١٩٩',
@@ -86,6 +150,7 @@ class HomePage extends StatelessWidget {
                     children: [
                       Expanded(
                         child: CenterCard(
+                          centerId: 1,
                           name: 'مركز العناية الطبي',
                           specialties: 'الأسنان ، الجلدية',
                           location: 'الدمام · حي الفيصلية',
@@ -98,6 +163,7 @@ class HomePage extends StatelessWidget {
                       SizedBox(width: 8),
                       Expanded(
                         child: CenterCard(
+                          centerId: 2,
                           name: 'مجمع النور الطبي',
                           specialties: 'الأسنان ، الجلدية',
                           location: 'الدمام · حي الفيصلية',
@@ -114,6 +180,7 @@ class HomePage extends StatelessWidget {
                     children: [
                       Expanded(
                         child: CenterCard(
+                          centerId: 3,
                           name: 'مركز الحياة الطبي',
                           specialties: 'العيون ، الجلدية',
                           location: 'الدمام · حي المزروعية',
@@ -126,6 +193,7 @@ class HomePage extends StatelessWidget {
                       SizedBox(width: 8),
                       Expanded(
                         child: CenterCard(
+                          centerId: 4,
                           name: 'مجمع السلام الطبي',
                           specialties: 'الأطفال ، الباطنية',
                           location: 'الدمام · حي الشاطئ',
@@ -148,6 +216,8 @@ class HomePage extends StatelessWidget {
                     children: [
                       Expanded(
                         child: CenterCard(
+                          centerId: 101,
+                          isClinic: true,
                           name: 'عيادة الدكتور أحمد',
                           specialties: 'الأسنان',
                           location: 'الدمام · حي الفيصلية',
@@ -160,6 +230,8 @@ class HomePage extends StatelessWidget {
                       SizedBox(width: 8),
                       Expanded(
                         child: CenterCard(
+                          centerId: 102,
+                          isClinic: true,
                           name: 'عيادة الدكتورة سارة',
                           specialties: 'الجلدية',
                           location: 'الدمام · حي المزروعية',
@@ -179,5 +251,48 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildLocationCard(BuildContext ctx, GeneralState s) {
+    final label = 'home_location_label'.tr();
+    switch (s.locationStatus) {
+      case LocationResolveStatus.idle:
+      case LocationResolveStatus.loading:
+        return LocationCard(
+          label: label,
+          value: 'home_location_loading'.tr(),
+          trailingSpinner: true,
+        );
+      case LocationResolveStatus.resolved:
+        final city = s.resolvedCityName ?? '';
+        final area = s.resolvedAreaName ?? '';
+        final sep = ctx.locale.languageCode == 'ar' ? '، ' : ', ';
+        final value = [city, area]
+            .where((e) => e.isNotEmpty)
+            .join(sep)
+            .ifEmpty('home_location_choose'.tr());
+        return LocationCard(
+          label: label,
+          value: value,
+          onTap: () => ctx.pushNamed(RouteNames.discoveryLocationPicker),
+        );
+      case LocationResolveStatus.serviceDisabled:
+        return LocationCard(
+          label: label,
+          value: 'home_location_service_off'.tr(),
+          onTap: () => locator<LocationService>().openSystemSettings(),
+        );
+      case LocationResolveStatus.denied:
+      case LocationResolveStatus.deniedForever:
+      case LocationResolveStatus.error:
+        return LocationCard(
+          label: label,
+          value: 'home_location_choose'.tr(),
+          onTap: _kickLocation,
+        );
+    }
+  }
 }
 
+extension on String {
+  String ifEmpty(String fallback) => isEmpty ? fallback : this;
+}

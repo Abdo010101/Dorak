@@ -52,8 +52,8 @@ class _PhonePageState extends State<PhonePage> {
           listenWhen: (p, c) => p.otpSent != c.otpSent && c.otpSent,
           listener: (context, state) => context.goNamed(RouteNames.otp),
           builder: (context, state) {
-            final hasError = state.status == Status.failure &&
-                state.errorMessage != null;
+            final hasError =
+                state.status == Status.failure && state.errorMessage != null;
             return Column(
               children: [
                 _TopBar(
@@ -68,8 +68,7 @@ class _PhonePageState extends State<PhonePage> {
                       Text(
                         'phone_title'.tr(),
                         textAlign: TextAlign.start,
-                        style:
-                            type.display.copyWith(color: colors.textPrimary),
+                        style: type.display.copyWith(color: colors.textPrimary),
                       ),
                       const SizedBox(height: 8),
                       Text(
@@ -84,8 +83,7 @@ class _PhonePageState extends State<PhonePage> {
                         label: 'phone_label'.tr(),
                         hintText: '55 123 4567',
                         helperText: hasError ? null : 'phone_helper'.tr(),
-                        errorText:
-                            hasError ? state.errorMessage!.tr() : null,
+                        errorText: hasError ? state.errorMessage!.tr() : null,
                         keyboardType: TextInputType.phone,
                         textInputAction: TextInputAction.done,
                         forceLtr: true,
@@ -94,8 +92,7 @@ class _PhonePageState extends State<PhonePage> {
                           LengthLimitingTextInputFormatter(10),
                         ],
                         leading: _DialCode(colors: colors, type: type),
-                        onSubmitted: (_) =>
-                            context.read<AuthCubit>().sendOtp(),
+                        onSubmitted: (_) => context.read<AuthCubit>().sendOtp(),
                       ),
                     ],
                   ),
@@ -123,11 +120,13 @@ class _DialCode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 44,
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      height: 32,
       alignment: Alignment.center,
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
-        border: Border(right: BorderSide(color: colors.fieldBorder)),
+        color: colors.white,
+        border: Border.all(color: colors.fieldBorder),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
         '+966',
@@ -148,16 +147,7 @@ class _TopBar extends StatelessWidget {
       height: 48,
       child: Row(
         children: [
-          IconButton(
-            icon: Icon(
-              Directionality.of(context) == TextDirection.rtl
-                  ? Icons.chevron_right
-                  : Icons.chevron_left,
-              size: 24,
-              color: color,
-            ),
-            onPressed: onBack,
-          ),
+          AppBackButton(onPressed: onBack),
           const Spacer(),
         ],
       ),

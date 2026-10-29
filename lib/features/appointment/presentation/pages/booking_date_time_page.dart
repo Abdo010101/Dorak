@@ -173,16 +173,7 @@ class _TopBar extends StatelessWidget {
           PositionedDirectional(
             end: 4,
             top: 4,
-            child: IconButton(
-              icon: Icon(
-                Directionality.of(context) == TextDirection.rtl
-                    ? Icons.chevron_left
-                    : Icons.chevron_right,
-                size: 24,
-                color: BookingTokens.textPrimary,
-              ),
-              onPressed: onBack,
-            ),
+            child: AppBackButton(onPressed: onBack),
           ),
         ],
       ),

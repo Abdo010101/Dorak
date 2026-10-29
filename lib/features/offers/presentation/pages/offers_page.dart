@@ -38,24 +38,28 @@ class OffersPage extends StatelessWidget {
                 childAspectRatio: 0.70,
                 children: const [
                   OfferCard(
+                    centerId: 2,
                     title: 'فحص البشرة',
                     centerName: 'مجمع النور الطبي',
                     price: '١٤٩',
                     imageAsset: 'assets/images/home/skin_offer.png',
                   ),
                   OfferCard(
+                    centerId: 1,
                     title: 'تنظيف الأسنان',
                     centerName: 'مركز العناية الطبي',
                     price: '١٩٩',
                     imageAsset: 'assets/images/home/dental_offer.png',
                   ),
                   OfferCard(
+                    centerId: 2,
                     title: 'فحص البشرة',
                     centerName: 'مجمع النور الطبي',
                     price: '١٤٩',
                     imageAsset: 'assets/images/home/skin_offer.png',
                   ),
                   OfferCard(
+                    centerId: 1,
                     title: 'تنظيف الأسنان',
                     centerName: 'مركز العناية الطبي',
                     price: '١٩٩',

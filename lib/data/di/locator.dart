@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:dorakpattient/core/services/location_service.dart';
 import 'package:dorakpattient/data/networks/clients/general_client.dart';
 import 'package:dorakpattient/data/repository/home_repo.dart';
 import 'package:get_it/get_it.dart';
@@ -18,6 +19,10 @@ Future setupLocator() async {
   ///Shared prefrences
   var instance = await SharedPref.getInstance();
   locator.registerSingleton<SharedPref>(instance);
+
+  locator.registerLazySingleton<LocationService>(
+    () => const GeolocatorLocationService(),
+  );
 
   locator.registerFactory(() => AuthenticationClient(
         InjectionClass.dio,

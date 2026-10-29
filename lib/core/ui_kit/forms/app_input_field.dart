@@ -76,7 +76,8 @@ class _AppInputFieldState extends State<AppInputField> {
   FocusNode? _ownedFocus;
   bool _focused = false;
 
-  FocusNode get _effectiveFocus => widget.focusNode ?? (_ownedFocus ??= FocusNode());
+  FocusNode get _effectiveFocus =>
+      widget.focusNode ?? (_ownedFocus ??= FocusNode());
 
   @override
   void initState() {
@@ -135,78 +136,88 @@ class _AppInputFieldState extends State<AppInputField> {
       ringColor = Colors.transparent;
     }
 
+    Widget inputRow = AnimatedContainer(
+      duration: const Duration(milliseconds: 140),
+      curve: Curves.easeOut,
+      height: 44,
+      decoration: BoxDecoration(
+        color: disabled ? colors.neutral50 : colors.white,
+        border: Border.all(color: borderColor, width: 1),
+        borderRadius: BorderRadius.circular(radii.medium),
+        boxShadow: ringColor == Colors.transparent
+            ? null
+            : [BoxShadow(color: ringColor, spreadRadius: 3)],
+      ),
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
+      child: Row(
+        children: [
+          if (widget.leading != null) ...[
+            widget.leading!,
+            const SizedBox(width: 10),
+          ],
+          Expanded(
+            child: TextField(
+              controller: widget.controller,
+              focusNode: _effectiveFocus,
+              keyboardType: widget.keyboardType,
+              textInputAction: widget.textInputAction,
+              obscureText: widget.obscureText,
+              enabled: widget.enabled,
+              readOnly: widget.readOnly,
+              maxLength: widget.maxLength,
+              inputFormatters: widget.inputFormatters,
+              onChanged: widget.onChanged,
+              onSubmitted: widget.onSubmitted,
+              onTap: widget.onTap,
+              autofocus: widget.autofocus,
+              textAlign: widget.textAlign ?? TextAlign.start,
+              textDirection: widget.textDirection,
+              cursorColor: colors.borderPrimary,
+              decoration: InputDecoration(
+                filled: false,
+                fillColor: Colors.transparent,
+                border: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
+                errorBorder: InputBorder.none,
+                focusedErrorBorder: InputBorder.none,
+                isCollapsed: true,
+                counterText: '',
+                contentPadding: const EdgeInsets.symmetric(vertical: 12),
+                hintText: widget.hintText,
+                hintStyle: typo.textLgRegular.copyWith(
+                  color: colors.textSecondary.withValues(alpha: .6),
+                ),
+              ),
+              style: typo.textLgRegular.copyWith(
+                color: disabled ? colors.textSecondary : colors.textPrimary,
+              ),
+            ),
+          ),
+          if (widget.trailing != null) ...[
+            const SizedBox(width: 10),
+            widget.trailing!,
+          ],
+        ],
+      ),
+    );
+    if (widget.forceLtr) {
+      inputRow =
+          Directionality(textDirection: TextDirection.ltr, child: inputRow);
+    }
+
     final field = Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (widget.label != null) ...[
-          Align(
-            alignment: AlignmentDirectional.centerStart,
-            child: Text(
-              widget.label!,
-              style: typo.textMdSemibold.copyWith(color: colors.textPrimary),
-            ),
+          Text(
+            widget.label!,
+            style: typo.textMdSemibold.copyWith(color: colors.textPrimary),
           ),
           const SizedBox(height: 6),
         ],
-        AnimatedContainer(
-          duration: const Duration(milliseconds: 140),
-          curve: Curves.easeOut,
-          height: 44,
-          decoration: BoxDecoration(
-            color: disabled ? colors.neutral50 : colors.surfaceField,
-            border: Border.all(color: borderColor, width: 1),
-            borderRadius: BorderRadius.circular(radii.medium),
-            boxShadow: ringColor == Colors.transparent
-                ? null
-                : [BoxShadow(color: ringColor, spreadRadius: 3)],
-          ),
-          padding: const EdgeInsetsDirectional.symmetric(horizontal: 14),
-          child: Row(
-            children: [
-              if (widget.leading != null) ...[
-                widget.leading!,
-                const SizedBox(width: 10),
-              ],
-              Expanded(
-                child: TextField(
-                  controller: widget.controller,
-                  focusNode: _effectiveFocus,
-                  keyboardType: widget.keyboardType,
-                  textInputAction: widget.textInputAction,
-                  obscureText: widget.obscureText,
-                  enabled: widget.enabled,
-                  readOnly: widget.readOnly,
-                  maxLength: widget.maxLength,
-                  inputFormatters: widget.inputFormatters,
-                  onChanged: widget.onChanged,
-                  onSubmitted: widget.onSubmitted,
-                  onTap: widget.onTap,
-                  autofocus: widget.autofocus,
-                  textAlign: widget.textAlign ?? TextAlign.start,
-                  textDirection: widget.textDirection,
-                  cursorColor: colors.borderPrimary,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    isCollapsed: true,
-                    counterText: '',
-                    contentPadding: const EdgeInsets.symmetric(vertical: 12),
-                    hintText: widget.hintText,
-                    hintStyle: typo.textLgRegular.copyWith(
-                      color: colors.textSecondary.withValues(alpha: .6),
-                    ),
-                  ),
-                  style: typo.textLgRegular.copyWith(
-                    color: disabled ? colors.textSecondary : colors.textPrimary,
-                  ),
-                ),
-              ),
-              if (widget.trailing != null) ...[
-                const SizedBox(width: 10),
-                widget.trailing!,
-              ],
-            ],
-          ),
-        ),
+        inputRow,
         if (hasError) ...[
           const SizedBox(height: 6),
           _MessageRow(
@@ -237,9 +248,6 @@ class _AppInputFieldState extends State<AppInputField> {
       ],
     );
 
-    if (widget.forceLtr) {
-      return Directionality(textDirection: TextDirection.ltr, child: field);
-    }
     return field;
   }
 }

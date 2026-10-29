@@ -16,12 +16,13 @@ class SpecialtyChipRow extends StatelessWidget {
       height: 40,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        reverse: Directionality.of(context) == TextDirection.rtl,
+        reverse: Directionality.of(context) == TextDirection.ltr,
         itemCount: chips.length,
         separatorBuilder: (_, __) => const SizedBox(width: 8),
         itemBuilder: (_, i) {
           final c = chips[i];
-          final bg = c.selected ? const Color(0xFF1F8046) : const Color(0xFFFAFAFA);
+          final bg =
+              c.selected ? const Color(0xFF1F8046) : const Color(0xFFFAFAFA);
           final fg = c.selected ? Colors.white : const Color(0xFF1D1D1D);
           return Container(
             padding: const EdgeInsets.symmetric(horizontal: 16),

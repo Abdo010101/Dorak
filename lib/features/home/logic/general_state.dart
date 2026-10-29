@@ -3,6 +3,17 @@ import 'package:equatable/equatable.dart';
 import '../../../core/state/status.dart';
 import '../../../data/models/response/response.dart';
 
+/// Lifecycle of the device-location resolve kicked off by `HomePage`.
+enum LocationResolveStatus {
+  idle,
+  loading,
+  resolved,
+  denied,
+  deniedForever,
+  serviceDisabled,
+  error,
+}
+
 class GeneralState extends Equatable {
   const GeneralState({
     this.status = Status.initial,
@@ -27,6 +38,9 @@ class GeneralState extends Equatable {
     this.lng,
     this.isMainSpecialization = false,
     this.errorMessage,
+    this.locationStatus = LocationResolveStatus.idle,
+    this.resolvedCityName,
+    this.resolvedAreaName,
   });
 
   final Status status;
@@ -51,6 +65,9 @@ class GeneralState extends Equatable {
   final double? lng;
   final bool isMainSpecialization;
   final String? errorMessage;
+  final LocationResolveStatus locationStatus;
+  final String? resolvedCityName;
+  final String? resolvedAreaName;
 
   GeneralState copyWith({
     Status? status,
@@ -76,6 +93,9 @@ class GeneralState extends Equatable {
     bool? isMainSpecialization,
     String? errorMessage,
     bool clearError = false,
+    LocationResolveStatus? locationStatus,
+    String? resolvedCityName,
+    String? resolvedAreaName,
   }) =>
       GeneralState(
         status: status ?? this.status,
@@ -99,9 +119,11 @@ class GeneralState extends Equatable {
         areaId: areaId ?? this.areaId,
         lat: lat ?? this.lat,
         lng: lng ?? this.lng,
-        isMainSpecialization:
-            isMainSpecialization ?? this.isMainSpecialization,
+        isMainSpecialization: isMainSpecialization ?? this.isMainSpecialization,
         errorMessage: clearError ? null : errorMessage ?? this.errorMessage,
+        locationStatus: locationStatus ?? this.locationStatus,
+        resolvedCityName: resolvedCityName ?? this.resolvedCityName,
+        resolvedAreaName: resolvedAreaName ?? this.resolvedAreaName,
       );
 
   @override
@@ -128,5 +150,8 @@ class GeneralState extends Equatable {
         lng,
         isMainSpecialization,
         errorMessage,
+        locationStatus,
+        resolvedCityName,
+        resolvedAreaName,
       ];
 }

@@ -28,10 +28,7 @@ class LocationPickerPage extends StatelessWidget {
             color: Color(0xFF1D1D1D),
           ),
         ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_forward_ios, color: Color(0xFF1D1D1D)),
-          onPressed: () => context.pop(),
-        ),
+        leading: AppBackButton(onPressed: () => context.pop()),
       ),
       body: SafeArea(
         top: false,

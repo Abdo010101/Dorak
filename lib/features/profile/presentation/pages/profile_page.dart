@@ -80,7 +80,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       final phone = state.phone.isNotEmpty
                           ? state.phone
                           : auth.user?.patient?.phone ?? '';
-                      final initial = name.isNotEmpty ? name.characters.first : '؟';
+                      final initial =
+                          name.isNotEmpty ? name.characters.first : '؟';
                       return _UserCard(
                         name: name,
                         phone: phone,
@@ -102,8 +103,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     _RowSpec(
                       icon: Icons.calendar_today_outlined,
                       label: 'nav_bookings',
-                      onTap: () =>
-                          context.goNamed(RouteNames.appointments),
+                      onTap: () => context.goNamed(RouteNames.appointments),
                     ),
                     _RowSpec(
                       icon: Icons.favorite_border,
@@ -186,6 +186,37 @@ class _UserCard extends StatelessWidget {
       ),
       child: Row(
         children: [
+          Container(
+            width: 60,
+            height: 60,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: colors.borderPrimary,
+              shape: BoxShape.circle,
+            ),
+            child: Text(
+              initial,
+              style: typo.display.copyWith(color: colors.onPrimary),
+            ),
+          ),
+          const SizedBox(width: 14),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                name,
+                style: typo.titleMd.copyWith(color: colors.textPrimary),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                phone,
+                style: typo.textLgSemibold.copyWith(
+                  color: colors.textSecondary,
+                ),
+              ),
+            ],
+          ),
+          const Spacer(),
           Material(
             color: colors.white,
             borderRadius: BorderRadius.circular(12),
@@ -203,39 +234,6 @@ class _UserCard extends StatelessWidget {
                 child: Icon(Icons.edit_outlined,
                     size: 20, color: colors.textPrimary),
               ),
-            ),
-          ),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  name,
-                  style: typo.titleMd.copyWith(color: colors.textPrimary),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  phone,
-                  style: typo.textLgSemibold.copyWith(
-                    color: colors.textSecondary,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: 14),
-          Container(
-            width: 60,
-            height: 60,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: colors.borderPrimary,
-              shape: BoxShape.circle,
-            ),
-            child: Text(
-              initial,
-              style: typo.display.copyWith(color: colors.onPrimary),
             ),
           ),
         ],
@@ -312,12 +310,10 @@ class _ListRow extends StatelessWidget {
     final typo = AppTypography.of(context);
     final titleColor =
         spec.isDestructive ? const Color(0xFFB42318) : colors.textPrimary;
-    final iconBg = spec.isDestructive
-        ? const Color(0xFFFEF3F2)
-        : colors.primaryTint;
-    final iconColor = spec.isDestructive
-        ? const Color(0xFFB42318)
-        : colors.borderPrimary;
+    final iconBg =
+        spec.isDestructive ? const Color(0xFFFEF3F2) : colors.primaryTint;
+    final iconColor =
+        spec.isDestructive ? const Color(0xFFB42318) : colors.borderPrimary;
     return InkWell(
       onTap: spec.onTap,
       child: Container(
@@ -330,32 +326,6 @@ class _ListRow extends StatelessWidget {
             const EdgeInsetsDirectional.symmetric(horizontal: 12, vertical: 10),
         child: Row(
           children: [
-            Icon(
-              Directionality.of(context) == TextDirection.rtl
-                  ? Icons.chevron_left
-                  : Icons.chevron_right,
-              size: 20,
-              color: colors.textSecondary,
-            ),
-            if (spec.trailingValue != null) ...[
-              const SizedBox(width: 8),
-              Text(
-                spec.trailingValue!.tr(),
-                style:
-                    typo.textMdRegular.copyWith(color: colors.textSecondary),
-              ),
-            ],
-            Expanded(
-              child: Padding(
-                padding:
-                    const EdgeInsetsDirectional.symmetric(horizontal: 12),
-                child: Text(
-                  spec.label.tr(),
-                  textAlign: TextAlign.start,
-                  style: typo.textLgSemibold.copyWith(color: titleColor),
-                ),
-              ),
-            ),
             Container(
               width: 36,
               height: 36,
@@ -365,6 +335,30 @@ class _ListRow extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Icon(spec.icon, size: 20, color: iconColor),
+            ),
+            if (spec.trailingValue != null) ...[
+              const SizedBox(width: 8),
+              Text(
+                spec.trailingValue!.tr(),
+                style: typo.textMdRegular.copyWith(color: colors.textSecondary),
+              ),
+            ],
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsetsDirectional.symmetric(horizontal: 12),
+                child: Text(
+                  spec.label.tr(),
+                  textAlign: TextAlign.start,
+                  style: typo.textLgSemibold.copyWith(color: titleColor),
+                ),
+              ),
+            ),
+            Icon(
+              Directionality.of(context) == TextDirection.rtl
+                  ? Icons.chevron_right
+                  : Icons.chevron_left,
+              size: 20,
+              color: colors.textSecondary,
             ),
           ],
         ),

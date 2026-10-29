@@ -31,6 +31,7 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
   @override
   void initState() {
     super.initState();
+    popIfGuest(context);
     final cubit = context.read<PatientProfileCubit>();
     final seed = cubit.state.profile ?? context.read<AuthCubit>().state.user?.patient;
     cubit.seedFrom(seed);

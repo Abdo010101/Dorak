@@ -21,6 +21,8 @@ class FilterPill extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Icon(
               Icons.tune,
@@ -28,14 +30,12 @@ class FilterPill extends StatelessWidget {
               color: Color(0xFF4C4C4C),
             ),
             const SizedBox(width: 8),
-            Expanded(
-              child: Text(
-                label,
-                textAlign: TextAlign.end,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF4C4C4C),
-                ),
+            Text(
+              label,
+              textAlign: TextAlign.end,
+              style: const TextStyle(
+                fontSize: 14,
+                color: Color(0xFF4C4C4C),
               ),
             ),
             const SizedBox(width: 8),

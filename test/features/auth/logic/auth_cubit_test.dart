@@ -17,6 +17,10 @@ void main() {
   late _MockAuthRepo repo;
   late _MockSharedPref prefs;
 
+  setUpAll(() {
+    registerFallbackValue(UserResponse());
+  });
+
   setUp(() {
     repo = _MockAuthRepo();
     prefs = _MockSharedPref();
@@ -52,6 +56,8 @@ void main() {
       setUp: () {
         when(() => repo.verifyOtp(body: any(named: 'body')))
             .thenAnswer((_) async => BaseModel<dynamic>(data: 'ok'));
+        when(() => prefs.storeLoginInfo(any()))
+            .thenAnswer((_) async => true);
       },
       build: () =>
           AuthCubit(authenticationRepository: repo, sharedPref: prefs),

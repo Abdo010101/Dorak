@@ -7,6 +7,7 @@ import 'package:dorakpattient/data/models/response/appointment_response.dart';
 import 'package:dorakpattient/features/appointment/logic/appointments_cubit.dart';
 import 'package:dorakpattient/features/appointment/logic/appointments_state.dart';
 import 'package:dorakpattient/features/appointment/presentation/widgets/booking_card.dart';
+import 'package:dorakpattient/features/auth/logic/auth_cubit.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,7 +27,11 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
   @override
   void initState() {
     super.initState();
+    popIfGuest(context);
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final auth = context.read<AuthCubit>().state;
+      if (!auth.isAuthenticated) return;
       context.read<AppointmentsCubit>().load();
     });
   }
@@ -44,21 +49,39 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(16, 6, 16, 14),
+                  padding: const EdgeInsetsDirectional.fromSTEB(4, 6, 16, 14),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Text(
-                        'appointments_title'.tr(),
-                        textAlign: TextAlign.start,
-                        style: typo.display.copyWith(color: colors.textPrimary),
+                      Row(
+                        children: [
+                          if (Navigator.of(context).canPop())
+                            const AppBackButton()
+                          else
+                            const SizedBox(width: 12),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.only(
+                                  start: 4, end: 12),
+                              child: Text(
+                                'appointments_title'.tr(),
+                                textAlign: TextAlign.start,
+                                style: typo.display
+                                    .copyWith(color: colors.textPrimary),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 14),
-                      _Tabs(
-                        current: state.tab,
-                        onTap: (t) => context
-                            .read<AppointmentsCubit>()
-                            .setTab(t),
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.only(start: 12),
+                        child: _Tabs(
+                          current: state.tab,
+                          onTap: (t) =>
+                              context.read<AppointmentsCubit>().setTab(t),
+                        ),
                       ),
                     ],
                   ),

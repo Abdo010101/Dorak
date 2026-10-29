@@ -1,3 +1,4 @@
+import 'package:dorakpattient/core/ui_kit/ui_kit.dart';
 import 'package:dorakpattient/features/appointment/presentation/pages/appointments_page.dart';
 import 'package:dorakpattient/features/discovery/presentation/pages/explore_page.dart';
 import 'package:dorakpattient/features/home/presentation/pages/home_page.dart';
@@ -38,6 +39,14 @@ class _MainShellPageState extends State<MainShellPage> {
     _TabSpec(icon: 'nav_profile.svg', labelKey: 'nav_account'),
   ];
 
+  static const _bookingsTabIndex = 2;
+
+  Future<void> _onTabTap(int i) async {
+    if (i == _bookingsTabIndex && !await ensureSignedIn(context)) return;
+    if (!mounted) return;
+    setState(() => _index = i);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +72,7 @@ class _MainShellPageState extends State<MainShellPage> {
                 final active = i == _index;
                 return Expanded(
                   child: InkWell(
-                    onTap: () => setState(() => _index = i),
+                    onTap: () => _onTabTap(i),
                     child: Stack(
                       alignment: Alignment.topCenter,
                       children: [
