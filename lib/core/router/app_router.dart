@@ -1,19 +1,27 @@
+import 'package:dorakpattient/data/models/response/appointment_response.dart';
 import 'package:dorakpattient/features/appointment/presentation/pages/appointments_page.dart';
 import 'package:dorakpattient/features/appointment/presentation/pages/booking_confirmed_page.dart';
 import 'package:dorakpattient/features/appointment/presentation/pages/booking_date_time_page.dart';
+import 'package:dorakpattient/features/appointment/presentation/pages/booking_details_page.dart';
 import 'package:dorakpattient/features/appointment/presentation/pages/booking_review_page.dart';
 import 'package:dorakpattient/features/auth/presentation/pages/complete_profile_page.dart';
 import 'package:dorakpattient/features/auth/presentation/pages/otp_page.dart';
 import 'package:dorakpattient/features/auth/presentation/pages/phone_page.dart';
 import 'package:dorakpattient/features/auth/presentation/pages/signed_in_page.dart';
+import 'package:dorakpattient/features/center/presentation/pages/center_details_page.dart';
+import 'package:dorakpattient/features/center/presentation/pages/clinic_details_page.dart';
+import 'package:dorakpattient/features/center/presentation/pages/doctors_at_center_page.dart';
 import 'package:dorakpattient/features/discovery/presentation/pages/explore_map_page.dart';
 import 'package:dorakpattient/features/discovery/presentation/pages/location_picker_page.dart';
 import 'package:dorakpattient/features/doctor/presentation/pages/doctor_profile_page.dart';
+import 'package:dorakpattient/features/favourites/presentation/pages/favourite_centers_page.dart';
 import 'package:dorakpattient/features/home/presentation/pages/main_shell_page.dart';
 import 'package:dorakpattient/features/intro/presentation/pages/splash_page.dart';
 import 'package:dorakpattient/features/intro/presentation/pages/welcome_page.dart';
 import 'package:dorakpattient/features/notification/presentation/pages/notifications_page.dart';
 import 'package:dorakpattient/features/offers/presentation/pages/offers_page.dart';
+import 'package:dorakpattient/features/profile/presentation/pages/help_support_page.dart';
+import 'package:dorakpattient/features/profile/presentation/pages/personal_info_page.dart';
 import 'package:dorakpattient/features/profile/presentation/pages/profile_page.dart';
 import 'package:dorakpattient/features/search/presentation/pages/search_results_page.dart';
 import 'package:dorakpattient/features/settings/presentation/pages/app_review_page.dart';
@@ -136,7 +144,9 @@ class AppRouter {
       GoRoute(
         path: RouteNames.doctor,
         name: RouteNames.doctor,
-        builder: (_, __) => const DoctorProfilePage(),
+        builder: (_, state) => DoctorProfilePage(
+          doctorId: int.tryParse(state.uri.queryParameters['id'] ?? '') ?? 1,
+        ),
       ),
       GoRoute(
         path: RouteNames.profile,
@@ -151,7 +161,29 @@ class AppRouter {
       GoRoute(
         path: RouteNames.editProfile,
         name: RouteNames.editProfile,
-        builder: (_, __) => const ProfilePage(),
+        builder: (_, __) => const PersonalInfoPage(),
+      ),
+      GoRoute(
+        path: RouteNames.personalInfo,
+        name: RouteNames.personalInfo,
+        builder: (_, __) => const PersonalInfoPage(),
+      ),
+      GoRoute(
+        path: RouteNames.favouriteCenters,
+        name: RouteNames.favouriteCenters,
+        builder: (_, __) => const FavouriteCentersPage(),
+      ),
+      GoRoute(
+        path: RouteNames.helpSupport,
+        name: RouteNames.helpSupport,
+        builder: (_, __) => const HelpSupportPage(),
+      ),
+      GoRoute(
+        path: RouteNames.bookingDetails,
+        name: RouteNames.bookingDetails,
+        builder: (_, state) => BookingDetailsPage(
+          appointment: state.extra as AppointmentResponse?,
+        ),
       ),
       GoRoute(
         path: RouteNames.success,
@@ -201,7 +233,9 @@ class AppRouter {
       GoRoute(
         path: RouteNames.doctorReview,
         name: RouteNames.doctorReview,
-        builder: (_, __) => const DoctorProfilePage(),
+        builder: (_, state) => DoctorProfilePage(
+          doctorId: int.tryParse(state.uri.queryParameters['id'] ?? '') ?? 1,
+        ),
       ),
       GoRoute(
         path: RouteNames.changePhone,
@@ -227,6 +261,27 @@ class AppRouter {
         path: RouteNames.discoveryLocationPicker,
         name: RouteNames.discoveryLocationPicker,
         builder: (_, __) => const LocationPickerPage(),
+      ),
+      GoRoute(
+        path: RouteNames.centerDetails,
+        name: RouteNames.centerDetails,
+        builder: (_, state) => CenterDetailsPage(
+          centerId: int.tryParse(state.uri.queryParameters['id'] ?? '') ?? 1,
+        ),
+      ),
+      GoRoute(
+        path: RouteNames.doctorsAtCenter,
+        name: RouteNames.doctorsAtCenter,
+        builder: (_, state) => DoctorsAtCenterPage(
+          centerId: int.tryParse(state.uri.queryParameters['id'] ?? '') ?? 1,
+        ),
+      ),
+      GoRoute(
+        path: RouteNames.clinicDetails,
+        name: RouteNames.clinicDetails,
+        builder: (_, state) => ClinicDetailsPage(
+          clinicId: int.tryParse(state.uri.queryParameters['id'] ?? '') ?? 100,
+        ),
       ),
     ],
     errorBuilder: (_, __) => const SplashPage(),

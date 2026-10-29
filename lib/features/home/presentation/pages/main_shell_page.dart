@@ -120,16 +120,3 @@ class _TabSpec {
   final String icon;
   final String labelKey;
 }
-
-class _StubTab extends StatelessWidget {
-  const _StubTab({required this.title});
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title), backgroundColor: Colors.white),
-      body: Center(child: Text(title)),
-    );
-  }
-}

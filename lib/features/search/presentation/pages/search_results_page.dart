@@ -5,10 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
-/// Phase 8 — Discovery 03 Search results (Figma node `203:1690`).
+/// Phase 8 — Discovery 03 Search results (Figma node `203:1690`) and 03b
+/// Search no-results (Figma node `352:3400`).
 ///
 /// Static mock data. SearchBloc wiring lands with the Phase 5
 /// SearchController/SearchResultController/FilterController migration.
+/// Empty-state is triggered when the query contains `xxx` as a static
+/// sentinel until the cubit wiring lands.
 class SearchResultsPage extends StatefulWidget {
   const SearchResultsPage({super.key, this.initialQuery = ''});
   final String initialQuery;
@@ -25,10 +28,19 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
   static const _textSecondary = Color(0xFF4C4C4C);
 
   @override
+  void initState() {
+    super.initState();
+    _query.addListener(() => setState(() {}));
+  }
+
+  @override
   void dispose() {
     _query.dispose();
     super.dispose();
   }
+
+  bool get _showEmpty =>
+      _query.text.trim().isNotEmpty && _query.text.contains('xxx');
 
   @override
   Widget build(BuildContext context) {
@@ -39,109 +51,210 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
           children: [
             _TopBar(controller: _query, onCancel: () => context.pop()),
             Expanded(
-              child: ListView(
-                padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
-                children: [
-                  Align(
-                    alignment: AlignmentDirectional.centerStart,
-                    child: Text(
-                      'search_specialties'.tr(),
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: _textPrimary,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  const SpecialtyChipRow(
-                    chips: [
-                      SpecialtyChipData('طب الأسنان', true),
-                      SpecialtyChipData('تقويم الأسنان', false),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '4 ${'search_results_label'.tr()}',
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: _textSecondary,
-                        ),
-                      ),
-                      Text(
-                        'search_medical_centers'.tr(),
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          color: _textPrimary,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  const Row(
-                    children: [
-                      Expanded(
-                        child: CenterCard(
-                          name: 'مركز العناية الطبي',
-                          specialties: 'الأسنان ، الجلدية',
-                          location: 'الدمام · حي الشاطئ',
-                          rating: '٤٫٨',
-                          reviewCount: '(١٢٠)',
-                          distance: '١٫٢ كم',
-                          imageAsset: 'assets/images/home/center1.png',
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      Expanded(
-                        child: CenterCard(
-                          name: 'مجمع النور الطبي',
-                          specialties: 'الأسنان ، الأطفال',
-                          location: 'الدمام · حي الفيصلية',
-                          rating: '٤٫٦',
-                          reviewCount: '(١٢٠)',
-                          distance: '٣٫٤ كم',
-                          imageAsset: 'assets/images/home/center2.png',
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  const Row(
-                    children: [
-                      Expanded(
-                        child: CenterCard(
-                          name: 'مركز الحياة الطبي',
-                          specialties: 'العيون ، الجلدية',
-                          location: 'الدمام · حي المزروعية',
-                          rating: '٤٫٥',
-                          reviewCount: '(١٢٠)',
-                          distance: '٣٫١ كم',
-                          imageAsset: 'assets/images/home/center1.png',
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      Expanded(
-                        child: CenterCard(
-                          name: 'مركز الحياة الطبي',
-                          specialties: 'العيون ، الجلدية',
-                          location: 'الدمام · حي المزروعية',
-                          rating: '٤٫٥',
-                          reviewCount: '(١٢٠)',
-                          distance: '٣٫١ كم',
-                          imageAsset: 'assets/images/home/center2.png',
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+              child: _showEmpty ? _buildEmpty() : _buildResults(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildResults() {
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
+      children: [
+        Align(
+          alignment: AlignmentDirectional.centerStart,
+          child: Text(
+            'search_specialties'.tr(),
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+              color: _textPrimary,
+            ),
+          ),
+        ),
+        const SizedBox(height: 12),
+        const SpecialtyChipRow(
+          chips: [
+            SpecialtyChipData('طب الأسنان', true),
+            SpecialtyChipData('تقويم الأسنان', false),
+          ],
+        ),
+        const SizedBox(height: 16),
+        _listHeader(count: 4, title: 'search_medical_centers'.tr()),
+        const SizedBox(height: 12),
+        const Row(
+          children: [
+            Expanded(
+              child: CenterCard(
+                name: 'مركز العناية الطبي',
+                specialties: 'الأسنان ، الجلدية',
+                location: 'الدمام · حي الشاطئ',
+                rating: '٤٫٨',
+                reviewCount: '(١٢٠)',
+                distance: '١٫٢ كم',
+                imageAsset: 'assets/images/home/center1.png',
+              ),
+            ),
+            SizedBox(width: 8),
+            Expanded(
+              child: CenterCard(
+                name: 'مجمع النور الطبي',
+                specialties: 'الأسنان ، الأطفال',
+                location: 'الدمام · حي الفيصلية',
+                rating: '٤٫٦',
+                reviewCount: '(١٢٠)',
+                distance: '٣٫٤ كم',
+                imageAsset: 'assets/images/home/center2.png',
               ),
             ),
           ],
         ),
+        const SizedBox(height: 12),
+        const Row(
+          children: [
+            Expanded(
+              child: CenterCard(
+                name: 'مركز الحياة الطبي',
+                specialties: 'العيون ، الجلدية',
+                location: 'الدمام · حي المزروعية',
+                rating: '٤٫٥',
+                reviewCount: '(١٢٠)',
+                distance: '٣٫١ كم',
+                imageAsset: 'assets/images/home/center1.png',
+              ),
+            ),
+            SizedBox(width: 8),
+            Expanded(
+              child: CenterCard(
+                name: 'مركز الحياة الطبي',
+                specialties: 'العيون ، الجلدية',
+                location: 'الدمام · حي المزروعية',
+                rating: '٤٫٥',
+                reviewCount: '(١٢٠)',
+                distance: '٣٫١ كم',
+                imageAsset: 'assets/images/home/center2.png',
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 20),
+        _listHeader(count: 2, title: 'search_clinics'.tr()),
+        const SizedBox(height: 12),
+        const Row(
+          children: [
+            Expanded(
+              child: CenterCard(
+                name: 'عيادة الدكتور أحمد',
+                specialties: 'الأسنان',
+                location: 'الدمام · حي الفيصلية',
+                rating: '٤٫٨',
+                reviewCount: '(٥٠)',
+                distance: '١٫٨ كم',
+                imageAsset: 'assets/images/home/center1.png',
+              ),
+            ),
+            SizedBox(width: 8),
+            Expanded(
+              child: CenterCard(
+                name: 'عيادة الدكتورة سارة',
+                specialties: 'الجلدية',
+                location: 'الدمام · حي المزروعية',
+                rating: '٤٫٧',
+                reviewCount: '(٦٥)',
+                distance: '٢٫٥ كم',
+                imageAsset: 'assets/images/home/center2.png',
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _listHeader({required int count, required String title}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          '$count ${'search_results_label'.tr()}',
+          style: const TextStyle(fontSize: 14, color: _textSecondary),
+        ),
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+            color: _textPrimary,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildEmpty() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: 132,
+            height: 132,
+            decoration: const BoxDecoration(
+              color: Color(0xFFF2F4F7),
+              shape: BoxShape.circle,
+            ),
+            alignment: Alignment.center,
+            child: const Icon(
+              Icons.search_off,
+              size: 56,
+              color: Color(0xFF9A9A9A),
+            ),
+          ),
+          const SizedBox(height: 24),
+          Text(
+            'search_empty_title'.tr(),
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+              color: _textPrimary,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'search_empty_subtitle'.tr(),
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 14,
+              color: _textSecondary,
+            ),
+          ),
+          const SizedBox(height: 24),
+          SizedBox(
+            width: 240,
+            height: 48,
+            child: FilledButton(
+              style: FilledButton.styleFrom(
+                backgroundColor: const Color(0xFF1F8046),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              onPressed: () => _query.clear(),
+              child: Text(
+                'search_empty_cta'.tr(),
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

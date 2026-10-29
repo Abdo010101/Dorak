@@ -1,161 +1,150 @@
+import 'package:dorakpattient/core/state/status.dart';
+import 'package:dorakpattient/core/theme/app_colors_theme.dart';
+import 'package:dorakpattient/core/theme/app_typography.dart';
+import 'package:dorakpattient/core/ui_kit/ui_kit.dart';
+import 'package:dorakpattient/data/models/response/notification_response.dart';
+import 'package:dorakpattient/features/notification/logic/notification_cubit.dart';
+import 'package:dorakpattient/features/notification/logic/notification_state.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-/// Phase 8 — Account 08 Notifications (Figma `209:2971`).
-///
-/// Material icons stand in for Figma Hicon icons on the row pills.
-class NotificationsPage extends StatelessWidget {
+/// Phase 11 — Account 08 Notifications (Figma `209:2971`) and Account 08b
+/// empty (Figma `352:3712`). Wires [NotificationCubit] with 4 states and
+/// today / this-week grouping.
+class NotificationsPage extends StatefulWidget {
   const NotificationsPage({super.key});
 
-  static const _accent = Color(0xFF1F8046);
-  static const _accentBg = Color(0xFFEFFFF3);
-  static const _primary50 = Color(0xFFDBFEE3);
-  static const _secondary50 = Color(0xFFE5EFFF);
-  static const _warning50 = Color(0xFFFFFAEB);
-  static const _borderTertiary = Color(0xFFE5E5E5);
-  static const _textPrimary = Color(0xFF1D1D1D);
-  static const _textSecondary = Color(0xFF4C4C4C);
+  @override
+  State<NotificationsPage> createState() => _NotificationsPageState();
+}
+
+class _NotificationsPageState extends State<NotificationsPage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<NotificationCubit>().loadFirstPage();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorsTheme.of(context);
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: colors.white,
+      appBar: AppTopBar(title: 'notif_title'.tr()),
       body: SafeArea(
-        child: Column(
-          children: [
-            _TopBar(onBack: () => context.canPop() ? context.pop() : null),
-            Expanded(
-              child: ListView(
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-                children: [
-                  _SectionHeader(
+        top: false,
+        child: BlocBuilder<NotificationCubit, NotificationFeedState>(
+          builder: (context, state) {
+            if (state.status == Status.loading && state.items.isEmpty) {
+              return const AppLoadingState();
+            }
+            if (state.status == Status.failure && state.items.isEmpty) {
+              return AppErrorState(
+                title: 'something_went_wrong'.tr(),
+                message: state.errorMessage,
+                retryLabel: 'retry'.tr(),
+                onRetry: () =>
+                    context.read<NotificationCubit>().loadFirstPage(),
+              );
+            }
+            if (state.items.isEmpty) {
+              return _EmptyState();
+            }
+            final (today, week) = _group(state.items);
+            return ListView(
+              padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 24),
+              children: [
+                if (today.isNotEmpty) ...[
+                  _GroupHeader(
                     title: 'notif_today'.tr(),
                     action: 'notif_mark_all'.tr(),
                     onAction: () {},
                   ),
                   const SizedBox(height: 10),
-                  const _NotificationItem(
-                    unread: true,
-                    title: 'تذكير بموعدك',
-                    body: 'موعدك غدًا الساعة ٤:٣٠ م مع د. أحمد العلي في مجمع النور الطبي.',
-                    time: 'منذ ١٠ دقائق',
-                    icon: Icons.calendar_today_outlined,
-                    iconBg: _primary50,
-                    iconColor: _accent,
-                  ),
-                  const SizedBox(height: 10),
-                  const _NotificationItem(
-                    unread: true,
-                    title: 'تم تأكيد حجزك',
-                    body: 'رقم الحجز DR-48213. يمكنك متابعة التفاصيل من حجوزاتي.',
-                    time: 'منذ ساعتين',
-                    icon: Icons.check,
-                    iconBg: _primary50,
-                    iconColor: _accent,
-                  ),
-                  const SizedBox(height: 14),
-                  _SectionHeader(title: 'notif_this_week'.tr()),
-                  const SizedBox(height: 10),
-                  const _NotificationItem(
-                    unread: false,
-                    title: 'عرض جديد قريب منك',
-                    body: 'خصم على تنظيف الأسنان في مركز العناية الطبي حتى نهاية الشهر.',
-                    time: 'أمس',
-                    icon: Icons.local_offer_outlined,
-                    iconBg: _secondary50,
-                    iconColor: Color(0xFF175CD3),
-                  ),
-                  const SizedBox(height: 10),
-                  const _NotificationItem(
-                    unread: false,
-                    title: 'قيّم زيارتك',
-                    body: 'كيف كانت زيارتك لمجمع النور الطبي؟ رأيك يساعد الآخرين.',
-                    time: 'منذ ٣ أيام',
-                    icon: Icons.favorite_border,
-                    iconBg: _warning50,
-                    iconColor: Color(0xFFB54708),
-                  ),
+                  for (final n in today) ...[
+                    _NotificationItem(data: n),
+                    const SizedBox(height: 10),
+                  ],
                 ],
-              ),
-            ),
-          ],
+                if (week.isNotEmpty) ...[
+                  const SizedBox(height: 4),
+                  _GroupHeader(title: 'notif_this_week'.tr()),
+                  const SizedBox(height: 10),
+                  for (final n in week) ...[
+                    _NotificationItem(data: n),
+                    const SizedBox(height: 10),
+                  ],
+                ],
+              ],
+            );
+          },
         ),
       ),
     );
   }
+
+  (List<NotificationModel>, List<NotificationModel>) _group(
+      List<NotificationModel> items) {
+    final today = <NotificationModel>[];
+    final week = <NotificationModel>[];
+    final now = DateTime.now();
+    for (final n in items) {
+      final dt = DateTime.tryParse(n.date ?? '');
+      final isToday = dt != null &&
+          dt.year == now.year &&
+          dt.month == now.month &&
+          dt.day == now.day;
+      (isToday ? today : week).add(n);
+    }
+    return (today, week);
+  }
 }
 
-class _TopBar extends StatelessWidget {
-  const _TopBar({required this.onBack});
-  final VoidCallback? onBack;
-
+class _EmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 52,
-      child: Row(
-        children: [
-          const Spacer(),
-          Center(
-            child: Text(
-              'notif_title'.tr(),
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-                color: NotificationsPage._textPrimary,
-              ),
-            ),
-          ),
-          const Spacer(),
-          IconButton(
-            icon: Icon(
-              Directionality.of(context) == TextDirection.rtl
-                  ? Icons.chevron_left
-                  : Icons.chevron_right,
-              size: 24,
-              color: NotificationsPage._textPrimary,
-            ),
-            onPressed: onBack,
-          ),
-        ],
+    final colors = AppColorsTheme.of(context);
+    return AppEmptyState(
+      icon: Icon(
+        Icons.notifications_off_outlined,
+        size: 48,
+        color: colors.borderPrimary,
       ),
+      title: 'notifications_empty_title'.tr(),
+      message: 'notifications_empty_body'.tr(),
     );
   }
 }
 
-class _SectionHeader extends StatelessWidget {
-  const _SectionHeader({required this.title, this.action, this.onAction});
+class _GroupHeader extends StatelessWidget {
+  const _GroupHeader({required this.title, this.action, this.onAction});
   final String title;
   final String? action;
   final VoidCallback? onAction;
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorsTheme.of(context);
+    final typo = AppTypography.of(context);
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         if (action != null)
           GestureDetector(
             onTap: onAction,
             child: Text(
               action!,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w700,
-                color: NotificationsPage._accent,
-              ),
+              style: typo.textLgSemibold.copyWith(color: colors.borderPrimary),
             ),
           )
         else
           const SizedBox.shrink(),
+        const Spacer(),
         Text(
           title,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-            color: NotificationsPage._textPrimary,
-          ),
+          style: typo.titleSm.copyWith(color: colors.textPrimary),
         ),
       ],
     );
@@ -163,80 +152,44 @@ class _SectionHeader extends StatelessWidget {
 }
 
 class _NotificationItem extends StatelessWidget {
-  const _NotificationItem({
-    required this.unread,
-    required this.title,
-    required this.body,
-    required this.time,
-    required this.icon,
-    required this.iconBg,
-    required this.iconColor,
-  });
-
-  final bool unread;
-  final String title;
-  final String body;
-  final String time;
-  final IconData icon;
-  final Color iconBg;
-  final Color iconColor;
+  const _NotificationItem({required this.data});
+  final NotificationModel data;
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorsTheme.of(context);
+    final typo = AppTypography.of(context);
+    final (icon, iconBg, iconColor) = _iconFor(data.type, colors);
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: unread ? NotificationsPage._accentBg : Colors.white,
-        border: Border.all(color: NotificationsPage._borderTertiary),
+        color: colors.white,
+        border: Border.all(color: colors.fieldBorder),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            time,
-            style: const TextStyle(
-              fontSize: 12,
-              color: NotificationsPage._textSecondary,
-            ),
+            _relativeTime(data.date),
+            style: typo.textMdRegular.copyWith(color: colors.textSecondary),
           ),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (unread) ...[
-                      Container(
-                        width: 8,
-                        height: 8,
-                        decoration: const BoxDecoration(
-                          color: NotificationsPage._accent,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                      const SizedBox(width: 6),
-                    ],
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                        color: NotificationsPage._textPrimary,
-                      ),
-                    ),
-                  ],
+                Text(
+                  data.title ?? '',
+                  textAlign: TextAlign.start,
+                  style: typo.textLgSemibold.copyWith(color: colors.textPrimary),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  body,
-                  textAlign: TextAlign.right,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    color: NotificationsPage._textSecondary,
-                  ),
+                  data.description ?? '',
+                  textAlign: TextAlign.start,
+                  style:
+                      typo.textLgRegular.copyWith(color: colors.textSecondary),
                 ),
               ],
             ),
@@ -252,5 +205,32 @@ class _NotificationItem extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  (IconData, Color, Color) _iconFor(String? type, AppColorsTheme c) {
+    switch (type) {
+      case 'offer':
+        return (Icons.local_offer_outlined, c.secondaryTint, c.textInfo);
+      case 'review':
+        return (
+          Icons.favorite_border,
+          const Color(0xFFFFFAEB),
+          const Color(0xFFB54708)
+        );
+      case 'booking':
+      default:
+        return (Icons.calendar_today_outlined, c.primaryTint, c.borderPrimary);
+    }
+  }
+
+  String _relativeTime(String? raw) {
+    final dt = DateTime.tryParse(raw ?? '');
+    if (dt == null) return raw ?? '';
+    final now = DateTime.now();
+    final diff = now.difference(dt);
+    if (diff.inMinutes < 60) return 'time_minutes_ago'.tr(args: ['${diff.inMinutes}']);
+    if (diff.inHours < 24) return 'time_hours_ago'.tr(args: ['${diff.inHours}']);
+    if (diff.inDays == 1) return 'time_yesterday'.tr();
+    return 'time_days_ago'.tr(args: ['${diff.inDays}']);
   }
 }

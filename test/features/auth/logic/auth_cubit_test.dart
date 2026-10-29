@@ -39,7 +39,7 @@ void main() {
       },
       build: () =>
           AuthCubit(authenticationRepository: repo, sharedPref: prefs),
-      seed: () => const AuthState(phone: '0555'),
+      seed: () => const AuthState(phone: '555123456'),
       act: (c) => c.sendOtp(),
       verify: (c) {
         expect(c.state.status, Status.success);

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -41,7 +42,7 @@ class OfferCard extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
+            padding: const EdgeInsetsDirectional.fromSTEB(12, 10, 12, 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -97,9 +98,9 @@ class OfferCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   width: double.infinity,
-                  child: const Text(
-                    'احجز العرض',
-                    style: TextStyle(
+                  child: Text(
+                    'offer_book_cta'.tr(),
+                    style: const TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w700,
                       color: Color(0xFF175CD3),

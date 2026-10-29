@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class SectionHeader extends StatelessWidget {
   const SectionHeader({
@@ -23,10 +22,12 @@ class SectionHeader extends StatelessWidget {
             onTap: onAction,
             child: Row(
               children: [
-                SvgPicture.asset(
-                  'assets/images/home/chevron_left.svg',
-                  width: 16,
-                  height: 16,
+                Icon(
+                  Directionality.of(context) == TextDirection.rtl
+                      ? Icons.chevron_left
+                      : Icons.chevron_right,
+                  size: 16,
+                  color: const Color(0xFF1F8046),
                 ),
                 const SizedBox(width: 4),
                 Text(

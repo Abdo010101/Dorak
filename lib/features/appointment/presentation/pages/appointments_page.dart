@@ -1,11 +1,20 @@
+import 'package:dorakpattient/core/router/route_names.dart';
+import 'package:dorakpattient/core/state/status.dart';
+import 'package:dorakpattient/core/theme/app_colors_theme.dart';
+import 'package:dorakpattient/core/theme/app_typography.dart';
+import 'package:dorakpattient/core/ui_kit/ui_kit.dart';
+import 'package:dorakpattient/data/models/response/appointment_response.dart';
+import 'package:dorakpattient/features/appointment/logic/appointments_cubit.dart';
+import 'package:dorakpattient/features/appointment/logic/appointments_state.dart';
 import 'package:dorakpattient/features/appointment/presentation/widgets/booking_card.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
-/// Phase 8 — Account 01 My bookings (Figma `207:2279`).
-///
-/// Static mock data. `AppointmentsCubit` wiring lands with the Phase 5
-/// AppointmentsController migration.
+/// Phase 11 — Account 01/02/03 My bookings (Figma `207:2279`, `207:2407`,
+/// `307:2547`, `207:2525`). 3 tabs: upcoming / past / cancelled. Wires
+/// [AppointmentsCubit]. RTL via directional alignment + `TextAlign.start`.
 class AppointmentsPage extends StatefulWidget {
   const AppointmentsPage({super.key});
 
@@ -14,130 +23,182 @@ class AppointmentsPage extends StatefulWidget {
 }
 
 class _AppointmentsPageState extends State<AppointmentsPage> {
-  int _tab = 0; // 0 upcoming, 1 past, 2 cancelled
-
-  static const _textPrimary = Color(0xFF1D1D1D);
-  static const _textSecondary = Color(0xFF4C4C4C);
-  static const _bgNeutral50 = Color(0xFFF4F4F4);
-  static const _accent = Color(0xFF1F8046);
-
-  List<BookingData> get _bookings {
-    switch (_tab) {
-      case 0:
-        return const [
-          BookingData(
-            status: BookingStatus.confirmed,
-            dateTime: 'الخميس ٢٢ أكتوبر · ٤:٣٠ م',
-            centerName: 'مجمع النور الطبي',
-            doctorService: 'د. أحمد العلي · كشف واستشارة أسنان',
-            branchCity: 'فرع الفيصلية · الدمام',
-            imageAsset: 'assets/images/home/center1.png',
-          ),
-          BookingData(
-            status: BookingStatus.pending,
-            dateTime: 'الأحد ٢ نوفمبر · ١٠:٠٠ ص',
-            centerName: 'مركز العناية الطبي',
-            doctorService: 'د. ريم السبيعي · فحص البشرة',
-            branchCity: 'فرع الشاطئ · الدمام',
-            imageAsset: 'assets/images/home/center2.png',
-          ),
-        ];
-      case 1:
-        return const [
-          BookingData(
-            status: BookingStatus.completed,
-            dateTime: 'الاثنين ٥ أغسطس · ٣:٠٠ م',
-            centerName: 'مجمع النور الطبي',
-            doctorService: 'د. أحمد العلي · كشف',
-            branchCity: 'فرع الفيصلية · الدمام',
-            imageAsset: 'assets/images/home/center1.png',
-          ),
-        ];
-      default:
-        return const [];
-    }
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<AppointmentsCubit>().load();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorsTheme.of(context);
+    final typo = AppTypography.of(context);
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: colors.white,
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 6, 16, 14),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    'appointments_title'.tr(),
-                    textAlign: TextAlign.right,
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700,
-                      color: _textPrimary,
-                    ),
-                  ),
-                  const SizedBox(height: 14),
-                  _Tabs(
-                    index: _tab,
-                    onTap: (i) => setState(() => _tab = i),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: _bookings.isEmpty
-                  ? Center(
-                      child: Text(
-                        'appointments_empty'.tr(),
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: _textSecondary,
-                        ),
+        child: BlocBuilder<AppointmentsCubit, AppointmentsState>(
+          builder: (context, state) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 6, 16, 14),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        'appointments_title'.tr(),
+                        textAlign: TextAlign.start,
+                        style: typo.display.copyWith(color: colors.textPrimary),
                       ),
-                    )
-                  : ListView.separated(
-                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-                      itemBuilder: (_, i) => BookingCard(data: _bookings[i]),
-                      separatorBuilder: (_, __) => const SizedBox(height: 12),
-                      itemCount: _bookings.length,
-                    ),
-            ),
-          ],
+                      const SizedBox(height: 14),
+                      _Tabs(
+                        current: state.tab,
+                        onTap: (t) => context
+                            .read<AppointmentsCubit>()
+                            .setTab(t),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(child: _Body(state: state)),
+              ],
+            );
+          },
         ),
       ),
     );
   }
 }
 
-class _Tabs extends StatelessWidget {
-  const _Tabs({required this.index, required this.onTap});
-  final int index;
-  final ValueChanged<int> onTap;
+class _Body extends StatelessWidget {
+  const _Body({required this.state});
+  final AppointmentsState state;
 
   @override
   Widget build(BuildContext context) {
-    const labels = ['القادمة', 'السابقة', 'الملغية'];
+    if (state.status == Status.loading) {
+      return const AppLoadingState();
+    }
+    if (state.status == Status.failure) {
+      return AppErrorState(
+        title: 'something_went_wrong'.tr(),
+        message: state.errorMessage,
+        onRetry: () => context.read<AppointmentsCubit>().load(),
+        retryLabel: 'retry'.tr(),
+      );
+    }
+    final items = state.items;
+    if (items.isEmpty) {
+      return _EmptyState(tab: state.tab);
+    }
+    return ListView.separated(
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+      itemCount: items.length,
+      separatorBuilder: (_, __) => const SizedBox(height: 12),
+      itemBuilder: (_, i) {
+        final r = items[i];
+        return BookingCard(
+          data: _dataFrom(r, state.tab),
+          onTap: () => context.pushNamed(
+            RouteNames.bookingDetails,
+            extra: r,
+          ),
+        );
+      },
+    );
+  }
+
+  BookingData _dataFrom(AppointmentResponse r, AppointmentsTab tab) {
+    final status = switch (tab) {
+      AppointmentsTab.cancelled => BookingStatus.cancelled,
+      AppointmentsTab.past => BookingStatus.completed,
+      AppointmentsTab.upcoming => _statusFromString(r.status) ??
+          BookingStatus.confirmed,
+    };
+    final dateTime = [r.day, r.date, r.month]
+        .where((s) => s != null && s.isNotEmpty)
+        .join(' · ');
+    return BookingData(
+      status: status,
+      dateTime: dateTime.isEmpty ? '—' : dateTime,
+      centerName: r.name ?? '',
+      doctorService: r.mainSpecialization ?? '',
+      branchCity: r.phone ?? '',
+      imageAsset: 'assets/images/home/center1.png',
+    );
+  }
+
+  BookingStatus? _statusFromString(String? s) => switch (s) {
+        'pending' => BookingStatus.pending,
+        'confirmed' => BookingStatus.confirmed,
+        'completed' => BookingStatus.completed,
+        'cancelled' => BookingStatus.cancelled,
+        _ => null,
+      };
+}
+
+class _EmptyState extends StatelessWidget {
+  const _EmptyState({required this.tab});
+  final AppointmentsTab tab;
+
+  @override
+  Widget build(BuildContext context) {
+    final key = switch (tab) {
+      AppointmentsTab.upcoming => 'appointments_empty_upcoming',
+      AppointmentsTab.past => 'appointments_empty_past',
+      AppointmentsTab.cancelled => 'appointments_empty_cancelled',
+    };
+    final colors = AppColorsTheme.of(context);
+    return AppEmptyState(
+      icon: Icon(
+        Icons.event_available_outlined,
+        size: 48,
+        color: colors.borderPrimary,
+      ),
+      title: 'appointments_empty_title'.tr(),
+      message: key.tr(),
+      actionLabel: tab == AppointmentsTab.upcoming
+          ? 'book_appointment'.tr()
+          : null,
+      onAction: tab == AppointmentsTab.upcoming
+          ? () => context.goNamed(RouteNames.home)
+          : null,
+    );
+  }
+}
+
+class _Tabs extends StatelessWidget {
+  const _Tabs({required this.current, required this.onTap});
+  final AppointmentsTab current;
+  final ValueChanged<AppointmentsTab> onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = AppColorsTheme.of(context);
+    final typo = AppTypography.of(context);
+    const tabs = AppointmentsTab.values;
     return Container(
       padding: const EdgeInsets.all(3),
       decoration: BoxDecoration(
-        color: _AppointmentsPageState._bgNeutral50,
+        color: colors.neutral50,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
-        children: List.generate(labels.length, (i) {
-          final active = i == index;
+        children: List.generate(tabs.length, (i) {
+          final t = tabs[i];
+          final active = t == current;
           return Expanded(
             child: GestureDetector(
-              onTap: () => onTap(i),
+              behavior: HitTestBehavior.opaque,
+              onTap: () => onTap(t),
               child: Container(
                 height: 36,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: active ? Colors.white : Colors.transparent,
+                  color: active ? colors.white : Colors.transparent,
                   borderRadius: BorderRadius.circular(8),
                   boxShadow: active
                       ? const [
@@ -150,13 +211,10 @@ class _Tabs extends StatelessWidget {
                       : null,
                 ),
                 child: Text(
-                  labels[i],
-                  style: TextStyle(
-                    fontSize: 14,
+                  _labelKey(t).tr(),
+                  style: typo.textLgSemibold.copyWith(
+                    color: active ? colors.borderPrimary : colors.textSecondary,
                     fontWeight: active ? FontWeight.w700 : FontWeight.w500,
-                    color: active
-                        ? _AppointmentsPageState._accent
-                        : _AppointmentsPageState._textSecondary,
                   ),
                 ),
               ),
@@ -166,4 +224,10 @@ class _Tabs extends StatelessWidget {
       ),
     );
   }
+
+  String _labelKey(AppointmentsTab t) => switch (t) {
+        AppointmentsTab.upcoming => 'appointments_tab_upcoming',
+        AppointmentsTab.past => 'appointments_tab_past',
+        AppointmentsTab.cancelled => 'appointments_tab_cancelled',
+      };
 }

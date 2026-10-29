@@ -1,139 +1,209 @@
 import 'package:dorakpattient/core/router/route_names.dart';
+import 'package:dorakpattient/core/theme/app_colors_theme.dart';
+import 'package:dorakpattient/core/theme/app_typography.dart';
+import 'package:dorakpattient/features/auth/logic/auth_cubit.dart';
+import 'package:dorakpattient/features/auth/logic/auth_state.dart';
+import 'package:dorakpattient/features/profile/logic/patient_profile_cubit.dart';
+import 'package:dorakpattient/features/profile/logic/patient_profile_state.dart';
+import 'package:dorakpattient/features/profile/presentation/widgets/guest_card.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-/// Phase 8 — Account 06 Profile signed-in (Figma `209:2649`).
-///
-/// Material icons stand in for Figma Hicon icons on list rows (same shape,
-/// Primary-25 green pill, chevron-left). Avatar uses initial fallback.
-class ProfilePage extends StatelessWidget {
+/// Phase 11 — Account 06 Profile signed-in (Figma `209:2649`) /
+/// Account 07 Profile guest (Figma `209:2842`). Switches on
+/// [AuthState.isAuthenticated]. RTL-first via directional alignment.
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
-  static const _accent = Color(0xFF1F8046);
-  static const _accentBg = Color(0xFFEFFFF3);
-  static const _borderTertiary = Color(0xFFE5E5E5);
-  static const _textPrimary = Color(0xFF1D1D1D);
-  static const _textSecondary = Color(0xFF4C4C4C);
-  static const _textError = Color(0xFFB42318);
-  static const _bgError = Color(0xFFFEF3F2);
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final auth = context.read<AuthCubit>().state;
+      if (auth.isAuthenticated) {
+        context.read<PatientProfileCubit>().load();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorsTheme.of(context);
+    final typo = AppTypography.of(context);
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: colors.white,
       body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.fromLTRB(16, 6, 16, 24),
-          children: [
-            Text(
-              'profile_title'.tr(),
-              textAlign: TextAlign.right,
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w700,
-                color: _textPrimary,
-              ),
-            ),
-            const SizedBox(height: 14),
-            const _UserCard(name: 'سارة أحمد', phone: '+966 55 123 4567', initial: 'س'),
-            const SizedBox(height: 14),
-            const _SectionLabel('profile_section_account'),
-            const SizedBox(height: 8),
-            _ListGroup(
-              rows: [
-                _ListRowSpec(
-                  icon: Icons.person_outline,
-                  label: 'profile_personal_info',
-                  onTap: () {},
+        child: BlocBuilder<AuthCubit, AuthState>(
+          builder: (context, auth) {
+            final isGuest = !auth.isAuthenticated;
+            return ListView(
+              padding: const EdgeInsetsDirectional.fromSTEB(16, 6, 16, 24),
+              children: [
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: Text(
+                    'profile_title'.tr(),
+                    textAlign: TextAlign.start,
+                    style: typo.display.copyWith(color: colors.textPrimary),
+                  ),
                 ),
-                _ListRowSpec(
-                  icon: Icons.calendar_today_outlined,
-                  label: 'nav_bookings',
-                  onTap: () => context.goNamed(RouteNames.appointments),
-                ),
-                _ListRowSpec(
-                  icon: Icons.favorite_border,
-                  label: 'profile_favorite_centers',
-                  onTap: () {},
-                ),
+                const SizedBox(height: 14),
+                if (isGuest) ...[
+                  GuestCard(
+                    onSignIn: () => context.goNamed(RouteNames.login),
+                  ),
+                  const SizedBox(height: 14),
+                  _GroupHeader(label: 'profile_section_preferences'),
+                  const SizedBox(height: 8),
+                  _ListGroup(rows: _preferenceRows(context)),
+                  const SizedBox(height: 14),
+                  _ListGroup(rows: [
+                    _RowSpec(
+                      icon: Icons.help_outline,
+                      label: 'profile_help_support',
+                      onTap: () => context.pushNamed(RouteNames.helpSupport),
+                    ),
+                  ]),
+                ] else ...[
+                  BlocBuilder<PatientProfileCubit, PatientProfileState>(
+                    builder: (_, state) {
+                      final name = state.name.isNotEmpty
+                          ? state.name
+                          : auth.user?.patient?.name ?? '';
+                      final phone = state.phone.isNotEmpty
+                          ? state.phone
+                          : auth.user?.patient?.phone ?? '';
+                      final initial = name.isNotEmpty ? name.characters.first : '؟';
+                      return _UserCard(
+                        name: name,
+                        phone: phone,
+                        initial: initial,
+                        onEdit: () =>
+                            context.pushNamed(RouteNames.personalInfo),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 14),
+                  _GroupHeader(label: 'profile_section_account'),
+                  const SizedBox(height: 8),
+                  _ListGroup(rows: [
+                    _RowSpec(
+                      icon: Icons.person_outline,
+                      label: 'profile_personal_info',
+                      onTap: () => context.pushNamed(RouteNames.personalInfo),
+                    ),
+                    _RowSpec(
+                      icon: Icons.calendar_today_outlined,
+                      label: 'nav_bookings',
+                      onTap: () =>
+                          context.goNamed(RouteNames.appointments),
+                    ),
+                    _RowSpec(
+                      icon: Icons.favorite_border,
+                      label: 'profile_favorite_centers',
+                      onTap: () =>
+                          context.pushNamed(RouteNames.favouriteCenters),
+                    ),
+                  ]),
+                  const SizedBox(height: 14),
+                  _GroupHeader(label: 'profile_section_preferences'),
+                  const SizedBox(height: 8),
+                  _ListGroup(rows: _preferenceRows(context)),
+                  const SizedBox(height: 14),
+                  _ListGroup(rows: [
+                    _RowSpec(
+                      icon: Icons.help_outline,
+                      label: 'profile_help_support',
+                      onTap: () => context.pushNamed(RouteNames.helpSupport),
+                    ),
+                    _RowSpec(
+                      icon: Icons.logout,
+                      label: 'profile_logout',
+                      isDestructive: true,
+                      onTap: () => context.read<AuthCubit>().logout(),
+                    ),
+                  ]),
+                ],
               ],
-            ),
-            const SizedBox(height: 14),
-            const _SectionLabel('profile_section_preferences'),
-            const SizedBox(height: 8),
-            _ListGroup(
-              rows: [
-                _ListRowSpec(
-                  icon: Icons.notifications_none,
-                  label: 'profile_notifications',
-                  trailingValue: 'profile_enabled',
-                  onTap: () {},
-                ),
-                _ListRowSpec(
-                  icon: Icons.language,
-                  label: 'profile_language',
-                  trailingValue: 'profile_language_value',
-                  onTap: () => context.goNamed(RouteNames.language),
-                ),
-                _ListRowSpec(
-                  icon: Icons.location_on_outlined,
-                  label: 'profile_city',
-                  trailingValue: 'profile_city_value',
-                  onTap: () {},
-                ),
-              ],
-            ),
-            const SizedBox(height: 14),
-            _ListGroup(
-              rows: [
-                _ListRowSpec(
-                  icon: Icons.help_outline,
-                  label: 'profile_help_support',
-                  onTap: () {},
-                ),
-                _ListRowSpec(
-                  icon: Icons.logout,
-                  label: 'profile_logout',
-                  isDestructive: true,
-                  onTap: () {},
-                ),
-              ],
-            ),
-          ],
+            );
+          },
         ),
       ),
     );
   }
+
+  List<_RowSpec> _preferenceRows(BuildContext context) => [
+        _RowSpec(
+          icon: Icons.notifications_none,
+          label: 'profile_notifications',
+          trailingValue: 'profile_enabled',
+          onTap: () => context.goNamed(RouteNames.notification),
+        ),
+        _RowSpec(
+          icon: Icons.language,
+          label: 'profile_language',
+          trailingValue: 'profile_language_value',
+          onTap: () => context.pushNamed(RouteNames.language),
+        ),
+        _RowSpec(
+          icon: Icons.location_on_outlined,
+          label: 'profile_city',
+          trailingValue: 'profile_city_value',
+          onTap: () {},
+        ),
+      ];
 }
 
 class _UserCard extends StatelessWidget {
-  const _UserCard({required this.name, required this.phone, required this.initial});
+  const _UserCard({
+    required this.name,
+    required this.phone,
+    required this.initial,
+    required this.onEdit,
+  });
   final String name;
   final String phone;
   final String initial;
+  final VoidCallback onEdit;
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorsTheme.of(context);
+    final typo = AppTypography.of(context);
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: ProfilePage._accentBg,
-        border: Border.all(color: ProfilePage._borderTertiary),
+        color: colors.primaryTint,
+        border: Border.all(color: colors.fieldBorder),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
         children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(color: ProfilePage._borderTertiary),
+          Material(
+            color: colors.white,
+            borderRadius: BorderRadius.circular(12),
+            child: InkWell(
+              onTap: onEdit,
               borderRadius: BorderRadius.circular(12),
+              child: Container(
+                width: 40,
+                height: 40,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  border: Border.all(color: colors.fieldBorder),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(Icons.edit_outlined,
+                    size: 20, color: colors.textPrimary),
+              ),
             ),
-            alignment: Alignment.center,
-            child: const Icon(Icons.edit_outlined, size: 20, color: ProfilePage._textPrimary),
           ),
           const SizedBox(width: 14),
           Expanded(
@@ -142,19 +212,13 @@ class _UserCard extends StatelessWidget {
               children: [
                 Text(
                   name,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: ProfilePage._textPrimary,
-                  ),
+                  style: typo.titleMd.copyWith(color: colors.textPrimary),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   phone,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: ProfilePage._textSecondary,
+                  style: typo.textLgSemibold.copyWith(
+                    color: colors.textSecondary,
                   ),
                 ),
               ],
@@ -165,17 +229,13 @@ class _UserCard extends StatelessWidget {
             width: 60,
             height: 60,
             alignment: Alignment.center,
-            decoration: const BoxDecoration(
-              color: ProfilePage._accent,
+            decoration: BoxDecoration(
+              color: colors.borderPrimary,
               shape: BoxShape.circle,
             ),
             child: Text(
               initial,
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
-              ),
+              style: typo.display.copyWith(color: colors.onPrimary),
             ),
           ),
         ],
@@ -184,28 +244,26 @@ class _UserCard extends StatelessWidget {
   }
 }
 
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.key_);
-  final String key_;
+class _GroupHeader extends StatelessWidget {
+  const _GroupHeader({required this.label});
+  final String label;
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorsTheme.of(context);
+    final typo = AppTypography.of(context);
     return Align(
       alignment: AlignmentDirectional.centerEnd,
       child: Text(
-        key_.tr(),
-        style: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-          color: ProfilePage._textSecondary,
-        ),
+        label.tr(),
+        style: typo.textLgRegular.copyWith(color: colors.textSecondary),
       ),
     );
   }
 }
 
-class _ListRowSpec {
-  const _ListRowSpec({
+class _RowSpec {
+  const _RowSpec({
     required this.icon,
     required this.label,
     required this.onTap,
@@ -222,22 +280,16 @@ class _ListRowSpec {
 
 class _ListGroup extends StatelessWidget {
   const _ListGroup({required this.rows});
-  final List<_ListRowSpec> rows;
+  final List<_RowSpec> rows;
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorsTheme.of(context);
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: ProfilePage._borderTertiary),
+        color: colors.white,
+        border: Border.all(color: colors.fieldBorder),
         borderRadius: BorderRadius.circular(16),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x0F1D1D1D),
-            offset: Offset(0, 2),
-            blurRadius: 4,
-          ),
-        ],
       ),
       child: Column(
         children: List.generate(rows.length, (i) {
@@ -251,53 +303,56 @@ class _ListGroup extends StatelessWidget {
 
 class _ListRow extends StatelessWidget {
   const _ListRow({required this.spec, required this.hasDivider});
-  final _ListRowSpec spec;
+  final _RowSpec spec;
   final bool hasDivider;
 
   @override
   Widget build(BuildContext context) {
-    final chevron = Directionality.of(context) == TextDirection.rtl
-        ? Icons.chevron_left
-        : Icons.chevron_right;
+    final colors = AppColorsTheme.of(context);
+    final typo = AppTypography.of(context);
     final titleColor =
-        spec.isDestructive ? ProfilePage._textError : ProfilePage._textPrimary;
-    final iconBg = spec.isDestructive ? ProfilePage._bgError : ProfilePage._accentBg;
-    final iconColor = spec.isDestructive ? ProfilePage._textError : ProfilePage._accent;
+        spec.isDestructive ? const Color(0xFFB42318) : colors.textPrimary;
+    final iconBg = spec.isDestructive
+        ? const Color(0xFFFEF3F2)
+        : colors.primaryTint;
+    final iconColor = spec.isDestructive
+        ? const Color(0xFFB42318)
+        : colors.borderPrimary;
     return InkWell(
       onTap: spec.onTap,
       child: Container(
         decoration: BoxDecoration(
           border: hasDivider
-              ? const Border(
-                  bottom: BorderSide(color: ProfilePage._borderTertiary),
-                )
+              ? Border(bottom: BorderSide(color: colors.fieldBorder))
               : null,
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        padding:
+            const EdgeInsetsDirectional.symmetric(horizontal: 12, vertical: 10),
         child: Row(
           children: [
-            Icon(chevron, size: 20, color: ProfilePage._textSecondary),
+            Icon(
+              Directionality.of(context) == TextDirection.rtl
+                  ? Icons.chevron_left
+                  : Icons.chevron_right,
+              size: 20,
+              color: colors.textSecondary,
+            ),
             if (spec.trailingValue != null) ...[
               const SizedBox(width: 8),
               Text(
                 spec.trailingValue!.tr(),
-                style: const TextStyle(
-                  fontSize: 13,
-                  color: ProfilePage._textSecondary,
-                ),
+                style:
+                    typo.textMdRegular.copyWith(color: colors.textSecondary),
               ),
             ],
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
+                padding:
+                    const EdgeInsetsDirectional.symmetric(horizontal: 12),
                 child: Text(
                   spec.label.tr(),
-                  textAlign: TextAlign.right,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: titleColor,
-                  ),
+                  textAlign: TextAlign.start,
+                  style: typo.textLgSemibold.copyWith(color: titleColor),
                 ),
               ),
             ),

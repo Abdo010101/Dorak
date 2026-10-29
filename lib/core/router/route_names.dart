@@ -29,9 +29,16 @@ abstract class RouteNames {
   static const profile = '$home/profile_screen';
   static const profileDetails = '$profile/profile_details_screen';
   static const editProfile = '$profileDetails/edit_profile_screen';
+  static const personalInfo = '$profile/personal_info_screen';
+  static const favouriteCenters = '$profile/favourite_centers_screen';
+  static const helpSupport = '$profile/help_support_screen';
+  static const bookingDetails = '$home/booking_details_screen';
   static const success = '$otp/success_screen';
   static const signUpFinger = '$success/sign_up_finger_screen';
   static const medicalCenter = '$profile/medical_center_screen';
+  static const centerDetails = '$home/center_details';
+  static const doctorsAtCenter = '$home/center_details/doctors';
+  static const clinicDetails = '$home/clinic_details';
   static const appReview = '$profile/app_review';
   static const changePassword = '$otp/changePassword';
   static const mainTest = 'main_test_screen';

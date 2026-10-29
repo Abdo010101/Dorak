@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -22,8 +23,9 @@ class BookingData {
 }
 
 class BookingCard extends StatelessWidget {
-  const BookingCard({super.key, required this.data});
+  const BookingCard({super.key, required this.data, this.onTap});
   final BookingData data;
+  final VoidCallback? onTap;
 
   static const _borderTertiary = Color(0xFFE5E5E5);
   static const _textPrimary = Color(0xFF1D1D1D);
@@ -33,8 +35,8 @@ class BookingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+    final card = Container(
+      padding: const EdgeInsetsDirectional.fromSTEB(14, 12, 14, 12),
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(color: _borderTertiary),
@@ -152,9 +154,9 @@ class BookingCard extends StatelessWidget {
                     color: _tonalBg,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Text(
-                    'التفاصيل',
-                    style: TextStyle(
+                  child: Text(
+                    'booking_card_details'.tr(),
+                    style: const TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w700,
                       color: _tonalText,
@@ -167,6 +169,12 @@ class BookingCard extends StatelessWidget {
         ],
       ),
     );
+    if (onTap == null) return card;
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(16),
+      child: card,
+    );
   }
 }
 
@@ -177,13 +185,13 @@ class _StatusBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final (bg, fg, label) = switch (status) {
-      BookingStatus.confirmed => (const Color(0xFFDBFEE3), const Color(0xFF1F8046), 'مؤكد'),
-      BookingStatus.pending => (const Color(0xFFFFFAEB), const Color(0xFFB54708), 'بانتظار التأكيد'),
-      BookingStatus.completed => (const Color(0xFFE5EFFF), const Color(0xFF175CD3), 'مكتمل'),
-      BookingStatus.cancelled => (const Color(0xFFFEE4E2), const Color(0xFFB42318), 'ملغي'),
+      BookingStatus.confirmed => (const Color(0xFFDBFEE3), const Color(0xFF1F8046), 'status_confirmed'.tr()),
+      BookingStatus.pending => (const Color(0xFFFFFAEB), const Color(0xFFB54708), 'status_pending'.tr()),
+      BookingStatus.completed => (const Color(0xFFE5EFFF), const Color(0xFF175CD3), 'status_completed'.tr()),
+      BookingStatus.cancelled => (const Color(0xFFFEE4E2), const Color(0xFFB42318), 'status_canceled'.tr()),
     };
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
         color: bg,
         borderRadius: BorderRadius.circular(8),

@@ -56,9 +56,9 @@ class ExploreMapPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            Expanded(
+            const Expanded(
               child: Stack(
-                children: const [
+                children: [
                   Positioned.fill(child: MapBackground()),
                   PositionedDirectional(
                     top: 60,

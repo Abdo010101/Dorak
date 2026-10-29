@@ -21,14 +21,14 @@ void main() {
 
     test('color tokens match DS values', () {
       final c = theme.extension<AppColorsTheme>()!;
-      expect(c.borderPrimary, const Color(0xFF014AE0));
+      expect(c.borderPrimary, const Color(0xFF1F8046));
       expect(c.textPrimary, const Color(0xFF1D1D1D));
-      expect(c.textSecondary, const Color(0xFF6D6D6D));
+      expect(c.textSecondary, const Color(0xFF4C4C4C));
       expect(c.surfaceField, const Color(0xFFFAFAFA));
       expect(c.fieldBorder, const Color(0xFFE5E5E5));
       expect(c.borderWarning, const Color(0xFFB54708));
       expect(c.borderSuccess, const Color(0xFF067647));
-      expect(c.primaryTint, const Color(0xFFEBF1FE));
+      expect(c.primaryTint, const Color(0xFFDBFEE3));
     });
 
     test('spacing scale', () {

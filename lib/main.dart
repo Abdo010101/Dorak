@@ -10,7 +10,11 @@ import 'package:dorakpattient/data/shared/shared_pref.dart';
 import 'package:dorakpattient/features/appointment/logic/appointments_cubit.dart';
 import 'package:dorakpattient/features/appointment/logic/booking_cubit.dart';
 import 'package:dorakpattient/features/auth/logic/auth_cubit.dart';
+import 'package:dorakpattient/features/center/presentation/cubit/center_details_cubit.dart';
+import 'package:dorakpattient/features/center/presentation/cubit/clinic_details_cubit.dart';
+import 'package:dorakpattient/features/center/presentation/cubit/doctors_at_center_cubit.dart';
 import 'package:dorakpattient/features/doctor/logic/doctor_profile_cubit.dart';
+import 'package:dorakpattient/features/favourites/logic/favourites_cubit.dart';
 import 'package:dorakpattient/features/home/logic/bottom_nav_cubit.dart';
 import 'package:dorakpattient/features/home/logic/general_cubit.dart';
 import 'package:dorakpattient/features/home/logic/home_cubit.dart';
@@ -136,6 +140,12 @@ class MyApp extends StatelessWidget {
                 locator<AvailableAppointmentRepository>(),
           ),
         ),
+        BlocProvider<CenterDetailsCubit>(create: (_) => CenterDetailsCubit()),
+        BlocProvider<DoctorsAtCenterCubit>(
+          create: (_) => DoctorsAtCenterCubit(),
+        ),
+        BlocProvider<ClinicDetailsCubit>(create: (_) => ClinicDetailsCubit()),
+        BlocProvider<FavouritesCubit>(create: (_) => FavouritesCubit()),
       ],
       child: Sizer(
         builder: (ctx, _, __) {

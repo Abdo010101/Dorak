@@ -430,3 +430,102 @@
 ! git tag -a v1.0.3+5 -m "Dorak Patient redesign v1.0.3+5" ui-redesign
 ! git push github v1.0.3+5
 ```
+
+### [2026-10-29] — ✅ Phase 11a — booking-in-clinic flow (Figma 438:12620)
+- **Branch:** `ui-redesign`.
+- **Figma:** file `jA3JQXye9DbBrxzNkEj9nf`, section `438:12620` — Date & Time (`438:12682`), Review & confirm (`438:12762`), Confirmed (`438:12824`).
+- **New files:**
+  - `lib/features/appointment/presentation/pages/booking_date_time_page.dart`
+  - `lib/features/appointment/presentation/pages/booking_review_page.dart`
+  - `lib/features/appointment/presentation/pages/booking_confirmed_page.dart`
+  - `lib/features/appointment/presentation/widgets/{booking_tokens,day_cell,time_slot,detail_row,booking_summary_header}.dart`
+- **Modified:** `core/router/route_names.dart` (+2 route constants), `core/router/app_router.dart` (+2 GoRoutes, swapped addAppointment target), `features/doctor/presentation/pages/doctor_profile_page.dart` (wired book CTA to `addAppointment`), `assets/translations/{ar,en}.json` (+34 booking_* keys).
+- **Scope:** static mock, Figma-exact. `BookingCubit` wiring + API deferred to a follow-up phase.
+- **RTL:** direction-agnostic throughout (`EdgeInsetsDirectional`, `AlignmentDirectional`, `PositionedDirectional`, chevron flips, logical `Row` order). Accent green `#1F8046` hardcoded locally per `DoctorProfilePage` pattern; `AppColorsTheme` reskin out of scope.
+- **Gates:** `flutter analyze` — no new errors (new files add 0 issues on top of 553 pre-existing lint infos). `flutter test` — pre-existing failures only (ui_kit color theme + auth sendOtp), both unrelated to this phase.
+
+## 2026-10-29 — Phase 11: Center & doctor-clinic section + RTL-first pass
+
+### Figma match
+Section `210:3088` ("03 · المركز والأطباء و العيادات") — shipped 3 missing screens and refactored the one existing screen:
+
+| Node | Screen | Status |
+|---|---|---|
+| `175:861` | Center Details — صفحة المركز | NEW (`lib/features/center/presentation/pages/center_details_page.dart`) |
+| `204:1933` | Center 02 — Doctors at center | NEW (`doctors_at_center_page.dart`) |
+| `433:11943` | Clinic Details — صفحة العيادة | NEW (`clinic_details_page.dart`) |
+| `204:2053`, `363:3494`, `363:3625` | Doctor profile (default + 2 variants) | Refactored — data-driven mock keyed by `doctorId`, RTL-first, i18n |
+
+### DS token swap
+`AppColorsTheme.borderPrimary` `#014AE0` → `#1F8046` (Figma green), `textSecondary` `#6D6D6D` → `#4C4C4C`, `primaryTint` `#EBF1FE` → `#DBFEE3`. Added `primary200 #98F3B2`, `secondaryTint #E5EFFF`, `textInfo #175CD3`, `neutral25 #FAFAFA`, `neutral50 #F4F4F4`. Clears the swap pending from the 2026-10-28 handoff.
+
+### New ui_kit primitives
+`AppRatingChip`, `AppDistanceTag`, `AppChoiceChip`, `AppPricePill`, `AppAvatar`, `AppSpecialtyTile`, `AppReviewCard`, `AppMapPreview`, `AppBookingSummaryHeader`. All RTL-first (`EdgeInsetsDirectional`, `PositionedDirectional`, `AlignmentDirectional`). Barrel updated: `lib/core/ui_kit/ui_kit.dart`.
+
+### Feature folder
+`lib/features/center/` — Clean Architecture: `domain/entities/center_entity.dart` (CenterEntity, ClinicEntity, SpecialtyEntity, OfferEntity, ReviewEntity, DoctorAtCenter); `data/mock/center_mock.dart`; `presentation/cubit/{center_details,doctors_at_center,clinic_details}_cubit+state.dart`; `presentation/pages/{3 pages}`; `presentation/widgets/{center_info_row, center_about_row, center_specialties_section, center_offers_section, center_reviews_section, center_booking_bar, doctor_at_center_card}`. Static-mock cubits — no backend wiring (centers API still commented out in `general_repo.dart`).
+
+### RTL-first cleanup on shared widgets
+- `center_card.dart` — rewrote with ui_kit primitives, token-only colors, i18n `center_card_details`, tappable → `centerDetails` route.
+- `offer_card.dart` — directional padding, i18n `offer_book_cta`.
+- `booking_card.dart` — directional padding, status strings → i18n (`status_confirmed/pending/completed/canceled`), details label → i18n (`booking_card_details`).
+- `section_header.dart` — chevron now flips with `Directionality.of(context)` (was fixed `chevron_left.svg`).
+
+### Routes
+`route_names.dart` — added `centerDetails`, `doctorsAtCenter`, `clinicDetails` (kept legacy `medicalCenter` constant intact). `app_router.dart` — 3 new `GoRoute`s with `?id=` query param; `doctor` + `doctorReview` routes now accept `?id=` to resolve the right variant. `main.dart` — registered `CenterDetailsCubit`, `DoctorsAtCenterCubit`, `ClinicDetailsCubit` under the root `MultiBlocProvider`.
+
+### i18n
+`assets/translations/{ar,en}.json` — added 36 keys covering center_*, clinic_*, doctor_stat_*, doctor_card_book, offer_*, status_*, sar_short, price_*. Arabic uses Arabic-Indic digits in sample data to match Figma.
+
+### Gates
+- `flutter analyze` — 0 errors in new code (down from 3 after fixing `TextDirection` collision from `easy_localization` with `hide TextDirection`); 3 pre-existing warnings in unrelated files.
+- `flutter test` — 63 pass. Updated `test/core/theme/app_theme_test.dart` to assert new DS values. Remaining failure: `auth_cubit sendOtp success flips otpSent flag` — pre-existing, no auth files touched this phase.
+
+### Follow-ups
+- Backend wiring once `getMedicalCenters` ships (currently commented out in `data/repository/general_repo.dart`).
+- Hero / offer images: new screens reference `assets/images/home/center1.png` + `offer1.png` as placeholders; swap for Figma hero (`imgHeroImage` asset) when assets are downloaded into `assets/images/center/`.
+- Favorite centers screen (`363:3887`) still deferred.
+
+## 2026-10-29 — Phase 12: Account & follow-up section (Figma `210:3121`)
+
+Shipped the full 05-الحساب والمتابعة section (16 Figma frames) and closed the "Favorite centers" deferred item from phase 11.
+
+### Screens
+| Node | Screen | Status |
+|---|---|---|
+| `207:2279` / `207:2407` / `307:2547` | Account 01/02 Bookings — upcoming / past / cancelled | Rebuilt with 3-tab switcher, `AppointmentsCubit` wiring, empty states |
+| `207:2525` | Account 03 Bookings empty | `AppEmptyState` branch per tab |
+| `208:2535` / `362:3487` | Account 04/04b Booking details (confirmed + pending) | NEW `booking_details_page.dart` |
+| `208:2641` | Account 05 Cancel booking sheet | NEW `cancel_booking_sheet.dart` with 4 reason `AppChoiceChip`s |
+| `209:2649` | Account 06 Profile signed-in | Rebuilt with `ui_kit`, wired to `PatientProfileCubit`, logout wired |
+| `209:2842` | Account 07 Profile guest | NEW `GuestCard` branch via `AuthCubit.isAuthenticated` |
+| `209:2971` / `352:3712` | Account 08/08b Notifications + empty | Rebuilt with today/this-week grouping, `NotificationCubit` wiring |
+| `209:3066` | Account 09 Personal info | NEW `personal_info_page.dart` (name/phone/email/gender/dob + delete-account); rewired `editProfile` route |
+| `363:3887` | Account 10 Favourite centers | NEW `favourites/` feature + `FavouritesCubit` (stub repo) |
+| `363:3756` | Account 11 Help & support | NEW `help_support_page.dart` |
+
+### Added
+- `lib/core/ui_kit/forms/app_input_field.dart` — 44 px high, 12 radius, optional label/leading/trailing/helper.
+- `lib/features/favourites/{logic,presentation/pages}/` — new feature folder.
+- Routes: `personalInfo`, `favouriteCenters`, `helpSupport`, `bookingDetails`. `editProfile` repoints from `ProfilePage` to `PersonalInfoPage`.
+- `BookingCard.onTap` for navigation to booking details.
+- 60+ translation keys added to `assets/translations/{ar,en}.json` (`booking_details_*`, `cancel_booking_*`, `cancel_reason_*`, `profile_guest_*`, `personal_info_*`, `favourite_centers_*`, `help_support_*`, `notifications_empty_*`, `time_*`, status labels, tab labels).
+
+### RTL-first
+Every new/touched file uses `TextAlign.start`, `AlignmentDirectional`, `EdgeInsetsDirectional`. `startLocale: 'ar'` was already set in `main.dart` (prior WIP). Chevrons mirror via `Directionality.of(context)` ternary.
+
+### Gates
+- `flutter analyze lib` — 0 errors (only pre-existing lint infos).
+- `flutter test` — 64/64 pass. Fixed one WIP-regressed test (`auth_cubit_test.dart` sendOtp seed was `'0555'`, now a 9-digit phone to satisfy the WIP's new `_isValidPhone`).
+
+### Absorbed concurrent WIP (same commit)
+Parallel session's untracked files were committed to keep the build green:
+- `lib/core/ui_kit/{chips,media,surfaces/app_booking_summary_header,surfaces/app_map_preview,surfaces/app_review_card,surfaces/app_specialty_tile}.dart` — DS primitives the Account section reuses.
+- `lib/features/center/` — center/clinic/doctors-at-center feature.
+- RTL + const-correctness touch-ups to home/discovery/doctor/search widgets.
+- `test/core/theme/app_theme_test.dart` adjustment.
+
+### Deferred
+- Reschedule flow from booking details.
+- Favorite centers API wiring (`FavouritesCubit.load()` currently emits empty).
+- Delete-account repo call from personal info.
