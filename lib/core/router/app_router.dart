@@ -37,6 +37,38 @@ import 'route_names.dart';
 final GlobalKey<NavigatorState> rootNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'root');
 
+/// Patient-app page transition: 240 ms fade + 8 px slide-up with
+/// `Curves.easeOutCubic`. Direction-neutral so it reads the same in RTL
+/// (Arabic) and LTR (English). Calm feel suited to a healthcare app.
+CustomTransitionPage<T> _calmPage<T>({
+  required LocalKey key,
+  required Widget child,
+}) {
+  return CustomTransitionPage<T>(
+    key: key,
+    transitionDuration: const Duration(milliseconds: 240),
+    reverseTransitionDuration: const Duration(milliseconds: 200),
+    child: child,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      final curved = CurvedAnimation(
+        parent: animation,
+        curve: Curves.easeOutCubic,
+        reverseCurve: Curves.easeInCubic,
+      );
+      return FadeTransition(
+        opacity: curved,
+        child: SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(0, 0.02),
+            end: Offset.zero,
+          ).animate(curved),
+          child: child,
+        ),
+      );
+    },
+  );
+}
+
 /// Single `GoRouter` for the app. All routes resolve to Phase 8 feature pages.
 /// Legacy auth / profile sub-routes (login, forget-password, change-password,
 /// gender, success, change-phone, edit-profile, profile-details, best-doctors,
@@ -53,240 +85,316 @@ class AppRouter {
       GoRoute(
         path: RouteNames.splash,
         name: RouteNames.splash,
-        builder: (_, __) => const SplashPage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const SplashPage()),
       ),
       GoRoute(
         path: RouteNames.welcome,
         name: RouteNames.welcome,
-        builder: (_, __) => const WelcomePage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const WelcomePage()),
       ),
       GoRoute(
         path: RouteNames.intro,
         name: RouteNames.intro,
-        builder: (_, __) => const WelcomePage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const WelcomePage()),
       ),
       GoRoute(
         path: RouteNames.login,
         name: RouteNames.login,
-        builder: (_, __) => const PhonePage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const PhonePage()),
       ),
       GoRoute(
         path: RouteNames.register,
         name: RouteNames.register,
-        builder: (_, __) => const PhonePage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const PhonePage()),
       ),
       GoRoute(
         path: RouteNames.otp,
         name: RouteNames.otp,
-        builder: (_, __) => const OtpPage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const OtpPage()),
       ),
       GoRoute(
         path: RouteNames.completeInfo,
         name: RouteNames.completeInfo,
-        builder: (_, __) => const CompleteProfilePage(),
+        pageBuilder: (_, state) => _calmPage(
+          key: state.pageKey,
+          child: const CompleteProfilePage(),
+        ),
       ),
       GoRoute(
         path: RouteNames.signedIn,
         name: RouteNames.signedIn,
-        builder: (_, __) => const SignedInPage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const SignedInPage()),
       ),
       GoRoute(
         path: RouteNames.home,
         name: RouteNames.home,
-        builder: (_, __) => const MainShellPage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const MainShellPage()),
       ),
       GoRoute(
         path: RouteNames.notification,
         name: RouteNames.notification,
-        builder: (_, __) => const NotificationsPage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const NotificationsPage()),
       ),
       GoRoute(
         path: RouteNames.setting,
         name: RouteNames.setting,
-        builder: (_, __) => const SettingsPage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const SettingsPage()),
       ),
       GoRoute(
         path: RouteNames.forgetPassword,
         name: RouteNames.forgetPassword,
-        builder: (_, __) => const PhonePage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const PhonePage()),
       ),
       GoRoute(
         path: RouteNames.appointments,
         name: RouteNames.appointments,
-        builder: (_, __) => const AppointmentsPage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const AppointmentsPage()),
       ),
       GoRoute(
         path: RouteNames.searchForCity,
         name: RouteNames.searchForCity,
-        builder: (_, __) => const SearchResultsPage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const SearchResultsPage()),
       ),
       GoRoute(
         path: RouteNames.searchForArea,
         name: RouteNames.searchForArea,
-        builder: (_, __) => const SearchResultsPage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const SearchResultsPage()),
       ),
       GoRoute(
         path: RouteNames.resultOfSearch,
         name: RouteNames.resultOfSearch,
-        builder: (_, state) => SearchResultsPage(
-          initialQuery: state.uri.queryParameters['q'] ?? 'أسنان',
+        pageBuilder: (_, state) => _calmPage(
+          key: state.pageKey,
+          child: SearchResultsPage(
+            initialQuery: state.uri.queryParameters['q'] ?? 'أسنان',
+          ),
         ),
       ),
       GoRoute(
         path: RouteNames.searchForSpecialties,
         name: RouteNames.searchForSpecialties,
-        builder: (_, __) => const SearchResultsPage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const SearchResultsPage()),
       ),
       GoRoute(
         path: RouteNames.searchForSubSpecialties,
         name: RouteNames.searchForSubSpecialties,
-        builder: (_, __) => const SearchResultsPage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const SearchResultsPage()),
       ),
       GoRoute(
         path: RouteNames.doctor,
         name: RouteNames.doctor,
-        builder: (_, state) => DoctorProfilePage(
-          doctorId: int.tryParse(state.uri.queryParameters['id'] ?? '') ?? 1,
+        pageBuilder: (_, state) => _calmPage(
+          key: state.pageKey,
+          child: DoctorProfilePage(
+            doctorId:
+                int.tryParse(state.uri.queryParameters['id'] ?? '') ?? 1,
+          ),
         ),
       ),
       GoRoute(
         path: RouteNames.profile,
         name: RouteNames.profile,
-        builder: (_, __) => const ProfilePage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const ProfilePage()),
       ),
       GoRoute(
         path: RouteNames.profileDetails,
         name: RouteNames.profileDetails,
-        builder: (_, __) => const ProfilePage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const ProfilePage()),
       ),
       GoRoute(
         path: RouteNames.editProfile,
         name: RouteNames.editProfile,
-        builder: (_, __) => const PersonalInfoPage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const PersonalInfoPage()),
       ),
       GoRoute(
         path: RouteNames.personalInfo,
         name: RouteNames.personalInfo,
-        builder: (_, __) => const PersonalInfoPage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const PersonalInfoPage()),
       ),
       GoRoute(
         path: RouteNames.favouriteCenters,
         name: RouteNames.favouriteCenters,
-        builder: (_, __) => const FavouriteCentersPage(),
+        pageBuilder: (_, state) => _calmPage(
+          key: state.pageKey,
+          child: const FavouriteCentersPage(),
+        ),
       ),
       GoRoute(
         path: RouteNames.helpSupport,
         name: RouteNames.helpSupport,
-        builder: (_, __) => const HelpSupportPage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const HelpSupportPage()),
       ),
       GoRoute(
         path: RouteNames.bookingDetails,
         name: RouteNames.bookingDetails,
-        builder: (_, state) => BookingDetailsPage(
-          appointment: state.extra as AppointmentResponse?,
+        pageBuilder: (_, state) => _calmPage(
+          key: state.pageKey,
+          child: BookingDetailsPage(
+            appointment: state.extra as AppointmentResponse?,
+          ),
         ),
       ),
       GoRoute(
         path: RouteNames.success,
         name: RouteNames.success,
-        builder: (_, __) => const MainShellPage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const MainShellPage()),
       ),
       GoRoute(
         path: RouteNames.appReview,
         name: RouteNames.appReview,
-        builder: (_, __) => const AppReviewPage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const AppReviewPage()),
       ),
       GoRoute(
         path: RouteNames.changePassword,
         name: RouteNames.changePassword,
-        builder: (_, __) => const PhonePage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const PhonePage()),
       ),
       GoRoute(
         path: RouteNames.gender,
         name: RouteNames.gender,
-        builder: (_, __) => const PhonePage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const PhonePage()),
       ),
       GoRoute(
         path: RouteNames.language,
         name: RouteNames.language,
-        builder: (_, __) => const LanguagePage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const LanguagePage()),
       ),
       GoRoute(
         path: RouteNames.addAppointment,
         name: RouteNames.addAppointment,
-        builder: (_, __) => const BookingSpecialtyDoctorPage(),
+        pageBuilder: (_, state) => _calmPage(
+          key: state.pageKey,
+          child: const BookingSpecialtyDoctorPage(),
+        ),
       ),
       GoRoute(
         path: RouteNames.bookingDateTime,
         name: RouteNames.bookingDateTime,
-        builder: (_, __) => const BookingDateTimePage(),
+        pageBuilder: (_, state) => _calmPage(
+          key: state.pageKey,
+          child: const BookingDateTimePage(),
+        ),
       ),
       GoRoute(
         path: RouteNames.bookingReview,
         name: RouteNames.bookingReview,
-        builder: (_, __) => const BookingReviewPage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const BookingReviewPage()),
       ),
       GoRoute(
         path: RouteNames.bookingConfirmed,
         name: RouteNames.bookingConfirmed,
-        builder: (_, __) => const BookingConfirmedPage(),
+        pageBuilder: (_, state) => _calmPage(
+          key: state.pageKey,
+          child: const BookingConfirmedPage(),
+        ),
       ),
       GoRoute(
         path: RouteNames.bestDoctors,
         name: RouteNames.bestDoctors,
-        builder: (_, __) => const SearchResultsPage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const SearchResultsPage()),
       ),
       GoRoute(
         path: RouteNames.doctorReview,
         name: RouteNames.doctorReview,
-        builder: (_, state) => DoctorProfilePage(
-          doctorId: int.tryParse(state.uri.queryParameters['id'] ?? '') ?? 1,
+        pageBuilder: (_, state) => _calmPage(
+          key: state.pageKey,
+          child: DoctorProfilePage(
+            doctorId:
+                int.tryParse(state.uri.queryParameters['id'] ?? '') ?? 1,
+          ),
         ),
       ),
       GoRoute(
         path: RouteNames.changePhone,
         name: RouteNames.changePhone,
-        builder: (_, __) => const PhonePage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const PhonePage()),
       ),
       GoRoute(
         path: RouteNames.searchDoctor,
         name: RouteNames.searchDoctor,
-        builder: (_, __) => const SearchResultsPage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const SearchResultsPage()),
       ),
       GoRoute(
         path: RouteNames.offers,
         name: RouteNames.offers,
-        builder: (_, __) => const OffersPage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const OffersPage()),
       ),
       GoRoute(
         path: RouteNames.discoveryExploreMap,
         name: RouteNames.discoveryExploreMap,
-        builder: (_, __) => const ExploreMapPage(),
+        pageBuilder: (_, state) =>
+            _calmPage(key: state.pageKey, child: const ExploreMapPage()),
       ),
       GoRoute(
         path: RouteNames.discoveryLocationPicker,
         name: RouteNames.discoveryLocationPicker,
-        builder: (_, __) => const LocationPickerPage(),
+        pageBuilder: (_, state) => _calmPage(
+          key: state.pageKey,
+          child: const LocationPickerPage(),
+        ),
       ),
       GoRoute(
         path: RouteNames.centerDetails,
         name: RouteNames.centerDetails,
-        builder: (_, state) => CenterDetailsPage(
-          centerId: int.tryParse(state.uri.queryParameters['id'] ?? '') ?? 1,
+        pageBuilder: (_, state) => _calmPage(
+          key: state.pageKey,
+          child: CenterDetailsPage(
+            centerId:
+                int.tryParse(state.uri.queryParameters['id'] ?? '') ?? 1,
+          ),
         ),
       ),
       GoRoute(
         path: RouteNames.doctorsAtCenter,
         name: RouteNames.doctorsAtCenter,
-        builder: (_, state) => DoctorsAtCenterPage(
-          centerId: int.tryParse(state.uri.queryParameters['id'] ?? '') ?? 1,
+        pageBuilder: (_, state) => _calmPage(
+          key: state.pageKey,
+          child: DoctorsAtCenterPage(
+            centerId:
+                int.tryParse(state.uri.queryParameters['id'] ?? '') ?? 1,
+          ),
         ),
       ),
       GoRoute(
         path: RouteNames.clinicDetails,
         name: RouteNames.clinicDetails,
-        builder: (_, state) => ClinicDetailsPage(
-          clinicId: int.tryParse(state.uri.queryParameters['id'] ?? '') ?? 100,
+        pageBuilder: (_, state) => _calmPage(
+          key: state.pageKey,
+          child: ClinicDetailsPage(
+            clinicId:
+                int.tryParse(state.uri.queryParameters['id'] ?? '') ?? 100,
+          ),
         ),
       ),
     ],
