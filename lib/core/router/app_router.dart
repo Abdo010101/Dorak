@@ -4,6 +4,7 @@ import 'package:dorakpattient/features/appointment/presentation/pages/booking_co
 import 'package:dorakpattient/features/appointment/presentation/pages/booking_date_time_page.dart';
 import 'package:dorakpattient/features/appointment/presentation/pages/booking_details_page.dart';
 import 'package:dorakpattient/features/appointment/presentation/pages/booking_review_page.dart';
+import 'package:dorakpattient/features/appointment/presentation/pages/booking_specialty_doctor_page.dart';
 import 'package:dorakpattient/features/auth/presentation/pages/complete_profile_page.dart';
 import 'package:dorakpattient/features/auth/presentation/pages/otp_page.dart';
 import 'package:dorakpattient/features/auth/presentation/pages/phone_page.dart';
@@ -213,6 +214,11 @@ class AppRouter {
       GoRoute(
         path: RouteNames.addAppointment,
         name: RouteNames.addAppointment,
+        builder: (_, __) => const BookingSpecialtyDoctorPage(),
+      ),
+      GoRoute(
+        path: RouteNames.bookingDateTime,
+        name: RouteNames.bookingDateTime,
         builder: (_, __) => const BookingDateTimePage(),
       ),
       GoRoute(

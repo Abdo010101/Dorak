@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/router/route_names.dart';
 import '../../../../core/theme/app_colors_theme.dart';
 import '../../../../core/theme/app_radii.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -30,7 +31,10 @@ class DoctorProfilePage extends StatelessWidget {
           children: [
             _TopBar(onBack: () => context.canPop() ? context.pop() : null),
             Expanded(child: _Content(data: data)),
-            _BookingBar(onBook: () {}),
+            _BookingBar(
+              onBook: () =>
+                  context.pushNamed(RouteNames.bookingSpecialtyDoctor),
+            ),
           ],
         ),
       ),

@@ -1,3 +1,5 @@
+import 'package:dorakpattient/core/theme/app_colors_theme.dart';
+import 'package:dorakpattient/core/theme/app_typography.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -27,21 +29,18 @@ class BookingCard extends StatelessWidget {
   final BookingData data;
   final VoidCallback? onTap;
 
-  static const _borderTertiary = Color(0xFFE5E5E5);
-  static const _textPrimary = Color(0xFF1D1D1D);
-  static const _textSecondary = Color(0xFF4C4C4C);
-  static const _tonalBg = Color(0xFFE5EFFF);
-  static const _tonalText = Color(0xFF175CD3);
-
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorsTheme.of(context);
+    final typo = AppTypography.of(context);
     final card = Container(
       padding: const EdgeInsetsDirectional.fromSTEB(14, 12, 14, 12),
       decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: _borderTertiary),
+        color: colors.white,
+        border: Border.all(color: colors.fieldBorder),
         borderRadius: BorderRadius.circular(16),
         boxShadow: const [
+          // Figma shadow-card; promoted to AppShadows in Phase B.
           BoxShadow(
             color: Color(0x0F1D1D1D),
             offset: Offset(0, 2),
@@ -60,10 +59,9 @@ class BookingCard extends StatelessWidget {
                 children: [
                   Text(
                     data.dateTime,
-                    style: const TextStyle(
-                      fontSize: 14,
+                    style: typo.textLgSemibold.copyWith(
+                      color: colors.textPrimary,
                       fontWeight: FontWeight.w700,
-                      color: _textPrimary,
                     ),
                   ),
                   const SizedBox(width: 6),
@@ -77,22 +75,26 @@ class BookingCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
-          const Divider(height: 1, color: _borderTertiary),
+          Divider(height: 1, color: colors.fieldBorder),
           const SizedBox(height: 12),
           Row(
             children: [
               Expanded(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       data.centerName,
-                      style: const TextStyle(fontSize: 13, color: _textSecondary),
+                      style: typo.textMdRegular.copyWith(
+                        color: colors.textSecondary,
+                      ),
                     ),
                     const SizedBox(height: 3),
                     Text(
                       data.doctorService,
-                      style: const TextStyle(fontSize: 13, color: _textSecondary),
+                      style: typo.textMdRegular.copyWith(
+                        color: colors.textSecondary,
+                      ),
                     ),
                     const SizedBox(height: 3),
                     Row(
@@ -100,9 +102,8 @@ class BookingCard extends StatelessWidget {
                       children: [
                         Text(
                           data.branchCity,
-                          style: const TextStyle(
-                            fontSize: 13,
-                            color: _textSecondary,
+                          style: typo.textMdRegular.copyWith(
+                            color: colors.textSecondary,
                           ),
                         ),
                         const SizedBox(width: 4),
@@ -136,7 +137,7 @@ class BookingCard extends StatelessWidget {
                 height: 40,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: _tonalBg,
+                  color: colors.secondaryTint,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: SvgPicture.asset(
@@ -151,15 +152,14 @@ class BookingCard extends StatelessWidget {
                   height: 40,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: _tonalBg,
+                    color: colors.secondaryTint,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
                     'booking_card_details'.tr(),
-                    style: const TextStyle(
-                      fontSize: 13,
+                    style: typo.textLgSemibold.copyWith(
+                      color: colors.textInfo,
                       fontWeight: FontWeight.w700,
-                      color: _tonalText,
                     ),
                   ),
                 ),
@@ -184,24 +184,45 @@ class _StatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColorsTheme.of(context);
+    final typo = AppTypography.of(context);
+    // Pending/cancelled palettes are not in the theme yet; added in Phase B
+    // (warningBg25/textWarning + errorBg25/textError). Confirmed/completed
+    // map to existing tokens.
     final (bg, fg, label) = switch (status) {
-      BookingStatus.confirmed => (const Color(0xFFDBFEE3), const Color(0xFF1F8046), 'status_confirmed'.tr()),
-      BookingStatus.pending => (const Color(0xFFFFFAEB), const Color(0xFFB54708), 'status_pending'.tr()),
-      BookingStatus.completed => (const Color(0xFFE5EFFF), const Color(0xFF175CD3), 'status_completed'.tr()),
-      BookingStatus.cancelled => (const Color(0xFFFEE4E2), const Color(0xFFB42318), 'status_canceled'.tr()),
+      BookingStatus.confirmed => (
+          colors.primaryTint,
+          colors.borderPrimary,
+          'status_confirmed'.tr(),
+        ),
+      BookingStatus.pending => (
+          const Color(0xFFFFFAEB),
+          colors.textWarning,
+          'status_pending'.tr(),
+        ),
+      BookingStatus.completed => (
+          colors.secondaryTint,
+          colors.textInfo,
+          'status_completed'.tr(),
+        ),
+      BookingStatus.cancelled => (
+          const Color(0xFFFEE4E2),
+          const Color(0xFFB42318),
+          'status_canceled'.tr(),
+        ),
     };
     return Container(
-      padding: const EdgeInsetsDirectional.symmetric(horizontal: 10, vertical: 5),
+      padding:
+          const EdgeInsetsDirectional.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
         color: bg,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
         label,
-        style: TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.w500,
+        style: typo.textMdRegular.copyWith(
           color: fg,
+          fontWeight: FontWeight.w500,
         ),
       ),
     );

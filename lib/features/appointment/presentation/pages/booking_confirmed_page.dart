@@ -22,7 +22,7 @@ class BookingConfirmedPage extends StatelessWidget {
           children: [
             Expanded(
               child: ListView(
-                padding: const EdgeInsets.fromLTRB(16, 24, 16, 16),
+                padding: const EdgeInsetsDirectional.fromSTEB(16, 24, 16, 16),
                 children: const [
                   _SuccessBadge(),
                   SizedBox(height: 20),
@@ -167,12 +167,17 @@ class _SummaryCard extends StatelessWidget {
             DetailRow(
               icon: Icons.location_on_outlined,
               label: 'booking_label_clinic'.tr(),
-              value: 'عيادة دكتور احمد',
+              value: 'مجمع النور الطبي',
+            ),
+            DetailRow(
+              icon: Icons.medical_services_outlined,
+              label: 'booking_label_service'.tr(),
+              value: 'كشف واستشارة أسنان',
             ),
             DetailRow(
               icon: Icons.person_outline,
-              label: 'booking_label_specialty'.tr(),
-              value: 'اسنان',
+              label: 'booking_label_doctor'.tr(),
+              value: 'د. أحمد العلي',
               showDivider: false,
             ),
           ],
@@ -195,7 +200,7 @@ class _BottomActions extends StatelessWidget {
     return SafeArea(
       top: false,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             SizedBox(

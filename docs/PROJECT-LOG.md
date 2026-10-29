@@ -529,3 +529,22 @@ Parallel session's untracked files were committed to keep the build green:
 - Reschedule flow from booking details.
 - Favorite centers API wiring (`FavouritesCubit.load()` currently emits empty).
 - Delete-account repo call from personal info.
+
+---
+
+### [2026-10-29] — ✅ DONE Booking-in-center flow aligned to Figma `210:3100`
+- **المنفذ:** Claude
+- **الميزة:** Booking (Figma section `210:3100` "04 · الحجز في مركز")
+- **التفاصيل:**
+  - **New Screen 1** `booking_specialty_doctor_page.dart` (Figma `177:888` + preselected-doctor variant `209:3151`). Static mock, specialty row + doctor list with "أي طبيب متاح" sentinel, CTA pushes `bookingDateTime`.
+  - **New widgets**: `booking_stepper.dart` (4 steps, Figma `177:928`), `specialty_chip_tile.dart` (Figma `177:945/954`), `doctor_pick_tile.dart` (Figma `177:983/997/1015`).
+  - **BookingStepper added** to Date+Time (`BookingStep.dateTime`) and Review (`BookingStep.review`) pages.
+  - **Date+Time**: `_SelectedSummary` gained a doctor·center row per Figma `178:1137`.
+  - **Review**: appointment-details card gained doctor + service rows per Figma `206:2236` (now 4 rows: doctor, service, date, time).
+  - **Confirmed**: summary gained service row + relabeled specialty → doctor per Figma `206:2345` (now 4 rows: appointment, clinic, service, doctor).
+  - **Routes**: new `bookingDateTime` route; `addAppointment` entry now resolves to `BookingSpecialtyDoctorPage`; `bookingSpecialtyDoctor` alias constant added.
+  - **CTA wiring**: `_BookingBar` in `doctor_profile_page.dart` now pushes `RouteNames.bookingSpecialtyDoctor` (was no-op).
+  - **RTL fixes**: `EdgeInsets.fromLTRB` → `EdgeInsetsDirectional.fromSTEB` across `appointments_page.dart`, `booking_date_time_page.dart`, `booking_review_page.dart`, `booking_confirmed_page.dart`. `booking_card.dart` moved to `AppColorsTheme`/`AppTypography`; `CrossAxisAlignment.end` → `.start`.
+  - **i18n**: added `booking_stepper_step1..4`, `booking_step_specialty`, `booking_step_doctor`, `booking_step_doctor_subtitle`, `booking_any_doctor`, `booking_label_doctor`, `booking_label_service`, `booking_cta_continue`, `booking_header_title` in `ar.json` + `en.json`.
+- **الملفات المتأثرة:** `lib/features/appointment/presentation/pages/{booking_specialty_doctor,booking_date_time,booking_review,booking_confirmed,appointments}_page.dart`, `lib/features/appointment/presentation/widgets/{booking_stepper,specialty_chip_tile,doctor_pick_tile,booking_card}.dart`, `lib/features/doctor/presentation/pages/doctor_profile_page.dart`, `lib/core/router/{app_router,route_names}.dart`, `assets/translations/{ar,en}.json`.
+- **النتيجة:** `flutter analyze` → 0 new errors/warnings (4 pre-existing info-level lints untouched). `flutter test` → 64/64 pass. BookingCubit wiring still deferred (pages consume static mocks); flagged as follow-up.

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/router/route_names.dart';
+import '../widgets/booking_stepper.dart';
 import '../widgets/booking_summary_header.dart';
 import '../widgets/booking_tokens.dart';
 import '../widgets/detail_row.dart';
@@ -27,7 +28,7 @@ class BookingReviewPage extends StatelessWidget {
             ),
             Expanded(
               child: ListView(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
                 children: [
                   const BookingSummaryHeader(
                     name: 'عيادة دكتور احمد',
@@ -36,11 +37,23 @@ class BookingReviewPage extends StatelessWidget {
                     imageSize: Size(64, 56),
                     padding: EdgeInsetsDirectional.only(start: 12, end: 8),
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 16),
+                  const BookingStepper(current: BookingStep.review),
+                  const SizedBox(height: 16),
                   _SectionTitle('booking_details_header'.tr()),
                   const SizedBox(height: 12),
                   _DetailCard(
                     rows: [
+                      DetailRow(
+                        icon: Icons.person_outline,
+                        label: 'booking_label_doctor'.tr(),
+                        value: 'د. أحمد العلي',
+                      ),
+                      DetailRow(
+                        icon: Icons.medical_services_outlined,
+                        label: 'booking_label_service'.tr(),
+                        value: 'كشف واستشارة أسنان',
+                      ),
                       DetailRow(
                         icon: Icons.calendar_today_outlined,
                         label: 'booking_label_date'.tr(),
@@ -237,7 +250,7 @@ class _BottomBar extends StatelessWidget {
             ),
           ],
         ),
-        padding: const EdgeInsets.fromLTRB(16, 23, 16, 16),
+        padding: const EdgeInsetsDirectional.fromSTEB(16, 23, 16, 16),
         child: SizedBox(
           height: 48,
           width: double.infinity,

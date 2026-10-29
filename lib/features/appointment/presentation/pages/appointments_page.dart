@@ -44,7 +44,7 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 6, 16, 14),
+                  padding: const EdgeInsetsDirectional.fromSTEB(16, 6, 16, 14),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -95,7 +95,7 @@ class _Body extends StatelessWidget {
       return _EmptyState(tab: state.tab);
     }
     return ListView.separated(
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+      padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 24),
       itemCount: items.length,
       separatorBuilder: (_, __) => const SizedBox(height: 12),
       itemBuilder: (_, i) {

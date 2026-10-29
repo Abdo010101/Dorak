@@ -45,6 +45,8 @@ abstract class RouteNames {
   static const gender = '$otp/gender_screen';
   static const language = '$profile/language_screen';
   static const addAppointment = '$home/add_appointment_screen';
+  static const bookingSpecialtyDoctor = addAppointment;
+  static const bookingDateTime = '$home/booking_date_time_screen';
   static const bookingReview = '$home/booking_review_screen';
   static const bookingConfirmed = '$home/booking_confirmed_screen';
   static const bestDoctors = '$home/best_doctors_screen';

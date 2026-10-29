@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/router/route_names.dart';
+import '../widgets/booking_stepper.dart';
 import '../widgets/booking_summary_header.dart';
 import '../widgets/booking_tokens.dart';
 import '../widgets/day_cell.dart';
@@ -60,13 +61,15 @@ class _BookingDateTimePageState extends State<BookingDateTimePage> {
             Expanded(
               child: ListView(
                 padding:
-                    const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                    const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
                 children: [
                   const BookingSummaryHeader(
                     name: 'عيادة دكتور احمد',
                     subtitle: 'طب الأسنان',
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 16),
+                  const BookingStepper(current: BookingStep.dateTime),
+                  const SizedBox(height: 16),
                   _SectionLabel('booking_step_pick_day'.tr()),
                   const SizedBox(height: 16),
                   _MonthRow(),
@@ -111,6 +114,7 @@ class _BookingDateTimePageState extends State<BookingDateTimePage> {
                     time: _selectedTime == null
                         ? ''
                         : '${_selectedTime!} مساءً',
+                    doctorCenter: 'د. أحمد العلي · مجمع النور الطبي',
                   ),
                 ],
               ),
@@ -423,9 +427,14 @@ class _SlotGrid extends StatelessWidget {
 }
 
 class _SelectedSummary extends StatelessWidget {
-  const _SelectedSummary({required this.date, required this.time});
+  const _SelectedSummary({
+    required this.date,
+    required this.time,
+    required this.doctorCenter,
+  });
   final String date;
   final String time;
+  final String doctorCenter;
 
   @override
   Widget build(BuildContext context) {
@@ -451,6 +460,8 @@ class _SelectedSummary extends StatelessWidget {
           _SummaryLine(icon: Icons.calendar_today_outlined, text: date),
           const SizedBox(height: 8),
           _SummaryLine(icon: Icons.access_time, text: time),
+          const SizedBox(height: 8),
+          _SummaryLine(icon: Icons.person_outline, text: doctorCenter),
         ],
       ),
     );
@@ -500,7 +511,7 @@ class _BottomBar extends StatelessWidget {
             ),
           ],
         ),
-        padding: const EdgeInsets.fromLTRB(16, 18, 16, 8),
+        padding: const EdgeInsetsDirectional.fromSTEB(16, 18, 16, 8),
         child: Column(
           children: [
             SizedBox(
