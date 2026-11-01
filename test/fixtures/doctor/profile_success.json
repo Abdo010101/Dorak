@@ -1,0 +1,16 @@
+{
+  "data": {
+    "doctor": {
+      "id": 7,
+      "name": "د. فاطمة النعيمي",
+      "image": "https://cdn.dorak.test/img/7.png",
+      "rate": "4.5"
+    },
+    "profile": {
+      "about": "استشاري أمراض الباطنة",
+      "experience_years": 12
+    },
+    "places": [],
+    "ratings": []
+  }
+}

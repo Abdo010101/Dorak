@@ -1,0 +1,10 @@
+{
+  "data": {
+    "morning": [
+      {"time": "10:00", "label": "10:00 ص", "available": true, "doctor_id": 7}
+    ],
+    "evening": [
+      {"time": "19:30", "label": "7:30 م", "available": false, "doctor_id": 7}
+    ]
+  }
+}

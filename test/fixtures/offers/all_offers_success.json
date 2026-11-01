@@ -1,0 +1,7 @@
+{
+  "data": {
+    "offers": [
+      {"id": 1, "title": "خصم 25% على فحص السكر", "price_before": "200", "price_after": "150"}
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "data": {
+    "schedules": [
+      {"day": "sunday", "from": "10:00", "to": "22:00"}
+    ]
+  }
+}

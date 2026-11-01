@@ -1,0 +1,18 @@
+{
+  "data": [
+    {
+      "id": 101,
+      "booking_number": "RSV-0001",
+      "status": "confirmed",
+      "status_label": "مؤكد",
+      "date_label": "الأحد 2 نوفمبر",
+      "time_label": "10:30 ص",
+      "service": "كشف عام",
+      "payment_type": "cash",
+      "payment_method": "الدفع في العيادة",
+      "can_cancel": true,
+      "can_reschedule": true,
+      "can_rate": false
+    }
+  ]
+}

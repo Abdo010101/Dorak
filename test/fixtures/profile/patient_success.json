@@ -1,0 +1,11 @@
+{
+  "data": {
+    "id": 42,
+    "name": "أحمد المريض",
+    "phone": "555123456",
+    "email": "ahmed@example.com",
+    "gender": "male",
+    "birth_date": "1990-05-14",
+    "allow_notifications": 1
+  }
+}

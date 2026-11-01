@@ -1,0 +1,14 @@
+{
+  "data": {
+    "id": 101,
+    "booking_number": "RSV-0001",
+    "status": "confirmed",
+    "status_label": "مؤكد",
+    "date_label": "الأحد 2 نوفمبر",
+    "time_label": "10:30 ص",
+    "service": "كشف عام",
+    "can_cancel": true,
+    "can_reschedule": true,
+    "change_deadline": "2026-11-01T22:00:00Z"
+  }
+}

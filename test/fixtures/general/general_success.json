@@ -1,0 +1,6 @@
+{
+  "data": {
+    "cities": [{"id": 1, "name": "الرياض"}, {"id": 2, "name": "جدة"}],
+    "specializations": []
+  }
+}

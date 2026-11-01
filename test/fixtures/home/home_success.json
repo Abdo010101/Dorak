@@ -1,0 +1,12 @@
+{
+  "data": {
+    "unread_notifications_count": 2,
+    "location": {"city": "الرياض", "lat": 24.7136, "lng": 46.6753},
+    "specializations": [{"id": 1, "name": "طب أسنان"}],
+    "nearest_medical_centers": [],
+    "nearest_clinics": [],
+    "best_doctors": [],
+    "latest_offers": [],
+    "patient_reservations": []
+  }
+}

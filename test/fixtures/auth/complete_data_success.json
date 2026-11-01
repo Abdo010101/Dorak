@@ -1,0 +1,14 @@
+{
+  "data": {
+    "id": 42,
+    "name": "أحمد المريض",
+    "phone": "555123456",
+    "full_phone": "+966555123456",
+    "email": "ahmed@example.com",
+    "gender": "male",
+    "birth_date": "1990-05-14",
+    "city": {"id": 1, "name": "الرياض"},
+    "allow_notifications": 1,
+    "verified_at": "2026-10-29T09:00:00Z"
+  }
+}

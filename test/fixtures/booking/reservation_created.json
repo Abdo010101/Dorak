@@ -1,0 +1,12 @@
+{
+  "data": {
+    "id": 202,
+    "booking_number": "RSV-0202",
+    "status": "pending",
+    "status_label": "قيد التأكيد",
+    "date_label": "الأحد 2 نوفمبر",
+    "time_label": "10:00 ص",
+    "can_cancel": true,
+    "can_reschedule": true
+  }
+}

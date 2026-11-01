@@ -2,8 +2,11 @@ import 'package:dio/dio.dart';
 import 'package:dorakpattient/core/services/location_service.dart';
 import 'package:dorakpattient/data/networks/clients/general_client.dart';
 import 'package:dorakpattient/data/repository/home_repo.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
+import '../networks/auth_interceptor.dart';
 import '../networks/clients/clients.dart';
 import '../networks/logging_interceptor.dart';
 import '../networks/network_constant.dart';
@@ -19,6 +22,18 @@ Future setupLocator() async {
   ///Shared prefrences
   var instance = await SharedPref.getInstance();
   locator.registerSingleton<SharedPref>(instance);
+
+  // AuthInterceptor must be inserted BEFORE LoggingInterceptor so the
+  // final request headers (token + language) show up in the request log.
+  InjectionClass.dio.interceptors.insert(
+    0,
+    AuthInterceptor(
+      prefs: instance,
+      languageCode: () =>
+          InjectionClass.dio.options.headers['Content-Language'] as String? ??
+          'ar',
+    ),
+  );
 
   locator.registerLazySingleton<LocationService>(
     () => const GeolocatorLocationService(),

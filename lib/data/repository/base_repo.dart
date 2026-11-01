@@ -10,11 +10,8 @@ class BaseRepository {
         connectivityResult == ConnectivityResult.wifi;
   }
 
-  Future<bool> checkAuth(DioError dioError) async {
-    final error = ErrorResponse(dioError: dioError);
-    if (error.statusCode == 401) {
-      do {} while (true);
-    }
-    return true;
-  }
+  /// Returns `true` when the Dio error is a 401. Caller decides what to
+  /// do: `AuthInterceptor` triggers logout, feature cubits surface a toast.
+  bool isUnauthorized(DioError dioError) =>
+      dioError.response?.statusCode == 401;
 }
