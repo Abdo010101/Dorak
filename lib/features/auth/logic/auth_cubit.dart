@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/state/status.dart';
+import '../../../data/models/response/response.dart';
 import '../../../data/repository/repository.dart';
 import '../../../data/shared/shared_pref.dart';
 import 'auth_state.dart';
@@ -95,12 +96,25 @@ class AuthCubit extends Cubit<AuthState> {
         'otp': state.otp,
       });
       if (result.error == null) {
-        final patient = state.user?.patient;
+        // Backend returns {token, is_new_user, profile_completed, patient}
+        // directly on the verify endpoint — see verify_otp_success.json
+        // fixture. Persist it so AuthInterceptor picks up the Bearer token
+        // on every subsequent request.
+        final raw = result.data;
+        final json = (raw is Map<String, dynamic>) ? raw : <String, dynamic>{};
+        final user = UserResponse.fromJson(json);
+        if ((user.token ?? '').isNotEmpty) {
+          await _prefs.storeLoginInfo(user);
+        }
+        final patient = user.patient;
         final needsProfile =
-            patient?.name == null || patient!.name!.trim().isEmpty;
+            (user.profileCompleted == false) ||
+                patient?.name == null ||
+                patient!.name!.trim().isEmpty;
         emit(state.copyWith(
           status: Status.success,
           verified: true,
+          user: user,
           needsProfile: needsProfile,
         ));
       } else {

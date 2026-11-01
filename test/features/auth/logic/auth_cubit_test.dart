@@ -70,6 +70,31 @@ void main() {
     );
 
     blocTest<AuthCubit, AuthState>(
+      'verifyOtp success persists token via prefs.storeLoginInfo',
+      setUp: () {
+        when(() => repo.verifyOtp(body: any(named: 'body'))).thenAnswer(
+          (_) async => BaseModel<dynamic>(data: {
+            'token': 'Bearer t.o.k.e.n',
+            'profile_completed': true,
+            'patient': {'id': 42, 'name': 'أحمد', 'phone': '555123456'},
+          }),
+        );
+        when(() => prefs.storeLoginInfo(any()))
+            .thenAnswer((_) async => true);
+      },
+      build: () =>
+          AuthCubit(authenticationRepository: repo, sharedPref: prefs),
+      seed: () => const AuthState(phone: '555123456', otp: '1234'),
+      act: (c) => c.verifyOtp(),
+      verify: (c) {
+        expect(c.state.verified, isTrue);
+        expect(c.state.user?.patient?.id, 42);
+        expect(c.state.needsProfile, isFalse);
+        verify(() => prefs.storeLoginInfo(any())).called(1);
+      },
+    );
+
+    blocTest<AuthCubit, AuthState>(
       'logout clears user and flips loggedOut',
       setUp: () {
         when(() => repo.logout())
