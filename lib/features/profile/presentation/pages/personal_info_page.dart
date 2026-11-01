@@ -1,3 +1,4 @@
+import 'package:dorakpattient/core/router/route_names.dart';
 import 'package:dorakpattient/core/state/status.dart';
 import 'package:dorakpattient/core/theme/app_colors_theme.dart';
 import 'package:dorakpattient/core/theme/app_typography.dart';
@@ -202,11 +203,18 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
       ),
     );
     if (confirm == true) {
-      // TODO(wire): hook into profile repo deleteAccount when API lands.
       if (!context.mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('personal_info_delete_pending'.tr())),
-      );
+      await context.read<AuthCubit>().deleteAccount();
+      if (!context.mounted) return;
+      final err = context.read<AuthCubit>().state.errorMessage;
+      if (err != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(err)),
+        );
+        return;
+      }
+      // AuthCubit flipped loggedOut; splash guard routes back to welcome.
+      context.goNamed(RouteNames.welcome);
     }
   }
 }

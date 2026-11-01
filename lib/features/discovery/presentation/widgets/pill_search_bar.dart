@@ -10,6 +10,7 @@ class PillSearchBar extends StatelessWidget {
     this.hint,
     this.readOnly = false,
     this.onTap,
+    this.onChanged,
     this.autofocus = false,
   });
 
@@ -17,6 +18,7 @@ class PillSearchBar extends StatelessWidget {
   final String? hint;
   final bool readOnly;
   final VoidCallback? onTap;
+  final ValueChanged<String>? onChanged;
   final bool autofocus;
 
   static const _accent = Color(0xFF1F8046);
@@ -46,6 +48,7 @@ class PillSearchBar extends StatelessWidget {
               readOnly: readOnly,
               autofocus: autofocus,
               onTap: onTap,
+              onChanged: onChanged,
               textAlign: TextAlign.end,
               style: const TextStyle(fontSize: 14, color: Color(0xFF1D1D1D)),
               decoration: InputDecoration(

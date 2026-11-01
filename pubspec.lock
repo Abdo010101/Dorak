@@ -1065,10 +1065,10 @@ packages:
     dependency: transitive
     description:
       name: protobuf
-      sha256: de9c9eb2c33f8e933a42932fe1dc504800ca45ebc3d673e6ed7f39754ee4053e
+      sha256: "13b6717366aa7ec3792dd62c19c7d33a785708224365f2db23c5ca01f1c1a0f2"
       url: "https://pub.dev"
     source: hosted
-    version: "4.2.0"
+    version: "6.1.0"
   provider:
     dependency: transitive
     description:
@@ -1121,10 +1121,10 @@ packages:
     dependency: "direct dev"
     description:
       name: retrofit_generator
-      sha256: "5827551e2496f2c9586e4f23eedd6ce0b519286d2f405f91bf70f342a96b48ce"
+      sha256: "756d252a6089e18209e5cf515f18784b80819b1a09abcc2ba3dcdafeb0246004"
       url: "https://pub.dev"
     source: hosted
-    version: "10.0.6"
+    version: "10.3.3"
   rxdart:
     dependency: transitive
     description:

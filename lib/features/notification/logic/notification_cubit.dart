@@ -22,6 +22,32 @@ class NotificationCubit extends Cubit<NotificationFeedState> {
     emit(state.copyWith(notificationsEnabled: value));
   }
 
+  /// `POST /patient/notifications/{id}/mark-as-read` (scope §10.2). Updates
+  /// the local item optimistically — backend echoes the full row but mobile
+  /// does not refetch for one tap.
+  Future<void> markAsRead(String id) async {
+    final result = await _repo.markAsRead(id);
+    if (result.error != null) {
+      emit(state.copyWith(errorMessage: result.error?.message));
+      return;
+    }
+    final next = state.items
+        .map((n) => n.id == id ? (n..isRead = true) : n)
+        .toList(growable: false);
+    emit(state.copyWith(items: next));
+  }
+
+  /// `POST /patient/notifications/mark-all-as-read` (scope §10.2).
+  Future<void> markAllAsRead() async {
+    final result = await _repo.markAllAsRead();
+    if (result.error != null) {
+      emit(state.copyWith(errorMessage: result.error?.message));
+      return;
+    }
+    final next = state.items.map((n) => n..isRead = true).toList(growable: false);
+    emit(state.copyWith(items: next));
+  }
+
   Future<void> _fetch({required int pageKey, required bool replace}) async {
     emit(state.copyWith(status: Status.loading, clearError: true));
     try {

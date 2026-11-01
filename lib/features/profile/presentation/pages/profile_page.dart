@@ -250,12 +250,9 @@ class _GroupHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = AppColorsTheme.of(context);
     final typo = AppTypography.of(context);
-    return Align(
-      alignment: AlignmentDirectional.centerEnd,
-      child: Text(
-        label.tr(),
-        style: typo.textLgRegular.copyWith(color: colors.textSecondary),
-      ),
+    return Text(
+      label.tr(),
+      style: typo.textLgRegular.copyWith(color: colors.textSecondary),
     );
   }
 }
@@ -310,8 +307,9 @@ class _ListRow extends StatelessWidget {
     final typo = AppTypography.of(context);
     final titleColor =
         spec.isDestructive ? const Color(0xFFB42318) : colors.textPrimary;
-    final iconBg =
-        spec.isDestructive ? const Color(0xFFFEF3F2) : colors.primaryTint;
+    final iconBg = spec.isDestructive
+        ? const Color(0xFFFEF3F2)
+        : colors.primaryTint.withOpacity(0.2);
     final iconColor =
         spec.isDestructive ? const Color(0xFFB42318) : colors.borderPrimary;
     return InkWell(

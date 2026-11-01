@@ -1,5 +1,6 @@
 {
   "app_name": "دورك",
+  "splash_tagline": "دورك جاي في وقته",
   "welcome_title": "أهلًا بك في دورك",
   "welcome_subtitle": "سجّل الدخول أو أنشئ حسابًا لحجز مواعيدك ومتابعتها بسهولة.",
   "welcome_cta_phone": "المتابعة برقم الجوال",
@@ -442,5 +443,21 @@
   "location_opt_in_body": "نستخدم موقعك لعرض المدينة والحي ومطابقة أقرب العيادات. لن نشاركه.",
   "location_opt_in_cta": "السماح بالوصول للموقع",
   "location_opt_in_settings_cta": "فتح الإعدادات",
-  "location_opt_in_dismiss": "ليس الآن"
+  "location_opt_in_dismiss": "ليس الآن",
+  "rate_booking_title": "قيّم تجربتك",
+  "rate_booking_subtitle": "كيف كانت تجربتك مع المركز الطبي؟",
+  "rate_booking_review_hint": "اكتب رأيك هنا",
+  "rate_booking_submit": "إرسال التقييم",
+  "rate_booking_later": "لاحقًا",
+  "rate_booking_success_title": "شكرًا لتقييمك",
+  "rate_booking_success_body": "تم إرسال تقييمك بنجاح.",
+  "rate_booking_done": "تم",
+  "cancel_booking_note_hint": "اكتب ملاحظة اختيارية…",
+  "help_support_unavailable": "رقم الدعم غير متاح الآن",
+  "booking_days_empty": "لا توجد مواعيد متاحة.",
+  "booking_slots_empty": "لا توجد أوقات متاحة في هذا اليوم.",
+  "reschedule_sheet_title": "اختر موعد جديد",
+  "reschedule_confirm": "تأكيد التغيير",
+  "explore_empty": "لا توجد نتائج في هذه المنطقة.",
+  "offers_empty": "لا توجد عروض متاحة الآن."
 }

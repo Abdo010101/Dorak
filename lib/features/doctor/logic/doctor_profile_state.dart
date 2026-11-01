@@ -12,6 +12,7 @@ class DoctorProfileState extends Equatable {
     this.offers = const [],
     this.tab = DoctorProfileTab.clinic,
     this.selectedPlaceIndex,
+    this.isFavorite = false,
     this.errorMessage,
   });
 
@@ -20,6 +21,7 @@ class DoctorProfileState extends Equatable {
   final List<OfferResponse> offers;
   final DoctorProfileTab tab;
   final int? selectedPlaceIndex;
+  final bool isFavorite;
   final String? errorMessage;
 
   Places? get selectedPlace {
@@ -35,6 +37,7 @@ class DoctorProfileState extends Equatable {
     List<OfferResponse>? offers,
     DoctorProfileTab? tab,
     int? selectedPlaceIndex,
+    bool? isFavorite,
     String? errorMessage,
     bool clearError = false,
   }) =>
@@ -44,10 +47,18 @@ class DoctorProfileState extends Equatable {
         offers: offers ?? this.offers,
         tab: tab ?? this.tab,
         selectedPlaceIndex: selectedPlaceIndex ?? this.selectedPlaceIndex,
+        isFavorite: isFavorite ?? this.isFavorite,
         errorMessage: clearError ? null : errorMessage ?? this.errorMessage,
       );
 
   @override
-  List<Object?> get props =>
-      [status, profile, offers, tab, selectedPlaceIndex, errorMessage];
+  List<Object?> get props => [
+        status,
+        profile,
+        offers,
+        tab,
+        selectedPlaceIndex,
+        isFavorite,
+        errorMessage,
+      ];
 }

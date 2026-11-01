@@ -43,4 +43,32 @@ class AppointmentsRepository extends BaseRepository {
       return BaseModel.noNetworkConnection();
     }
   }
+
+  /// `GET /patient/reservations/{id}`.
+  Future<BaseModel<AppointmentResponse>> getReservation(int id) async {
+    if (!await checkForConnectivity()) return BaseModel.noNetworkConnection();
+    try {
+      final res = await appointmentClient.getReservation(id);
+      return BaseModel(data: res.data);
+    } on DioError catch (e) {
+      return BaseModel(error: ErrorResponse(dioError: e));
+    }
+  }
+
+  /// `POST /patient/reservations/{id}/reschedule {date, time}` — keeps the
+  /// same id, flips status back to `pending`.
+  Future<BaseModel<AppointmentResponse>> reschedule(
+    int id, {
+    required String date,
+    required String time,
+  }) async {
+    if (!await checkForConnectivity()) return BaseModel.noNetworkConnection();
+    try {
+      final res = await appointmentClient
+          .rescheduleReservation(id, {'date': date, 'time': time});
+      return BaseModel(data: res.data);
+    } on DioError catch (e) {
+      return BaseModel(error: ErrorResponse(dioError: e));
+    }
+  }
 }

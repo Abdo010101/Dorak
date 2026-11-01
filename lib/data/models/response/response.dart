@@ -1,5 +1,9 @@
 export 'all_offers_response.dart';
 export 'appointment_response.dart';
+export 'booking_response.dart';
+export 'centers_response.dart';
+export 'discovery_response.dart';
+export 'favourite_response.dart';
 export 'available_shecdules_response.dart';
 export 'base/base_response.dart';
 export 'base/base_response_list.dart';

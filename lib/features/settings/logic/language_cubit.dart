@@ -22,7 +22,7 @@ class LanguageCubit extends Cubit<LanguageState> {
 
   void setLocale(Locale next) {
     if (next == state.locale) return;
-    _dio.options.headers['Content-language'] = next.languageCode;
+    _dio.options.headers['Content-Language'] = next.languageCode;
     emit(state.copyWith(locale: next));
   }
 

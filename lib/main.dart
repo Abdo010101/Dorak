@@ -11,6 +11,7 @@ import 'package:dorakpattient/data/shared/shared_pref.dart';
 import 'package:dorakpattient/features/appointment/logic/appointments_cubit.dart';
 import 'package:dorakpattient/features/appointment/logic/booking_cubit.dart';
 import 'package:dorakpattient/features/auth/logic/auth_cubit.dart';
+import 'package:dorakpattient/features/discovery/logic/discovery_cubit.dart';
 import 'package:dorakpattient/features/center/presentation/cubit/center_details_cubit.dart';
 import 'package:dorakpattient/features/center/presentation/cubit/clinic_details_cubit.dart';
 import 'package:dorakpattient/features/center/presentation/cubit/doctors_at_center_cubit.dart';
@@ -101,6 +102,7 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -141,11 +143,17 @@ class MyApp extends StatelessWidget {
         BlocProvider<DoctorProfileCubit>(
           create: (_) => DoctorProfileCubit(
             doctorProfileRepository: locator<DoctorProfileRepository>(),
+            favouritesRepository: locator<FavouritesRepository>(),
           ),
         ),
         BlocProvider<SearchCubit>(
           create: (_) => SearchCubit(
-            searchResultRepository: locator<DoctorsSearchResultRepository>(),
+            discoveryRepository: locator<DiscoveryRepository>(),
+          ),
+        ),
+        BlocProvider<DiscoveryCubit>(
+          create: (_) => DiscoveryCubit(
+            repo: locator<DiscoveryRepository>(),
           ),
         ),
         BlocProvider<AuthCubit>(
@@ -162,16 +170,28 @@ class MyApp extends StatelessWidget {
         BlocProvider<BottomNavCubit>(create: (_) => BottomNavCubit()),
         BlocProvider<BookingCubit>(
           create: (_) => BookingCubit(
-            availableAppointmentRepository:
-                locator<AvailableAppointmentRepository>(),
+            bookingRepository: locator<BookingRepository>(),
           ),
         ),
-        BlocProvider<CenterDetailsCubit>(create: (_) => CenterDetailsCubit()),
-        BlocProvider<DoctorsAtCenterCubit>(
-          create: (_) => DoctorsAtCenterCubit(),
+        BlocProvider<CenterDetailsCubit>(
+          create: (_) => CenterDetailsCubit(
+            repo: locator<CentersRepository>(),
+            favouritesRepo: locator<FavouritesRepository>(),
+          ),
         ),
-        BlocProvider<ClinicDetailsCubit>(create: (_) => ClinicDetailsCubit()),
-        BlocProvider<FavouritesCubit>(create: (_) => FavouritesCubit()),
+        BlocProvider<DoctorsAtCenterCubit>(
+          create: (_) =>
+              DoctorsAtCenterCubit(repo: locator<CentersRepository>()),
+        ),
+        BlocProvider<ClinicDetailsCubit>(
+          create: (_) => ClinicDetailsCubit(
+            repo: locator<CentersRepository>(),
+            favouritesRepo: locator<FavouritesRepository>(),
+          ),
+        ),
+        BlocProvider<FavouritesCubit>(
+          create: (_) => FavouritesCubit(repo: locator<FavouritesRepository>()),
+        ),
       ],
       child: Sizer(
         builder: (ctx, _, __) {

@@ -1,16 +1,21 @@
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/router/route_names.dart';
 import '../../../../core/ui_kit/ui_kit.dart';
+import '../../../../data/models/response/appointment_response.dart';
+import '../../logic/booking_cubit.dart';
+import '../../logic/booking_state.dart';
 import '../widgets/booking_tokens.dart';
 import '../widgets/detail_row.dart';
 
 /// UI-redesign booking flow — step 4: confirmation.
 ///
-/// Figma `jA3JQXye9DbBrxzNkEj9nf` node `438:12824`. Static mock; booking
-/// number is a placeholder until `BookingCubit` returns the real id.
+/// Figma `jA3JQXye9DbBrxzNkEj9nf` node `438:12824`. Reads
+/// `BookingCubit.state.confirmed` — the PatientReservationResource returned
+/// by `POST /patient/reservations` (scope §10.2).
 class BookingConfirmedPage extends StatelessWidget {
   const BookingConfirmedPage({super.key});
 
@@ -19,28 +24,34 @@ class BookingConfirmedPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView(
-                padding: const EdgeInsetsDirectional.fromSTEB(16, 24, 16, 16),
-                children: const [
-                  _SuccessBadge(),
-                  SizedBox(height: 20),
-                  _Title(),
-                  SizedBox(height: 8),
-                  _Body(),
-                  SizedBox(height: 24),
-                  _SummaryCard(),
-                ],
-              ),
-            ),
-            _BottomActions(
-              onViewBookings: () =>
-                  context.goNamed(RouteNames.appointments),
-              onBackHome: () => context.goNamed(RouteNames.home),
-            ),
-          ],
+        child: BlocBuilder<BookingCubit, BookingState>(
+          builder: (context, s) {
+            final r = s.confirmed;
+            return Column(
+              children: [
+                Expanded(
+                  child: ListView(
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(16, 24, 16, 16),
+                    children: [
+                      const _SuccessBadge(),
+                      const SizedBox(height: 20),
+                      const _Title(),
+                      const SizedBox(height: 8),
+                      const _Body(),
+                      const SizedBox(height: 24),
+                      _SummaryCard(reservation: r),
+                    ],
+                  ),
+                ),
+                _BottomActions(
+                  onViewBookings: () =>
+                      context.goNamed(RouteNames.home, extra: 2),
+                  onBackHome: () => context.goNamed(RouteNames.home),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
@@ -112,10 +123,18 @@ class _Body extends StatelessWidget {
 }
 
 class _SummaryCard extends StatelessWidget {
-  const _SummaryCard();
+  const _SummaryCard({required this.reservation});
+  final AppointmentResponse? reservation;
 
   @override
   Widget build(BuildContext context) {
+    final r = reservation;
+    final bookingNumber = r?.bookingNumber ?? '—';
+    final dateLine = [r?.dateLabel, r?.timeLabel]
+        .where((v) => v != null && v.isNotEmpty)
+        .join(' · ');
+    final placeName = r?.place?.name ?? '—';
+    final service = r?.service ?? r?.specialization?.name ?? '—';
     return DecoratedBox(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -149,9 +168,9 @@ class _SummaryCard extends StatelessWidget {
                     ),
                   ),
                   const Spacer(),
-                  const Text(
-                    'DR-48213',
-                    style: TextStyle(
+                  Text(
+                    bookingNumber,
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
                       color: BookingTokens.accent,
@@ -163,22 +182,17 @@ class _SummaryCard extends StatelessWidget {
             DetailRow(
               icon: Icons.calendar_today_outlined,
               label: 'booking_label_appointment'.tr(),
-              value: 'الخميس ٢٢ أكتوبر · ٤:٣٠ م',
+              value: dateLine.isEmpty ? '—' : dateLine,
             ),
             DetailRow(
               icon: Icons.location_on_outlined,
               label: 'booking_label_clinic'.tr(),
-              value: 'مجمع النور الطبي',
+              value: placeName,
             ),
             DetailRow(
               icon: Icons.medical_services_outlined,
               label: 'booking_label_service'.tr(),
-              value: 'كشف واستشارة أسنان',
-            ),
-            DetailRow(
-              icon: Icons.person_outline,
-              label: 'booking_label_doctor'.tr(),
-              value: 'د. أحمد العلي',
+              value: service,
               showDivider: false,
             ),
           ],

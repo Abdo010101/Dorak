@@ -156,8 +156,12 @@ class AppRouter {
       GoRoute(
         path: RouteNames.home,
         name: RouteNames.home,
-        pageBuilder: (_, state) =>
-            _calmPage(key: state.pageKey, child: const MainShellPage()),
+        pageBuilder: (_, state) => _calmPage(
+          key: state.pageKey,
+          child: MainShellPage(
+            initialIndex: state.extra is int ? state.extra as int : 0,
+          ),
+        ),
       ),
       GoRoute(
         path: RouteNames.notification,

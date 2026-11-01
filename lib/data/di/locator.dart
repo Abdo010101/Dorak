@@ -61,6 +61,10 @@ Future setupLocator() async {
   locator.registerFactory(() => NotificationClient(
         InjectionClass.dio,
       ));
+  locator.registerFactory(() => FavouritesClient(InjectionClass.dio));
+  locator.registerFactory(() => CentersClient(InjectionClass.dio));
+  locator.registerFactory(() => DiscoveryClient(InjectionClass.dio));
+  locator.registerFactory(() => BookingClient(InjectionClass.dio));
 
   locator.registerFactory<AuthenticationRepository>(() =>
       AuthenticationRepository(
@@ -97,6 +101,14 @@ Future setupLocator() async {
   locator.registerFactory<NotificationsRepository>(() =>
       NotificationsRepository(
           notificationsClient: locator<NotificationClient>()));
+  locator.registerFactory<FavouritesRepository>(
+      () => FavouritesRepository(client: locator<FavouritesClient>()));
+  locator.registerFactory<CentersRepository>(
+      () => CentersRepository(client: locator<CentersClient>()));
+  locator.registerFactory<DiscoveryRepository>(
+      () => DiscoveryRepository(client: locator<DiscoveryClient>()));
+  locator.registerFactory<BookingRepository>(
+      () => BookingRepository(client: locator<BookingClient>()));
 }
 
 abstract class InjectionClass {
@@ -111,6 +123,6 @@ abstract class InjectionClass {
       'Content-Type': 'application/json',
       'Accept': 'application/json, text/plain, /',
       'X-Requested-With': 'XMLHttpRequest',
-      'Content-language': 'ar',
+      'Content-Language': 'ar',
     };
 }

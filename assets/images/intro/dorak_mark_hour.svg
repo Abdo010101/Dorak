@@ -1,0 +1,11 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="108.137" height="126.84" viewBox="0 0 108.137 126.84" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Logo/Dorak hour hand" transform="translate(2.0710 0.5460) translate(47.0858 79.2175) rotate(26.565) scale(1 0.75) rotate(-26.565) translate(-47.0858 -79.2175)">
+<path id="Vector_4" d="M59.2321 85.2682C61.3232 86.3098 63.8628 85.4591 64.9045 83.368C65.9461 81.2769 65.0954 78.7374 63.0043 77.6957L50.858 71.645C48.7669 70.6034 46.2273 71.4541 45.1856 73.5451C44.1439 75.6362 44.9947 78.1758 47.0858 79.2175L59.2321 85.2682Z" fill="url(#paint2_linear_0_100)"/>
+</g>
+<defs>
+<linearGradient id="paint2_linear_0_100" x1="55.0489" y1="85.7171" x2="55.0482" y2="71.2071" gradientUnits="userSpaceOnUse">
+<stop stop-color="#032F7A"/>
+<stop offset="0.68" stop-color="#032FAC"/>
+</linearGradient>
+</defs>
+</svg>

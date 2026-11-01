@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/state/status.dart';
-import '../../../data/models/response/response.dart';
 import '../../../data/repository/repository.dart';
 import '../../../data/shared/shared_pref.dart';
 import 'auth_state.dart';
@@ -47,9 +46,6 @@ class AuthCubit extends Cubit<AuthState> {
     emit(state.copyWith(user: stored));
   }
 
-  // TODO(auth): remove mock short-circuit when backend is ready.
-  static const bool _mockAuth = true;
-
   Future<void> sendOtp() async {
     if (!_isValidPhone(state.phone)) {
       emit(state.copyWith(
@@ -64,11 +60,6 @@ class AuthCubit extends Cubit<AuthState> {
       otpSent: false,
       clearError: true,
     ));
-    if (_mockAuth) {
-      await Future<void>.delayed(const Duration(milliseconds: 400));
-      emit(state.copyWith(status: Status.success, otpSent: true));
-      return;
-    }
     try {
       final result = await _repo.sendOtp(body: {'phone': state.phone});
       if (result.error == null) {
@@ -98,27 +89,6 @@ class AuthCubit extends Cubit<AuthState> {
       verified: false,
       clearError: true,
     ));
-    if (_mockAuth) {
-      await Future<void>.delayed(const Duration(milliseconds: 400));
-      final mockUser = UserResponse(
-        token: 'mock-token',
-        patient: Patient(
-          id: 1,
-          name: 'سارة أحمد',
-          phone: state.phone,
-          email: 'sara@example.com',
-          gender: 'female',
-        ),
-      );
-      await _prefs.storeLoginInfo(mockUser);
-      emit(state.copyWith(
-        status: Status.success,
-        verified: true,
-        needsProfile: false,
-        user: mockUser,
-      ));
-      return;
-    }
     try {
       final result = await _repo.verifyOtp(body: {
         'phone': state.phone,
@@ -158,27 +128,6 @@ class AuthCubit extends Cubit<AuthState> {
       profileCompleted: false,
       clearError: true,
     ));
-    if (_mockAuth) {
-      await Future<void>.delayed(const Duration(milliseconds: 400));
-      final updated = UserResponse(
-        token: state.user?.token ?? 'mock-token',
-        patient: Patient(
-          id: state.user?.patient?.id ?? 1,
-          name: state.name,
-          phone: state.phone,
-          email: state.email,
-          gender: state.user?.patient?.gender,
-        ),
-      );
-      await _prefs.storeLoginInfo(updated);
-      emit(state.copyWith(
-        status: Status.success,
-        profileCompleted: true,
-        needsProfile: false,
-        user: updated,
-      ));
-      return;
-    }
     try {
       final result = await _repo.completeData(body: {
         'name': state.name,
@@ -208,6 +157,46 @@ class AuthCubit extends Cubit<AuthState> {
       await _repo.logout();
       _prefs.deleteLoginInfo();
       emit(const AuthState(status: Status.success, loggedOut: true));
+    } on DioException catch (e) {
+      emit(state.copyWith(status: Status.failure, errorMessage: e.message));
+    }
+  }
+
+  /// `POST /patient/delete-account` (scope §10.2). Backend cancels any
+  /// upcoming reservations, revokes the token, and soft-deletes the
+  /// patient — mobile mirrors `logout()`'s cleanup afterwards.
+  Future<void> deleteAccount() async {
+    emit(state.copyWith(status: Status.loading, clearError: true));
+    try {
+      final result = await _repo.deleteAccount();
+      if (result.error != null) {
+        emit(state.copyWith(
+          status: Status.failure,
+          errorMessage: result.error?.message,
+        ));
+        return;
+      }
+      _prefs.deleteLoginInfo();
+      emit(const AuthState(status: Status.success, loggedOut: true));
+    } on DioException catch (e) {
+      emit(state.copyWith(status: Status.failure, errorMessage: e.message));
+    }
+  }
+
+  /// `POST /patient/resend-otp` (scope §10.2). Called from `otp_page.dart`
+  /// after the 45 s cooldown. Backend throttles: 3/account + 20/IP per 10 min.
+  Future<void> resendOtp() async {
+    emit(state.copyWith(status: Status.loading, clearError: true));
+    try {
+      final result = await _repo.resendOtp();
+      if (result.error != null) {
+        emit(state.copyWith(
+          status: Status.failure,
+          errorMessage: result.error?.message,
+        ));
+        return;
+      }
+      emit(state.copyWith(status: Status.success, otpSent: true));
     } on DioException catch (e) {
       emit(state.copyWith(status: Status.failure, errorMessage: e.message));
     }

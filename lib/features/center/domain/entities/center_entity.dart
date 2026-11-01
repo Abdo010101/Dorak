@@ -15,11 +15,18 @@ class CenterEntity extends Equatable {
     required this.reviews,
     required this.pinLabel,
     required this.doctors,
+    this.heroImageUrl,
   });
 
   final int id;
   final String name;
   final String heroImageAsset;
+
+  /// Backend image URL from `MedicalCenterDetails.card.image` /
+  /// `details.images.first`. When present, the UI renders this via
+  /// Image.network; otherwise it falls back to [heroImageAsset].
+  final String? heroImageUrl;
+
   final String address;
   final String city;
   final String distanceKm;
@@ -35,6 +42,7 @@ class CenterEntity extends Equatable {
         id,
         name,
         heroImageAsset,
+        heroImageUrl,
         address,
         city,
         distanceKm,
@@ -132,10 +140,12 @@ class ClinicEntity extends Equatable {
     required this.offers,
     required this.reviews,
     required this.pinLabel,
+    this.heroImageUrl,
   });
   final int id;
   final String name;
   final String heroImageAsset;
+  final String? heroImageUrl;
   final String address;
   final String city;
   final String distanceKm;
@@ -149,6 +159,7 @@ class ClinicEntity extends Equatable {
         id,
         name,
         heroImageAsset,
+        heroImageUrl,
         address,
         city,
         distanceKm,

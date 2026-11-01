@@ -26,37 +26,6 @@ class AuthenticationRepository extends BaseRepository {
     }
   }
 
-  Future<BaseModel<UserResponse>> loginWithEmailAndPassword(
-      LoginRequest model) async {
-    if (await checkForConnectivity()) {
-      try {
-        return BaseModel(
-            data: await authenticationClient.login(model).then((value) {
-          return value.data;
-        }));
-      } on DioError catch (e) {
-        return BaseModel(error: ErrorResponse(dioError: e));
-      }
-    } else {
-      return BaseModel.noNetworkConnection();
-    }
-  }
-
-  Future<BaseModel<UserResponse>> register(var model) async {
-    if (await checkForConnectivity()) {
-      try {
-        return BaseModel(
-            data: await authenticationClient.register(model).then((value) {
-          return value.data;
-        }));
-      } on DioError catch (e) {
-        return BaseModel(error: ErrorResponse(dioError: e));
-      }
-    } else {
-      return BaseModel.noNetworkConnection();
-    }
-  }
-
   Future<BaseModel<UserResponse>> loginWithSocial(
       LoginWithSocialRequest model) async {
     if (await checkForConnectivity()) {
@@ -136,14 +105,26 @@ class AuthenticationRepository extends BaseRepository {
     }
   }
 
-  Future<BaseModel<dynamic>> changePassword(
-      {required String phone, required var body}) async {
+  Future<BaseModel<dynamic>> resendOtp() async {
     if (await checkForConnectivity()) {
       try {
         return BaseModel(
-            data: await authenticationClient
-                .changePassword(phone, body)
-                .then((value) {
+            data: await authenticationClient.resendOtp().then((value) {
+          return value;
+        }));
+      } on DioError catch (e) {
+        return BaseModel(error: ErrorResponse(dioError: e));
+      }
+    } else {
+      return BaseModel.noNetworkConnection();
+    }
+  }
+
+  Future<BaseModel<dynamic>> deleteAccount() async {
+    if (await checkForConnectivity()) {
+      try {
+        return BaseModel(
+            data: await authenticationClient.deleteAccount().then((value) {
           return value;
         }));
       } on DioError catch (e) {

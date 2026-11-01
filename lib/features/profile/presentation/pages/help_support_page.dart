@@ -1,10 +1,16 @@
 import 'package:dorakpattient/core/theme/app_colors_theme.dart';
 import 'package:dorakpattient/core/theme/app_typography.dart';
 import 'package:dorakpattient/core/ui_kit/ui_kit.dart';
+import 'package:dorakpattient/features/home/logic/general_cubit.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// Phase 11 — Account 11 Help & support (Figma `363:3756`).
+///
+/// "Contact us" opens WhatsApp via `wa.me/<whatsapp_number>` where the
+/// number comes from `/patient/general.whatsapp_number` (scope §10.1).
 class HelpSupportPage extends StatelessWidget {
   const HelpSupportPage({super.key});
 
@@ -22,7 +28,7 @@ class HelpSupportPage extends StatelessWidget {
             _RowSpec(
               icon: Icons.chat_bubble_outline,
               label: 'help_support_contact',
-              onTap: () {},
+              onTap: () => _openWhatsApp(context),
             ),
             _RowSpec(
               icon: Icons.help_outline,
@@ -38,6 +44,32 @@ class HelpSupportPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _openWhatsApp(BuildContext context) async {
+    final number = context
+        .read<GeneralCubit>()
+        .state
+        .generalResponse
+        ?.whatsappNumber;
+    if (number == null || number.isEmpty) {
+      AppSnackbar.show(
+        context,
+        'help_support_unavailable'.tr(),
+        kind: AppSnackbarKind.error,
+      );
+      return;
+    }
+    final digits = number.replaceAll(RegExp(r'[^0-9]'), '');
+    final uri = Uri.parse('https://wa.me/$digits');
+    final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
+    if (!ok && context.mounted) {
+      AppSnackbar.show(
+        context,
+        'help_support_unavailable'.tr(),
+        kind: AppSnackbarKind.error,
+      );
+    }
   }
 }
 

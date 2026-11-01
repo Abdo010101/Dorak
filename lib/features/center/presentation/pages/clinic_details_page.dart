@@ -1,7 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../core/router/route_names.dart';
 import '../../../../core/state/status.dart';
 import '../../../../core/theme/app_colors_theme.dart';
 import '../../../../core/theme/app_radii.dart';
@@ -56,11 +58,17 @@ class _ClinicDetailsPageState extends State<ClinicDetailsPage> {
                 final clinic = state.clinic!;
                 return Column(
                   children: [
-                    _TopBar(title: clinic.name),
+                    _TopBar(
+                      title: clinic.name,
+                      isFavorite: state.isFavorite,
+                      onToggleFavorite: () =>
+                          context.read<ClinicDetailsCubit>().toggleFavorite(),
+                    ),
                     Expanded(child: _Content(clinic: clinic)),
                     CenterBookingBar(
                       primaryLabel: 'clinic_book_cta'.tr(),
-                      onPrimary: () {},
+                      onPrimary: () =>
+                          context.pushNamed(RouteNames.bookingDateTime),
                     ),
                   ],
                 );
@@ -74,8 +82,14 @@ class _ClinicDetailsPageState extends State<ClinicDetailsPage> {
 }
 
 class _TopBar extends StatelessWidget {
-  const _TopBar({required this.title});
+  const _TopBar({
+    required this.title,
+    required this.isFavorite,
+    required this.onToggleFavorite,
+  });
   final String title;
+  final bool isFavorite;
+  final VoidCallback onToggleFavorite;
 
   @override
   Widget build(BuildContext context) {
@@ -95,8 +109,11 @@ class _TopBar extends StatelessWidget {
             ),
           ),
           IconButton(
-            icon: Icon(Icons.favorite_border, color: colors.textPrimary),
-            onPressed: () {},
+            icon: Icon(
+              isFavorite ? Icons.favorite : Icons.favorite_border,
+              color: isFavorite ? const Color(0xFFB42318) : colors.textPrimary,
+            ),
+            onPressed: onToggleFavorite,
           ),
         ],
       ),
@@ -124,16 +141,34 @@ class _Content extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(radii.medium),
-          child: Image.asset(
-            clinic.heroImageAsset,
-            height: 189,
-            width: double.infinity,
-            fit: BoxFit.cover,
-            errorBuilder: (_, __, ___) => Container(
-              height: 189,
-              color: colors.neutral50,
-            ),
-          ),
+          child: (clinic.heroImageUrl != null &&
+                  clinic.heroImageUrl!.isNotEmpty)
+              ? Image.network(
+                  clinic.heroImageUrl!,
+                  height: 189,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, __, ___) => Image.asset(
+                    clinic.heroImageAsset,
+                    height: 189,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) => Container(
+                      height: 189,
+                      color: colors.neutral50,
+                    ),
+                  ),
+                )
+              : Image.asset(
+                  clinic.heroImageAsset,
+                  height: 189,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, __, ___) => Container(
+                    height: 189,
+                    color: colors.neutral50,
+                  ),
+                ),
         ),
         SizedBox(height: spacing.xl),
         CenterInfoRow(

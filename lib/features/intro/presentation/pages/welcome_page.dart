@@ -23,8 +23,31 @@ const _borderTertiary = Color(0xFFE5E5E5);
 const _textDisplay = Color(0xFF0C0C0C);
 const _textSecondary = Color(0xFF4C4C4C);
 
-class WelcomePage extends StatelessWidget {
+class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
+
+  @override
+  State<WelcomePage> createState() => _WelcomePageState();
+}
+
+class _WelcomePageState extends State<WelcomePage>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _ctrl;
+
+  @override
+  void initState() {
+    super.initState();
+    _ctrl = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1100),
+    )..forward();
+  }
+
+  @override
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +58,50 @@ class WelcomePage extends StatelessWidget {
         child: Column(
           children: [
             const _TopBar(),
-            Expanded(child: Center(child: _Content())),
-            const _GuestLink(),
+            Expanded(child: Center(child: _Content(ctrl: _ctrl))),
+            _StaggerFade(
+              controller: _ctrl,
+              begin: 0.75,
+              end: 1.0,
+              child: const _GuestLink(),
+            ),
             const SizedBox(height: 24),
           ],
         ),
       ),
+    );
+  }
+}
+
+/// Fade + slide-up driven by a shared controller over an interval `[begin,end]`.
+class _StaggerFade extends StatelessWidget {
+  const _StaggerFade({
+    required this.controller,
+    required this.begin,
+    required this.end,
+    required this.child,
+    this.slide = 0.25,
+  });
+
+  final AnimationController controller;
+  final double begin;
+  final double end;
+  final Widget child;
+  final double slide;
+
+  @override
+  Widget build(BuildContext context) {
+    final curve = CurvedAnimation(
+      parent: controller,
+      curve: Interval(begin, end, curve: Curves.easeOutCubic),
+    );
+    final offset = Tween<Offset>(
+      begin: Offset(0, slide),
+      end: Offset.zero,
+    ).animate(curve);
+    return SlideTransition(
+      position: offset,
+      child: FadeTransition(opacity: curve, child: child),
     );
   }
 }
@@ -105,55 +166,107 @@ class _LanguagePill extends StatelessWidget {
 }
 
 class _Content extends StatelessWidget {
+  const _Content({required this.ctrl});
+  final AnimationController ctrl;
+
   @override
   Widget build(BuildContext context) {
     final type = AppTypography.of(context);
     final spacing = AppSpacing.of(context);
+
+    final logoScale = Tween<double>(begin: 0.85, end: 1.0).animate(
+      CurvedAnimation(
+        parent: ctrl,
+        curve: const Interval(0.0, 0.5, curve: Curves.easeOutBack),
+      ),
+    );
+    final logoFade = CurvedAnimation(
+      parent: ctrl,
+      curve: const Interval(0.0, 0.4, curve: Curves.easeOut),
+    );
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: spacing.lg),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SvgPicture.asset(
-            'assets/images/intro/dorak_mark.svg',
-            width: 68,
-            height: 80,
+          FadeTransition(
+            opacity: logoFade,
+            child: ScaleTransition(
+              scale: logoScale,
+              child: SvgPicture.asset(
+                'assets/images/intro/dorak_mark.svg',
+                width: 68,
+                height: 80,
+              ),
+            ),
           ),
           const SizedBox(height: 24),
-          Text(
-            'welcome_title'.tr(),
-            textAlign: TextAlign.center,
-            style: type.display.copyWith(color: const Color(0xFF1D1D1D)),
+          _StaggerFade(
+            controller: ctrl,
+            begin: 0.15,
+            end: 0.55,
+            child: Text(
+              'welcome_title'.tr(),
+              textAlign: TextAlign.center,
+              style: type.display.copyWith(color: const Color(0xFF1D1D1D)),
+            ),
           ),
           const SizedBox(height: 10),
-          Text(
-            'welcome_subtitle'.tr(),
-            textAlign: TextAlign.center,
-            style: type.textLgRegular.copyWith(color: _textSecondary),
+          _StaggerFade(
+            controller: ctrl,
+            begin: 0.25,
+            end: 0.6,
+            child: Text(
+              'welcome_subtitle'.tr(),
+              textAlign: TextAlign.center,
+              style: type.textLgRegular.copyWith(color: _textSecondary),
+            ),
           ),
           const SizedBox(height: 40),
-          _PrimaryCTA(
-            label: 'welcome_cta_phone'.tr(),
-            onPressed: () => context.goNamed(RouteNames.register),
+          _StaggerFade(
+            controller: ctrl,
+            begin: 0.4,
+            end: 0.75,
+            child: _PrimaryCTA(
+              label: 'welcome_cta_phone'.tr(),
+              onPressed: () => context.goNamed(RouteNames.register),
+            ),
           ),
           const SizedBox(height: 20),
-          const _OrDivider(),
+          _StaggerFade(
+            controller: ctrl,
+            begin: 0.5,
+            end: 0.8,
+            slide: 0.1,
+            child: const _OrDivider(),
+          ),
           const SizedBox(height: 20),
-          _SocialButton(
-            label: 'welcome_cta_apple'.tr(),
-            assetPath: 'assets/images/intro/apple_logo.svg',
-            backgroundColor: _socialBlack,
-            foregroundColor: Colors.white,
-            onPressed: () {},
+          _StaggerFade(
+            controller: ctrl,
+            begin: 0.55,
+            end: 0.9,
+            child: _SocialButton(
+              label: 'welcome_cta_apple'.tr(),
+              assetPath: 'assets/images/intro/apple_logo.svg',
+              backgroundColor: _socialBlack,
+              foregroundColor: Colors.white,
+              onPressed: () {},
+            ),
           ),
           const SizedBox(height: 12),
-          _SocialButton(
-            label: 'welcome_cta_google'.tr(),
-            assetPath: 'assets/images/intro/google_logo.svg',
-            backgroundColor: Colors.white,
-            foregroundColor: _textDisplay,
-            bordered: true,
-            onPressed: () {},
+          _StaggerFade(
+            controller: ctrl,
+            begin: 0.65,
+            end: 1.0,
+            child: _SocialButton(
+              label: 'welcome_cta_google'.tr(),
+              assetPath: 'assets/images/intro/google_logo.svg',
+              backgroundColor: Colors.white,
+              foregroundColor: _textDisplay,
+              bordered: true,
+              onPressed: () {},
+            ),
           ),
         ],
       ),
@@ -260,7 +373,7 @@ class _GuestLink extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
-        InjectionClass.dio.options.headers['Content-language'] =
+        InjectionClass.dio.options.headers['Content-Language'] =
             context.locale.languageCode;
         context.goNamed(RouteNames.home);
       },

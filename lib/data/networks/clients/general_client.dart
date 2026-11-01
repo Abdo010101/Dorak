@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:retrofit/http.dart';
+import 'package:retrofit/retrofit.dart';
 
 import '../../models/response/response.dart';
 import '../network_constant.dart';

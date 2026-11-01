@@ -1,18 +1,26 @@
+import 'package:dorakpattient/core/state/status.dart';
 import 'package:dorakpattient/core/theme/app_colors_theme.dart';
 import 'package:dorakpattient/core/theme/app_typography.dart'
     show AppTypography;
 import 'package:dorakpattient/core/ui_kit/ui_kit.dart';
+import 'package:dorakpattient/data/di/locator.dart';
 import 'package:dorakpattient/data/models/response/appointment_response.dart';
+import 'package:dorakpattient/data/repository/appointment_repo.dart';
+import 'package:dorakpattient/features/appointment/logic/booking_details_cubit.dart';
 import 'package:dorakpattient/features/appointment/presentation/widgets/booking_card.dart';
 import 'package:dorakpattient/features/appointment/presentation/widgets/cancel_booking_sheet.dart';
+import 'package:dorakpattient/features/appointment/presentation/widgets/reschedule_sheet.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// Phase 11 — Account 04 Booking details (Figma `208:2535`), Account 04b
-/// pending variant (`362:3487`). Reads the [AppointmentResponse] passed via
-/// go_router `extra`. Shows status badge, booking number, center summary,
-/// appointment rows (date/time/doctor/service/fees), map preview, primary CTA
-/// and cancel link. RTL-first via directional alignment.
+/// pending variant (`362:3487`).
+///
+/// Hydrates from the [AppointmentResponse] passed via router `extra`, then
+/// fetches the live reservation via `GET /patient/reservations/{id}` so
+/// status / can_cancel / can_reschedule / change_deadline reflect what the
+/// backend thinks right now (scope answer §8.7).
 class BookingDetailsPage extends StatelessWidget {
   const BookingDetailsPage({super.key, this.appointment});
 
@@ -20,103 +28,165 @@ class BookingDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppColorsTheme.of(context);
-    final a = appointment;
-    final isPending = (a?.status ?? 'confirmed') == 'pending';
-    final status = isPending ? BookingStatus.pending : BookingStatus.confirmed;
+    return BlocProvider<BookingDetailsCubit>(
+      create: (_) {
+        final cubit = BookingDetailsCubit(
+          repo: locator<AppointmentsRepository>(),
+        )..seedFrom(appointment);
+        final id = appointment?.id;
+        if (id != null) cubit.load(id);
+        return cubit;
+      },
+      child: _View(initial: appointment),
+    );
+  }
+}
 
+class _View extends StatelessWidget {
+  const _View({required this.initial});
+  final AppointmentResponse? initial;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = AppColorsTheme.of(context);
     return Scaffold(
       backgroundColor: colors.white,
       appBar: AppTopBar(title: 'booking_details_title'.tr()),
       body: SafeArea(
         top: false,
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView(
-                padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 24),
-                children: [
-                  _StatusRow(status: status, bookingNumber: _bookingNumber(a)),
-                  const SizedBox(height: 16),
-                  AppBookingSummaryHeader(
-                    title: a?.name ?? '',
-                    subtitle: a?.phone ?? '',
-                    imageAsset: 'assets/images/home/center1.png',
-                  ),
-                  const SizedBox(height: 16),
-                  _InfoCard(
-                    rows: [
-                      _InfoRow(
-                        icon: Icons.calendar_today_outlined,
-                        label: 'booking_details_date'.tr(),
-                        value: _dateText(a),
-                      ),
-                      _InfoRow(
-                        icon: Icons.access_time,
-                        label: 'booking_details_time'.tr(),
-                        value: a?.date ?? '—',
-                      ),
-                      _InfoRow(
-                        icon: Icons.person_outline,
-                        label: 'booking_details_doctor'.tr(),
-                        value: a?.name ?? '—',
-                      ),
-                      _InfoRow(
-                        icon: Icons.medical_services_outlined,
-                        label: 'booking_details_service'.tr(),
-                        value: a?.mainSpecialization ?? '—',
-                      ),
-                      _InfoRow(
-                        icon: Icons.account_balance_wallet_outlined,
-                        label: 'booking_details_fees'.tr(),
-                        value: a?.rate != null && a!.rate!.isNotEmpty
-                            ? '${a.rate} ${'currency_sar'.tr()}'
-                            : '—',
-                        isLast: true,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  AppMapPreview(
-                    pinLabel: 'booking_details_directions'.tr(),
-                    openMapLabel: 'booking_details_open_map'.tr(),
-                  ),
-                ],
-              ),
-            ),
-            _ActionBar(
-              status: status,
-              onReschedule: () {
-                // TODO(wire): navigate to reschedule flow when the BRD lands.
-              },
-              onCancel: () => _openCancelSheet(context),
-            ),
-          ],
+        child: BlocBuilder<BookingDetailsCubit, BookingDetailsState>(
+          builder: (context, s) {
+            final a = s.reservation ?? initial;
+            if (a == null && s.status == Status.loading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (a == null) {
+              return Center(
+                child: Text(
+                  s.errorMessage ?? 'something_went_wrong'.tr(),
+                  style: TextStyle(color: colors.textSecondary),
+                ),
+              );
+            }
+            return Column(
+              children: [
+                Expanded(child: _Body(a: a)),
+                _ActionBar(
+                  reservation: a,
+                  onReschedule: () => _openReschedule(context, a),
+                  onCancel: () => _openCancelSheet(context, a),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
   }
 
-  String _bookingNumber(AppointmentResponse? a) {
-    final id = a?.id;
-    if (id == null) return '—';
-    return 'DR-${id.toString().padLeft(5, '0')}';
+  Future<void> _openReschedule(
+    BuildContext context,
+    AppointmentResponse a,
+  ) async {
+    final updated = await showRescheduleSheet(context, reservation: a);
+    if (updated != null && context.mounted) {
+      context.read<BookingDetailsCubit>().applyUpdated(updated);
+    }
   }
 
-  String _dateText(AppointmentResponse? a) {
-    final parts = [a?.day, a?.date, a?.month]
-        .where((s) => s != null && s.isNotEmpty)
-        .toList();
-    return parts.isEmpty ? '—' : parts.join(' · ');
-  }
-
-  Future<void> _openCancelSheet(BuildContext context) async {
+  Future<void> _openCancelSheet(
+    BuildContext context,
+    AppointmentResponse a,
+  ) async {
     await showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (_) => CancelBookingSheet(appointment: appointment),
+      builder: (_) => CancelBookingSheet(appointment: a),
     );
+  }
+}
+
+class _Body extends StatelessWidget {
+  const _Body({required this.a});
+  final AppointmentResponse a;
+
+  @override
+  Widget build(BuildContext context) {
+    final status = _statusEnum(a);
+    return ListView(
+      padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 24),
+      children: [
+        _StatusRow(status: status, bookingNumber: a.bookingNumber ?? '—'),
+        const SizedBox(height: 16),
+        AppBookingSummaryHeader(
+          title: a.place?.name ?? '',
+          subtitle: a.place?.branch ?? a.place?.address ?? '',
+          imageAsset: 'assets/images/home/center1.png',
+        ),
+        const SizedBox(height: 16),
+        _InfoCard(rows: [
+          _InfoRow(
+            icon: Icons.calendar_today_outlined,
+            label: 'booking_details_date'.tr(),
+            value: a.dateLabel ?? '—',
+          ),
+          _InfoRow(
+            icon: Icons.access_time,
+            label: 'booking_details_time'.tr(),
+            value: a.timeLabel ?? '—',
+          ),
+          _InfoRow(
+            icon: Icons.medical_services_outlined,
+            label: 'booking_details_service'.tr(),
+            value: a.service ?? a.specialization?.name ?? '—',
+          ),
+          _InfoRow(
+            icon: Icons.account_balance_wallet_outlined,
+            label: 'booking_label_payment'.tr(),
+            value:
+                a.paymentMethod ?? 'booking_payment_in_center'.tr(),
+            isLast: true,
+          ),
+        ]),
+        if ((a.place?.lat ?? 0) != 0 && (a.place?.lng ?? 0) != 0) ...[
+          const SizedBox(height: 16),
+          AppMapPreview(
+            pinLabel: a.place?.address ?? 'booking_details_directions'.tr(),
+            openMapLabel: 'booking_details_open_map'.tr(),
+          ),
+        ],
+        if (a.cancellation?.label != null) ...[
+          const SizedBox(height: 16),
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: const Color(0xFFFEF3F2),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Text(
+              a.cancellation!.label!,
+              style: const TextStyle(color: Color(0xFFB42318)),
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+
+  BookingStatus _statusEnum(AppointmentResponse a) {
+    switch (a.status) {
+      case 'pending':
+        return BookingStatus.pending;
+      case 'completed':
+        return BookingStatus.completed;
+      case 'cancelled':
+      case 'no_show':
+        return BookingStatus.cancelled;
+      case 'confirmed':
+      default:
+        return BookingStatus.confirmed;
+    }
   }
 }
 
@@ -212,7 +282,8 @@ class _InfoRow extends StatelessWidget {
     final colors = AppColorsTheme.of(context);
     final typo = AppTypography.of(context);
     return Container(
-      padding: const EdgeInsetsDirectional.symmetric(horizontal: 14, vertical: 12),
+      padding:
+          const EdgeInsetsDirectional.symmetric(horizontal: 14, vertical: 12),
       decoration: BoxDecoration(
         border: isLast
             ? null
@@ -242,12 +313,12 @@ class _InfoRow extends StatelessWidget {
 
 class _ActionBar extends StatelessWidget {
   const _ActionBar({
-    required this.status,
+    required this.reservation,
     required this.onReschedule,
     required this.onCancel,
   });
 
-  final BookingStatus status;
+  final AppointmentResponse reservation;
   final VoidCallback onReschedule;
   final VoidCallback onCancel;
 
@@ -255,22 +326,24 @@ class _ActionBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = AppColorsTheme.of(context);
     final typo = AppTypography.of(context);
-    final canCancel = status == BookingStatus.confirmed ||
-        status == BookingStatus.pending;
+    final canReschedule = reservation.canReschedule ?? false;
+    final canCancel = reservation.canCancel ?? false;
+    final isPending = reservation.status == 'pending';
     return SafeArea(
       top: false,
       child: Padding(
         padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 12),
         child: Column(
           children: [
-            AppPrimaryButton(
-              label: status == BookingStatus.pending
-                  ? 'booking_details_track'.tr()
-                  : 'booking_details_reschedule'.tr(),
-              onPressed: onReschedule,
-            ),
+            if (canReschedule)
+              AppPrimaryButton(
+                label: isPending
+                    ? 'booking_details_track'.tr()
+                    : 'booking_details_reschedule'.tr(),
+                onPressed: onReschedule,
+              ),
             if (canCancel) ...[
-              const SizedBox(height: 10),
+              if (canReschedule) const SizedBox(height: 10),
               TextButton(
                 onPressed: onCancel,
                 child: Text(

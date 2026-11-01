@@ -60,11 +60,17 @@ class _CenterDetailsPageState extends State<CenterDetailsPage> {
                 final center = state.center!;
                 return Column(
                   children: [
-                    _TopBar(title: center.name),
+                    _TopBar(
+                      title: center.name,
+                      isFavorite: state.isFavorite,
+                      onToggleFavorite: () =>
+                          context.read<CenterDetailsCubit>().toggleFavorite(),
+                    ),
                     Expanded(child: _Content(center: center)),
                     CenterBookingBar(
                       primaryLabel: 'center_book_cta'.tr(),
-                      onPrimary: () {},
+                      onPrimary: () =>
+                          context.pushNamed(RouteNames.bookingSpecialtyDoctor),
                       secondaryLabel: 'center_doctors_cta'.tr(),
                       onSecondary: () {
                         debugPrint('[center_details] push doctorsAtCenter');
@@ -83,8 +89,14 @@ class _CenterDetailsPageState extends State<CenterDetailsPage> {
 }
 
 class _TopBar extends StatelessWidget {
-  const _TopBar({required this.title});
+  const _TopBar({
+    required this.title,
+    required this.isFavorite,
+    required this.onToggleFavorite,
+  });
   final String title;
+  final bool isFavorite;
+  final VoidCallback onToggleFavorite;
 
   @override
   Widget build(BuildContext context) {
@@ -104,8 +116,11 @@ class _TopBar extends StatelessWidget {
             ),
           ),
           IconButton(
-            icon: Icon(Icons.favorite_border, color: colors.textPrimary),
-            onPressed: () {},
+            icon: Icon(
+              isFavorite ? Icons.favorite : Icons.favorite_border,
+              color: isFavorite ? const Color(0xFFB42318) : colors.textPrimary,
+            ),
+            onPressed: onToggleFavorite,
           ),
         ],
       ),
@@ -132,16 +147,34 @@ class _Content extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(radii.medium),
-          child: Image.asset(
-            center.heroImageAsset,
-            height: 189,
-            width: double.infinity,
-            fit: BoxFit.cover,
-            errorBuilder: (_, __, ___) => Container(
-              height: 189,
-              color: colors.neutral50,
-            ),
-          ),
+          child: (center.heroImageUrl != null &&
+                  center.heroImageUrl!.isNotEmpty)
+              ? Image.network(
+                  center.heroImageUrl!,
+                  height: 189,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, __, ___) => Image.asset(
+                    center.heroImageAsset,
+                    height: 189,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) => Container(
+                      height: 189,
+                      color: colors.neutral50,
+                    ),
+                  ),
+                )
+              : Image.asset(
+                  center.heroImageAsset,
+                  height: 189,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, __, ___) => Container(
+                    height: 189,
+                    color: colors.neutral50,
+                  ),
+                ),
         ),
         SizedBox(height: spacing.xl),
         CenterInfoRow(

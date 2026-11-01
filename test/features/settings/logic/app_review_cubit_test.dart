@@ -1,6 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:dorakpattient/core/state/status.dart';
-import 'package:dorakpattient/data/models/response/doctor_profile_response.dart';
 import 'package:dorakpattient/data/networks/base_model.dart';
 import 'package:dorakpattient/data/repository/repository.dart';
 import 'package:dorakpattient/features/settings/logic/app_review_cubit.dart';
@@ -40,8 +39,8 @@ void main() {
     blocTest<AppReviewCubit, AppReviewState>(
       'submit with rating emits loading then success',
       setUp: () {
-        when(() => repo.doctorRate(any())).thenAnswer(
-          (_) async => BaseModel<Ratings>(data: Ratings()),
+        when(() => repo.appRate(any())).thenAnswer(
+          (_) async => BaseModel<dynamic>(data: const {}),
         );
       },
       build: () => AppReviewCubit(rateRepository: repo),

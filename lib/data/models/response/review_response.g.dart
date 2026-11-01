@@ -8,10 +8,10 @@ part of 'review_response.dart';
 
 ReviewResponse _$ReviewResponseFromJson(Map<String, dynamic> json) =>
     ReviewResponse(
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       name: json['name'] as String?,
       comment: json['comment'] as String?,
-      rating: json['rating'] as int?,
+      rating: (json['rating'] as num?)?.toInt(),
       time: json['time'] as String?,
     );
 

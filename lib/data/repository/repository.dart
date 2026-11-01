@@ -1,7 +1,11 @@
 export 'appointment_repo.dart';
 export 'auth_repo.dart';
 export 'base_repo.dart';
+export 'booking_repo.dart';
+export 'centers_repo.dart';
+export 'discovery_repo.dart';
 export 'doctor_profile_repo.dart';
+export 'favourites_repo.dart';
 export 'general_repo.dart';
 export 'home_repo.dart';
 export 'notification_repo.dart';

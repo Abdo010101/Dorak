@@ -1,4 +1,6 @@
 {
+  "app_name": "Dorak",
+  "splash_tagline": "Your turn, right on time",
   "welcome_title": "Welcome to Dorak",
   "welcome_subtitle": "Sign in or create an account to book and track your appointments easily.",
   "welcome_cta_phone": "Continue with phone",
@@ -442,5 +444,21 @@
   "location_opt_in_body": "We use your location to show your city and area and match nearby clinics. We never share it.",
   "location_opt_in_cta": "Allow location access",
   "location_opt_in_settings_cta": "Open settings",
-  "location_opt_in_dismiss": "Not now"
+  "location_opt_in_dismiss": "Not now",
+  "rate_booking_title": "Rate your experience",
+  "rate_booking_subtitle": "How was your experience with the medical center?",
+  "rate_booking_review_hint": "Write your review here",
+  "rate_booking_submit": "Send rating",
+  "rate_booking_later": "Later",
+  "rate_booking_success_title": "Thanks for your rating",
+  "rate_booking_success_body": "Your rating was sent successfully.",
+  "rate_booking_done": "Done",
+  "cancel_booking_note_hint": "Add an optional note…",
+  "help_support_unavailable": "Support number is unavailable right now",
+  "booking_days_empty": "No available days.",
+  "booking_slots_empty": "No available times on this day.",
+  "reschedule_sheet_title": "Pick a new time",
+  "reschedule_confirm": "Confirm change",
+  "explore_empty": "No results in this area.",
+  "offers_empty": "No offers right now."
 }

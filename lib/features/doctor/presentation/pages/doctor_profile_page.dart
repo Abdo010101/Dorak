@@ -1,6 +1,7 @@
+import 'package:dorakpattient/core/state/status.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/router/route_names.dart';
@@ -9,38 +10,64 @@ import '../../../../core/theme/app_radii.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/ui_kit/ui_kit.dart';
+import '../../../../data/models/response/doctor_profile_response.dart';
+import '../../logic/doctor_profile_cubit.dart';
+import '../../logic/doctor_profile_state.dart';
 
 /// Phase 8 — Doctor profile (Figma `204:2053`, variants `363:3494`, `363:3625`).
 ///
-/// RTL-first. Data from static mock keyed by [doctorId] until
-/// `DoctorProfileCubit` wiring returns real `DoctorProfileResponse` for every
-/// doctor the backend serves.
-class DoctorProfilePage extends StatelessWidget {
+/// RTL-first. Wires [DoctorProfileCubit] → `GET /patient/doctors/{id}` and
+/// renders the new `profile` sub-block (headline, rating, experience_years,
+/// patients_count, bio, branches, services, is_favorite). Heart toggles
+/// the doctor favorite via [DoctorProfileCubit.toggleFavorite].
+class DoctorProfilePage extends StatefulWidget {
   const DoctorProfilePage({super.key, this.doctorId = 1});
 
   final int doctorId;
 
   @override
+  State<DoctorProfilePage> createState() => _DoctorProfilePageState();
+}
+
+class _DoctorProfilePageState extends State<DoctorProfilePage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      context.read<DoctorProfileCubit>().load(widget.doctorId);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final colors = AppColorsTheme.of(context);
-    final data = _doctorMock(doctorId);
     return Scaffold(
       backgroundColor: colors.white,
       body: Directionality(
         textDirection: TextDirection.rtl,
         child: SafeArea(
-          child: Column(
-            children: [
-              _TopBar(onBack: () => context.canPop() ? context.pop() : null),
-              Expanded(child: _Content(data: data)),
-              _BookingBar(
-                onBook: () async {
-                  if (!await ensureSignedIn(context)) return;
-                  if (!context.mounted) return;
-                  context.pushNamed(RouteNames.bookingSpecialtyDoctor);
-                },
-              ),
-            ],
+          child: BlocBuilder<DoctorProfileCubit, DoctorProfileState>(
+            builder: (context, s) {
+              return Column(
+                children: [
+                  _TopBar(
+                    isFavorite: s.isFavorite,
+                    onBack: () => context.canPop() ? context.pop() : null,
+                    onToggleFavorite: () =>
+                        context.read<DoctorProfileCubit>().toggleFavorite(),
+                  ),
+                  Expanded(child: _Content(state: s)),
+                  _BookingBar(
+                    onBook: () async {
+                      if (!await ensureSignedIn(context)) return;
+                      if (!context.mounted) return;
+                      context.pushNamed(RouteNames.bookingSpecialtyDoctor);
+                    },
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),
@@ -48,94 +75,15 @@ class DoctorProfilePage extends StatelessWidget {
   }
 }
 
-class _DoctorMock {
-  const _DoctorMock({
-    required this.name,
-    required this.subtitle,
-    required this.about,
-    required this.reviewersCount,
-    required this.experienceYears,
-    required this.ratingValue,
-    required this.ratingCount,
-    required this.cities,
-    required this.priceLabel,
-    required this.serviceName,
-  });
-
-  static const String avatarAsset = 'assets/images/doctor/avatar.png';
-
-  final String name;
-  final String subtitle;
-  final String about;
-  final String reviewersCount;
-  final String experienceYears;
-  final String ratingValue;
-  final String ratingCount;
-  final List<_CityBranch> cities;
-  final String priceLabel;
-  final String serviceName;
-}
-
-class _CityBranch {
-  const _CityBranch({required this.city, required this.branches});
-  final String city;
-  final String branches;
-}
-
-_DoctorMock _doctorMock(int id) {
-  switch (id) {
-    case 2:
-      return const _DoctorMock(
-        name: 'د. سارة الحسن',
-        subtitle: 'أخصائية طب الأسنان · مجمع النور الطبي',
-        about:
-            'أخصائية طب أسنان عام وتجميلي، تهتم براحة المراجع ووضوح خطة العلاج.',
-        reviewersCount: '+٣٠٠',
-        experienceYears: '٨',
-        ratingValue: '٤٫٧',
-        ratingCount: '٩٨',
-        cities: [_CityBranch(city: 'الدمام', branches: 'فرع الفيصلية')],
-        priceLabel: '١٥٠',
-        serviceName: 'كشف واستشارة أسنان',
-      );
-    case 3:
-      return const _DoctorMock(
-        name: 'د. منى الزهراني',
-        subtitle: 'استشارية طب الأطفال · مجمع النور الطبي',
-        about:
-            'استشارية طب الأطفال وحديثي الولادة، بخبرة طويلة في متابعة نمو الأطفال.',
-        reviewersCount: '+٨٠٠',
-        experienceYears: '١٥',
-        ratingValue: '٤٫٩',
-        ratingCount: '١٥٤',
-        cities: [_CityBranch(city: 'الدمام', branches: 'فرع الفيصلية')],
-        priceLabel: '١٨٠',
-        serviceName: 'كشف واستشارة أطفال',
-      );
-    case 1:
-    default:
-      return const _DoctorMock(
-        name: 'د. أحمد العلي',
-        subtitle: 'استشاري طب الأسنان · مجمع النور الطبي',
-        about:
-            'استشاري في طب وجراحة الأسنان، متخصص في التجميل وعلاج العصب، ويهتم بتجربة مريحة لكل مراجع.',
-        reviewersCount: '+٥٠٠',
-        experienceYears: '١٢',
-        ratingValue: '٤٫٨',
-        ratingCount: '٥٠٠',
-        cities: [
-          _CityBranch(city: 'الخبر', branches: 'فرع العقربية'),
-          _CityBranch(city: 'الدمام', branches: 'فرع الفيصلية · فرع الشاطئ'),
-        ],
-        priceLabel: '١٥٠',
-        serviceName: 'كشف واستشارة أسنان',
-      );
-  }
-}
-
 class _TopBar extends StatelessWidget {
-  const _TopBar({required this.onBack});
+  const _TopBar({
+    required this.isFavorite,
+    required this.onBack,
+    required this.onToggleFavorite,
+  });
+  final bool isFavorite;
   final VoidCallback? onBack;
+  final VoidCallback onToggleFavorite;
 
   @override
   Widget build(BuildContext context) {
@@ -155,14 +103,11 @@ class _TopBar extends StatelessWidget {
             ),
           ),
           IconButton(
-            icon: SvgPicture.asset(
-              'assets/images/doctor/heart.svg',
-              width: 24,
-              height: 24,
-              placeholderBuilder: (_) =>
-                  Icon(Icons.favorite_border, color: colors.textPrimary),
+            icon: Icon(
+              isFavorite ? Icons.favorite : Icons.favorite_border,
+              color: isFavorite ? const Color(0xFFB42318) : colors.textPrimary,
             ),
-            onPressed: () {},
+            onPressed: onToggleFavorite,
           ),
         ],
       ),
@@ -171,12 +116,26 @@ class _TopBar extends StatelessWidget {
 }
 
 class _Content extends StatelessWidget {
-  const _Content({required this.data});
-  final _DoctorMock data;
+  const _Content({required this.state});
+  final DoctorProfileState state;
 
   @override
   Widget build(BuildContext context) {
     final spacing = AppSpacing.of(context);
+    final colors = AppColorsTheme.of(context);
+    if (state.status == Status.loading && state.profile == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    final profile = state.profile?.profile;
+    final doctor = state.profile?.doctor;
+    if (profile == null && doctor == null) {
+      return Center(
+        child: Text(
+          state.errorMessage ?? 'something_went_wrong'.tr(),
+          style: TextStyle(color: colors.textSecondary),
+        ),
+      );
+    }
     return ListView(
       padding: EdgeInsetsDirectional.fromSTEB(
         spacing.lg,
@@ -185,28 +144,33 @@ class _Content extends StatelessWidget {
         spacing.lg,
       ),
       children: [
-        _DoctorHeader(data: data),
+        _DoctorHeader(name: doctor?.name ?? '', headline: profile?.headline),
         SizedBox(height: spacing.lg),
-        _StatsRow(data: data),
-        SizedBox(height: spacing.xl),
-        const _SectionTitle(key_: 'doctor_about'),
-        SizedBox(height: spacing.xs2),
-        _BodyText(text: data.about),
-        SizedBox(height: spacing.xl),
-        const _SectionTitle(key_: 'doctor_locations'),
-        SizedBox(height: spacing.sm),
-        Row(
-          children: [
-            for (int i = 0; i < data.cities.length; i++) ...[
-              if (i > 0) SizedBox(width: spacing.sm),
-              Expanded(child: _CityCard(info: data.cities[i])),
-            ],
+        _StatsRow(profile: profile),
+        if ((profile?.bio ?? '').isNotEmpty) ...[
+          SizedBox(height: spacing.xl),
+          const _SectionTitle(keyName: 'doctor_about'),
+          SizedBox(height: spacing.xs2),
+          _BodyText(text: profile!.bio!),
+        ],
+        if ((profile?.branches ?? const []).isNotEmpty) ...[
+          SizedBox(height: spacing.xl),
+          const _SectionTitle(keyName: 'doctor_locations'),
+          SizedBox(height: spacing.sm),
+          for (final b in profile!.branches!) ...[
+            _CityCard(branch: b),
+            SizedBox(height: spacing.xs2),
           ],
-        ),
-        SizedBox(height: spacing.xl),
-        const _SectionTitle(key_: 'doctor_price'),
-        SizedBox(height: spacing.sm),
-        _ServiceRow(name: data.serviceName, price: data.priceLabel),
+        ],
+        if ((profile?.services ?? const []).isNotEmpty) ...[
+          SizedBox(height: spacing.xl),
+          const _SectionTitle(keyName: 'doctor_price'),
+          SizedBox(height: spacing.sm),
+          for (final s in profile!.services!) ...[
+            _ServiceRow(name: s),
+            SizedBox(height: spacing.xs2),
+          ],
+        ],
         SizedBox(height: spacing.xxl),
       ],
     );
@@ -214,8 +178,9 @@ class _Content extends StatelessWidget {
 }
 
 class _DoctorHeader extends StatelessWidget {
-  const _DoctorHeader({required this.data});
-  final _DoctorMock data;
+  const _DoctorHeader({required this.name, required this.headline});
+  final String name;
+  final String? headline;
 
   @override
   Widget build(BuildContext context) {
@@ -224,43 +189,41 @@ class _DoctorHeader extends StatelessWidget {
     final spacing = AppSpacing.of(context);
     return Column(
       children: [
-        ClipOval(
-          child: Image.asset(
-            _DoctorMock.avatarAsset,
-            width: 96,
-            height: 96,
-            fit: BoxFit.cover,
-            errorBuilder: (_, __, ___) => const AppAvatar(size: 96, radius: 48),
-          ),
-        ),
+        const AppAvatar(size: 96, radius: 48),
         SizedBox(height: spacing.xs2),
         Text(
-          data.name,
+          name,
           style: typo.titleMd.copyWith(color: colors.textPrimary),
         ),
-        SizedBox(height: spacing.xs),
-        Text(
-          data.subtitle,
-          style: typo.textLgRegular.copyWith(color: colors.textSecondary),
-        ),
+        if ((headline ?? '').isNotEmpty) ...[
+          SizedBox(height: spacing.xs),
+          Text(
+            headline!,
+            style: typo.textLgRegular.copyWith(color: colors.textSecondary),
+          ),
+        ],
       ],
     );
   }
 }
 
 class _StatsRow extends StatelessWidget {
-  const _StatsRow({required this.data});
-  final _DoctorMock data;
+  const _StatsRow({required this.profile});
+  final DoctorProfile? profile;
 
   @override
   Widget build(BuildContext context) {
     final spacing = AppSpacing.of(context);
+    final reviewers = (profile?.patientsCount ?? 0).toString();
+    final experience = (profile?.experienceYears ?? 0).toString();
+    final ratingValue = profile?.rating ?? '0';
+    final ratingCount = (profile?.ratingsCount ?? 0).toString();
     return Row(
       children: [
         Expanded(
           child: _StatTile(
             icon: Icons.groups_outlined,
-            value: data.reviewersCount,
+            value: reviewers,
             label: 'doctor_stat_reviewers'.tr(),
           ),
         ),
@@ -268,8 +231,7 @@ class _StatsRow extends StatelessWidget {
         Expanded(
           child: _StatTile(
             icon: Icons.verified_outlined,
-            value:
-                'doctor_stat_experience_years'.tr(args: [data.experienceYears]),
+            value: 'doctor_stat_experience_years'.tr(args: [experience]),
             label: 'doctor_stat_experience'.tr(),
           ),
         ),
@@ -277,8 +239,8 @@ class _StatsRow extends StatelessWidget {
         Expanded(
           child: _StatTile(
             icon: Icons.star_outline_rounded,
-            value: data.ratingValue,
-            label: 'doctor_stat_rating'.tr(args: [data.ratingCount]),
+            value: ratingValue,
+            label: 'doctor_stat_rating'.tr(args: [ratingCount]),
           ),
         ),
       ],
@@ -321,8 +283,8 @@ class _StatTile extends StatelessWidget {
 }
 
 class _SectionTitle extends StatelessWidget {
-  const _SectionTitle({required this.key_});
-  final String key_;
+  const _SectionTitle({required this.keyName});
+  final String keyName;
 
   @override
   Widget build(BuildContext context) {
@@ -331,7 +293,7 @@ class _SectionTitle extends StatelessWidget {
     return Align(
       alignment: AlignmentDirectional.centerStart,
       child: Text(
-        key_.tr(),
+        keyName.tr(),
         style: typo.titleSm.copyWith(color: colors.textPrimary),
       ),
     );
@@ -355,8 +317,8 @@ class _BodyText extends StatelessWidget {
 }
 
 class _CityCard extends StatelessWidget {
-  const _CityCard({required this.info});
-  final _CityBranch info;
+  const _CityCard({required this.branch});
+  final String branch;
 
   @override
   Widget build(BuildContext context) {
@@ -375,17 +337,8 @@ class _CityCard extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(info.city,
-                    style: typo.titleSm.copyWith(color: colors.textPrimary)),
-                SizedBox(height: spacing.xs - 2),
-                Text(info.branches,
-                    style: typo.textMdRegular
-                        .copyWith(color: colors.textSecondary)),
-              ],
-            ),
+            child: Text(branch,
+                style: typo.titleSm.copyWith(color: colors.textPrimary)),
           ),
           SizedBox(width: spacing.md - 2),
           Icon(Icons.location_on_outlined,
@@ -397,9 +350,8 @@ class _CityCard extends StatelessWidget {
 }
 
 class _ServiceRow extends StatelessWidget {
-  const _ServiceRow({required this.name, required this.price});
+  const _ServiceRow({required this.name});
   final String name;
-  final String price;
 
   @override
   Widget build(BuildContext context) {
@@ -415,19 +367,9 @@ class _ServiceRow extends StatelessWidget {
         border: Border.all(color: colors.fieldBorder),
         borderRadius: BorderRadius.circular(radii.large),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(name,
-              style: typo.textLgSemibold.copyWith(color: colors.textPrimary)),
-          Text(
-            'price_sar'.tr(args: [price]),
-            style: typo.textLgSemibold.copyWith(
-              color: colors.borderPrimary,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ],
+      child: Text(
+        name,
+        style: typo.textLgSemibold.copyWith(color: colors.textPrimary),
       ),
     );
   }

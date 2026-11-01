@@ -56,11 +56,19 @@ class _NotificationsPageState extends State<NotificationsPage> {
                   _GroupHeader(
                     title: 'notif_today'.tr(),
                     action: 'notif_mark_all'.tr(),
-                    onAction: () {},
+                    onAction: () =>
+                        context.read<NotificationCubit>().markAllAsRead(),
                   ),
                   const SizedBox(height: 10),
                   for (final n in today) ...[
-                    _NotificationItem(data: n),
+                    GestureDetector(
+                      onTap: n.id == null || (n.isRead ?? false)
+                          ? null
+                          : () => context
+                              .read<NotificationCubit>()
+                              .markAsRead(n.id!),
+                      child: _NotificationItem(data: n),
+                    ),
                     const SizedBox(height: 10),
                   ],
                 ],
@@ -69,7 +77,14 @@ class _NotificationsPageState extends State<NotificationsPage> {
                   _GroupHeader(title: 'notif_this_week'.tr()),
                   const SizedBox(height: 10),
                   for (final n in week) ...[
-                    _NotificationItem(data: n),
+                    GestureDetector(
+                      onTap: n.id == null || (n.isRead ?? false)
+                          ? null
+                          : () => context
+                              .read<NotificationCubit>()
+                              .markAsRead(n.id!),
+                      child: _NotificationItem(data: n),
+                    ),
                     const SizedBox(height: 10),
                   ],
                 ],

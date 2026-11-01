@@ -1,9 +1,14 @@
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/router/route_names.dart';
+import '../../../../core/state/status.dart';
 import '../../../../core/ui_kit/ui_kit.dart';
+import '../../../../data/models/response/booking_response.dart';
+import '../../logic/booking_cubit.dart';
+import '../../logic/booking_state.dart';
 import '../widgets/booking_stepper.dart';
 import '../widgets/booking_summary_header.dart';
 import '../widgets/booking_tokens.dart';
@@ -12,8 +17,11 @@ import '../widgets/time_slot.dart';
 
 /// UI-redesign booking flow — step 2: pick date & time.
 ///
-/// Figma `jA3JQXye9DbBrxzNkEj9nf` node `438:12682`. Static mock; selection
-/// state is local until `BookingCubit` wiring lands.
+/// Figma `jA3JQXye9DbBrxzNkEj9nf` node `438:12682`. Wired to [BookingCubit]:
+/// day strip reads `state.days`, slots read `state.morningSlots` +
+/// `state.eveningSlots`. The parent route must have called
+/// `BookingCubit.start(...)` on step 1 so doctorId / medicalCenterId /
+/// variant are populated.
 class BookingDateTimePage extends StatefulWidget {
   const BookingDateTimePage({super.key});
 
@@ -22,129 +30,106 @@ class BookingDateTimePage extends StatefulWidget {
 }
 
 class _BookingDateTimePageState extends State<BookingDateTimePage> {
-  static const _days = <_DayItem>[
-    _DayItem(day: 'الاثنين', date: '٢٦', state: DayCellState.available),
-    _DayItem(day: 'الأحد', date: '٢٥', state: DayCellState.available),
-    _DayItem(day: 'السبت', date: '٢٤', state: DayCellState.available),
-    _DayItem(day: 'الجمعة', date: '٢٣', state: DayCellState.closed),
-    _DayItem(day: 'الخميس', date: '٢٢', state: DayCellState.available),
-  ];
-
-  static const _amSlots = <_SlotItem>[
-    _SlotItem(time: '١٠:٠٠ ص', state: TimeSlotState.booked),
-    _SlotItem(time: '٩:٣٠ ص', state: TimeSlotState.defaultState),
-    _SlotItem(time: '٩:٠٠ ص', state: TimeSlotState.defaultState),
-    _SlotItem(time: '١١:٣٠ ص', state: TimeSlotState.defaultState),
-    _SlotItem(time: '١١:٠٠ ص', state: TimeSlotState.defaultState),
-    _SlotItem(time: '١٠:٣٠ ص', state: TimeSlotState.defaultState),
-  ];
-
-  static const _pmSlots = <_SlotItem>[
-    _SlotItem(time: '٥:٠٠ م', state: TimeSlotState.defaultState),
-    _SlotItem(time: '٤:٣٠ م', state: TimeSlotState.defaultState),
-    _SlotItem(time: '٤:٠٠ م', state: TimeSlotState.defaultState),
-  ];
-
-  int _selectedDayIndex = 4; // Thursday ٢٢ pre-selected per Figma.
-  String? _selectedTime = '٤:٣٠ م';
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      context.read<BookingCubit>().loadDays();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Column(
-          children: [
-            _TopBar(
-              title: 'booking_select_title'.tr(),
-              onBack: () => context.canPop() ? context.pop() : null,
-            ),
-            Expanded(
-              child: ListView(
-                padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
-                children: [
-                  const BookingSummaryHeader(
-                    name: 'عيادة دكتور احمد',
-                    subtitle: 'طب الأسنان',
+        child: BlocBuilder<BookingCubit, BookingState>(
+          builder: (context, s) {
+            final cubit = context.read<BookingCubit>();
+            return Column(
+              children: [
+                _TopBar(
+                  title: 'booking_select_title'.tr(),
+                  onBack: () => context.canPop() ? context.pop() : null,
+                ),
+                Expanded(
+                  child: ListView(
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
+                    children: [
+                      const BookingSummaryHeader(
+                        name: 'عيادة دكتور احمد',
+                        subtitle: 'طب الأسنان',
+                      ),
+                      const SizedBox(height: 16),
+                      const BookingStepper(current: BookingStep.dateTime),
+                      const SizedBox(height: 16),
+                      _SectionLabel('booking_step_pick_day'.tr()),
+                      const SizedBox(height: 16),
+                      _DaysSection(
+                        status: s.daysStatus,
+                        days: s.days,
+                        selectedDate: s.selectedDay?.date,
+                        onTap: cubit.selectDay,
+                      ),
+                      const SizedBox(height: 16),
+                      const _Legend(),
+                      const SizedBox(height: 24),
+                      _SectionLabel('booking_step_pick_time'.tr()),
+                      const SizedBox(height: 6),
+                      Text(
+                        'booking_times_hint'.tr(),
+                        textAlign: TextAlign.start,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: BookingTokens.textSecondary,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      _SlotsSection(
+                        status: s.slotsStatus,
+                        morning: s.morningSlots,
+                        evening: s.eveningSlots,
+                        selectedTime: s.selectedSlot?.time,
+                        onSelect: cubit.selectSlot,
+                      ),
+                      if (s.selectedDay != null && s.selectedSlot != null) ...[
+                        const SizedBox(height: 16),
+                        _SelectedSummary(
+                          date: s.selectedDay!.dateLabel ??
+                              s.selectedDay!.date ??
+                              '',
+                          time: s.selectedSlot!.label ??
+                              s.selectedSlot!.time ??
+                              '',
+                        ),
+                      ],
+                      if (s.errorMessage != null) ...[
+                        const SizedBox(height: 10),
+                        Text(
+                          s.errorMessage!,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Color(0xFFB42318),
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
-                  const SizedBox(height: 16),
-                  const BookingStepper(current: BookingStep.dateTime),
-                  const SizedBox(height: 16),
-                  _SectionLabel('booking_step_pick_day'.tr()),
-                  const SizedBox(height: 16),
-                  _MonthRow(),
-                  const SizedBox(height: 16),
-                  _DaysStrip(
-                    days: _days,
-                    selectedIndex: _selectedDayIndex,
-                    onTap: (i) => setState(() => _selectedDayIndex = i),
-                  ),
-                  const SizedBox(height: 16),
-                  const _Legend(),
-                  const SizedBox(height: 24),
-                  _SectionLabel('booking_step_pick_time'.tr()),
-                  const SizedBox(height: 6),
-                  Text(
-                    'booking_times_hint'.tr(),
-                    textAlign: TextAlign.start,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: BookingTokens.textSecondary,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  _SlotGroup(
-                    icon: Icons.wb_sunny_outlined,
-                    label: 'booking_slot_am'.tr(),
-                    slots: _amSlots,
-                    selectedTime: _selectedTime,
-                    onSelect: (t) => setState(() => _selectedTime = t),
-                  ),
-                  const SizedBox(height: 16),
-                  _SlotGroup(
-                    icon: Icons.nightlight_outlined,
-                    label: 'booking_slot_pm'.tr(),
-                    slots: _pmSlots,
-                    selectedTime: _selectedTime,
-                    onSelect: (t) => setState(() => _selectedTime = t),
-                  ),
-                  const SizedBox(height: 16),
-                  _SelectedSummary(
-                    date: 'الخميس، ٢٢ أكتوبر ٢٠٢٦',
-                    time:
-                        _selectedTime == null ? '' : '${_selectedTime!} مساءً',
-                    doctorCenter: 'د. أحمد العلي · مجمع النور الطبي',
-                  ),
-                ],
-              ),
-            ),
-            _BottomBar(
-              onNext: _selectedTime == null
-                  ? null
-                  : () => context.pushNamed(RouteNames.bookingReview),
-            ),
-          ],
+                ),
+                _BottomBar(
+                  onNext: s.canPreview
+                      ? () => context.pushNamed(RouteNames.bookingReview)
+                      : null,
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
   }
-}
-
-class _DayItem {
-  const _DayItem({
-    required this.day,
-    required this.date,
-    required this.state,
-  });
-  final String day;
-  final String date;
-  final DayCellState state;
-}
-
-class _SlotItem {
-  const _SlotItem({required this.time, required this.state});
-  final String time;
-  final TimeSlotState state;
 }
 
 class _TopBar extends StatelessWidget {
@@ -199,68 +184,62 @@ class _SectionLabel extends StatelessWidget {
   }
 }
 
-class _MonthRow extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        const Text(
-          'أكتوبر ٢٠٢٦',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-            color: BookingTokens.textPrimary,
-          ),
-        ),
-        TextButton.icon(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.calendar_month_outlined,
-            size: 20,
-            color: BookingTokens.infoText,
-          ),
-          label: Text(
-            'booking_open_calendar'.tr(),
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              color: BookingTokens.infoText,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _DaysStrip extends StatelessWidget {
-  const _DaysStrip({
+class _DaysSection extends StatelessWidget {
+  const _DaysSection({
+    required this.status,
     required this.days,
-    required this.selectedIndex,
+    required this.selectedDate,
     required this.onTap,
   });
 
-  final List<_DayItem> days;
-  final int selectedIndex;
-  final ValueChanged<int> onTap;
+  final Status status;
+  final List<BookingDay> days;
+  final String? selectedDate;
+  final ValueChanged<BookingDay> onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        for (int i = 0; i < days.length; i++) ...[
-          Expanded(
+    if (status == Status.loading && days.isEmpty) {
+      return const Padding(
+        padding: EdgeInsets.symmetric(vertical: 24),
+        child: Center(child: CircularProgressIndicator()),
+      );
+    }
+    if (days.isEmpty) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 24),
+        child: Text(
+          'booking_days_empty'.tr(),
+          textAlign: TextAlign.center,
+          style: const TextStyle(color: BookingTokens.textSecondary),
+        ),
+      );
+    }
+    // Horizontal strip (RTL-safe via reverse).
+    return SizedBox(
+      height: 80,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemCount: days.length,
+        separatorBuilder: (_, __) => const SizedBox(width: 6),
+        itemBuilder: (_, i) {
+          final d = days[i];
+          final isSelected = d.date == selectedDate;
+          return SizedBox(
+            width: 64,
             child: DayCell(
-              day: days[i].day,
-              date: days[i].date,
-              state: i == selectedIndex ? DayCellState.selected : days[i].state,
-              onTap: () => onTap(i),
+              day: d.dayLabel ?? '',
+              date: d.dateLabel ?? d.date ?? '',
+              state: isSelected
+                  ? DayCellState.selected
+                  : (d.isAvailable
+                      ? DayCellState.available
+                      : DayCellState.closed),
+              onTap: d.isAvailable ? () => onTap(d) : null,
             ),
-          ),
-          if (i != days.length - 1) const SizedBox(width: 6),
-        ],
-      ],
+          );
+        },
+      ),
     );
   }
 }
@@ -314,6 +293,64 @@ class _LegendDot extends StatelessWidget {
   }
 }
 
+class _SlotsSection extends StatelessWidget {
+  const _SlotsSection({
+    required this.status,
+    required this.morning,
+    required this.evening,
+    required this.selectedTime,
+    required this.onSelect,
+  });
+
+  final Status status;
+  final List<BookingSlot> morning;
+  final List<BookingSlot> evening;
+  final String? selectedTime;
+  final ValueChanged<BookingSlot> onSelect;
+
+  @override
+  Widget build(BuildContext context) {
+    if (status == Status.loading && morning.isEmpty && evening.isEmpty) {
+      return const Padding(
+        padding: EdgeInsets.symmetric(vertical: 24),
+        child: Center(child: CircularProgressIndicator()),
+      );
+    }
+    if (morning.isEmpty && evening.isEmpty) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 24),
+        child: Text(
+          'booking_slots_empty'.tr(),
+          textAlign: TextAlign.center,
+          style: const TextStyle(color: BookingTokens.textSecondary),
+        ),
+      );
+    }
+    return Column(
+      children: [
+        if (morning.isNotEmpty)
+          _SlotGroup(
+            icon: Icons.wb_sunny_outlined,
+            label: 'booking_slot_am'.tr(),
+            slots: morning,
+            selectedTime: selectedTime,
+            onSelect: onSelect,
+          ),
+        if (morning.isNotEmpty && evening.isNotEmpty)
+          const SizedBox(height: 16),
+        if (evening.isNotEmpty)
+          _SlotGroup(
+            icon: Icons.nightlight_outlined,
+            label: 'booking_slot_pm'.tr(),
+            slots: evening,
+            selectedTime: selectedTime,
+            onSelect: onSelect,
+          ),
+      ],
+    );
+  }
+}
+
 class _SlotGroup extends StatelessWidget {
   const _SlotGroup({
     required this.icon,
@@ -325,9 +362,9 @@ class _SlotGroup extends StatelessWidget {
 
   final IconData icon;
   final String label;
-  final List<_SlotItem> slots;
+  final List<BookingSlot> slots;
   final String? selectedTime;
-  final ValueChanged<String> onSelect;
+  final ValueChanged<BookingSlot> onSelect;
 
   @override
   Widget build(BuildContext context) {
@@ -373,9 +410,9 @@ class _SlotGrid extends StatelessWidget {
     required this.onSelect,
   });
 
-  final List<_SlotItem> slots;
+  final List<BookingSlot> slots;
   final String? selectedTime;
-  final ValueChanged<String> onSelect;
+  final ValueChanged<BookingSlot> onSelect;
 
   @override
   Widget build(BuildContext context) {
@@ -390,13 +427,15 @@ class _SlotGrid extends StatelessWidget {
               for (int j = 0; j < rowSlots.length; j++) ...[
                 Expanded(
                   child: TimeSlot(
-                    time: rowSlots[j].time,
-                    state: rowSlots[j].state == TimeSlotState.booked
-                        ? TimeSlotState.booked
-                        : (selectedTime == rowSlots[j].time
+                    time: rowSlots[j].label ?? rowSlots[j].time ?? '',
+                    state: (rowSlots[j].available ?? true)
+                        ? (selectedTime == rowSlots[j].time
                             ? TimeSlotState.selected
-                            : TimeSlotState.defaultState),
-                    onTap: () => onSelect(rowSlots[j].time),
+                            : TimeSlotState.defaultState)
+                        : TimeSlotState.booked,
+                    onTap: (rowSlots[j].available ?? true)
+                        ? () => onSelect(rowSlots[j])
+                        : null,
                   ),
                 ),
                 if (j != rowSlots.length - 1) const SizedBox(width: 6),
@@ -415,14 +454,9 @@ class _SlotGrid extends StatelessWidget {
 }
 
 class _SelectedSummary extends StatelessWidget {
-  const _SelectedSummary({
-    required this.date,
-    required this.time,
-    required this.doctorCenter,
-  });
+  const _SelectedSummary({required this.date, required this.time});
   final String date;
   final String time;
-  final String doctorCenter;
 
   @override
   Widget build(BuildContext context) {
@@ -448,8 +482,6 @@ class _SelectedSummary extends StatelessWidget {
           _SummaryLine(icon: Icons.calendar_today_outlined, text: date),
           const SizedBox(height: 8),
           _SummaryLine(icon: Icons.access_time, text: time),
-          const SizedBox(height: 8),
-          _SummaryLine(icon: Icons.person_outline, text: doctorCenter),
         ],
       ),
     );

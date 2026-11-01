@@ -8,8 +8,8 @@ part of 'rate_request.dart';
 
 RateRequest _$RateRequestFromJson(Map<String, dynamic> json) => RateRequest(
       comment: json['comment'] as String?,
-      rate: json['rate'] as int?,
-      doctorId: json['doctor_id'] as int?,
+      rate: (json['rate'] as num?)?.toInt(),
+      doctorId: (json['doctor_id'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$RateRequestToJson(RateRequest instance) =>

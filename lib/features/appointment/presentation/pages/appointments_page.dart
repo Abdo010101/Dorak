@@ -7,6 +7,7 @@ import 'package:dorakpattient/data/models/response/appointment_response.dart';
 import 'package:dorakpattient/features/appointment/logic/appointments_cubit.dart';
 import 'package:dorakpattient/features/appointment/logic/appointments_state.dart';
 import 'package:dorakpattient/features/appointment/presentation/widgets/booking_card.dart';
+import 'package:dorakpattient/features/appointment/presentation/widgets/rate_booking_sheet.dart';
 import 'package:dorakpattient/features/auth/logic/auth_cubit.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
@@ -39,7 +40,7 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
     final colors = AppColorsTheme.of(context);
     return Scaffold(
       backgroundColor: colors.white,
-      appBar: AppTopBar(title: 'appointments_title'.tr()),
+      appBar: AppTopBar(title: 'appointments_title'.tr(), showBack: false),
       body: SafeArea(
         top: false,
         child: BlocBuilder<AppointmentsCubit, AppointmentsState>(
@@ -106,7 +107,10 @@ class _Body extends StatelessWidget {
             RouteNames.bookingDetails,
             extra: r,
           ),
-          onRate: () {},
+          // Doctor id is not yet surfaced on the mock cards; wire this to
+          // the reservation's doctor_id once Round 5 switches past-bookings
+          // to the real PatientReservationResource.
+          onRate: () => showRateBookingSheet(context, doctorId: r.id ?? 0),
         );
       },
     );
@@ -119,20 +123,44 @@ class _Body extends StatelessWidget {
       AppointmentsTab.upcoming =>
         _statusFromString(r.status) ?? BookingStatus.confirmed,
     };
+    // Hide the "Add rating" CTA when backend says the patient already rated
+    // this doctor (`can_rate: false`) — see scope answer Q5.
     final actions = switch (tab) {
       AppointmentsTab.upcoming => BookingActions.upcomingCallDetails,
-      AppointmentsTab.past => BookingActions.pastAddRating,
+      AppointmentsTab.past => (r.canRate ?? true)
+          ? BookingActions.pastAddRating
+          : BookingActions.none,
       AppointmentsTab.cancelled => BookingActions.none,
     };
-    final dateTime = [r.day, r.date, r.month]
+    // Prefer the new PatientReservationResource fields; fall back to the
+    // deprecated flat fields while mock cards still exist in the UI.
+    // ignore: deprecated_member_use_from_same_package
+    final legacyDateTime = [r.day, r.date, r.month]
         .where((s) => s != null && s.isNotEmpty)
         .join(' · ');
+    final dateTime = [r.dateLabel, r.timeLabel]
+            .where((s) => s != null && s.isNotEmpty)
+            .join(' · ')
+            .isNotEmpty
+        ? [r.dateLabel, r.timeLabel]
+            .where((s) => s != null && s.isNotEmpty)
+            .join(' · ')
+        : legacyDateTime;
+    // ignore: deprecated_member_use_from_same_package
+    final centerName = r.place?.name ?? r.name ?? '';
+    final doctorService = r.service ??
+        r.specialization?.name ??
+        // ignore: deprecated_member_use_from_same_package
+        r.mainSpecialization ??
+        '';
+    // ignore: deprecated_member_use_from_same_package
+    final branchCity = r.place?.branch ?? r.place?.address ?? r.phone ?? '';
     return BookingData(
       status: status,
       dateTime: dateTime.isEmpty ? '—' : dateTime,
-      centerName: r.name ?? '',
-      doctorService: r.mainSpecialization ?? '',
-      branchCity: r.phone ?? '',
+      centerName: centerName,
+      doctorService: doctorService,
+      branchCity: branchCity,
       imageAsset: 'assets/images/home/center1.png',
       actions: actions,
     );

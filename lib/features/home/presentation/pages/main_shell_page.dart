@@ -11,14 +11,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 /// Tab order follows Figma visual order (RTL): Account | Bookings | Discovery | Home.
 /// Logical index: 0=Home, 1=Discovery, 2=Bookings, 3=Account.
 class MainShellPage extends StatefulWidget {
-  const MainShellPage({super.key});
+  const MainShellPage({super.key, this.initialIndex = 0});
+  final int initialIndex;
 
   @override
   State<MainShellPage> createState() => _MainShellPageState();
 }
 
 class _MainShellPageState extends State<MainShellPage> {
-  int _index = 0;
+  late int _index = widget.initialIndex;
 
   static const _accent = Color(0xFF1F8046);
   static const _textSecondary = Color(0xFF4C4C4C);

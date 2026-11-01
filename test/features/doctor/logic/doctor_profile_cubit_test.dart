@@ -2,6 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:dorakpattient/core/state/status.dart';
 import 'package:dorakpattient/data/models/response/response.dart';
 import 'package:dorakpattient/data/networks/base_model.dart';
+import 'package:dorakpattient/data/repository/favourites_repo.dart';
 import 'package:dorakpattient/data/repository/repository.dart';
 import 'package:dorakpattient/features/doctor/logic/doctor_profile_cubit.dart';
 import 'package:dorakpattient/features/doctor/logic/doctor_profile_state.dart';
@@ -10,17 +11,26 @@ import 'package:mocktail/mocktail.dart';
 
 class _MockDoctorRepo extends Mock implements DoctorProfileRepository {}
 
+class _MockFavouritesRepo extends Mock implements FavouritesRepository {}
+
 void main() {
   late _MockDoctorRepo repo;
+  late _MockFavouritesRepo favouritesRepo;
 
   setUp(() {
     repo = _MockDoctorRepo();
+    favouritesRepo = _MockFavouritesRepo();
   });
+
+  DoctorProfileCubit newCubit() => DoctorProfileCubit(
+        doctorProfileRepository: repo,
+        favouritesRepository: favouritesRepo,
+      );
 
   group('DoctorProfileCubit', () {
     blocTest<DoctorProfileCubit, DoctorProfileState>(
       'setTab emits new tab',
-      build: () => DoctorProfileCubit(doctorProfileRepository: repo),
+      build: newCubit,
       act: (c) => c.setTab(DoctorProfileTab.offers),
       expect: () => const [DoctorProfileState(tab: DoctorProfileTab.offers)],
     );
@@ -35,7 +45,7 @@ void main() {
           (_) async => BaseModel<DoctorProfileResponse>(data: doctor),
         );
       },
-      build: () => DoctorProfileCubit(doctorProfileRepository: repo),
+      build: newCubit,
       act: (c) => c.load(42),
       verify: (c) {
         expect(c.state.status, Status.success);
@@ -45,7 +55,7 @@ void main() {
 
     blocTest<DoctorProfileCubit, DoctorProfileState>(
       'selectPlace emits new index',
-      build: () => DoctorProfileCubit(doctorProfileRepository: repo),
+      build: newCubit,
       seed: () => DoctorProfileState(
         profile: DoctorProfileResponse()..places = [Places(), Places()],
         selectedPlaceIndex: 0,

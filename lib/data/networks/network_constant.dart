@@ -4,14 +4,15 @@ class NetworkConstant {
   static const String kPageNumberParam = 'page';
   static const int kPageNumberValue = 1;
 
-  // static const _kDevBaseUrl = 'https://dev.dorak-app.com/api/patient/';
+  // static const _kDevBaseUrl = 'https://dev.dorak-app.com/api/v2/patient/';
 
-  static const _kReleaseBaseUrl = 'https://dorak-app.com/api/patient/';
+  static const _kReleaseBaseUrl = 'https://dorak-app.com/api/v2/patient/';
   static const kAppleStoreUrl = '';
   static const kGooglePlayUrl = '';
   static const kAndroidPackage = '';
   static const kAppleId = '';
-  static const kAuthorizationHeader = "authorization";
+  static const kAuthorizationHeader = "Authorization";
+  static const kLanguageHeader = "Content-Language";
   static const kBaseUrl = _kReleaseBaseUrl;
   static const kGoogleApiKey = 'AIzaSyBZFRav3jNg1pH9RAQxO1IhOGb7keLaoDM';
 
@@ -24,8 +25,6 @@ class NetworkConstant {
   static const String kDoctorProfileRequest = "doctors";
   static const String kBestDoctors = "best-doctors";
   static const String kAllOffers = "offers";
-  static const String kLoginRequest = "login";
-  static const String kRegisterRequest = "register";
   static const String kGeneralRequest = "general";
   static const String kCitiesRequest = "cities";
   static const String kAreasRequest = "areas";
@@ -46,7 +45,6 @@ class NetworkConstant {
   static const String kVerifyOtp = "verify";
   static const String kChangePhone = "change-phone";
   static const String kSendOtp = "send-otp";
-  static const String kChangePassword = "change-password";
   static const String kSendOtpRequest = "resend-otp";
   static const String kVerifyOtpRequest = "verify";
   static const String kTerms = "terms-of-service";
@@ -54,4 +52,40 @@ class NetworkConstant {
   static const String kCompleteData = "complete-profile-data";
   static const String kProfile = "profile";
   static const String kSearchByName = "search-by-name";
+
+  // Account
+  static const String kDeleteAccount = "delete-account";
+
+  // Favorites
+  static const String kFavorites = "favorites";
+  static const String kAddDoctorToFavorite = "add-doctor-to-favorite";
+  static const String kRemoveDoctorFromFavorite = "remove-doctor-from-favorite";
+  static const String kAddMedicalCenterToFavorite =
+      "add-medical-center-to-favorite";
+  static const String kRemoveMedicalCenterFromFavorite =
+      "remove-medical-center-from-favorite";
+  static const String kAddOfferToFavorite = "add-offer-to-favorite";
+  static const String kRemoveOfferFromFavorite = "remove-offer-from-favorite";
+
+  // Notifications
+  static const String kMarkAsRead = "mark-as-read";
+  static const String kMarkAllAsRead = "notifications/mark-all-as-read";
+
+  // Booking stepper (scope §10.1)
+  static const String kBookingDays = "booking/days";
+  static const String kBookingSlots = "booking/slots";
+  static const String kBookingPreview = "booking/preview";
+  // Reservation CRUD (scope §10.2)
+  static const String kReservationReschedule = "reschedule";
+
+  // Centers / clinics / discovery
+  static const String kMedicalCenters = "medical-centers";
+  static const String kClinics = "clinics";
+  static const String kDoctorsAtCenter = "doctors";
+  static const String kSpecializations = "specializations";
+  static const String kSearch = "search";
+  static const String kExploreMap = "explore/map";
+  static const String kLocation = "location";
+  static const String kLocations = "locations";
+  static const String kNearestMedicalCenters = "nearest-medical-centers";
 }

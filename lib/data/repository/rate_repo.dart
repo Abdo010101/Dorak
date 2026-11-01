@@ -10,11 +10,12 @@ class RateRepository extends BaseRepository {
 
   RateRepository({required this.rateClient});
 
-  Future<BaseModel> addRate(var body) async {
+  /// `POST /patient/app-ratings` — rate the app itself.
+  Future<BaseModel> appRate(var body) async {
     if (await checkForConnectivity()) {
       try {
         return BaseModel(
-            data: await rateClient.addRate(body).then((value) {
+            data: await rateClient.appRate(body).then((value) {
           return value.data;
         }));
       } on DioError catch (e) {

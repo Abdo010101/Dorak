@@ -2,12 +2,11 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/state/status.dart';
-import '../../../data/models/request/rate_request.dart';
 import '../../../data/repository/repository.dart';
 import 'app_review_state.dart';
 
-/// Replaces `AppReviewController`. Pure data in/out; navigation on success
-/// is the caller's responsibility (listen on `state.submitted`).
+/// Submits an **app** rating via `POST /patient/app-ratings`. Doctor ratings
+/// use `RateRepository.doctorRate` and live in the booking rate sheet.
 class AppReviewCubit extends Cubit<AppReviewState> {
   AppReviewCubit({required RateRepository rateRepository})
       : _rateRepository = rateRepository,
@@ -21,7 +20,7 @@ class AppReviewCubit extends Cubit<AppReviewState> {
 
   void reset() => emit(const AppReviewState());
 
-  Future<void> submit({int? doctorId}) async {
+  Future<void> submit() async {
     if (state.rating == 0) {
       emit(
         state.copyWith(
@@ -33,14 +32,12 @@ class AppReviewCubit extends Cubit<AppReviewState> {
     }
     emit(state.copyWith(status: Status.loading, clearError: true));
     try {
-      final result = await _rateRepository.doctorRate(
-        RateRequest(
-          comment: state.comment,
-          rate: state.rating.toInt(),
-          doctorId: doctorId,
-        ),
-      );
-      if (result.data != null) {
+      final body = <String, dynamic>{
+        'rate': state.rating.toInt(),
+        if (state.comment.trim().isNotEmpty) 'comment': state.comment,
+      };
+      final result = await _rateRepository.appRate(body);
+      if (result.error == null) {
         emit(state.copyWith(status: Status.success, submitted: true));
       } else {
         emit(

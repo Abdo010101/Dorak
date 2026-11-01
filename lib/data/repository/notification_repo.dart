@@ -46,4 +46,32 @@ class NotificationsRepository extends BaseRepository {
       return BaseModel.noNetworkConnection();
     }
   }
+
+  Future<BaseModel<dynamic>> markAsRead(String id) async {
+    if (await checkForConnectivity()) {
+      try {
+        return BaseModel(
+            data:
+                await notificationsClient.markAsRead(id).then((value) => value.data));
+      } on DioError catch (e) {
+        return BaseModel(error: ErrorResponse(dioError: e));
+      }
+    } else {
+      return BaseModel.noNetworkConnection();
+    }
+  }
+
+  Future<BaseModel<dynamic>> markAllAsRead() async {
+    if (await checkForConnectivity()) {
+      try {
+        return BaseModel(
+            data:
+                await notificationsClient.markAllAsRead().then((value) => value.data));
+      } on DioError catch (e) {
+        return BaseModel(error: ErrorResponse(dioError: e));
+      }
+    } else {
+      return BaseModel.noNetworkConnection();
+    }
+  }
 }

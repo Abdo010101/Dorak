@@ -44,11 +44,23 @@ class AppointmentsCubit extends Cubit<AppointmentsState> {
     }
   }
 
-  Future<void> cancel(int index) async {
+  /// `POST /patient/reservations/cancel-reservation`. Reason + note come from
+  /// `general.cancellation_reasons` (scope §10.2); mobile reads the list via
+  /// `GeneralCubit.state.generalResponse?.cancellationReasons`.
+  Future<void> cancel(
+    int index, {
+    String? reasonKey,
+    String? note,
+  }) async {
     if (index < 0 || index >= state.items.length) return;
     final target = state.items[index];
+    final body = <String, dynamic>{
+      'id': target.id,
+      if (reasonKey != null && reasonKey.isNotEmpty) 'reason': reasonKey,
+      if (note != null && note.trim().isNotEmpty) 'note': note.trim(),
+    };
     try {
-      final result = await _repo.declineAppointment({'id': target.id});
+      final result = await _repo.declineAppointment(body);
       if (result.data != null) {
         final next = [...state.items];
         next[index].status = 'cancelled';

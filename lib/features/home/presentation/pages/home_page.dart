@@ -1,8 +1,12 @@
 import 'package:dorakpattient/core/services/location_service.dart';
+import 'package:dorakpattient/core/state/status.dart';
 import 'package:dorakpattient/core/ui_kit/feedback/location_opt_in_sheet.dart';
 import 'package:dorakpattient/data/di/locator.dart';
+import 'package:dorakpattient/data/models/response/home_response.dart';
 import 'package:dorakpattient/features/home/logic/general_cubit.dart';
 import 'package:dorakpattient/features/home/logic/general_state.dart';
+import 'package:dorakpattient/features/home/logic/home_cubit.dart';
+import 'package:dorakpattient/features/home/logic/home_state.dart';
 import 'package:dorakpattient/features/home/presentation/widgets/center_card.dart';
 import 'package:dorakpattient/features/home/presentation/widgets/home_header.dart';
 import 'package:dorakpattient/features/home/presentation/widgets/location_card.dart';
@@ -31,7 +35,11 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _kickLocation());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _kickLocation();
+      if (!mounted) return;
+      context.read<HomeCubit>().load();
+    });
   }
 
   /// Resolve device location. By default this is a no-op when the cubit
@@ -100,155 +108,8 @@ class _HomePageState extends State<HomePage> {
                         prev.resolvedAreaName != cur.resolvedAreaName,
                     builder: (ctx, s) => _buildLocationCard(ctx, s),
                   ),
-                  const SizedBox(height: 24),
-                  SectionHeader(
-                    title: 'home_specialties'.tr(),
-                    actionLabel: 'home_view_all'.tr(),
-                    onAction: () {},
-                  ),
-                  const SizedBox(height: 16),
-                  const SpecialtyChipRow(
-                    chips: [
-                      SpecialtyChipData('الكل', true),
-                      SpecialtyChipData('الأسنان', false),
-                      SpecialtyChipData('الجلدية', false),
-                      SpecialtyChipData('العيون', false),
-                      SpecialtyChipData('الأطفال', false),
-                    ],
-                  ),
-                  const SizedBox(height: 24),
-                  SectionHeader(
-                    title: 'home_latest_offers'.tr(),
-                    actionLabel: 'home_view_all'.tr(),
-                    onAction: () {},
-                  ),
-                  const SizedBox(height: 16),
-                  const Row(
-                    children: [
-                      Expanded(
-                        child: OfferCard(
-                          centerId: 2,
-                          title: 'فحص البشرة',
-                          centerName: 'مجمع النور الطبي',
-                          price: '١٤٩',
-                          imageAsset: 'assets/images/home/skin_offer.png',
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      Expanded(
-                        child: OfferCard(
-                          centerId: 1,
-                          title: 'تنظيف الأسنان',
-                          centerName: 'مركز العناية الطبي',
-                          price: '١٩٩',
-                          imageAsset: 'assets/images/home/dental_offer.png',
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 24),
-                  SectionHeader(
-                    title: 'home_nearest_centers'.tr(),
-                    actionLabel: 'home_view_all'.tr(),
-                    onAction: () {},
-                  ),
-                  const SizedBox(height: 16),
-                  const Row(
-                    children: [
-                      Expanded(
-                        child: CenterCard(
-                          centerId: 1,
-                          name: 'مركز العناية الطبي',
-                          specialties: 'الأسنان ، الجلدية',
-                          location: 'الدمام · حي الفيصلية',
-                          rating: '٤٫٨',
-                          reviewCount: '(١٢٠)',
-                          distance: '٢٫٤ كم',
-                          imageAsset: 'assets/images/home/center1.png',
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      Expanded(
-                        child: CenterCard(
-                          centerId: 2,
-                          name: 'مجمع النور الطبي',
-                          specialties: 'الأسنان ، الجلدية',
-                          location: 'الدمام · حي الفيصلية',
-                          rating: '٤٫٨',
-                          reviewCount: '(١٢٠)',
-                          distance: '٢٫٤ كم',
-                          imageAsset: 'assets/images/home/center2.png',
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  const Row(
-                    children: [
-                      Expanded(
-                        child: CenterCard(
-                          centerId: 3,
-                          name: 'مركز الحياة الطبي',
-                          specialties: 'العيون ، الجلدية',
-                          location: 'الدمام · حي المزروعية',
-                          rating: '٤٫٥',
-                          reviewCount: '(١١٠)',
-                          distance: '٣٫١ كم',
-                          imageAsset: 'assets/images/home/center1.png',
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      Expanded(
-                        child: CenterCard(
-                          centerId: 4,
-                          name: 'مجمع السلام الطبي',
-                          specialties: 'الأطفال ، الباطنية',
-                          location: 'الدمام · حي الشاطئ',
-                          rating: '٤٫٦',
-                          reviewCount: '(٩٨)',
-                          distance: '٤٫٢ كم',
-                          imageAsset: 'assets/images/home/center2.png',
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 24),
-                  SectionHeader(
-                    title: 'home_nearest_clinics'.tr(),
-                    actionLabel: 'home_view_all'.tr(),
-                    onAction: () {},
-                  ),
-                  const SizedBox(height: 16),
-                  const Row(
-                    children: [
-                      Expanded(
-                        child: CenterCard(
-                          centerId: 101,
-                          isClinic: true,
-                          name: 'عيادة الدكتور أحمد',
-                          specialties: 'الأسنان',
-                          location: 'الدمام · حي الفيصلية',
-                          rating: '٤٫٨',
-                          reviewCount: '(٥٠)',
-                          distance: '١٫٨ كم',
-                          imageAsset: 'assets/images/home/center1.png',
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      Expanded(
-                        child: CenterCard(
-                          centerId: 102,
-                          isClinic: true,
-                          name: 'عيادة الدكتورة سارة',
-                          specialties: 'الجلدية',
-                          location: 'الدمام · حي المزروعية',
-                          rating: '٤٫٧',
-                          reviewCount: '(٦٥)',
-                          distance: '٢٫٥ كم',
-                          imageAsset: 'assets/images/home/center2.png',
-                        ),
-                      ),
-                    ],
+                  BlocBuilder<HomeCubit, HomeState>(
+                    builder: (context, s) => _HomeSections(state: s),
                   ),
                 ],
               ),
@@ -302,4 +163,141 @@ class _HomePageState extends State<HomePage> {
 
 extension on String {
   String ifEmpty(String fallback) => isEmpty ? fallback : this;
+}
+
+/// Home sections fed by [HomeCubit] (`GET /patient/home`, scope §10.1.12):
+/// specialties chips, latest_offers, nearest_medical_centers (4),
+/// nearest_clinics (4). Falls back to a loading spinner on first fetch.
+class _HomeSections extends StatelessWidget {
+  const _HomeSections({required this.state});
+  final HomeState state;
+
+  @override
+  Widget build(BuildContext context) {
+    final home = state.home;
+    if (home == null && state.status == Status.loading) {
+      return const Padding(
+        padding: EdgeInsets.symmetric(vertical: 48),
+        child: Center(child: CircularProgressIndicator()),
+      );
+    }
+    final specs = home?.specializations ?? const [];
+    final offers = home?.latestOffers ?? const [];
+    final centers = home?.nearestMedicalCenters ?? const [];
+    final clinics = home?.nearestClinics ?? const [];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const SizedBox(height: 24),
+        if (specs.isNotEmpty) ...[
+          SectionHeader(
+            title: 'home_specialties'.tr(),
+            actionLabel: 'home_view_all'.tr(),
+            onAction: () {},
+          ),
+          const SizedBox(height: 16),
+          SpecialtyChipRow(
+            chips: [
+              for (int i = 0; i < specs.length; i++)
+                SpecialtyChipData(specs[i].name ?? '', i == 0),
+            ],
+          ),
+          const SizedBox(height: 24),
+        ],
+        if (offers.isNotEmpty) ...[
+          SectionHeader(
+            title: 'home_latest_offers'.tr(),
+            actionLabel: 'home_view_all'.tr(),
+            onAction: () {},
+          ),
+          const SizedBox(height: 16),
+          _TwoColumnGrid(
+            items: offers,
+            builder: (o) => OfferCard(
+              centerId: 0,
+              title: o.title ?? '',
+              centerName: o.doctor?.name ?? '',
+              price: (o.priceAfter ?? o.priceBefore ?? '').toString(),
+              imageAsset: 'assets/images/home/dental_offer.png',
+            ),
+          ),
+          const SizedBox(height: 24),
+        ],
+        if (centers.isNotEmpty) ...[
+          SectionHeader(
+            title: 'home_nearest_centers'.tr(),
+            actionLabel: 'home_view_all'.tr(),
+            onAction: () {},
+          ),
+          const SizedBox(height: 16),
+          _TwoColumnGrid(
+            items: centers,
+            builder: (c) => _cardFromPlace(c, isClinic: false),
+          ),
+          const SizedBox(height: 24),
+        ],
+        if (clinics.isNotEmpty) ...[
+          SectionHeader(
+            title: 'home_nearest_clinics'.tr(),
+            actionLabel: 'home_view_all'.tr(),
+            onAction: () {},
+          ),
+          const SizedBox(height: 16),
+          _TwoColumnGrid(
+            items: clinics,
+            builder: (c) => _cardFromPlace(c, isClinic: true),
+          ),
+        ],
+      ],
+    );
+  }
+
+  Widget _cardFromPlace(HomePlaceCard c, {required bool isClinic}) {
+    return CenterCard(
+      centerId: c.id ?? 0,
+      isClinic: isClinic,
+      name: c.name ?? '',
+      specialties: (c.specializations ?? const []).join(' · '),
+      location: [c.city, c.area].whereType<String>().join(' · '),
+      rating: c.rating ?? '—',
+      reviewCount: '(${c.ratingsCount ?? 0})',
+      distance: c.distanceKm != null
+          ? '${c.distanceKm!.toStringAsFixed(1)} km'
+          : '',
+      imageAsset: isClinic
+          ? 'assets/images/home/center2.png'
+          : 'assets/images/home/center1.png',
+    );
+  }
+}
+
+class _TwoColumnGrid<T> extends StatelessWidget {
+  const _TwoColumnGrid({required this.items, required this.builder});
+  final List<T> items;
+  final Widget Function(T) builder;
+
+  @override
+  Widget build(BuildContext context) {
+    final rows = <Widget>[];
+    for (var i = 0; i < items.length; i += 2) {
+      final left = items[i];
+      final right = i + 1 < items.length ? items[i + 1] : null;
+      rows.add(
+        Padding(
+          padding: EdgeInsets.only(top: i == 0 ? 0 : 12),
+          child: Row(
+            children: [
+              Expanded(child: builder(left)),
+              const SizedBox(width: 8),
+              Expanded(
+                child:
+                    right == null ? const SizedBox.shrink() : builder(right),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+    return Column(children: rows);
+  }
 }

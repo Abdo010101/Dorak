@@ -4,21 +4,21 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/state/status.dart';
-import '../../../data/repository/repository.dart';
+import '../../../data/repository/discovery_repo.dart';
 import 'search_state.dart';
 
-/// Replaces `SearchController` + `SearchResultController` + part of
-/// `FilterController`. Owns query (debounced 350 ms), filter map, and
-/// one page of results. Filter UI composition stays in the UI layer.
+/// `GET /patient/search?search&lat&lng&specialization_id&per_page`
+/// (scope §10.1.4). Returns specializations + medical_centers + clinics
+/// in one call. Debounces the query 350 ms.
 class SearchCubit extends Cubit<SearchState> {
   SearchCubit({
-    required DoctorsSearchResultRepository searchResultRepository,
+    required DiscoveryRepository discoveryRepository,
     Duration debounce = const Duration(milliseconds: 350),
-  })  : _repo = searchResultRepository,
+  })  : _repo = discoveryRepository,
         _debounce = debounce,
         super(const SearchState());
 
-  final DoctorsSearchResultRepository _repo;
+  final DiscoveryRepository _repo;
   final Duration _debounce;
   Timer? _debouncer;
 
@@ -41,13 +41,16 @@ class SearchCubit extends Cubit<SearchState> {
   void clearFilters() => emit(state.copyWith(filters: const {}));
 
   Future<void> search() async {
+    if (state.query.trim().isEmpty) return;
     emit(state.copyWith(status: Status.loading, clearError: true));
     try {
-      final params = <String, dynamic>{
-        ...state.filters,
-        if (state.query.isNotEmpty) 'name': state.query,
-      };
-      final result = await _repo.getDoctors(params, 1);
+      final result = await _repo.search(
+        search: state.query,
+        lat: state.filters['lat'] as double?,
+        lng: state.filters['lng'] as double?,
+        specializationId: state.filters['specialization_id'] as int?,
+        perPage: state.filters['per_page'] as int?,
+      );
       final data = result.data;
       if (data != null) {
         emit(state.copyWith(status: Status.success, result: data));
