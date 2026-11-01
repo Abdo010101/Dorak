@@ -128,7 +128,22 @@ Future setupLocator() async {
 
 abstract class InjectionClass {
   static final Dio dio = Dio()
-    ..interceptors.add(LoggingInterceptor())
+    ..interceptors.addAll([
+      // Pretty-print every request/response in debug only; strip in release
+      // so we never spam prod logs with payload bodies.
+      if (kDebugMode)
+        PrettyDioLogger(
+          requestHeader: true,
+          requestBody: true,
+          responseBody: true,
+          responseHeader: false,
+          error: true,
+          compact: true,
+          maxWidth: 120,
+        )
+      else
+        LoggingInterceptor(),
+    ])
     ..options.connectTimeout = const Duration(milliseconds: 50000)
     ..options.receiveTimeout = const Duration(milliseconds: 50000)
     ..options.receiveDataWhenStatusError = true

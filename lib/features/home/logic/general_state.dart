@@ -96,6 +96,7 @@ class GeneralState extends Equatable {
     LocationResolveStatus? locationStatus,
     String? resolvedCityName,
     String? resolvedAreaName,
+    bool clearCityArea = false,
   }) =>
       GeneralState(
         status: status ?? this.status,
@@ -115,8 +116,8 @@ class GeneralState extends Equatable {
         specId: specId ?? this.specId,
         specializationId: specializationId ?? this.specializationId,
         specializationName: specializationName ?? this.specializationName,
-        cityId: cityId ?? this.cityId,
-        areaId: areaId ?? this.areaId,
+        cityId: clearCityArea ? null : cityId ?? this.cityId,
+        areaId: clearCityArea ? null : areaId ?? this.areaId,
         lat: lat ?? this.lat,
         lng: lng ?? this.lng,
         isMainSpecialization: isMainSpecialization ?? this.isMainSpecialization,

@@ -1,7 +1,11 @@
 {
   "data": {
-    "offers": [
-      {"id": 1, "title": "خصم 25% على فحص السكر", "price_before": "200", "price_after": "150"}
-    ]
+    "offers": {
+      "data": [
+        {"id": 1, "title": "خصم 25% على فحص السكر", "price_before": "200", "price_after": "150"}
+      ]
+    },
+    "max_price": "500",
+    "min_price": "100"
   }
 }

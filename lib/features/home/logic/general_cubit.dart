@@ -252,7 +252,7 @@ class GeneralCubit extends Cubit<GeneralState> {
   }
 
   void setLatLng({required double lat, required double lng}) =>
-      emit(state.copyWith(lat: lat, lng: lng));
+      emit(state.copyWith(lat: lat, lng: lng, clearCityArea: true));
 
   Future<void> loadTermsAndPolicy() async {
     await _loadTerms();

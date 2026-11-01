@@ -183,15 +183,19 @@ class _AppPrimaryButtonState extends State<AppPrimaryButton>
           )
         : btn;
 
+    // expand: false → intrinsic-width button (used inside AlertDialog actions
+    // and other Row contexts where a LayoutBuilder constraint chain fails).
+    if (!widget.expand) {
+      return SizedBox(height: height, child: IntrinsicWidth(child: decorated));
+    }
     return LayoutBuilder(
       builder: (ctx, constraints) {
-        final maxW = constraints.hasBoundedWidth && widget.expand
-            ? constraints.maxWidth
-            : null;
+        final maxW =
+            constraints.hasBoundedWidth ? constraints.maxWidth : null;
         final targetW = widget.isLoading ? height : maxW;
         return SizedBox(
           height: height,
-          width: widget.expand ? maxW : null,
+          width: maxW,
           child: Align(
             alignment: AlignmentDirectional.center,
             child: AnimatedContainer(
