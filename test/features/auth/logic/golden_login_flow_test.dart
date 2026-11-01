@@ -38,8 +38,16 @@ void main() {
   test('golden path — sendOtp → verifyOtp flips otpSent + verified', () async {
     when(() => repo.sendOtp(body: any(named: 'body')))
         .thenAnswer((_) async => BaseModel<dynamic>(data: 'ok'));
-    when(() => repo.verifyOtp(body: any(named: 'body')))
-        .thenAnswer((_) async => BaseModel<dynamic>(data: 'ok'));
+    when(() => repo.checkOtp(body: any(named: 'body'))).thenAnswer(
+      (_) async => BaseModel<dynamic>(data: {
+        'data': {
+          'token': 'Bearer t.o.k.e.n',
+          'profile_completed': true,
+          'patient': {'id': 1, 'name': 'أحمد', 'phone': '555123456'},
+        },
+      }),
+    );
+    when(() => prefs.storeLoginInfo(any())).thenAnswer((_) async => true);
 
     final cubit = AuthCubit(authenticationRepository: repo, sharedPref: prefs);
     cubit.setPhone('555123456');

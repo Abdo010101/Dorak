@@ -126,23 +126,27 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
           ),
           const SizedBox(height: 16),
         ],
-        if (centers.isNotEmpty) ...[
-          _listHeader(
-            count: r?.medicalCenters?.total ?? centers.length,
-            title: 'search_medical_centers'.tr(),
-          ),
-          const SizedBox(height: 12),
-          _cardsGrid(centers, isClinic: false),
-          const SizedBox(height: 20),
-        ],
-        if (clinics.isNotEmpty) ...[
-          _listHeader(
-            count: r?.clinics?.total ?? clinics.length,
-            title: 'search_clinics'.tr(),
-          ),
-          const SizedBox(height: 12),
-          _cardsGrid(clinics, isClinic: true),
-        ],
+        // Centers section — always render the header so a 0-count is
+        // readable to the user; cards appear only when there are rows.
+        _listHeader(
+          count: r?.medicalCenters?.total ?? centers.length,
+          title: 'search_medical_centers'.tr(),
+        ),
+        const SizedBox(height: 12),
+        if (centers.isNotEmpty)
+          _cardsGrid(centers, isClinic: false)
+        else
+          _InlineEmpty(label: 'search_no_centers'.tr()),
+        const SizedBox(height: 20),
+        _listHeader(
+          count: r?.clinics?.total ?? clinics.length,
+          title: 'search_clinics'.tr(),
+        ),
+        const SizedBox(height: 12),
+        if (clinics.isNotEmpty)
+          _cardsGrid(clinics, isClinic: true)
+        else
+          _InlineEmpty(label: 'search_no_clinics'.tr()),
       ],
     );
   }
@@ -187,13 +191,9 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
   }
 
   Widget _listHeader({required int count, required String title}) {
+    // RTL: title pins to leading edge (right), count tail to trailing (left).
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          '$count ${'search_results_label'.tr()}',
-          style: const TextStyle(fontSize: 14, color: _textSecondary),
-        ),
         Text(
           title,
           style: const TextStyle(
@@ -202,7 +202,35 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
             color: _textPrimary,
           ),
         ),
+        const Spacer(),
+        Text(
+          '$count ${'search_results_label'.tr()}',
+          style: const TextStyle(fontSize: 14, color: _textSecondary),
+        ),
       ],
+    );
+  }
+}
+
+class _InlineEmpty extends StatelessWidget {
+  const _InlineEmpty({required this.label});
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFAFAFA),
+        border: Border.all(color: const Color(0xFFE5E5E5)),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Text(
+        label,
+        textAlign: TextAlign.center,
+        style: const TextStyle(color: Color(0xFF4C4C4C)),
+      ),
     );
   }
 }

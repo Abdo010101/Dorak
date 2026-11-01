@@ -13,6 +13,13 @@
   "home_nearest_centers": "Nearest centers",
   "home_nearest_clinics": "Nearest clinics",
   "home_view_all": "View all",
+  "home_best_doctors": "Top doctors",
+  "home_empty_offers": "No offers available right now",
+  "home_empty_centers": "No medical centers near you",
+  "home_empty_clinics": "No clinics near you",
+  "home_empty_doctors": "No doctors yet",
+  "home_empty_centers_hint": "Enable location to see nearby options",
+  "home_empty_clinics_hint": "Enable location to see nearby options",
   "nav_home": "Home",
   "nav_discover": "Discover",
   "nav_bookings": "Bookings",
@@ -460,5 +467,7 @@
   "reschedule_sheet_title": "Pick a new time",
   "reschedule_confirm": "Confirm change",
   "explore_empty": "No results in this area.",
-  "offers_empty": "No offers right now."
+  "offers_empty": "No offers right now.",
+  "search_no_centers": "No medical centers for this search.",
+  "search_no_clinics": "No clinics for this search."
 }

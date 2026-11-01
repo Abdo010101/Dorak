@@ -1,9 +1,11 @@
 import 'package:dorakpattient/features/appointment/presentation/pages/appointments_page.dart';
 import 'package:dorakpattient/features/discovery/presentation/pages/explore_page.dart';
+import 'package:dorakpattient/features/home/logic/bottom_nav_cubit.dart';
 import 'package:dorakpattient/features/home/presentation/pages/home_page.dart';
 import 'package:dorakpattient/features/profile/presentation/pages/profile_page.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 /// Phase 8 — Main shell with bottom nav (4 tabs). Mirrors Figma `171:682`.
@@ -19,7 +21,14 @@ class MainShellPage extends StatefulWidget {
 }
 
 class _MainShellPageState extends State<MainShellPage> {
-  late int _index = widget.initialIndex;
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      context.read<BottomNavCubit>().setIndex(widget.initialIndex);
+    });
+  }
 
   static const _accent = Color(0xFF1F8046);
   static const _textSecondary = Color(0xFF4C4C4C);
@@ -39,12 +48,13 @@ class _MainShellPageState extends State<MainShellPage> {
     _TabSpec(icon: 'nav_profile.svg', labelKey: 'nav_account'),
   ];
 
-  void _onTabTap(int i) => setState(() => _index = i);
+  void _onTabTap(int i) => context.read<BottomNavCubit>().setIndex(i);
 
   @override
   Widget build(BuildContext context) {
+    final index = context.watch<BottomNavCubit>().state;
     return Scaffold(
-      body: _pages[_index],
+      body: _pages[index],
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
           color: Colors.white,
@@ -63,7 +73,7 @@ class _MainShellPageState extends State<MainShellPage> {
             height: 64,
             child: Row(
               children: List.generate(_tabs.length, (i) {
-                final active = i == _index;
+                final active = i == index;
                 return Expanded(
                   child: InkWell(
                     onTap: () => _onTabTap(i),

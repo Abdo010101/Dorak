@@ -54,8 +54,15 @@ void main() {
     blocTest<AuthCubit, AuthState>(
       'verifyOtp success flips verified flag',
       setUp: () {
-        when(() => repo.verifyOtp(body: any(named: 'body')))
-            .thenAnswer((_) async => BaseModel<dynamic>(data: 'ok'));
+        when(() => repo.checkOtp(body: any(named: 'body'))).thenAnswer(
+          (_) async => BaseModel<dynamic>(data: {
+            'data': {
+              'token': 'Bearer t.o.k.e.n',
+              'profile_completed': true,
+              'patient': {'id': 1, 'name': 'أحمد', 'phone': '0555'},
+            },
+          }),
+        );
         when(() => prefs.storeLoginInfo(any()))
             .thenAnswer((_) async => true);
       },
@@ -72,11 +79,13 @@ void main() {
     blocTest<AuthCubit, AuthState>(
       'verifyOtp success persists token via prefs.storeLoginInfo',
       setUp: () {
-        when(() => repo.verifyOtp(body: any(named: 'body'))).thenAnswer(
+        when(() => repo.checkOtp(body: any(named: 'body'))).thenAnswer(
           (_) async => BaseModel<dynamic>(data: {
-            'token': 'Bearer t.o.k.e.n',
-            'profile_completed': true,
-            'patient': {'id': 42, 'name': 'أحمد', 'phone': '555123456'},
+            'data': {
+              'token': 'Bearer t.o.k.e.n',
+              'profile_completed': true,
+              'patient': {'id': 42, 'name': 'أحمد', 'phone': '555123456'},
+            },
           }),
         );
         when(() => prefs.storeLoginInfo(any()))

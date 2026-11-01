@@ -1,3 +1,4 @@
+import 'package:dorakpattient/core/router/route_names.dart';
 import 'package:dorakpattient/core/services/location_service.dart';
 import 'package:dorakpattient/core/state/status.dart';
 import 'package:dorakpattient/core/ui_kit/feedback/location_opt_in_sheet.dart';
@@ -16,6 +17,7 @@ import 'package:dorakpattient/features/home/presentation/widgets/specialty_chip_
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 /// Phase 8 — Home — الرئيسية (Figma node `171:509`).
 ///
@@ -185,6 +187,8 @@ class _HomeSections extends StatelessWidget {
     final offers = home?.latestOffers ?? const [];
     final centers = home?.nearestMedicalCenters ?? const [];
     final clinics = home?.nearestClinics ?? const [];
+    final doctors = home?.bestDoctors ?? const [];
+    final locationKnown = home?.location != null;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -201,16 +205,24 @@ class _HomeSections extends StatelessWidget {
               for (int i = 0; i < specs.length; i++)
                 SpecialtyChipData(specs[i].name ?? '', i == 0),
             ],
+            onTap: (i) {
+              final name = specs[i].name ?? '';
+              if (name.isEmpty) return;
+              context.pushNamed(
+                RouteNames.resultOfSearch,
+                queryParameters: {'q': name},
+              );
+            },
           ),
           const SizedBox(height: 24),
         ],
-        if (offers.isNotEmpty) ...[
-          SectionHeader(
-            title: 'home_latest_offers'.tr(),
-            actionLabel: 'home_view_all'.tr(),
-            onAction: () {},
-          ),
-          const SizedBox(height: 16),
+        SectionHeader(
+          title: 'home_latest_offers'.tr(),
+          actionLabel: 'home_view_all'.tr(),
+          onAction: () {},
+        ),
+        const SizedBox(height: 16),
+        if (offers.isNotEmpty)
           _TwoColumnGrid(
             items: offers,
             builder: (o) => OfferCard(
@@ -220,34 +232,52 @@ class _HomeSections extends StatelessWidget {
               price: (o.priceAfter ?? o.priceBefore ?? '').toString(),
               imageAsset: 'assets/images/home/dental_offer.png',
             ),
-          ),
-          const SizedBox(height: 24),
-        ],
-        if (centers.isNotEmpty) ...[
-          SectionHeader(
-            title: 'home_nearest_centers'.tr(),
-            actionLabel: 'home_view_all'.tr(),
-            onAction: () {},
-          ),
-          const SizedBox(height: 16),
+          )
+        else
+          _EmptySectionCard(message: 'home_empty_offers'.tr()),
+        const SizedBox(height: 24),
+        SectionHeader(
+          title: 'home_nearest_centers'.tr(),
+          actionLabel: 'home_view_all'.tr(),
+          onAction: () {},
+        ),
+        const SizedBox(height: 16),
+        if (centers.isNotEmpty)
           _TwoColumnGrid(
             items: centers,
             builder: (c) => _cardFromPlace(c, isClinic: false),
+          )
+        else
+          _EmptySectionCard(
+            message: 'home_empty_centers'.tr(),
+            hint: locationKnown ? null : 'home_empty_centers_hint'.tr(),
           ),
-          const SizedBox(height: 24),
-        ],
-        if (clinics.isNotEmpty) ...[
-          SectionHeader(
-            title: 'home_nearest_clinics'.tr(),
-            actionLabel: 'home_view_all'.tr(),
-            onAction: () {},
-          ),
-          const SizedBox(height: 16),
+        const SizedBox(height: 24),
+        SectionHeader(
+          title: 'home_nearest_clinics'.tr(),
+          actionLabel: 'home_view_all'.tr(),
+          onAction: () {},
+        ),
+        const SizedBox(height: 16),
+        if (clinics.isNotEmpty)
           _TwoColumnGrid(
             items: clinics,
             builder: (c) => _cardFromPlace(c, isClinic: true),
+          )
+        else
+          _EmptySectionCard(
+            message: 'home_empty_clinics'.tr(),
+            hint: locationKnown ? null : 'home_empty_clinics_hint'.tr(),
           ),
-        ],
+        const SizedBox(height: 24),
+        SectionHeader(
+          title: 'home_best_doctors'.tr(),
+          actionLabel: 'home_view_all'.tr(),
+          onAction: () {},
+        ),
+        const SizedBox(height: 16),
+        if (doctors.isEmpty)
+          _EmptySectionCard(message: 'home_empty_doctors'.tr()),
       ],
     );
   }
@@ -261,9 +291,8 @@ class _HomeSections extends StatelessWidget {
       location: [c.city, c.area].whereType<String>().join(' · '),
       rating: c.rating ?? '—',
       reviewCount: '(${c.ratingsCount ?? 0})',
-      distance: c.distanceKm != null
-          ? '${c.distanceKm!.toStringAsFixed(1)} km'
-          : '',
+      distance:
+          c.distanceKm != null ? '${c.distanceKm!.toStringAsFixed(1)} km' : '',
       imageAsset: isClinic
           ? 'assets/images/home/center2.png'
           : 'assets/images/home/center1.png',
@@ -290,8 +319,7 @@ class _TwoColumnGrid<T> extends StatelessWidget {
               Expanded(child: builder(left)),
               const SizedBox(width: 8),
               Expanded(
-                child:
-                    right == null ? const SizedBox.shrink() : builder(right),
+                child: right == null ? const SizedBox.shrink() : builder(right),
               ),
             ],
           ),
@@ -299,5 +327,53 @@ class _TwoColumnGrid<T> extends StatelessWidget {
       );
     }
     return Column(children: rows);
+  }
+}
+
+class _EmptySectionCard extends StatelessWidget {
+  const _EmptySectionCard({required this.message, this.hint});
+
+  final String message;
+  final String? hint;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+        decoration: BoxDecoration(
+          color: theme.colorScheme.surfaceContainerLow,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: theme.dividerColor.withValues(alpha: 0.4)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(Icons.inbox_outlined,
+                size: 24, color: theme.colorScheme.outline),
+            const SizedBox(height: 8),
+            Text(
+              message,
+              textAlign: TextAlign.center,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
+            if (hint != null) ...[
+              const SizedBox(height: 4),
+              Text(
+                hint!,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.outline,
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
   }
 }

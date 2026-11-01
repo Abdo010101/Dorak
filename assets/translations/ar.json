@@ -13,6 +13,13 @@
   "home_nearest_centers": "أقرب المراكز",
   "home_nearest_clinics": "أقرب العيادات",
   "home_view_all": "عرض الكل",
+  "home_best_doctors": "أفضل الأطباء",
+  "home_empty_offers": "لا توجد عروض متاحة الآن",
+  "home_empty_centers": "لا توجد مراكز بالقرب منك",
+  "home_empty_clinics": "لا توجد عيادات بالقرب منك",
+  "home_empty_doctors": "لم يتم إضافة أطباء بعد",
+  "home_empty_centers_hint": "فعّل تحديد الموقع لرؤية الأقرب إليك",
+  "home_empty_clinics_hint": "فعّل تحديد الموقع لرؤية الأقرب إليك",
   "nav_home": "الرئيسية",
   "nav_discover": "استكشف",
   "nav_bookings": "حجوزاتي",
@@ -459,5 +466,7 @@
   "reschedule_sheet_title": "اختر موعد جديد",
   "reschedule_confirm": "تأكيد التغيير",
   "explore_empty": "لا توجد نتائج في هذه المنطقة.",
-  "offers_empty": "لا توجد عروض متاحة الآن."
+  "offers_empty": "لا توجد عروض متاحة الآن.",
+  "search_no_centers": "لا توجد مراكز لهذا البحث.",
+  "search_no_clinics": "لا توجد عيادات لهذا البحث."
 }

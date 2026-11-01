@@ -3,6 +3,7 @@ import 'package:dorakpattient/core/theme/app_colors_theme.dart';
 import 'package:dorakpattient/core/theme/app_typography.dart';
 import 'package:dorakpattient/features/auth/logic/auth_cubit.dart';
 import 'package:dorakpattient/features/auth/logic/auth_state.dart';
+import 'package:dorakpattient/features/home/logic/bottom_nav_cubit.dart';
 import 'package:dorakpattient/features/profile/logic/patient_profile_cubit.dart';
 import 'package:dorakpattient/features/profile/logic/patient_profile_state.dart';
 import 'package:dorakpattient/features/profile/presentation/widgets/guest_card.dart';
@@ -103,7 +104,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     _RowSpec(
                       icon: Icons.calendar_today_outlined,
                       label: 'nav_bookings',
-                      onTap: () => context.goNamed(RouteNames.appointments),
+                      onTap: () =>
+                          context.read<BottomNavCubit>().setIndex(2),
                     ),
                     _RowSpec(
                       icon: Icons.favorite_border,

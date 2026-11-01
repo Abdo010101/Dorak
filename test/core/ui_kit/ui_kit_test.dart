@@ -3,6 +3,8 @@ import 'package:dorakpattient/core/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+void _noop() {}
+
 Widget _wrap(Widget child, {Locale locale = const Locale('en')}) {
   return MaterialApp(
     locale: locale,
@@ -59,17 +61,21 @@ void main() {
   });
 
   group('navigation', () {
-    testWidgets('AppTopBar shows title and back in RTL as arrow_forward',
-        (tester) async {
+    testWidgets('AppTopBar shows title + back arrow (RTL uses arrow_back, '
+        'the glyph that points away from the start edge)', (tester) async {
       await tester.pumpWidget(MaterialApp(
         theme: AppTheme.light(locale: const Locale('en')),
         home: const Directionality(
           textDirection: TextDirection.rtl,
-          child: Scaffold(appBar: AppTopBar(title: 'Settings')),
+          // Explicit onBack keeps the back button visible even when the test
+          // has no navigator history (AppBackButton hides itself otherwise).
+          child: Scaffold(
+            appBar: AppTopBar(title: 'Settings', onBack: _noop),
+          ),
         ),
       ));
       expect(find.text('Settings'), findsOneWidget);
-      expect(find.byIcon(Icons.arrow_forward), findsOneWidget);
+      expect(find.byIcon(Icons.arrow_back), findsOneWidget);
     });
 
     testWidgets('AppBottomNavBar shows items and reports tap', (tester) async {

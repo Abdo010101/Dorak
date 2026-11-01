@@ -91,38 +91,50 @@ class AuthCubit extends Cubit<AuthState> {
       clearError: true,
     ));
     try {
-      final result = await _repo.verifyOtp(body: {
+      // Sign-in OTP verification lives on `POST /patient/check-otp` (scope
+      // §10.1.2). The authenticated `/patient/verify` endpoint returns 401
+      // until the patient already holds a Bearer token.
+      final result = await _repo.checkOtp(body: {
         'phone': state.phone,
         'otp': state.otp,
       });
-      if (result.error == null) {
-        // Backend returns {token, is_new_user, profile_completed, patient}
-        // directly on the verify endpoint — see verify_otp_success.json
-        // fixture. Persist it so AuthInterceptor picks up the Bearer token
-        // on every subsequent request.
-        final raw = result.data;
-        final json = (raw is Map<String, dynamic>) ? raw : <String, dynamic>{};
-        final user = UserResponse.fromJson(json);
-        if ((user.token ?? '').isNotEmpty) {
-          await _prefs.storeLoginInfo(user);
-        }
-        final patient = user.patient;
-        final needsProfile =
-            (user.profileCompleted == false) ||
-                patient?.name == null ||
-                patient!.name!.trim().isEmpty;
-        emit(state.copyWith(
-          status: Status.success,
-          verified: true,
-          user: user,
-          needsProfile: needsProfile,
-        ));
-      } else {
+      if (result.error != null) {
         emit(state.copyWith(
           status: Status.failure,
+          verified: false,
+          errorMessage: result.error?.message ?? 'otp_invalid_error',
+        ));
+        return;
+      }
+      // Backend envelope is `{success, data:{token, is_new_user,
+      // profile_completed, patient}, message}`.
+      final raw = result.data;
+      Map<String, dynamic> payload = const {};
+      if (raw is Map && raw['data'] is Map) {
+        payload = Map<String, dynamic>.from(raw['data'] as Map);
+      } else if (raw is Map<String, dynamic>) {
+        payload = raw;
+      }
+      final user = UserResponse.fromJson(payload);
+      if ((user.token ?? '').isEmpty) {
+        emit(state.copyWith(
+          status: Status.failure,
+          verified: false,
           errorMessage: 'otp_invalid_error',
         ));
+        return;
       }
+      await _prefs.storeLoginInfo(user);
+      final patient = user.patient;
+      final needsProfile = (user.profileCompleted == false) ||
+          patient?.name == null ||
+          patient!.name!.trim().isEmpty;
+      emit(state.copyWith(
+        status: Status.success,
+        verified: true,
+        user: user,
+        needsProfile: needsProfile,
+      ));
     } on DioException catch (e) {
       emit(state.copyWith(status: Status.failure, errorMessage: e.message));
     }

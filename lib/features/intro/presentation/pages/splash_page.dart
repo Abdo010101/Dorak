@@ -88,13 +88,13 @@ class _SplashPageState extends State<SplashPage>
 
   Future<void> _route() async {
     final state = context.read<AuthCubit>().state;
+    // Having a Bearer token is enough to land on home; the profile-complete
+    // step was already gated during OTP sign-in via `needsProfile`. The old
+    // `patient.phone.isNotEmpty` guard was kicking signed-in users back to
+    // welcome on cold start / hot restart whenever the stored patient object
+    // was missing `phone` (backend may send only `full_phone`).
     if (state.isAuthenticated) {
-      final phone = state.user?.patient?.phone;
-      if (phone == null || phone.isEmpty) {
-        context.goNamed(RouteNames.welcome);
-      } else {
-        context.goNamed(RouteNames.home);
-      }
+      context.goNamed(RouteNames.home);
       return;
     }
     final firstTime = await _sharedPref.getFirstTime() ?? false;

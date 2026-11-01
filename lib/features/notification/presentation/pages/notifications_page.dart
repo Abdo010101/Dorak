@@ -4,9 +4,11 @@ import 'package:dorakpattient/core/ui_kit/ui_kit.dart';
 import 'package:dorakpattient/data/models/response/notification_response.dart';
 import 'package:dorakpattient/features/notification/logic/notification_cubit.dart';
 import 'package:dorakpattient/features/notification/logic/notification_state.dart';
+import 'package:dorakpattient/core/router/route_names.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 /// Phase 11 — Account 08 Notifications (Figma `209:2971`) and Account 08b
 /// empty (Figma `352:3712`). Wires [NotificationCubit] with 4 states and
@@ -32,7 +34,11 @@ class _NotificationsPageState extends State<NotificationsPage> {
     final colors = AppColorsTheme.of(context);
     return Scaffold(
       backgroundColor: colors.white,
-      appBar: AppTopBar(title: 'notif_title'.tr()),
+      appBar: AppTopBar(
+        title: 'notif_title'.tr(),
+        onBack: () =>
+            context.canPop() ? context.pop() : context.goNamed(RouteNames.home),
+      ),
       body: SafeArea(
         top: false,
         child: BlocBuilder<NotificationCubit, NotificationFeedState>(

@@ -126,7 +126,7 @@ class _AuthenticationClient implements AuthenticationClient {
   }
 
   @override
-  Future<dynamic> checkOtp(String phone, dynamic body) async {
+  Future<dynamic> checkOtp(dynamic body) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -135,7 +135,7 @@ class _AuthenticationClient implements AuthenticationClient {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'check-otp/${phone}',
+            'check-otp',
             queryParameters: queryParameters,
             data: _data,
           )

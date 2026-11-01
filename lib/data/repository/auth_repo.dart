@@ -58,13 +58,11 @@ class AuthenticationRepository extends BaseRepository {
     }
   }
 
-  Future<BaseModel<dynamic>> checkOtp(
-      {required String phone, required var body}) async {
+  Future<BaseModel<dynamic>> checkOtp({required var body}) async {
     if (await checkForConnectivity()) {
       try {
         return BaseModel(
-            data:
-                await authenticationClient.checkOtp(phone, body).then((value) {
+            data: await authenticationClient.checkOtp(body).then((value) {
           return value;
         }));
       } on DioError catch (e) {

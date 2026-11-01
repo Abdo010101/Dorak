@@ -26,9 +26,14 @@ abstract class AuthenticationClient {
   @POST(NetworkConstant.kSendOtp)
   Future<dynamic> sendOtp(@Body() var body);
 
-  @POST("${NetworkConstant.kCheckOtp}/{phone}")
-  Future<dynamic> checkOtp(@Path('phone') String phone, @Body() var body);
+  /// `POST /patient/check-otp` — sign-in OTP verification (scope §10.1.2).
+  /// Body: `{phone, otp, fcm_token?}`. Response: `{token, is_new_user,
+  /// profile_completed, patient}`. Fixed test OTP `1995`.
+  @POST(NetworkConstant.kCheckOtp)
+  Future<dynamic> checkOtp(@Body() var body);
 
+  /// `POST /patient/verify` — re-verify an *already-signed-in* patient's
+  /// phone (scope §10.2). Needs a Bearer token; returns 401 otherwise.
   @POST(NetworkConstant.kVerifyOtp)
   Future<dynamic> verifyOtp(@Body() var body);
 
